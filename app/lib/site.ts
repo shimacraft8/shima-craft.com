@@ -10,7 +10,7 @@ export const site = {
   /** お問い合わせ先メールアドレス（mailto・構造化データ・プライバシーポリシーで共通利用） */
   email: "shimacraft8@gmail.com",
   /** 本番URL。Vercel等の環境変数 NEXT_PUBLIC_SITE_URL で上書きできます。 */
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://shima-craft.vercel.app",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://shima-craft.com",
   /** 対応エリア（構造化データ areaServed 用） */
   areaServed: "奄美大島（鹿児島県）",
   ogImage: "/hero.jpg",

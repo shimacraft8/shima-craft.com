@@ -7,7 +7,6 @@ import { Price } from "@/app/components/Price";
 import { Faq } from "@/app/components/Faq";
 import { Contact } from "@/app/components/Contact";
 import { Footer } from "@/app/components/Footer";
-import { CustomCursor } from "@/app/components/CustomCursor";
 import { StickyContact } from "@/app/components/StickyContact";
 import { IntroOverlay } from "@/app/components/IntroOverlay";
 
@@ -26,7 +25,6 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
-      <CustomCursor />
       <StickyContact />
     </>
   );

@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/hiroshikento/Downloads/**)",
+      "Bash(unzip -l \"files \\(1\\).zip\")",
+      "Bash(unzip -o \"/Users/hiroshikento/Downloads/files \\(1\\).zip\" -d \"./extracted\")",
+      "Read(//Users/hiroshikento/**)",
+      "Read(//Users/hiroshikento/Documents/**)",
+      "Bash(sed -E 's/\\(data:image\\\\/[a-zA-Z+]+;base64,\\)[A-Za-z0-9+/=]+/\\\\1__STRIPPED__/g' shima-craft-v2.html)",
+      "Read(//tmp/**)",
+      "Bash(npm -v)",
+      "Bash(curl -s -m 5 -o /dev/null -w \"%{http_code}\" https://registry.npmjs.org/next)",
+      "Bash(npm install *)",
+      "Bash(npm view *)",
+      "Bash(npm run *)",
+      "Bash(lsof -ti:3100)",
+      "Bash(xargs kill)",
+      "Bash(curl -s -o /dev/null -w \"home:%{http_code}\\\\n\" http://localhost:3100/)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(lsof -ti:3000)",
+      "Bash(sips -g pixelWidth -g pixelHeight public/logo.png)",
+      "Bash(python3 -c \"import PIL; print\\('PIL', PIL.__version__\\)\")",
+      "Bash(pip3 install *)",
+      "Bash(python3 -)",
+      "Bash(xargs kill -9)",
+      "Bash(curl -s -o /dev/null -w \"compile pass1: %{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"compile pass2: %{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"compile: %{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"compile2: %{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(git init *)",
+      "Bash(git checkout *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git remote *)",
+      "Bash(git push *)",
+      "Bash(gh auth *)"
+    ]
+  }
+}

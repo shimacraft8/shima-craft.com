@@ -43,6 +43,7 @@ export function Hero() {
           variants={fadeUp}
           initial={reduce ? "show" : "hidden"}
           animate="show"
+          style={{ whiteSpace: "nowrap", fontSize: "clamp(1.1rem, 5.5vw, 4.5rem)" }}
         >
           島の魅力を、もっと世界へ。
         </motion.h1>

@@ -79,6 +79,12 @@ export function Works() {
             ))}
           </div>
         </Reveal>
+
+        <p style={{ textAlign: "center", fontSize: "0.9rem", color: "#888", marginTop: "48px" }}>
+          <strong style={{ fontWeight: 600 }}>すべてSHIMA CRAFTが制作したサンプルサイトです。</strong>
+          <br />
+          あなたのお店でも、同じクオリティでご提案できます。
+        </p>
       </div>
     </section>
   );

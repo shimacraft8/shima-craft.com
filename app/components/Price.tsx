@@ -25,6 +25,7 @@ const SPOT: { service: string; price: string }[] = [
   { service: "写真撮影", price: "要お見積もり" },
   { service: "動画編集", price: "3,000円〜/本" },
   { service: "空撮・映像制作", price: "30,000円〜/本" },
+  { service: "ネット集客サポート（じゃらん・ホットペッパー等の登録・構築）", price: "30,000円〜" },
 ];
 
 export function Price() {

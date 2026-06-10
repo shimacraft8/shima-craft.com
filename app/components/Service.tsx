@@ -11,12 +11,12 @@ const SERVICES: Service[] = [
   {
     title: "HP制作",
     desc: "HPが古い・ないお店に、新しい顔を。",
-    price: "制作費 50,000円〜",
+    price: "制作費 10,000円〜",
   },
   {
     title: "HP保守・運用",
     desc: "作ったあとも、ずっとサポート。",
-    price: "月額 5,000円〜",
+    price: "月額 4,800円/月",
   },
   {
     title: "空撮・映像制作",

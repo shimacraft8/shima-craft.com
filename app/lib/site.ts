@@ -8,7 +8,7 @@ export const site = {
   description:
     "鹿児島・離島の事業者さんのWeb制作・撮影・映像制作を、まるごとサポートします。HP制作・空撮・動画編集・ネット集客まで一貫対応。奄美大島を中心に対応しています。",
   /** お問い合わせ先メールアドレス（mailto・構造化データ・プライバシーポリシーで共通利用） */
-  email: "shimacraft8@gmail.com",
+  email: "shimacraftwork@gmail.com",
   /** 本番URL。Vercel等の環境変数 NEXT_PUBLIC_SITE_URL で上書きできます。 */
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://shima-craft.com",
   /** 対応エリア（構造化データ areaServed 用） */

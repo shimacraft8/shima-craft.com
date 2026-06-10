@@ -2,9 +2,9 @@ import { Reveal } from "@/app/components/Reveal";
 
 /* ── HP制作（初期費用）────────────────────────── */
 const INIT: { service: string; price: string }[] = [
-  { service: "HP制作", price: "10,000円" },
-  { service: "HP制作（写真撮影セット）", price: "30,000円〜" },
-  { service: "HP制作（空撮・写真セット）", price: "50,000円〜" },
+  { service: "HP制作", price: "10000円" },
+  { service: "HP制作（写真撮影セット）", price: "30000円〜" },
+  { service: "HP制作（空撮・写真セット）", price: "50000円〜" },
 ];
 
 /* ── 月額保守に含まれること / 含まれないこと ─────── */
@@ -23,9 +23,9 @@ const EXCLUDED = [
 const SPOT: { service: string; price: string }[] = [
   { service: "ページ追加・デザイン変更", price: "要お見積もり" },
   { service: "写真撮影", price: "要お見積もり" },
-  { service: "動画編集", price: "3,000円〜/本" },
-  { service: "空撮・映像制作", price: "30,000円〜/本" },
-  { service: "ネット集客サポート（じゃらん・ホットペッパー等の登録・構築）", price: "30,000円〜" },
+  { service: "動画編集", price: "3000円〜/本" },
+  { service: "空撮・映像制作", price: "30000円〜/本" },
+  { service: "ネット集客サポート（じゃらん・ホットペッパー等の登録・構築）", price: "30000円〜" },
 ];
 
 export function Price() {
@@ -71,10 +71,13 @@ export function Price() {
               </div>
 
               <div className="price-monthly-hero">
-                <span className="price-monthly-amount">4,800</span>
+                <span className="price-monthly-amount">4800</span>
                 <span className="price-monthly-unit">円<small>/月</small></span>
               </div>
               <p className="price-monthly-catch">プランは1つだけ。シンプルに、続けやすく。</p>
+              <p style={{ textAlign: "center", fontSize: "0.85rem", color: "#999", marginTop: "8px", padding: "0 28px" }}>
+                1日あたり約160円。Web担当者を持つ感覚で、任せてください。
+              </p>
 
               <div className="price-checklist-wrap">
                 <div className="price-checklist">
@@ -107,7 +110,7 @@ export function Price() {
                 <span className="price-option-item">
                   Googleマップ管理（口コミ返信・写真追加・投稿代行）
                 </span>
-                <span className="price-option-price">3,000円/月</span>
+                <span className="price-option-price">3000円/月</span>
               </div>
             </div>
           </Reveal>

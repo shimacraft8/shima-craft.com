@@ -657,6 +657,13 @@ section {
   font-weight: 500;
   font-size: 0.85rem;
 }
+.price-table-note {
+  display: block;
+  font-size: 0.75rem;
+  color: #999;
+  font-weight: 400;
+  margin-top: 3px;
+}
 .price-table td:last-child {
   text-align: right;
   font-family: var(--en);

@@ -113,13 +113,13 @@ const jsonLd = {
       "@type": "Offer",
       itemOffered: { "@type": "Service", name: "HP制作" },
       priceCurrency: "JPY",
-      price: "50000",
+      price: "150000",
     },
     {
       "@type": "Offer",
-      itemOffered: { "@type": "Service", name: "HP保守・運用" },
+      itemOffered: { "@type": "Service", name: "HP保守・運用（年間契約）" },
       priceCurrency: "JPY",
-      price: "5000",
+      price: "0",
     },
     {
       "@type": "Offer",

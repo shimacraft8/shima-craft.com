@@ -1,17 +1,29 @@
 import { Reveal } from "@/app/components/Reveal";
 
 /* ── HP制作（初期費用）────────────────────────── */
-const INIT: { service: string; price: string }[] = [
-  { service: "HP制作", price: "10000円" },
-  { service: "HP制作（写真撮影セット）", price: "30000円〜" },
-  { service: "HP制作（空撮・写真セット）", price: "50000円〜" },
+const INIT: { service: string; price: string; note?: string }[] = [
+  {
+    service: "HP制作",
+    price: "150,000円",
+    note: "初回ドメイン代・1年間の保守込み",
+  },
+  {
+    service: "HP制作（写真撮影セット）",
+    price: "180,000円〜",
+    note: "上記＋写真撮影",
+  },
+  {
+    service: "HP制作（空撮・写真セット）",
+    price: "200,000円〜",
+    note: "上記＋ドローン空撮・写真",
+  },
 ];
 
-/* ── 月額保守に含まれること / 含まれないこと ─────── */
+/* ── 年間保守に含まれること / 含まれないこと ─────── */
 const INCLUDED = [
   "HP維持・SSL管理",
   "セキュリティ更新",
-  "月1回の軽微な修正",
+  "年間を通じた軽微な修正対応",
 ];
 const EXCLUDED = [
   "ページ追加・大幅なデザイン変更",
@@ -41,7 +53,7 @@ export function Price() {
 
           {/* ── HP制作（初期費用）─────────────────── */}
           <Reveal dir="up">
-            <div className="price-block">
+            <div className="price-block price-block--feature">
               <div className="price-block-header">
                 <span className="price-block-tag">初期費用</span>
                 <h3 className="price-block-title">HP制作</h3>
@@ -53,30 +65,34 @@ export function Price() {
                 <tbody>
                   {INIT.map((r) => (
                     <tr key={r.service}>
-                      <td>{r.service}</td>
+                      <td>
+                        {r.service}
+                        {r.note && (
+                          <span className="price-table-note">{r.note}</span>
+                        )}
+                      </td>
                       <td>{r.price}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
+              <p style={{ textAlign: "center", fontSize: "0.85rem", color: "#999", padding: "16px 28px 20px" }}>
+                初回費用にドメイン取得代・1年間の保守がすべて含まれます。
+              </p>
             </div>
           </Reveal>
 
-          {/* ── 月額保守（1プラン）─────────────────── */}
+          {/* ── 年間保守（2年目以降）─────────────────── */}
           <Reveal dir="up">
-            <div className="price-block price-block--feature">
+            <div className="price-block">
               <div className="price-block-header">
-                <span className="price-block-tag">月額</span>
-                <h3 className="price-block-title">月額保守プラン</h3>
+                <span className="price-block-tag">年間契約</span>
+                <h3 className="price-block-title">保守プラン（2年目以降）</h3>
               </div>
 
-              <div className="price-monthly-hero">
-                <span className="price-monthly-amount">4800</span>
-                <span className="price-monthly-unit">円<small>/月</small></span>
-              </div>
-              <p className="price-monthly-catch">プランは1つだけ。シンプルに、続けやすく。</p>
-              <p style={{ textAlign: "center", fontSize: "0.85rem", color: "#999", marginTop: "8px", padding: "0 28px" }}>
-                1日あたり約160円。Web担当者を持つ感覚で、任せてください。
+              <p style={{ textAlign: "center", fontSize: "0.92rem", color: "#555", padding: "20px 28px 4px", lineHeight: 1.8 }}>
+                ドメイン更新のタイミングで、年1回の契約更新。<br />
+                <span style={{ fontSize: "0.82rem", color: "#999" }}>解約時はファイル一式をすべてお渡しします。ドメインの変更手続きはご自身でのご対応となります。</span>
               </p>
 
               <div className="price-checklist-wrap">
@@ -110,7 +126,7 @@ export function Price() {
                 <span className="price-option-item">
                   Googleマップ管理（口コミ返信・写真追加・投稿代行）
                 </span>
-                <span className="price-option-price">3000円/月</span>
+                <span className="price-option-price">別途ご相談</span>
               </div>
             </div>
           </Reveal>

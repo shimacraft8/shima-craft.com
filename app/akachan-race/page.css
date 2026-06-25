@@ -1,0 +1,310 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Outfit:wght@400;600;700&display=swap');
+
+.ar-root {
+  font-family: var(--sans, 'Hiragino Sans', sans-serif);
+  background: #FFFBF0;
+  color: #333;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* HEADER */
+.ar-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px clamp(16px, 4vw, 48px);
+  transition: all 0.4s ease;
+}
+.ar-header.scrolled {
+  background: rgba(255,251,240,0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+}
+.ar-header-title {
+  font-family: 'Noto Serif JP', var(--serif, serif);
+  font-weight: 700;
+  font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+  color: #fff;
+  transition: color 0.4s;
+  letter-spacing: 0.06em;
+}
+.ar-header.scrolled .ar-header-title { color: #333; }
+.ar-header-cta {
+  font-family: 'Outfit', var(--en, sans-serif);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  padding: 9px 24px;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #FF7E8B, #FF6B6B);
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 0 6px 20px rgba(255,107,107,0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
+  white-space: nowrap;
+}
+.ar-header-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(255,107,107,0.4);
+}
+
+/* HERO */
+.ar-hero {
+  position: relative;
+  height: 100svh;
+  min-height: 600px;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  text-align: center;
+}
+.ar-hero-video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.ar-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,0.25) 0%,
+    rgba(0,0,0,0.5) 60%,
+    rgba(0,0,0,0.65) 100%
+  );
+}
+.ar-hero-inner {
+  position: relative; z-index: 2;
+  color: #fff;
+  padding: 0 24px;
+  max-width: 700px;
+}
+.ar-hero-venue {
+  font-family: 'Noto Serif JP', var(--serif, serif);
+  font-size: clamp(0.85rem, 2.2vw, 1.05rem);
+  letter-spacing: 0.25em;
+  opacity: 0.88;
+  margin-bottom: 16px;
+  display: inline-block;
+  border: 1px solid rgba(255,255,255,0.45);
+  padding: 5px 18px;
+  border-radius: 30px;
+}
+.ar-hero-title {
+  font-family: 'Noto Serif JP', var(--serif, serif);
+  font-weight: 700;
+  font-size: clamp(2.8rem, 9vw, 5.5rem);
+  line-height: 1.15;
+  letter-spacing: 0.06em;
+  text-shadow: 0 4px 30px rgba(0,0,0,0.25);
+  margin-bottom: 28px;
+}
+.ar-hero-date {
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  margin-bottom: 6px;
+}
+.ar-hero-time {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  letter-spacing: 0.08em;
+  opacity: 0.82;
+  margin-bottom: 44px;
+}
+.ar-hero-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #FF7E8B, #FF6B6B);
+  color: #fff;
+  padding: 18px 52px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: clamp(0.95rem, 2vw, 1.05rem);
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  box-shadow: 0 12px 36px rgba(255,107,107,0.42);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.ar-hero-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 48px rgba(255,107,107,0.5);
+}
+.ar-scroll-ind {
+  position: absolute; bottom: 36px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 3; text-align: center; color: #fff;
+  animation: arBounce 2.2s ease-in-out infinite;
+}
+.ar-scroll-ind span {
+  font-family: 'Outfit', var(--en, sans-serif);
+  font-size: 0.65rem; letter-spacing: 0.3em;
+  display: block; margin-bottom: 8px; opacity: 0.8;
+}
+@keyframes arBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(10px); }
+}
+
+/* SECTION commons */
+.ar-section {
+  padding: clamp(64px, 10vw, 120px) clamp(20px, 6vw, 80px);
+}
+.ar-section-label {
+  font-family: 'Outfit', var(--en, sans-serif);
+  font-size: 0.78rem;
+  letter-spacing: 0.3em;
+  color: #FF7E8B;
+  text-align: center;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  display: block;
+}
+.ar-section-title {
+  font-family: 'Noto Serif JP', var(--serif, serif);
+  font-weight: 700;
+  font-size: clamp(1.7rem, 4vw, 2.4rem);
+  text-align: center;
+  margin-bottom: 52px;
+  letter-spacing: 0.06em;
+  color: #222;
+}
+.ar-container { max-width: 1060px; margin: 0 auto; }
+
+/* DETAILS CARDS */
+.ar-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 22px;
+  margin-bottom: 40px;
+}
+.ar-card {
+  background: #fff;
+  border-radius: 22px;
+  padding: 34px 24px;
+  text-align: center;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.06);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.ar-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+}
+.ar-card-emoji { font-size: 2.8rem; display: block; margin-bottom: 14px; }
+.ar-card-label {
+  font-family: 'Outfit', var(--en, sans-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: #52B788;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  display: block;
+}
+.ar-card-value {
+  font-family: 'Noto Serif JP', var(--serif, serif);
+  font-weight: 700;
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
+  line-height: 1.6;
+  color: #222;
+  white-space: pre-line;
+}
+
+/* PRIZE BANNER */
+.ar-prize {
+  background: linear-gradient(135deg, rgba(255,126,139,0.12), rgba(255,209,102,0.16));
+  border: 2px dashed rgba(255,126,139,0.5);
+  border-radius: 22px;
+  padding: 32px 36px;
+  text-align: center;
+}
+.ar-prize-title {
+  font-family: 'Noto Serif JP', var(--serif, serif);
+  font-weight: 700;
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  color: #FF7E8B;
+  margin-bottom: 10px;
+}
+.ar-prize-text { font-size: 0.92rem; color: #666; line-height: 1.8; }
+
+/* APPLY SECTION */
+.ar-apply-bg {
+  background: linear-gradient(135deg, #fff8f4, #f0faf8);
+}
+.ar-apply-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  max-width: 700px;
+  margin: 0 auto 36px;
+}
+.ar-apply-card {
+  border-radius: 22px;
+  padding: 38px 28px;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: block;
+}
+.ar-apply-card:hover { transform: translateY(-6px); }
+.ar-apply-card-ig {
+  background: linear-gradient(135deg, #833ab4, #fd1d1d 60%, #fcb045);
+  box-shadow: 0 12px 34px rgba(131,58,180,0.3);
+}
+.ar-apply-card-ig:hover { box-shadow: 0 18px 44px rgba(131,58,180,0.4); }
+.ar-apply-card-mail {
+  background: linear-gradient(135deg, #FF7E8B, #FF6B6B);
+  box-shadow: 0 12px 34px rgba(255,107,107,0.3);
+}
+.ar-apply-card-mail:hover { box-shadow: 0 18px 44px rgba(255,107,107,0.4); }
+.ar-apply-icon { font-size: 3rem; display: block; margin-bottom: 14px; }
+.ar-apply-method {
+  font-weight: 700;
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
+  margin-bottom: 8px;
+  letter-spacing: 0.04em;
+}
+.ar-apply-detail { font-size: 0.82rem; opacity: 0.88; line-height: 1.5; }
+.ar-apply-note {
+  text-align: center;
+  font-size: 0.88rem;
+  color: #888;
+  line-height: 1.9;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* ORGANIZER */
+.ar-organizer {
+  text-align: center;
+  padding: clamp(48px, 8vw, 80px) clamp(20px, 6vw, 80px);
+  background: #fff;
+}
+.ar-org-label { font-size: 0.82rem; color: #aaa; margin-bottom: 10px; }
+.ar-org-name {
+  font-family: 'Noto Serif JP', var(--serif, serif);
+  font-weight: 700;
+  font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+  color: #222;
+  margin-bottom: 6px;
+}
+.ar-org-sub { font-size: 0.88rem; color: #888; }
+
+/* FOOTER */
+.ar-footer {
+  text-align: center;
+  padding: 28px 20px;
+  background: #f5f0e8;
+  font-family: 'Outfit', var(--en, sans-serif);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: #bbb;
+}
+.ar-footer a { color: #FF7E8B; text-decoration: none; }
+.ar-footer a:hover { text-decoration: underline; }
+
+/* decorative dots */
+.ar-dot {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.15;
+  pointer-events: none;
+}

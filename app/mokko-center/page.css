@@ -87,22 +87,22 @@
   text-align: center;
   overflow: hidden;
 }
-.mc-hero-bg {
+.mc-hero-bg-img {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse at 30% 60%, rgba(92, 139, 90, 0.4) 0%, transparent 55%),
-    radial-gradient(ellipse at 75% 30%, rgba(193, 122, 43, 0.35) 0%, transparent 50%),
-    linear-gradient(160deg, #2C1810 0%, #4A3020 35%, #3A5A38 70%, #2A4228 100%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 .mc-hero-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(0,0,0,0.1) 0%,
-    rgba(0,0,0,0.35) 55%,
-    rgba(0,0,0,0.55) 100%
+    rgba(0,0,0,0.35) 0%,
+    rgba(0,0,0,0.55) 55%,
+    rgba(0,0,0,0.7) 100%
   );
 }
 .mc-hero-inner {
@@ -126,8 +126,8 @@
 .mc-hero-title {
   font-family: var(--serif, 'Noto Serif JP', serif);
   font-weight: 700;
-  font-size: clamp(2.4rem, 7.5vw, 5rem);
-  line-height: 1.25;
+  font-size: clamp(2rem, 5.5vw, 3.8rem);
+  line-height: 1.35;
   letter-spacing: 0.04em;
   text-shadow: 0 4px 32px rgba(0,0,0,0.3);
   margin-bottom: 24px;
@@ -236,10 +236,19 @@
 .mc-info-item {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 10px;
   font-size: 0.88rem;
   letter-spacing: 0.04em;
   opacity: 0.95;
+}
+.mc-info-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  opacity: 0.75;
+  border: 1px solid rgba(255,255,255,0.4);
+  padding: 2px 8px;
+  border-radius: 20px;
+  white-space: nowrap;
 }
 
 /* ── SECTION COMMONS ── */
@@ -297,20 +306,17 @@
   gap: 18px;
 }
 .mc-feature-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
   background: #fff;
   border-radius: 16px;
   padding: 22px 24px;
   box-shadow: 0 4px 20px rgba(44, 24, 16, 0.07);
   transition: transform 0.3s, box-shadow 0.3s;
+  border-left: 3px solid var(--mc-primary);
 }
 .mc-feature-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 34px rgba(139, 98, 72, 0.14);
 }
-.mc-feature-icon { font-size: 2rem; flex: 0 0 auto; margin-top: 2px; }
 .mc-feature-title {
   font-family: var(--serif, serif);
   font-weight: 700;

@@ -21,19 +21,19 @@ export default function MokkoCenterPage() {
           <span className="mc-header-logo-ja">木工センター</span>
         </div>
         <a href="tel:0997695015" className="mc-header-cta">
-          📞 お電話でご予約
+          お電話でご予約
         </a>
       </header>
 
       {/* ── HERO ── */}
       <section className="mc-hero">
-        <div className="mc-hero-bg" aria-hidden="true" />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/mokko-center/gallery-3.jpg" alt="" className="mc-hero-bg-img" aria-hidden="true" />
         <div className="mc-hero-overlay" aria-hidden="true" />
         <div className="mc-hero-inner">
           <span className="mc-hero-badge">奄美市住用木工工芸センター</span>
           <h1 className="mc-hero-title">
-            リュウキュウマツで<br />
-            木工芸品を体験
+            リュウキュウマツで<br />木工芸品を体験
           </h1>
           <p className="mc-hero-sub">
             美しい木目と木の香りに包まれながら、<br className="mc-br-pc" />
@@ -76,13 +76,13 @@ export default function MokkoCenterPage() {
       <div className="mc-info-strip">
         <div className="mc-info-strip-inner">
           {[
-            { icon: "🕐", text: "9:30 〜 17:30" },
-            { icon: "📅", text: "水・木 定休" },
-            { icon: "📞", text: "0997-69-5015" },
-            { icon: "🚗", text: "空港から車で約65分" },
+            { label: "営業時間", text: "9:30 〜 17:30" },
+            { label: "定休日", text: "水・木曜日" },
+            { label: "電話", text: "0997-69-5015" },
+            { label: "奄美空港から", text: "車で約65分" },
           ].map((item) => (
             <div className="mc-info-item" key={item.text}>
-              <span>{item.icon}</span>
+              <span className="mc-info-label">{item.label}</span>
               <span>{item.text}</span>
             </div>
           ))}
@@ -111,23 +111,19 @@ export default function MokkoCenterPage() {
             <div className="mc-about-features">
               {[
                 {
-                  icon: "🪵",
                   title: "木工芸品の製作",
                   desc: "リュウキュウマツの一枚板を使った美しい家具・工芸品を製作できます。",
                 },
                 {
-                  icon: "🛠️",
                   title: "丁寧な製作指導",
                   desc: "経験豊富なスタッフが初心者から上級者まで対応します。",
                 },
                 {
-                  icon: "🔧",
                   title: "機材持ち込み可",
                   desc: "専用工房スペースで、ご自身の機材を使った製作が可能です。",
                 },
               ].map((f) => (
                 <div className="mc-feature-card" key={f.title}>
-                  <span className="mc-feature-icon">{f.icon}</span>
                   <div>
                     <h3 className="mc-feature-title">{f.title}</h3>
                     <p className="mc-feature-desc">{f.desc}</p>

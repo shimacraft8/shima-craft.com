@@ -1,6 +1,27 @@
-import Link from "next/link";
+import type { Metadata } from "next";
 import { ArrowRight, Grid3X3, ShieldCheck } from "lucide-react";
 import { demos } from "@/lib/demoConfigs";
+import { TrackedLink } from "@/app/components/TrackedLink";
+
+export const metadata: Metadata = {
+  title: "業務システム画面サンプル",
+  description:
+    "店舗・宿泊施設・工務店など、業務改善に使える管理画面のサンプルです。入力・保存などの実処理は行わず、画面レイアウトや導入イメージをご確認いただけます。",
+  alternates: {
+    canonical: "/system-samples",
+  },
+  openGraph: {
+    title: "業務システム画面サンプル｜SHIMA CRAFT",
+    description:
+      "店舗・宿泊施設・工務店など、業務改善に使える管理画面のサンプルです。画面レイアウトや導入イメージをご確認いただけます。",
+    url: "/system-samples",
+  },
+  twitter: {
+    title: "業務システム画面サンプル｜SHIMA CRAFT",
+    description:
+      "店舗・宿泊施設・工務店など、業務改善に使える管理画面のサンプルです。画面レイアウトや導入イメージをご確認いただけます。",
+  },
+};
 
 export default function Home() {
   return (
@@ -27,14 +48,20 @@ export default function Home() {
 
         <section className="demo-index" aria-label="サンプル一覧">
           {demos.map((demo) => (
-            <Link className="demo-index-card" href={`/${demo.id}`} key={demo.id}>
+            <TrackedLink
+              className="demo-index-card"
+              href={`/${demo.id}`}
+              key={demo.id}
+              eventName="demo_open"
+              eventParams={{ demo: demo.id, source: "system_samples" }}
+            >
               <span className="demo-number">{demo.no}</span>
               <div>
                 <h2>{demo.shortName}</h2>
                 <p>{demo.target}</p>
               </div>
               <ArrowRight size={20} />
-            </Link>
+            </TrackedLink>
           ))}
         </section>
 

@@ -1,4 +1,5 @@
 import { mailtoHref } from "@/app/lib/site";
+import { TrackedLink } from "@/app/components/TrackedLink";
 
 /**
  * スマホ専用の固定CTA（画面下に常時表示）。表示制御は CSS のメディアクエリで行う。
@@ -6,7 +7,13 @@ import { mailtoHref } from "@/app/lib/site";
 export function StickyContact() {
   return (
     <div className="sticky-cta">
-      <a href={mailtoHref}>お問い合わせ</a>
+      <TrackedLink
+        href={mailtoHref}
+        eventName="contact_click"
+        eventParams={{ location: "sticky" }}
+      >
+        相談する
+      </TrackedLink>
     </div>
   );
 }

@@ -7,10 +7,10 @@ import { Reveal } from "@/app/components/Reveal";
 type Step = { n: number; title: string; sub: string };
 
 const STEPS: Step[] = [
-  { n: 1, title: "メールでご相談", sub: "（無料）" },
-  { n: 2, title: "ヒアリング", sub: "お見積もり" },
-  { n: 3, title: "制作・確認", sub: "イメージを共有" },
-  { n: 4, title: "納品・運用開始", sub: "公開後もサポート" },
+  { n: 1, title: "状況の確認", sub: "困りごとを伺います" },
+  { n: 2, title: "内容の整理", sub: "必要な制作内容を確認" },
+  { n: 3, title: "進め方の提案", sub: "画面や構成を共有" },
+  { n: 4, title: "制作・確認", sub: "公開に向けて調整" },
 ];
 
 /** 0→N へ 180ms 刻みでカウントアップする数字バッジ（HTMLの挙動を踏襲） */
@@ -63,7 +63,7 @@ export function Flow() {
       <div className="container">
         <div className="section-label">Flow</div>
         <Reveal dir="up">
-          <h2 className="section-title">FLOW</h2>
+          <h2 className="section-title">相談から制作までの流れ</h2>
         </Reveal>
 
         <Reveal dir="right">

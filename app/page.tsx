@@ -1,7 +1,9 @@
 import { Header } from "@/app/components/Header";
 import { Hero } from "@/app/components/Hero";
+import { Problems } from "@/app/components/Problems";
 import { About } from "@/app/components/About";
 import { Service } from "@/app/components/Service";
+import { SampleHighlights } from "@/app/components/SampleHighlights";
 import { Works } from "@/app/components/Works";
 import { Flow } from "@/app/components/Flow";
 import { Price } from "@/app/components/Price";
@@ -18,8 +20,10 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <About />
+        <Problems />
         <Service />
+        <About />
+        <SampleHighlights />
         <Works />
         <Flow />
         <Price />

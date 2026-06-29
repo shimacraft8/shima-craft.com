@@ -1,38 +1,42 @@
 import { Reveal } from "@/app/components/Reveal";
+import { TrackedLink } from "@/app/components/TrackedLink";
 
 type Service = {
   title: string;
-  desc: string;
-  price: string;
-  badge?: { type: "new" | "prep"; label: string };
+  concern: string;
+  support: string;
+  href: string;
+  cta: string;
 };
 
 const SERVICES: Service[] = [
   {
-    title: "HP制作",
-    desc: "HPが古い・ないお店に、新しい顔を。",
-    price: "150,000円〜（ドメイン代・1年保守込み）",
+    title: "ホームページ制作・リニューアル",
+    concern: "サイトが古い、スマートフォンで見づらい、事業の魅力が伝わりにくい方向け。",
+    support: "見せ方・文章・写真の使い方を整理し、事業内容が伝わるページに整えます。",
+    href: "#works",
+    cta: "制作事例を見る",
   },
   {
-    title: "HP保守・運用",
-    desc: "年1回の更新契約で継続サポート。解約時はファイル一式お渡しします。",
-    price: "年間更新契約（2年目以降）",
+    title: "Web集客・問い合わせ導線改善",
+    concern: "SNSや口コミに頼っていて、問い合わせまでの流れが分かりにくい方向け。",
+    support: "Googleマップ、予約導線、問い合わせ導線など、Web上の入口を確認します。",
+    href: "#contact",
+    cta: "相談する",
   },
   {
-    title: "空撮・映像制作",
-    desc: "ドローン空撮から編集まで一貫対応。島の絶景をそのままWebや動画に。",
-    price: "30000円〜/本",
-    badge: { type: "new", label: "NEW" },
+    title: "予約・顧客管理などの業務画面",
+    concern: "予約や顧客情報を、電話・紙・複数ツールで管理している方向け。",
+    support: "業務システム画面サンプルを見ながら、必要な管理画面を検討できます。",
+    href: "/system-samples",
+    cta: "画面サンプルを見る",
   },
   {
-    title: "動画編集",
-    desc: "SNS・YouTube向けの動画編集に対応。Premiere Proで高品質に仕上げます。",
-    price: "3000円〜/本",
-  },
-  {
-    title: "ネット集客サポート",
-    desc: "じゃらん・ホットペッパー・Googleマップ・公式LINEなど、ネット集客まわりの登録・構築をまるごと代行。",
-    price: "登録・構築 30000円〜",
+    title: "写真・動画・ドローン撮影",
+    concern: "施設やサービスの雰囲気を、写真や動画でうまく伝えたい方向け。",
+    support: "WebサイトやSNSで使いやすい写真・動画・空撮素材づくりを支援します。",
+    href: "#works",
+    cta: "事例を見る",
   },
 ];
 
@@ -42,21 +46,31 @@ export function Service() {
       <div className="container">
         <div className="section-label">Service</div>
         <Reveal dir="up">
-          <h2 className="section-title">SERVICE</h2>
+          <h2 className="section-title">SHIMA CRAFTでできること</h2>
+        </Reveal>
+        <Reveal dir="up" delay={0.1}>
+          <p className="section-lead">
+            まずはホームページ制作・改善を軸に、集客導線や業務の流れまで必要な範囲を整理します。
+          </p>
         </Reveal>
 
         <Reveal dir="right">
-          <div className="cards">
+          <div className="cards service-grid">
             {SERVICES.map((s) => (
-              <article className="card" key={s.title}>
-                {s.badge && (
-                  <span className={`badge ${s.badge.type}`}>
-                    {s.badge.label}
-                  </span>
-                )}
+              <article className="card service-card" key={s.title}>
                 <h3>{s.title}</h3>
-                <p className="desc">{s.desc}</p>
-                <div className="price">{s.price}</div>
+                <p className="service-label">こんな悩み向け</p>
+                <p className="desc">{s.concern}</p>
+                <p className="service-label">支援内容</p>
+                <p className="desc">{s.support}</p>
+                <TrackedLink
+                  href={s.href}
+                  className="text-link"
+                  eventName={s.href === "/system-samples" ? "sample_list_click" : "service_click"}
+                  eventParams={{ service: s.title }}
+                >
+                  {s.cta}
+                </TrackedLink>
               </article>
             ))}
           </div>

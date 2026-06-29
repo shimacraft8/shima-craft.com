@@ -3,13 +3,14 @@
 import { useId, useState } from "react";
 import { motion } from "framer-motion";
 import { Reveal } from "@/app/components/Reveal";
+import { trackEvent } from "@/app/components/TrackedLink";
 
 type Item = { q: string; a: string };
 
 const ITEMS: Item[] = [
   {
-    q: "見積もりは有料ですか？",
-    a: "いいえ、ご相談・お見積もりはすべて無料です。ご相談の中で、ご要望に合わせた簡易的なサンプルサイトをお出しすることも可能です。完成イメージを見てから判断していただけるので、まずはお気軽にご連絡ください。",
+    q: "何を相談すればいいか決まっていなくても大丈夫ですか？",
+    a: "はい。現在のホームページや集客、予約・顧客管理など、気になっていることをそのままお聞かせください。必要な内容を一緒に整理します。",
   },
   {
     q: "撮影の対応エリアはどこまでですか？",
@@ -24,8 +25,8 @@ const ITEMS: Item[] = [
     a: "解約・変更の際は、構築済みのファイルをすべてお渡しします。ドメインの変更手続きはご自身でのご対応となりますが、引継ぎのご説明はもちろんいたします。いつでもお気軽にご相談ください。",
   },
   {
-    q: "じゃらんやホットペッパーの登録もお願いできますか？",
-    a: "はい。じゃらん・ホットペッパー・Googleマップ・公式LINEなど、ネット集客まわりの登録や初期構築をまるごと代行します（登録・構築 30000円〜）。登録後の継続的な更新・運用は月額保守プランでサポートできますので、あわせてご相談ください。",
+    q: "予約や顧客管理の画面だけ相談できますか？",
+    a: "業務システム画面サンプルを見ながら、予約管理・顧客管理・問い合わせ管理などの相談ができます。まずは現在の管理方法や困っている点をお聞かせください。",
   },
   {
     q: "制作期間はどのくらいかかりますか？",
@@ -36,6 +37,12 @@ const ITEMS: Item[] = [
 function FaqItem({ item }: { item: Item }) {
   const [open, setOpen] = useState(false);
   const panelId = useId();
+  const toggle = () => {
+    setOpen((value) => {
+      if (!value) trackEvent("faq_open", { question: item.q });
+      return !value;
+    });
+  };
 
   return (
     <div className={`faq-item${open ? " open" : ""}`}>
@@ -44,7 +51,7 @@ function FaqItem({ item }: { item: Item }) {
         className="faq-q"
         aria-expanded={open}
         aria-controls={panelId}
-        onClick={() => setOpen((v) => !v)}
+        onClick={toggle}
       >
         {item.q}
         <span className="faq-icon" aria-hidden="true" />

@@ -41,7 +41,12 @@ export const metadata: Metadata = {
   keywords: [
     "SHIMA CRAFT",
     "ホームページ制作",
+    "ホームページリニューアル",
     "HP制作",
+    "Web集客",
+    "問い合わせ導線",
+    "予約管理",
+    "顧客管理",
     "空撮",
     "ドローン",
     "動画編集",

@@ -8,6 +8,7 @@ import {
   useTransform,
 } from "framer-motion";
 import { mailtoHref } from "@/app/lib/site";
+import { TrackedLink } from "@/app/components/TrackedLink";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 36 },
@@ -38,33 +39,63 @@ export function Hero() {
       </motion.div>
 
       <div className="hero-inner">
+        <motion.p
+          className="hero-kicker"
+          custom={0.1}
+          variants={fadeUp}
+          initial={reduce ? "show" : "hidden"}
+          animate="show"
+        >
+          小さな事業の見せ方と運用を整える地域のWebパートナー
+        </motion.p>
         <motion.h1
           custom={0.2}
           variants={fadeUp}
           initial={reduce ? "show" : "hidden"}
           animate="show"
-          style={{ whiteSpace: "nowrap", fontSize: "clamp(1.1rem, 5.5vw, 4.5rem)" }}
         >
-          島の魅力を、もっと世界へ。
+          <span className="hero-title-line">
+            <span>奄美・鹿児島の</span>
+            <span>小規模事業者へ</span>
+          </span>
+          <span className="hero-title-line">
+            <span>Web制作と</span>
+            <span>集客導線を整えます</span>
+          </span>
         </motion.h1>
         <motion.p
+          className="hero-lead"
           custom={0.4}
           variants={fadeUp}
           initial={reduce ? "show" : "hidden"}
           animate="show"
         >
-          鹿児島・離島の事業者さんのWeb制作・撮影・映像制作を、まるごとサポートします。
+          ホームページ制作・リニューアルから、写真・動画、予約や顧客管理まで。事業の状況を伺い、必要なものを分かりやすく整理してご提案します。
         </motion.p>
-        <motion.a
-          href={mailtoHref}
-          className="btn"
+        <motion.div
+          className="hero-actions"
           custom={0.6}
           variants={fadeUp}
           initial={reduce ? "show" : "hidden"}
           animate="show"
         >
-          まずは相談する
-        </motion.a>
+          <TrackedLink
+            href={mailtoHref}
+            className="btn"
+            eventName="contact_click"
+            eventParams={{ location: "hero_primary" }}
+          >
+            Web制作・改善について相談する
+          </TrackedLink>
+          <TrackedLink
+            href="#works"
+            className="btn btn-ghost"
+            eventName="works_click"
+            eventParams={{ location: "hero_secondary" }}
+          >
+            制作事例と画面サンプルを見る
+          </TrackedLink>
+        </motion.div>
       </div>
 
       <div className="scroll-ind">

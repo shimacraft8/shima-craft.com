@@ -3,6 +3,7 @@ import { Noto_Serif_JP, Noto_Sans_JP, Outfit } from "next/font/google";
 import { site } from "@/app/lib/site";
 import { GoogleAnalytics } from "@/app/components/GoogleAnalytics";
 import "./globals.css";
+import "./system-samples.css";
 
 /* ===== フォント（next/font/google） ===== */
 // 見出し：Noto Serif JP

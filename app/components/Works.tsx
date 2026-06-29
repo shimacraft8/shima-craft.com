@@ -30,6 +30,13 @@ const WORKS: Work[] = [
     url: "https://kuro-stand.vercel.app",
     accent: "#1A1A1A",
   },
+  {
+    category: "業務改善",
+    title: "業務システムサンプル",
+    desc: "店舗・宿泊施設・工務店など、業務改善に使える管理画面のサンプルです。",
+    url: "/system-samples",
+    accent: "#E8735A",
+  },
 ];
 
 export function Works() {
@@ -55,11 +62,11 @@ export function Works() {
                   <p className="work-desc">{w.desc}</p>
                   <a
                     href={w.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    target={w.url.startsWith("http") ? "_blank" : undefined}
+                    rel={w.url.startsWith("http") ? "noopener noreferrer" : undefined}
                     className="work-link"
                   >
-                    サイトを見る
+                    {w.url.startsWith("http") ? "サイトを見る" : "サンプルを見る"}
                     <svg
                       width="14"
                       height="14"

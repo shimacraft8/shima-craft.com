@@ -72,11 +72,18 @@
 }
 
 .sample-scope .home h1 {
-  max-width: 760px;
+  max-width: 900px;
   margin: 10px 0 18px;
-  font-size: clamp(2.2rem, 5vw, 4.8rem);
+  font-size: clamp(2.2rem, 4.6vw, 4.6rem);
   line-height: 1.12;
   letter-spacing: 0;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+
+.sample-scope .sample-title-piece {
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .sample-scope .home-lead {
@@ -1088,4 +1095,3 @@
     padding: 7px;
   }
 }
-

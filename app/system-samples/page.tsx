@@ -9,7 +9,10 @@ export default function Home() {
         <section className="home-hero">
           <div>
             <p className="eyebrow">SHIMA CRAFT SYSTEM SAMPLES</p>
-            <h1>業務システムサンプル</h1>
+            <h1>
+              <span className="sample-title-piece">業務システム</span>
+              <span className="sample-title-piece">サンプル</span>
+            </h1>
             <p className="home-lead">
               店舗・宿泊施設・工務店など、業務改善に使える管理画面のサンプルです。
               画面レイアウトや導入イメージをご確認いただけます。

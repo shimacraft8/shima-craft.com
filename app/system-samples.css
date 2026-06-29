@@ -166,7 +166,7 @@
   padding: 18px;
 }
 
-.sample-scope .app-shell {
+.sample-scope.app-shell {
   display: grid;
   grid-template-columns: 240px minmax(0, 1fr);
   min-height: 100vh;
@@ -995,7 +995,7 @@
 }
 
 @media (max-width: 760px) {
-  .sample-scope .app-shell {
+  .sample-scope.app-shell {
     display: block;
   }
 

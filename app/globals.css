@@ -177,6 +177,9 @@ body {
   margin-bottom: 18px;
   color: rgba(255, 255, 255, 0.92);
 }
+.hero-kicker span + span {
+  margin-left: 0.45em;
+}
 .hero h1 {
   font-family: var(--serif);
   font-weight: 700;
@@ -247,14 +250,27 @@ body {
     padding-right: 18px;
   }
   .hero h1 {
-    font-size: clamp(1.8rem, 8.4vw, 2.35rem);
+    font-size: clamp(1.55rem, 7.2vw, 2.1rem);
     line-height: 1.32;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
   }
   .hero-title-line {
     display: block;
   }
   .hero-title-line span {
+    display: block;
+    margin-left: 0;
+  }
+  .hero-title-line span + span {
+    margin-left: 0;
+  }
+  .hero-kicker {
+    letter-spacing: 0.08em;
+  }
+  .hero-kicker span {
+    display: block;
+  }
+  .hero-kicker span + span {
     margin-left: 0;
   }
   .hero p.hero-lead {
@@ -349,7 +365,6 @@ body {
 section {
   padding: clamp(70px, 11vw, 130px) clamp(20px, 6vw, 80px);
   position: relative;
-  overflow-x: clip;
 }
 .hero {
   padding-top: 0;
@@ -1141,6 +1156,18 @@ section {
   color: var(--secondary);
   margin-bottom: 8px;
   display: block;
+}
+.work-kind {
+  display: inline-flex;
+  align-self: flex-start;
+  margin-bottom: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(42, 157, 143, 0.1);
+  color: var(--secondary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.4;
 }
 .work-title {
   font-family: var(--serif);

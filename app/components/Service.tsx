@@ -15,12 +15,12 @@ const SERVICES: Service[] = [
     concern: "サイトが古い、スマートフォンで見づらい、事業の魅力が伝わりにくい方向け。",
     support: "見せ方・文章・写真の使い方を整理し、事業内容が伝わるページに整えます。",
     href: "#works",
-    cta: "制作事例を見る",
+    cta: "サイトサンプルを見る",
   },
   {
-    title: "Web集客・問い合わせ導線改善",
+    title: "Web集客・問い合わせまでの流れ",
     concern: "SNSや口コミに頼っていて、問い合わせまでの流れが分かりにくい方向け。",
-    support: "Googleマップ、予約導線、問い合わせ導線など、Web上の入口を確認します。",
+    support: "Googleマップ、予約・問い合わせの流れなど、Web上の入口を確認します。",
     href: "#contact",
     cta: "相談する",
   },
@@ -36,7 +36,7 @@ const SERVICES: Service[] = [
     concern: "施設やサービスの雰囲気を、写真や動画でうまく伝えたい方向け。",
     support: "WebサイトやSNSで使いやすい写真・動画・空撮素材づくりを支援します。",
     href: "#works",
-    cta: "事例を見る",
+    cta: "制作例を見る",
   },
 ];
 
@@ -50,7 +50,7 @@ export function Service() {
         </Reveal>
         <Reveal dir="up" delay={0.1}>
           <p className="section-lead">
-            まずはホームページ制作・改善を軸に、集客導線や業務の流れまで必要な範囲を整理します。
+            まずはホームページ制作・改善を軸に、問い合わせまでの流れや業務の流れまで必要な範囲を整理します。
           </p>
         </Reveal>
 

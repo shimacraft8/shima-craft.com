@@ -11,13 +11,13 @@ export function Contact() {
           まずは現在の状況をお聞かせください
         </h2>
         <p className="lead">
-          依頼内容が整理できていなくても大丈夫です。ホームページ、集客導線、予約・顧客管理など、気になっていることをメールでご連絡ください。
+          依頼内容が整理できていなくても大丈夫です。ホームページ、問い合わせまでの流れ、予約・顧客管理など、気になっていることをメールでご連絡ください。
         </p>
         <TrackedLink
           href={mailtoHref}
           className="btn-contact"
-          eventName="mailto_click"
-          eventParams={{ location: "contact" }}
+          eventName="contact_click"
+          eventParams={{ location: "contact", method: "email" }}
         >
           {site.email}
         </TrackedLink>

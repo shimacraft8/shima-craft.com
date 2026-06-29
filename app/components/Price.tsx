@@ -46,7 +46,7 @@ export function Price() {
       <div className="container">
         <div className="section-label">Price</div>
         <Reveal dir="up">
-          <h2 className="section-title">PRICE</h2>
+          <h2 className="section-title">制作費用の目安</h2>
         </Reveal>
 
         <div className="price-blocks">

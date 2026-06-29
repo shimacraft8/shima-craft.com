@@ -46,7 +46,8 @@ export function Hero() {
           initial={reduce ? "show" : "hidden"}
           animate="show"
         >
-          小さな事業の見せ方と運用を整える地域のWebパートナー
+          <span>小さな事業の見せ方と運用を整える</span>
+          <span>地域のWebパートナー</span>
         </motion.p>
         <motion.h1
           custom={0.2}
@@ -56,11 +57,12 @@ export function Hero() {
         >
           <span className="hero-title-line">
             <span>奄美・鹿児島の</span>
-            <span>小規模事業者へ</span>
+            <span>事業者向けに、</span>
           </span>
           <span className="hero-title-line">
-            <span>Web制作と</span>
-            <span>集客導線を整えます</span>
+            <span>ホームページと</span>
+            <span>予約・問い合わせの流れを</span>
+            <span>整えます</span>
           </span>
         </motion.h1>
         <motion.p
@@ -83,7 +85,7 @@ export function Hero() {
             href={mailtoHref}
             className="btn"
             eventName="contact_click"
-            eventParams={{ location: "hero_primary" }}
+            eventParams={{ location: "hero_primary", method: "email" }}
           >
             Web制作・改善について相談する
           </TrackedLink>
@@ -93,7 +95,7 @@ export function Hero() {
             eventName="works_click"
             eventParams={{ location: "hero_secondary" }}
           >
-            制作事例と画面サンプルを見る
+            制作例と画面サンプルを見る
           </TrackedLink>
         </motion.div>
       </div>

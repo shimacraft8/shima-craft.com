@@ -16,9 +16,9 @@ type RevealProps = {
 const offsetFor = (dir: Direction) => {
   switch (dir) {
     case "left":
-      return { x: -60, y: 0 };
+      return { x: -18, y: 0 };
     case "right":
-      return { x: 60, y: 0 };
+      return { x: 18, y: 0 };
     default:
       return { x: 0, y: 36 };
   }

@@ -17,7 +17,7 @@ const SAMPLES = [
     scene: "サロン・整体院・地域サービス",
   },
   {
-    title: "口コミ・Google導線",
+    title: "口コミ・Googleへの案内",
     href: "/demo05",
     issue: "良い口コミを自然に集めたい",
     visible: "口コミ一覧、アンケート、QRリンク",
@@ -42,7 +42,7 @@ export function SampleHighlights() {
         </Reveal>
         <Reveal dir="up" delay={0.1}>
           <p className="section-lead">
-            実際の導入実績ではなく、業務改善のイメージを確認するためのサンプル画面です。
+            実際の納品案件ではなく、業務改善のイメージを確認するためのサンプル画面です。
           </p>
         </Reveal>
 

@@ -10,7 +10,7 @@ export function StickyContact() {
       <TrackedLink
         href={mailtoHref}
         eventName="contact_click"
-        eventParams={{ location: "sticky" }}
+        eventParams={{ location: "sticky", method: "email" }}
       >
         相談する
       </TrackedLink>

@@ -35,3 +35,9 @@ next-env.d.ts
 
 # source materials (kept out of the deployed app)
 /extracted
+
+# Claude Code local settings (contains personal config, never commit)
+.claude/settings.local.json
+
+# External project nested here (has its own git repo)
+garage-mock/

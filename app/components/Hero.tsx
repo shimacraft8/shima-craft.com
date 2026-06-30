@@ -22,7 +22,6 @@ const fadeUp = {
 export function Hero() {
   const reduce = useReducedMotion();
   const { scrollY } = useScroll();
-  // 緩やかなパララックス（HTMLの background-position-y シフトを再現）
   const y = useTransform(scrollY, [0, 800], ["0%", "12%"]);
 
   return (
@@ -39,22 +38,10 @@ export function Hero() {
       </motion.div>
 
       <div className="hero-inner">
-        <motion.p
-          className="hero-kicker"
-          custom={0.1}
-          variants={fadeUp}
-          initial={reduce ? "show" : "hidden"}
-          animate="show"
-        >
-          <span>小さな事業の見せ方と運用を整える</span>
-          <span>地域のWebパートナー</span>
+        <motion.p className="hero-kicker" custom={0.1} variants={fadeUp} initial={reduce ? "show" : "hidden"} animate="show">
+          <span>島の魅力を、もっと世界へ。</span>
         </motion.p>
-        <motion.h1
-          custom={0.2}
-          variants={fadeUp}
-          initial={reduce ? "show" : "hidden"}
-          animate="show"
-        >
+        <motion.h1 custom={0.2} variants={fadeUp} initial={reduce ? "show" : "hidden"} animate="show">
           <span className="hero-title-line">
             <span>奄美・鹿児島の</span>
             <span>事業者向けに、</span>
@@ -65,36 +52,14 @@ export function Hero() {
             <span>整えます</span>
           </span>
         </motion.h1>
-        <motion.p
-          className="hero-lead"
-          custom={0.4}
-          variants={fadeUp}
-          initial={reduce ? "show" : "hidden"}
-          animate="show"
-        >
-          ホームページ制作・リニューアルから、写真・動画、予約や顧客管理まで。事業の状況を伺い、必要なものを分かりやすく整理してご提案します。
+        <motion.p className="hero-lead" custom={0.4} variants={fadeUp} initial={reduce ? "show" : "hidden"} animate="show">
+          ホームページ制作・リニューアルから、写真・動画、予約や顧客管理まで。事業の状況を伺い、必要な内容を分かりやすく整理します。
         </motion.p>
-        <motion.div
-          className="hero-actions"
-          custom={0.6}
-          variants={fadeUp}
-          initial={reduce ? "show" : "hidden"}
-          animate="show"
-        >
-          <TrackedLink
-            href={mailtoHref}
-            className="btn"
-            eventName="contact_click"
-            eventParams={{ location: "hero_primary", method: "email" }}
-          >
+        <motion.div className="hero-actions" custom={0.6} variants={fadeUp} initial={reduce ? "show" : "hidden"} animate="show">
+          <TrackedLink href={mailtoHref} className="btn" eventName="contact_click" eventParams={{ location: "hero_primary", method: "email" }}>
             Web制作・改善について相談する
           </TrackedLink>
-          <TrackedLink
-            href="#works"
-            className="btn btn-ghost"
-            eventName="works_click"
-            eventParams={{ location: "hero_secondary" }}
-          >
+          <TrackedLink href="#works" className="btn btn-ghost" eventName="works_click" eventParams={{ location: "hero_secondary" }}>
             制作例と画面サンプルを見る
           </TrackedLink>
         </motion.div>

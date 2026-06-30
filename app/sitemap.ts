@@ -28,5 +28,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    {
+      url: `${site.url}/web-check`,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
   ];
 }

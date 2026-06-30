@@ -33,7 +33,7 @@ export function About() {
                 <path d="M4 18c4 0 4 4 8 4s4-4 8-4 4 4 8 4 4-4 8-4 4 4 8 4" />
                 <path d="M4 30c4 0 4 4 8 4s4-4 8-4 4 4 8 4 4-4 8-4 4 4 8 4" />
               </svg>
-              <p>地域・離島の小規模事業者に合った提案</p>
+              <p>地域の事業者の状況に合った提案</p>
             </div>
             <div className="about-icon">
               <svg

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { PrivacyPolicy } from "@/app/components/PrivacyPolicy";
 
 export function Footer() {
@@ -11,6 +12,14 @@ export function Footer() {
         width={189}
         height={42}
       />
+      <nav className="footer-nav" aria-label="フッターナビゲーション">
+        <Link href="/web-check" className="footer-nav-link">
+          Web導線チェック
+        </Link>
+        <Link href="/services" className="footer-nav-link">
+          サービス一覧
+        </Link>
+      </nav>
       © 2026 SHIMA CRAFT All Rights Reserved.
       <PrivacyPolicy />
     </footer>

@@ -233,6 +233,9 @@ export default function TourismPage() {
         <div className="related-section">
           <p className="related-section-label">Related</p>
           <div className="related-links">
+            <Link href="/web-check" className="related-link">
+              Web導線かんたんチェック
+            </Link>
             <Link href="/services" className="related-link">
               サービス一覧を見る
             </Link>

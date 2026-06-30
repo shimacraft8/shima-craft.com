@@ -77,9 +77,12 @@ export function Service() {
           </div>
         </Reveal>
         <Reveal dir="up" delay={0.2}>
-          <div style={{ textAlign: "center", marginTop: "2.5rem" }}>
+          <div style={{ textAlign: "center", marginTop: "2.5rem", display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "18px" }}>
             <Link href="/services" className="text-link">
               サービスを詳しく見る
+            </Link>
+            <Link href="/web-check" className="text-link" style={{ fontSize: "0.88rem", color: "#888" }}>
+              1分でWeb導線をチェックする
             </Link>
           </div>
         </Reveal>

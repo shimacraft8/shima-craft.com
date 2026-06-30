@@ -75,7 +75,7 @@ const FAQS = [
   },
   {
     q: "制作期間の目安を教えてください。",
-    a: "内容の確認や素材の準備状況によって変わりますが、1〜2か月を目安にお考えください。お急ぎの場合はご相談ください。",
+    a: "制作作業は約3週間を目安にしています。素材の準備やご確認の期間を含め、ご相談から公開までは1〜2か月程度となる場合があります。内容や状況によって変わりますので、まずはご相談ください。",
   },
   {
     q: "写真や文章がなくても制作できますか？",
@@ -241,6 +241,9 @@ export default function WebDesignPage() {
         <div className="related-section">
           <p className="related-section-label">Related</p>
           <div className="related-links">
+            <Link href="/web-check" className="related-link">
+              Web導線かんたんチェック
+            </Link>
             <Link href="/services" className="related-link">
               サービス一覧を見る
             </Link>
@@ -252,6 +255,7 @@ export default function WebDesignPage() {
             </Link>
           </div>
         </div>
+
       </main>
       <Footer />
       <StickyContact />

@@ -142,6 +142,9 @@ export default function ServicesPage() {
         <div className="related-section">
           <p className="related-section-label">Navigation</p>
           <div className="related-links">
+            <Link href="/web-check" className="related-link">
+              Web導線かんたんチェック
+            </Link>
             <Link href="/" className="related-link">
               SHIMA CRAFT トップへ
             </Link>

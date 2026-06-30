@@ -1042,6 +1042,51 @@ section {
   font-size: 0.85rem;
   color: #777;
 }
+.contact-sub {
+  margin-top: 14px;
+  font-size: 0.88rem;
+  color: #666;
+}
+.contact-direct-wrap {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+.contact-direct-label {
+  font-size: 0.88rem;
+  color: #777;
+  margin-bottom: 10px;
+}
+.contact-email-link {
+  display: inline-block;
+  font-family: var(--en);
+  font-size: 1rem;
+  color: #1d7a6e;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  letter-spacing: 0.03em;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+}
+.contact-email-link:hover {
+  color: var(--secondary);
+  background: rgba(42, 157, 143, 0.1);
+}
+.contact-email-link:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 2px;
+}
+.btn-contact:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+@media (max-width: 400px) {
+  .btn-contact {
+    padding: 18px 24px;
+    font-size: 0.95rem;
+  }
+}
 
 /* ===== Footer ===== */
 .site-footer {

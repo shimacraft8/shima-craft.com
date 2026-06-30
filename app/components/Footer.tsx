@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { PrivacyPolicy } from "@/app/components/PrivacyPolicy";
 
 export function Footer() {
   return (
@@ -21,7 +20,9 @@ export function Footer() {
         </Link>
       </nav>
       © 2026 SHIMA CRAFT All Rights Reserved.
-      <PrivacyPolicy />
+      <Link href="/privacy" className="pp-link">
+        プライバシーポリシー
+      </Link>
     </footer>
   );
 }

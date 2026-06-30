@@ -1128,6 +1128,73 @@ section {
   text-decoration: underline;
 }
 
+/* ===== Privacy Page ===== */
+.privacy-page {
+  padding: clamp(96px, 13vw, 132px) clamp(20px, 6vw, 80px) clamp(64px, 9vw, 96px);
+  background: linear-gradient(
+    160deg,
+    rgba(42, 157, 143, 0.05) 0%,
+    rgba(244, 162, 97, 0.04) 100%
+  );
+}
+.privacy-container {
+  max-width: 820px;
+  margin: 0 auto;
+}
+.privacy-container h1 {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 4.4vw, 2.65rem);
+  line-height: 1.35;
+  letter-spacing: 0.03em;
+  margin: 0 0 28px;
+  color: var(--text);
+}
+.privacy-content {
+  display: grid;
+  gap: 24px;
+  padding: clamp(24px, 5vw, 40px);
+  border: 1px solid rgba(26, 26, 26, 0.06);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 6px 24px rgba(26, 26, 26, 0.06);
+}
+.privacy-lead,
+.privacy-block p {
+  color: #444;
+  font-size: clamp(0.92rem, 1.7vw, 1rem);
+  line-height: 1.95;
+}
+.privacy-block {
+  padding-top: 2px;
+}
+.privacy-block h2 {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(1.08rem, 2.4vw, 1.28rem);
+  line-height: 1.5;
+  margin: 0 0 10px;
+  color: var(--secondary);
+}
+.privacy-block p + p {
+  margin-top: 10px;
+}
+.privacy-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+@media (max-width: 480px) {
+  .privacy-page {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .privacy-content {
+    padding: 22px 18px;
+    border-radius: 14px;
+  }
+}
+
 /* ===== Modal ===== */
 .modal-overlay {
   position: fixed;
@@ -2266,7 +2333,6 @@ section {
   font-size: 0.9rem;
   color: #444;
   line-height: 1.55;
-  cursor: pointer;
 }
 .wc-checkbox {
   width: 18px;

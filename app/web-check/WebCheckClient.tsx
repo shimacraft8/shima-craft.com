@@ -369,27 +369,31 @@ function FormSection({
         </div>
 
         <div className={`wc-field wc-consent${errors.consent ? " error" : ""}`}>
-          <label className="wc-consent-label">
+          <div className="wc-consent-label">
             <input
+              id="wc-consent"
               type="checkbox"
               className="wc-checkbox"
               checked={values.consent}
               onChange={(e) =>
                 setValues((v) => ({ ...v, consent: e.target.checked }))
               }
+              aria-labelledby="wc-consent-label-text"
               aria-describedby={errors.consent ? "wc-consent-err" : undefined}
               aria-invalid={!!errors.consent}
             />
-            <span>
+            <span id="wc-consent-label-text">
               <a
-                href="#privacy-note"
+                href="/privacy"
                 className="wc-pp-link"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 プライバシーポリシー
               </a>
               に同意して送信します
             </span>
-          </label>
+          </div>
           {errors.consent && (
             <span
               id="wc-consent-err"

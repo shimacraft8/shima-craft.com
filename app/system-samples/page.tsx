@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ArrowRight, Grid3X3, ShieldCheck } from "lucide-react";
 import { demos } from "@/lib/demoConfigs";
 import { TrackedLink } from "@/app/components/TrackedLink";
+import { mailtoHref } from "@/app/lib/site";
 
 export const metadata: Metadata = {
   title: "業務システム画面サンプル",
@@ -71,6 +73,26 @@ export default function Home() {
             各サンプルでは、ダッシュボード・一覧・確認画面などの導入イメージをご確認いただけます。
           </p>
         </section>
+
+        <div style={{ borderTop: "0.5px solid var(--border)", marginTop: 28, paddingTop: 28, paddingBottom: 8, textAlign: "center" }}>
+          <p style={{ color: "var(--muted)", fontSize: "0.9rem", marginBottom: 18 }}>
+            導入のご相談・ご質問は SHIMA CRAFT へ
+          </p>
+          <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap", alignItems: "center" }}>
+            <TrackedLink
+              href={mailtoHref}
+              className="primary"
+              style={{ fontSize: "0.92rem", padding: "10px 20px" }}
+              eventName="contact_click"
+              eventParams={{ location: "system_samples_footer", method: "email" }}
+            >
+              メールでお問い合わせ
+            </TrackedLink>
+            <Link href="/" style={{ color: "var(--muted)", fontSize: "0.88rem", textDecoration: "underline" }}>
+              SHIMA CRAFT トップへ戻る
+            </Link>
+          </div>
+        </div>
       </main>
     </div>
   );

@@ -124,8 +124,6 @@ const jsonLd = {
     {
       "@type": "Offer",
       itemOffered: { "@type": "Service", name: "HP保守・運用（年間契約）" },
-      priceCurrency: "JPY",
-      price: "0",
     },
     {
       "@type": "Offer",

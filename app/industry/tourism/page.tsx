@@ -7,21 +7,28 @@ import { Breadcrumb } from "@/app/components/Breadcrumb";
 import { TrackedLink } from "@/app/components/TrackedLink";
 import { mailtoHref } from "@/app/lib/site";
 
+const PAGE_TITLE = "観光・アクティビティ事業者向けホームページ制作｜SHIMA CRAFT";
+const PAGE_DESC =
+  "体験プラン・料金・集合場所・持ち物・注意事項・予約導線を整理した観光・アクティビティ事業者向けのホームページ制作。奄美発・全国オンライン対応。";
+
 export const metadata: Metadata = {
   title: "観光・アクティビティ事業者向けホームページ制作",
-  description:
-    "体験プラン・料金・集合場所・持ち物・注意事項・予約導線を整理した観光・アクティビティ事業者向けのホームページ制作。奄美発・全国オンライン対応。",
+  description: PAGE_DESC,
   alternates: { canonical: "/industry/tourism" },
   openGraph: {
-    title: "観光・アクティビティ事業者向けホームページ制作｜SHIMA CRAFT",
-    description:
-      "体験プラン・料金・集合場所・持ち物・注意事項・予約導線を整理した観光・アクティビティ事業者向けのホームページ制作。奄美発・全国オンライン対応。",
+    title: PAGE_TITLE,
+    description: PAGE_DESC,
     url: "/industry/tourism",
+    type: "website",
+    locale: "ja_JP",
+    siteName: "SHIMA CRAFT",
+    images: [{ url: "/hero.jpg", width: 1200, height: 630, alt: "奄美大島の空撮写真 — SHIMA CRAFT" }],
   },
   twitter: {
-    title: "観光・アクティビティ事業者向けホームページ制作｜SHIMA CRAFT",
-    description:
-      "体験プラン・料金・集合場所・持ち物・注意事項・予約導線を整理した観光・アクティビティ事業者向けのホームページ制作。奄美発・全国オンライン対応。",
+    card: "summary_large_image",
+    title: PAGE_TITLE,
+    description: PAGE_DESC,
+    images: ["/hero.jpg"],
   },
 };
 
@@ -192,15 +199,17 @@ export default function TourismPage() {
           </div>
         </section>
 
-        <section className="svc-section svc-faq">
+        <section className="svc-section">
           <div className="container">
             <h2 className="svc-title">よくある質問</h2>
-            {FAQS.map((f) => (
-              <div key={f.q}>
-                <p className="svc-faq-q">{f.q}</p>
-                <p className="svc-faq-a">{f.a}</p>
-              </div>
-            ))}
+            <div className="svc-faq-list">
+              {FAQS.map((f) => (
+                <div key={f.q}>
+                  <p className="svc-faq-q">{f.q}</p>
+                  <p className="svc-faq-a">{f.a}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 

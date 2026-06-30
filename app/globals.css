@@ -1444,12 +1444,11 @@ section {
 }
 
 /* ─── FAQ（静的HTML版） ─── */
-.svc-faq {
-  max-width: 720px;
-  margin: 0 auto;
+.svc-faq-list {
   display: flex;
   flex-direction: column;
   gap: 22px;
+  margin-top: 8px;
 }
 .svc-faq-q {
   font-weight: 600;

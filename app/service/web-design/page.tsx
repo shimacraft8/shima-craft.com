@@ -7,21 +7,28 @@ import { Breadcrumb } from "@/app/components/Breadcrumb";
 import { TrackedLink } from "@/app/components/TrackedLink";
 import { mailtoHref } from "@/app/lib/site";
 
+const PAGE_TITLE = "ホームページ制作・リニューアル｜SHIMA CRAFT";
+const PAGE_DESC =
+  "奄美発・全国オンライン対応。サイトが古い・スマホ非対応・問い合わせが来ないなどのお困りごとを整理し、必要な情報を伝わる形にまとめたホームページを制作します。";
+
 export const metadata: Metadata = {
   title: "ホームページ制作・リニューアル",
-  description:
-    "奄美発・全国オンライン対応。サイトが古い・スマホ非対応・問い合わせが来ないなどのお困りごとを整理し、必要な情報を伝わる形にまとめたホームページを制作します。",
+  description: PAGE_DESC,
   alternates: { canonical: "/service/web-design" },
   openGraph: {
-    title: "ホームページ制作・リニューアル｜SHIMA CRAFT",
-    description:
-      "奄美発・全国オンライン対応。サイトが古い・スマホ非対応・問い合わせが来ないなどのお困りごとを整理し、必要な情報を伝わる形にまとめたホームページを制作します。",
+    title: PAGE_TITLE,
+    description: PAGE_DESC,
     url: "/service/web-design",
+    type: "website",
+    locale: "ja_JP",
+    siteName: "SHIMA CRAFT",
+    images: [{ url: "/hero.jpg", width: 1200, height: 630, alt: "奄美大島の空撮写真 — SHIMA CRAFT" }],
   },
   twitter: {
-    title: "ホームページ制作・リニューアル｜SHIMA CRAFT",
-    description:
-      "奄美発・全国オンライン対応。サイトが古い・スマホ非対応・問い合わせが来ないなどのお困りごとを整理し、必要な情報を伝わる形にまとめたホームページを制作します。",
+    card: "summary_large_image",
+    title: PAGE_TITLE,
+    description: PAGE_DESC,
+    images: ["/hero.jpg"],
   },
 };
 
@@ -192,15 +199,17 @@ export default function WebDesignPage() {
           </div>
         </section>
 
-        <section className="svc-section svc-faq" style={{ background: "#fff" }}>
+        <section className="svc-section" style={{ background: "#fff" }}>
           <div className="container">
             <h2 className="svc-title">よくある質問</h2>
-            {FAQS.map((f) => (
-              <div key={f.q}>
-                <p className="svc-faq-q">{f.q}</p>
-                <p className="svc-faq-a">{f.a}</p>
-              </div>
-            ))}
+            <div className="svc-faq-list">
+              {FAQS.map((f) => (
+                <div key={f.q}>
+                  <p className="svc-faq-q">{f.q}</p>
+                  <p className="svc-faq-a">{f.a}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 

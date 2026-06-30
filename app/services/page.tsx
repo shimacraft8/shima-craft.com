@@ -7,21 +7,28 @@ import { Breadcrumb } from "@/app/components/Breadcrumb";
 import { TrackedLink } from "@/app/components/TrackedLink";
 import { mailtoHref } from "@/app/lib/site";
 
+const PAGE_TITLE = "サービス一覧｜SHIMA CRAFT";
+const PAGE_DESC =
+  "ホームページ制作・リニューアル、写真・動画、予約・問い合わせ管理など、SHIMA CRAFTが対応するサービスをご案内します。奄美発・全国オンライン対応。";
+
 export const metadata: Metadata = {
   title: "サービス一覧",
-  description:
-    "ホームページ制作・リニューアル、写真・動画、予約・問い合わせ管理など、SHIMA CRAFTが対応するサービスをご案内します。奄美発・全国オンライン対応。",
+  description: PAGE_DESC,
   alternates: { canonical: "/services" },
   openGraph: {
-    title: "サービス一覧｜SHIMA CRAFT",
-    description:
-      "ホームページ制作・リニューアル、写真・動画、予約・問い合わせ管理など、SHIMA CRAFTが対応するサービスをご案内します。奄美発・全国オンライン対応。",
+    title: PAGE_TITLE,
+    description: PAGE_DESC,
     url: "/services",
+    type: "website",
+    locale: "ja_JP",
+    siteName: "SHIMA CRAFT",
+    images: [{ url: "/hero.jpg", width: 1200, height: 630, alt: "奄美大島の空撮写真 — SHIMA CRAFT" }],
   },
   twitter: {
-    title: "サービス一覧｜SHIMA CRAFT",
-    description:
-      "ホームページ制作・リニューアル、写真・動画、予約・問い合わせ管理など、SHIMA CRAFTが対応するサービスをご案内します。奄美発・全国オンライン対応。",
+    card: "summary_large_image",
+    title: PAGE_TITLE,
+    description: PAGE_DESC,
+    images: ["/hero.jpg"],
   },
 };
 
@@ -94,6 +101,7 @@ export default function ServicesPage() {
 
         <section className="svc-section">
           <div className="container">
+            <h2 className="svc-title">ご提供内容</h2>
             <div className="svc-cards">
               {SERVICES.map((s) => (
                 <article className="svc-card" key={s.title}>

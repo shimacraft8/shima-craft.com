@@ -5,7 +5,11 @@ import Script from "next/script";
  * 未設定（空文字 / undefined）の場合は何も出力しない。
  */
 export function GoogleAnalytics({ gaId }: { gaId?: string }) {
-  if (!gaId) return null;
+  const isProduction =
+    process.env.NODE_ENV === "production" &&
+    process.env.VERCEL_ENV === "production";
+
+  if (!gaId || !isProduction) return null;
 
   return (
     <>

@@ -180,6 +180,11 @@ body {
 .hero-kicker span + span {
   margin-left: 0.45em;
 }
+.hero-kicker-sub {
+  opacity: 0.78;
+  font-size: 0.9em;
+  letter-spacing: 0.16em;
+}
 .hero h1 {
   font-family: var(--serif);
   font-weight: 700;

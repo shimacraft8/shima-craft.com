@@ -40,27 +40,20 @@ export function Hero() {
       <div className="hero-inner">
         <motion.p className="hero-kicker" custom={0.1} variants={fadeUp} initial={reduce ? "show" : "hidden"} animate="show">
           <span>島の魅力を、もっと世界へ。</span>
+          <span className="hero-kicker-sub">奄美発・全国オンライン対応</span>
         </motion.p>
         <motion.h1 custom={0.2} variants={fadeUp} initial={reduce ? "show" : "hidden"} animate="show">
-          <span className="hero-title-line">
-            <span>奄美・鹿児島の</span>
-            <span>事業者向けに、</span>
-          </span>
-          <span className="hero-title-line">
-            <span>ホームページと</span>
-            <span>予約・問い合わせの流れを</span>
-            <span>整えます</span>
-          </span>
+          伝わるホームページを。
         </motion.h1>
         <motion.p className="hero-lead" custom={0.4} variants={fadeUp} initial={reduce ? "show" : "hidden"} animate="show">
-          ホームページ制作・リニューアルから、写真・動画、予約や顧客管理まで。事業の状況を伺い、必要な内容を分かりやすく整理します。
+          ホームページ制作・リニューアルから、写真・動画、予約・顧客管理まで。事業に必要な内容を整理し、分かりやすい形に整えます。
         </motion.p>
         <motion.div className="hero-actions" custom={0.6} variants={fadeUp} initial={reduce ? "show" : "hidden"} animate="show">
           <TrackedLink href={mailtoHref} className="btn" eventName="contact_click" eventParams={{ location: "hero_primary", method: "email" }}>
-            Web制作・改善について相談する
+            ホームページについて相談する
           </TrackedLink>
           <TrackedLink href="#works" className="btn btn-ghost" eventName="works_click" eventParams={{ location: "hero_secondary" }}>
-            制作例と画面サンプルを見る
+            制作サンプルを見る
           </TrackedLink>
         </motion.div>
       </div>

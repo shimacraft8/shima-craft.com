@@ -1,0 +1,180 @@
+/*
+ * 凪ノ宿 AMAMI LP — スタイル
+ * SHIMA CRAFTのglobals.cssには影響しない独立スタイル
+ * このファイルはapp/nagino-yado-lp/layout.tsxのみがimportする
+ */
+
+/* ===== CSS変数 ===== */
+.nagino-yado-root {
+  --nagi-offwhite: #F7F5F0;
+  --nagi-teal: #2D5A5A;
+  --nagi-teal-dark: #1E3F3F;
+  --nagi-sand: #E8DDD0;
+  --nagi-charcoal: #2A2A2A;
+  --nagi-wood: #8B6E4E;
+  --nagi-warm-gray: #6B6460;
+}
+
+/* ===== ベースリセット（LP内のみ） ===== */
+.nagino-yado-root {
+  background-color: #F7F5F0;
+  color: #2A2A2A;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.nagino-yado-root h1,
+.nagino-yado-root h2,
+.nagino-yado-root h3 {
+  font-family: var(--font-serif), Georgia, serif;
+  line-height: 1.4;
+  letter-spacing: 0.05em;
+}
+
+.nagino-yado-root body,
+.nagino-yado-root p,
+.nagino-yado-root span {
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* ===== スムーズスクロール ===== */
+.nagino-yado-root {
+  scroll-behavior: smooth;
+}
+
+/* ===== フォーカス ===== */
+.nagino-yado-root *:focus-visible {
+  outline: 2px solid #2D5A5A;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ===== ユーティリティクラス（LP専用） ===== */
+.nagino-yado-root .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background-color: #2D5A5A;
+  color: #F7F5F0;
+  font-size: 0.875rem;
+  letter-spacing: 0.2em;
+  font-weight: 500;
+  transition: background-color 0.3s, transform 0.3s;
+  min-height: 52px;
+  min-width: 200px;
+  text-decoration: none;
+}
+
+.nagino-yado-root .btn-primary:hover {
+  background-color: #1E3F3F;
+}
+
+.nagino-yado-root .btn-primary:focus-visible {
+  outline: 2px solid #2D5A5A;
+  outline-offset: 2px;
+}
+
+.nagino-yado-root .btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  border: 1px solid #2D5A5A;
+  color: #2D5A5A;
+  font-size: 0.875rem;
+  letter-spacing: 0.2em;
+  font-weight: 500;
+  transition: background-color 0.3s, color 0.3s;
+  min-height: 52px;
+  min-width: 200px;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.nagino-yado-root .btn-outline:hover {
+  background-color: #2D5A5A;
+  color: #F7F5F0;
+}
+
+.nagino-yado-root .section-padding {
+  padding: 4rem 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .nagino-yado-root .section-padding {
+    padding: 6rem 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nagino-yado-root .section-padding {
+    padding: 8rem 2.5rem;
+  }
+}
+
+.nagino-yado-root .section-title {
+  font-size: 1.5rem;
+  font-family: var(--font-serif), Georgia, serif;
+  color: #2A2A2A;
+  letter-spacing: 0.05em;
+}
+
+@media (min-width: 768px) {
+  .nagino-yado-root .section-title {
+    font-size: 1.875rem;
+  }
+}
+
+.nagino-yado-root .section-subtitle {
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  color: #6B6460;
+  text-transform: uppercase;
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* ===== フェードインアニメーション ===== */
+.nagino-yado-root .fade-in-item {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+/* JsReadyInit が .nagino-yado-root に .nagi-js-ready を付与した後に有効になる */
+.nagino-yado-root.nagi-js-ready .fade-in-item {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.nagino-yado-root.nagi-js-ready .fade-in-item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nagino-yado-root .fade-in-item,
+  .nagino-yado-root.nagi-js-ready .fade-in-item,
+  .nagino-yado-root.nagi-js-ready .fade-in-item.is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ===== スクロールバー ===== */
+.nagino-yado-root ::-webkit-scrollbar {
+  width: 4px;
+}
+
+.nagino-yado-root ::-webkit-scrollbar-track {
+  background: #E8DDD0;
+}
+
+.nagino-yado-root ::-webkit-scrollbar-thumb {
+  background: #2D5A5A;
+  border-radius: 2px;
+}

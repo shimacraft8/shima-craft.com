@@ -9,6 +9,7 @@ type Work = {
   scope: string;
   url: string;
   accent: string; // カードのアクセントカラー（top border）
+  linkLabel?: string; // ボタン文言を上書きしたい場合に指定
 };
 
 const WORKS: Work[] = [
@@ -38,6 +39,16 @@ const WORKS: Work[] = [
     scope: "カフェサイトのブランド表現・店舗情報・来店前の情報整理",
     url: "https://kuro-stand.vercel.app",
     accent: "#1A1A1A",
+  },
+  {
+    kind: "制作サンプル",
+    category: "宿泊施設",
+    title: "凪ノ宿 AMAMI",
+    desc: "InstagramやGoogleマップから既存の予約ページへつなぐ、宿泊施設向け体験型プランLP。動画と静止画で宿泊体験を伝えます。",
+    scope: "動画・静止画を組み合わせた宿泊体験の表現・予約導線の設計",
+    url: "/nagino-yado-lp/",
+    accent: "#2D5A5A",
+    linkLabel: "体験型LPを見る",
   },
   {
     kind: "画面サンプル",
@@ -86,7 +97,7 @@ export function Works() {
                     eventName={w.url === "/system-samples" ? "sample_list_click" : "works_click"}
                     eventParams={{ work: w.title }}
                   >
-                    {w.url.startsWith("http") ? "サイトサンプルを見る" : "画面サンプルを見る"}
+                    {w.linkLabel ?? (w.url.startsWith("http") ? "サイトサンプルを見る" : "画面サンプルを見る")}
                     <svg
                       width="14"
                       height="14"

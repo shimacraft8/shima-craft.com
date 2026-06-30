@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Reveal } from "@/app/components/Reveal";
 import { TrackedLink } from "@/app/components/TrackedLink";
 
@@ -73,6 +74,13 @@ export function Service() {
                 </TrackedLink>
               </article>
             ))}
+          </div>
+        </Reveal>
+        <Reveal dir="up" delay={0.2}>
+          <div style={{ textAlign: "center", marginTop: "2.5rem" }}>
+            <Link href="/services" className="text-link">
+              サービスを詳しく見る
+            </Link>
           </div>
         </Reveal>
       </div>

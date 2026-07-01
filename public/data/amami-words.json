@@ -1,0 +1,1378 @@
+{
+  "dataset": "amami-words-public",
+  "generatedAt": "2026-07-01T00:00:00+09:00",
+  "count": 27,
+  "records": [
+    {
+      "id": "WORD-001",
+      "category": "家族",
+      "standardWord": "祖父",
+      "sourceId": "pref-oshima-dialect-map-family",
+      "sourceTitle": "大島地区方言マップ（かぞく編）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20150216144248-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "フシュ",
+            "ジュー",
+            "フッシュ",
+            "ジュ",
+            "オッショ",
+            "ジュウ"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "アジィー"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "ジィー",
+            "フーアジャ",
+            "ジジィ",
+            "フッシュウ"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "ジャージャ"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "ウブ"
+          ]
+        }
+      ],
+      "caution": "資料に記載された表記をそのまま採録。集落によって異なる可能性がある（資料注記）。",
+      "publicationStatus": "条件付き公開"
+    },
+    {
+      "id": "WORD-002",
+      "category": "家族",
+      "standardWord": "祖母",
+      "sourceId": "pref-oshima-dialect-map-family",
+      "sourceTitle": "大島地区方言マップ（かぞく編）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20150216144248-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "ホンマ",
+            "アンマ",
+            "ハンネェ"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "アンマー"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "アン",
+            "フーアマ",
+            "アンニェ",
+            "ハンシャリ"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "アジ"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "パーパー"
+          ]
+        }
+      ],
+      "caution": "資料に記載された表記をそのまま採録。集落によって異なる可能性がある（資料注記）。",
+      "publicationStatus": "条件付き公開"
+    },
+    {
+      "id": "WORD-003",
+      "category": "家族",
+      "standardWord": "父",
+      "sourceId": "pref-oshima-dialect-map-family",
+      "sourceTitle": "大島地区方言マップ（かぞく編）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20150216144248-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "ジュー",
+            "チャン",
+            "アジャ"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "オトー"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "アジャ"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "アチャ"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "アチャ"
+          ]
+        }
+      ],
+      "caution": "資料に記載された表記をそのまま採録。集落によって異なる可能性がある（資料注記）。",
+      "publicationStatus": "条件付き公開"
+    },
+    {
+      "id": "WORD-004",
+      "category": "家族",
+      "standardWord": "母",
+      "sourceId": "pref-oshima-dialect-map-family",
+      "sourceTitle": "大島地区方言マップ（かぞく編）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20150216144248-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "アンマ",
+            "オッカン",
+            "アシェ",
+            "ウッカ",
+            "オッカ"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "オッカン"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "アマ"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "アマ",
+            "オカン"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "アンマー"
+          ]
+        }
+      ],
+      "caution": "資料に記載された表記をそのまま採録。集落によって異なる可能性がある（資料注記）。",
+      "publicationStatus": "条件付き公開"
+    },
+    {
+      "id": "WORD-005",
+      "category": "家族",
+      "standardWord": "兄",
+      "sourceId": "pref-oshima-dialect-map-family",
+      "sourceTitle": "大島地区方言マップ（かぞく編）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20150216144248-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "アニ",
+            "アニョ",
+            "ニー",
+            "ヤンマェ",
+            "ニィー",
+            "アニョー",
+            "イヒリ"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "ニィー"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "ミィー",
+            "ムイ",
+            "ムイー"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "ミー"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "ヤカ"
+          ]
+        }
+      ],
+      "caution": "資料に記載された表記をそのまま採録。集落によって異なる可能性がある（資料注記）。",
+      "publicationStatus": "条件付き公開"
+    },
+    {
+      "id": "WORD-006",
+      "category": "家族",
+      "standardWord": "姉",
+      "sourceId": "pref-oshima-dialect-map-family",
+      "sourceTitle": "大島地区方言マップ（かぞく編）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20150216144248-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "アセ",
+            "ネー",
+            "アゴー",
+            "クェッガ",
+            "アネイ",
+            "アネグァ",
+            "ウナリ",
+            "ネェー"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "ネェー"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "アカ",
+            "アカァ"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "アヤ",
+            "ネンネ"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "アンニャー"
+          ]
+        }
+      ],
+      "caution": "資料に記載された表記をそのまま採録。集落によって異なる可能性がある（資料注記）。",
+      "publicationStatus": "条件付き公開"
+    },
+    {
+      "id": "WORD-007",
+      "category": "道具",
+      "standardWord": "ゆのみ",
+      "sourceId": "pref-oshima-dialect-map-tools",
+      "sourceTitle": "大島地区方言マップ（どうぐ編）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20140213094309-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "ユヌミ",
+            "チャジャワン",
+            "チャヂャワン",
+            "チャヂワン",
+            "シャジャワン",
+            "チャワン"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "サジャワン"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "チャヂワン",
+            "チャジャワン"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "チャチャバヌ",
+            "ユノウミ"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "チャバヌ"
+          ]
+        }
+      ],
+      "caution": "資料に記載された表記をそのまま採録。集落によって異なる可能性がある（資料注記）。",
+      "publicationStatus": "条件付き公開"
+    },
+    {
+      "id": "WORD-008",
+      "category": "道具",
+      "standardWord": "ざる",
+      "sourceId": "pref-oshima-dialect-map-tools",
+      "sourceTitle": "大島地区方言マップ（どうぐ編）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20140213094309-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "ソケェ",
+            "ソウケェ",
+            "マグゥ",
+            "ソーケー",
+            "ソーケ",
+            "ソケ"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "ソービンカー"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "セー"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "ヒャーギ",
+            "セー",
+            "ティル"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "ソイ"
+          ]
+        }
+      ],
+      "caution": "資料に記載された表記をそのまま採録。集落によって異なる可能性がある（資料注記）。",
+      "publicationStatus": "条件付き公開"
+    },
+    {
+      "id": "WORD-009",
+      "category": "道具",
+      "standardWord": "椀",
+      "sourceId": "pref-oshima-dialect-map-tools",
+      "sourceTitle": "大島地区方言マップ（どうぐ編）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20140213094309-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "ワン",
+            "ミシチャワン",
+            "クェーヂャワン",
+            "スィムワン",
+            "シルマリ",
+            "ミシマリ",
+            "ツルチャワン"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "マーリ"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "シルジャワン",
+            "チャワン",
+            "ワン"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "チャバヌ"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "マハイ"
+          ]
+        }
+      ],
+      "caution": "資料に記載された表記をそのまま採録。集落によって異なる可能性がある（資料注記）。",
+      "publicationStatus": "条件付き公開"
+    },
+    {
+      "id": "WORD-010",
+      "category": "道具",
+      "standardWord": "包丁",
+      "sourceId": "pref-oshima-dialect-map-tools",
+      "sourceTitle": "大島地区方言マップ（どうぐ編）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20140213094309-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "ポーチャ",
+            "ホウチャ",
+            "ホウチャー",
+            "ホシャ",
+            "ホーシャ"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "ハタナ"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "ホウチャ",
+            "カタナ"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "ハタナ"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "ハタナ"
+          ]
+        }
+      ],
+      "caution": "資料に記載された表記をそのまま採録。集落によって異なる可能性がある（資料注記）。",
+      "publicationStatus": "条件付き公開"
+    },
+    {
+      "id": "WORD-011",
+      "category": "自然",
+      "standardWord": "風",
+      "sourceId": "pref-oshima-dialect-map-nature",
+      "sourceTitle": "大島地区方言マップ（しぜん編）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20130208141259-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "カジェ",
+            "カゼ",
+            "カズィ",
+            "カデェ",
+            "カズゥ"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "ハディ"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "カディ",
+            "カジ",
+            "カジー",
+            "カズィ"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "ハジ"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "ハディ"
+          ]
+        }
+      ],
+      "caution": "資料に記載された表記をそのまま採録。集落によって異なる可能性がある（資料注記）。",
+      "publicationStatus": "条件付き公開"
+    },
+    {
+      "id": "WORD-012",
+      "category": "自然",
+      "standardWord": "空",
+      "sourceId": "pref-oshima-dialect-map-nature",
+      "sourceTitle": "大島地区方言マップ（しぜん編）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20130208141259-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "ティン",
+            "ソラ",
+            "スラ"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "ティントゥー"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "ティン",
+            "テン",
+            "テント"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "ティント"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "ティントウ"
+          ]
+        }
+      ],
+      "caution": "資料に記載された表記をそのまま採録。集落によって異なる可能性がある（資料注記）。",
+      "publicationStatus": "条件付き公開"
+    },
+    {
+      "id": "WORD-013",
+      "category": "自然",
+      "standardWord": "晴天",
+      "sourceId": "pref-oshima-dialect-map-nature",
+      "sourceTitle": "大島地区方言マップ（しぜん編）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20130208141259-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "ハレ",
+            "ハレデンキ",
+            "ジョウテンキ",
+            "ヒヤリ"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "ユカティンキ"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "ハリ",
+            "イーワーチキィ",
+            "ハレィ",
+            "ヒャーリ"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "ハリ"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "パリュン"
+          ]
+        }
+      ],
+      "caution": "資料に記載された表記をそのまま採録。集落によって異なる可能性がある（資料注記）。",
+      "publicationStatus": "条件付き公開"
+    },
+    {
+      "id": "WORD-014",
+      "category": "自然",
+      "standardWord": "台風",
+      "sourceId": "pref-oshima-dialect-map-nature",
+      "sourceTitle": "大島地区方言マップ（しぜん編）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20130208141259-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "テーフー",
+            "ティフゥ",
+            "テーフ",
+            "テェプィ",
+            "テフ"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "テーフー"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "フテカディ",
+            "ウーカディ",
+            "カジフキ",
+            "テェーフゥ",
+            "ウウカズィ"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "テーフ",
+            "ハジフキ"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "ウーハディ"
+          ]
+        }
+      ],
+      "caution": "資料に記載された表記をそのまま採録。集落によって異なる可能性がある（資料注記）。",
+      "publicationStatus": "条件付き公開"
+    },
+    {
+      "id": "WORD-015",
+      "category": "生き物",
+      "standardWord": "いぬ",
+      "sourceId": "pref-oshima-dialect-map-creatures",
+      "sourceTitle": "大島地区方言マップ（いきもの編）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20120202133619-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "イン"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "インガー"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "イン"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "イヌー"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "イヌ"
+          ]
+        }
+      ],
+      "caution": "資料内では「（奄美大島）（喜界島）（徳之島）」「（沖永良部島）（与論島）」がそれぞれ1行にまとめて表記され、値もその並び順で列挙されている。本データは見出しと値の並び順を対応させて記録した。",
+      "publicationStatus": "条件付き公開"
+    },
+    {
+      "id": "WORD-016",
+      "category": "生き物",
+      "standardWord": "ねずみ",
+      "sourceId": "pref-oshima-dialect-map-creatures",
+      "sourceTitle": "大島地区方言マップ（いきもの編）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20120202133619-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "ネイズン",
+            "ネイズィン",
+            "ネズン",
+            "ヌィディン",
+            "ヌジュー"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "ニドゥマー",
+            "ユミジュ",
+            "カーキィ"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "ネズミ",
+            "ニジミ",
+            "ニジーミ"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "オイシャ",
+            "ユムヌ"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "ユムヌ"
+          ]
+        }
+      ],
+      "caution": "沖永良部島と与論島でともに「ユムヌ」が記載されている。誤記ではなく資料原文のまま。",
+      "publicationStatus": "条件付き公開"
+    },
+    {
+      "id": "WORD-017",
+      "category": "生き物",
+      "standardWord": "ねこ",
+      "sourceId": "pref-oshima-dialect-map-creatures",
+      "sourceTitle": "大島地区方言マップ（いきもの編）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20120202133619-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "マヤ",
+            "ミャー"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "マヤー",
+            "グルー"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "ニャウ",
+            "マユ"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "ミャ"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "ミャンカ"
+          ]
+        }
+      ],
+      "caution": "資料内では「（奄美大島）（喜界島）（徳之島）」の3地域が2段組で列挙され、値もその並び順で列挙されている。本データは見出しと値の並び順を対応させて記録した。",
+      "publicationStatus": "条件付き公開"
+    },
+    {
+      "id": "WORD-018",
+      "category": "生き物",
+      "standardWord": "とかげ",
+      "sourceId": "pref-oshima-dialect-map-creatures",
+      "sourceTitle": "大島地区方言マップ（いきもの編）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20120202133619-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "イキクェラ",
+            "テンナブリャ",
+            "テンマブリャ",
+            "ティンマブリャ",
+            "ヤゾ"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "ヤドゥー",
+            "ヤドナッピア",
+            "ヤドナンバー"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "ミヤト",
+            "マシャクヤ",
+            "マホー"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "ティラザ",
+            "キナギャ"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "ギニャギニャ"
+          ]
+        }
+      ],
+      "caution": "資料に記載された表記をそのまま採録。集落によって異なる可能性がある（資料注記）。",
+      "publicationStatus": "条件付き公開"
+    },
+    {
+      "id": "WORD-019",
+      "category": "生き物",
+      "standardWord": "かえる",
+      "sourceId": "pref-oshima-dialect-map-creatures",
+      "sourceTitle": "大島地区方言マップ（いきもの編）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20120202133619-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "ビキ",
+            "ビッキ",
+            "ビッキャ",
+            "ビッキャー"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "ビチャー",
+            "ビーチャー"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "ビッキャ",
+            "アタラ",
+            "アッタラ",
+            "ゴロージャ"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "ガーク"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "アタビク"
+          ]
+        }
+      ],
+      "caution": "資料に記載された表記をそのまま採録。集落によって異なる可能性がある（資料注記）。",
+      "publicationStatus": "条件付き公開"
+    },
+    {
+      "id": "WORD-020",
+      "category": "食事",
+      "standardWord": "いただきます",
+      "sourceId": "pref-oshima-dialect-map-meals",
+      "sourceTitle": "大島地区方言マップ（食事編）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20120202133810-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "ムラヨーロ（イタダキョーロ）",
+            "ムラヲリョイ（ヰ）（イタダキョロイ（ヰ））",
+            "カモイ（ヰ）（カミョオリョウイ（ヰ）・ムラヲリョイ（ヰ））",
+            "ムロヲェー（イタダキャヲロゥ・グッソォナリョ　オロ）",
+            "ミショロリー（カミョロリー）"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "カメーラ（ムラエーラ）"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "カマーイ（ヰ）ー（モロレーライ（ヰ）ー・モローライ（ヰ）ー）",
+            "コーティーナー（コーティーネーラ）"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "クァッチシラー（ムロヤブラ）",
+            "カミュンド"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "コロン（タバーリラン・コレビラン・ムレービラン）"
+          ]
+        }
+      ],
+      "caution": "資料内注記「※（ ）書きは丁寧な表現です」に基づき、括弧内は本体表現の丁寧形として保持した（別語ではない）。",
+      "publicationStatus": "条件付き公開"
+    },
+    {
+      "id": "WORD-021",
+      "category": "食事",
+      "standardWord": "めしあがれ",
+      "sourceId": "pref-oshima-dialect-map-meals",
+      "sourceTitle": "大島地区方言マップ（食事編）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20120202133810-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "ミショレ（ミショリンショレ・オスショロ）",
+            "ミショウレ（ミショウリンショウレ）",
+            "ミショルィ（ミショレィンショウレィ）",
+            "ミィショレー（ミィショリンショレー）"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "カミバエー（ミソーリー）"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "カモー（ンキャゲイロー）",
+            "コーティーネェ（ニィキャギィレーレ）"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "カミ（オイシリ・オイシタボリ）"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "アギリ（アギティ・タバーリ）"
+          ]
+        }
+      ],
+      "caution": "括弧内は丁寧形（資料内注記による）。",
+      "publicationStatus": "条件付き公開"
+    },
+    {
+      "id": "WORD-022",
+      "category": "食事",
+      "standardWord": "ごちそうさま",
+      "sourceId": "pref-oshima-dialect-map-meals",
+      "sourceTitle": "大島地区方言マップ（食事編）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20120202133810-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "ムラヨータ（イタダキョータ）",
+            "マッサリョタ（アリガッサマリョウタ）",
+            "マサタ（マサリョウタ）",
+            "マーサタドー・クワキィシィー（マーサリョタ・クヮキショータ・グッソサマリョヲタ）"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "マサタ（ウフックンデータマサレータ）"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "クヮーキシィ（ヰ）ー（クヮーキシェーティ（ヰ）ー）"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "クァッチシャン（ムロヤブタン）",
+            "ミヘディロ"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "マサタン（マサイビュータン・クァッチィーエービタン）"
+          ]
+        }
+      ],
+      "caution": "括弧内は丁寧形（資料内注記による）。「マッサリョタ（アリガッサマリョウタ）」は既存「ありがっさまりょうた」と類似するが、本項目は『ごちそうさま』文脈での記載であるため別概念として扱う。",
+      "publicationStatus": "条件付き公開"
+    },
+    {
+      "id": "WORD-023",
+      "category": "食事",
+      "standardWord": "おいしいです",
+      "sourceId": "pref-oshima-dialect-map-meals",
+      "sourceTitle": "大島地区方言マップ（食事編）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20120202133810-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "（ン）マカリ（（ン）マカリョーリ）",
+            "マッサット（マッサリョット）",
+            "マサリヤ（マサリョータド）",
+            "マァーサリー（マァサリョヲリ・マァサリョオター）",
+            "マサリョータァー"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "マサティ（マサレー）"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "マーハイ（マーハレユイ）",
+            "マァーハリ（マァーハレティ）"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "ゥマサン（ゥマサアヤブン）",
+            "マサアタン",
+            "マァーサン"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "マサイ・マサイドー（マサイビュイ）"
+          ]
+        }
+      ],
+      "caution": "括弧内は丁寧形（資料内注記による）。",
+      "publicationStatus": "条件付き公開"
+    },
+    {
+      "id": "WORD-024",
+      "category": "あいさつ",
+      "standardWord": "ごめんください",
+      "sourceId": "pref-oshima-dialect-map-greetings-2",
+      "sourceTitle": "大島地区方言マップ（あいさつ編2）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20120202133738-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "キョウロウ",
+            "ホイー・ホイ",
+            "キャオロー",
+            "ウガミンショーラ",
+            "キャウロー",
+            "キョーロォ"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "ヤーウモッイカイ",
+            "ホーイセーラ",
+            "ホーイウモーユッカイ"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "ヘーダレン",
+            "フェイダーニ",
+            "ヤーナンモーレユムイ（ヰ）"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "マーヌヤーサーレー",
+            "ウガミヤブラー",
+            "ウヤブンニャー"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "サービタン"
+          ]
+        }
+      ],
+      "caution": "資料に記載された表記をそのまま採録。集落によって異なる可能性がある（資料注記）。",
+      "publicationStatus": "条件付き公開"
+    },
+    {
+      "id": "WORD-025",
+      "category": "あいさつ",
+      "standardWord": "おひさしぶりです",
+      "sourceId": "pref-oshima-dialect-map-greetings-2",
+      "sourceTitle": "大島地区方言マップ（あいさつ編2）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20120202133738-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "マレマレ",
+            "マレマレダリョッカ",
+            "マレマレダリョイヤー",
+            "マレマレジャカー",
+            "オガミドゥサアリョウタ",
+            "ウガンドゥサー",
+            "ウガミンショウラン"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "マーリマーリデンガ",
+            "ミドゥーサヤー"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "ミィドゥッカムダレンジャヤ",
+            "ミィドカームンジャーガー",
+            "ムイ（ヰ）ドゥカームンダレンヤー",
+            "ニャーラムジャヤ"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "フガミドウサ",
+            "ラゥガミドゥーサ",
+            "ウガミドゥーサアヤブン"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "フガンドゥーサヌ"
+          ]
+        }
+      ],
+      "caution": "資料に記載された表記をそのまま採録。集落によって異なる可能性がある（資料注記）。",
+      "publicationStatus": "条件付き公開"
+    },
+    {
+      "id": "WORD-026",
+      "category": "あいさつ",
+      "standardWord": "さようなら",
+      "sourceId": "pref-oshima-dialect-map-greetings-2",
+      "sourceTitle": "大島地区方言マップ（あいさつ編2）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20120202133738-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "マタウガミョーロ",
+            "イキョロウ",
+            "イキョロイー",
+            "マタヤ",
+            "マタアチァャー",
+            "ジャーヤ"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "イチェーラ",
+            "イキヨー",
+            "マタオーエーロー"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "マタヤ(ー)",
+            "シカヤ",
+            "モールイ（ヰ）ヨー",
+            "モーリィヨー"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "マタヤー",
+            "イキヨー",
+            "ムドゥユンドー"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "ウヮーリョー",
+            "イキヨー",
+            "ナーヤー"
+          ]
+        }
+      ],
+      "caution": "資料に記載された表記をそのまま採録。集落によって異なる可能性がある（資料注記）。",
+      "publicationStatus": "条件付き公開"
+    },
+    {
+      "id": "WORD-027",
+      "category": "あいさつ",
+      "standardWord": "こんばんは",
+      "sourceId": "pref-oshima-dialect-map-greetings-1",
+      "sourceTitle": "大島地区方言マップ（あいさつ編）",
+      "sourcePage": "1",
+      "sourceUrl": "https://www.pref.kagoshima.jp/aq01/chiiki/oshima/kyoiku/documents/17569_20120202133840-1.pdf",
+      "trustTier": "official_prefecture",
+      "regions": [
+        {
+          "region": "奄美大島",
+          "forms": [
+            "ヨウネ（ヤ）ウガミ（ン）ショウラ(ン)",
+            "ヨウネヤフガミンショウラン",
+            "ヨーネェヤオガミンショロ",
+            "ヨネヤウガミンショウラ"
+          ]
+        },
+        {
+          "region": "喜界島",
+          "forms": [
+            "－（固定形なし。状況に応じた時候のあいさつを使用）"
+          ]
+        },
+        {
+          "region": "徳之島",
+          "forms": [
+            "ヨーニウガメラ",
+            "ヨーネェーウガメーラ",
+            "ヨーネィウガメーラ"
+          ]
+        },
+        {
+          "region": "沖永良部島",
+          "forms": [
+            "ヲゥガミヤブラ",
+            "フガミヤブラー",
+            "フガミドゥーサー"
+          ]
+        },
+        {
+          "region": "与論島",
+          "forms": [
+            "フガミャービラン"
+          ]
+        }
+      ],
+      "caution": "喜界島は資料内で「－」表記。資料脚注「※喜界島では、朝昼晩のあいさつ語は特になく、状況に応じた時候のあいさつを交わします。」に基づく明示的な『固定形なし』であり、未確認や欠落ではない。沖永良部島・与論島は「おはようございます」「こんにちは」と同一の表記が資料内で繰り返されている（時間帯を問わない固定形とみられる）。",
+      "publicationStatus": "条件付き公開"
+    }
+  ]
+}

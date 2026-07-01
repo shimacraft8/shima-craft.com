@@ -4,8 +4,12 @@ import { HeaderInner } from "@/app/components/HeaderInner";
 import { Footer } from "@/app/components/Footer";
 import { StickyContact } from "@/app/components/StickyContact";
 import { Breadcrumb } from "@/app/components/Breadcrumb";
-import { DialectListClient } from "@/app/amami-dialect/_components/DialectListClient";
+import { SearchExplorer } from "@/app/amami-dialect/_components/SearchExplorer";
 import { AMAMI_DIALECT_PATH, dialectSearchIndex } from "@/app/lib/amamiDialect";
+
+type Props = {
+  searchParams: Record<string, string | string[] | undefined>;
+};
 
 const PAGE_DESC =
   "ことわざ・あいさつ・語彙（家族・道具・自然・生き物・食事）を横断して検索できるページです。";
@@ -27,13 +31,7 @@ export const metadata: Metadata = {
 
 const DATASET_LABELS = ["ことわざ", "あいさつ", "語彙"];
 
-export default function DialectSearchPage() {
-  const items = dialectSearchIndex.map((item) => ({
-    ...item,
-    filterValue: item.dataset,
-    filterLabel: item.dataset,
-  }));
-
+export default function DialectSearchPage({ searchParams }: Props) {
   return (
     <>
       <HeaderInner />
@@ -50,20 +48,26 @@ export default function DialectSearchPage() {
           <p className="inner-hero-area">SEARCH</p>
           <h1>奄美方言 横断検索</h1>
           <p className="inner-hero-lead">
-            ことわざ・あいさつ・語彙をまとめて{items.length}件、種類を問わず検索できます。
+            ことわざ・あいさつ・語彙をまとめて{dialectSearchIndex.length}件、種類を問わず検索できます。
+            「喜界島 おはよう」のように、地域名と語句を空白で区切って検索することもできます。
           </p>
         </div>
 
         <section className="svc-section">
           <div className="container">
-            <DialectListClient
-              items={items}
-              filterLabel="種類"
-              searchLabel="奄美方言 横断検索"
-              filterOptions={DATASET_LABELS.map((label) => ({ label, value: label }))}
+            <SearchExplorer
+              items={dialectSearchIndex}
+              datasetLabels={DATASET_LABELS}
+              searchParams={searchParams}
             />
           </div>
         </section>
+
+        <div className="dialect-back-actions">
+          <Link href={AMAMI_DIALECT_PATH} className="btn btn-soft">
+            辞書トップへ戻る
+          </Link>
+        </div>
 
         <div className="related-section">
           <p className="related-section-label">Navigation</p>

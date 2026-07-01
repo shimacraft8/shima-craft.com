@@ -134,6 +134,15 @@ export default function ProverbDetailPage({ params }: Props) {
           </details>
         </article>
 
+        <div className="dialect-back-actions">
+          <Link href={`${AMAMI_DIALECT_PATH}/proverbs`} className="btn btn-soft">
+            ことわざ一覧へ戻る
+          </Link>
+          <Link href={AMAMI_DIALECT_PATH} className="btn btn-soft">
+            辞書トップへ戻る
+          </Link>
+        </div>
+
         <div className="related-section">
           <p className="related-section-label">Navigation</p>
           <div className="related-links">

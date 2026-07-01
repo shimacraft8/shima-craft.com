@@ -26,7 +26,10 @@ export function generateMetadata({ params }: Props): Metadata {
     return {};
   }
 
-  const meaning = displayText(record.meaning) || displayText(record.otherTranslations);
+  const meaning =
+    displayText(record.meaning) ||
+    displayText(record.otherTranslations) ||
+    displayText(record.politeness);
   const description = meaning ? `${record.title}。${meaning}` : record.title;
 
   return {
@@ -139,6 +142,15 @@ export default function GreetingDetailPage({ params }: Props) {
             </dl>
           </details>
         </article>
+
+        <div className="dialect-back-actions">
+          <Link href={`${AMAMI_DIALECT_PATH}/greetings`} className="btn btn-soft">
+            あいさつ一覧へ戻る
+          </Link>
+          <Link href={AMAMI_DIALECT_PATH} className="btn btn-soft">
+            辞書トップへ戻る
+          </Link>
+        </div>
 
         <div className="related-section">
           <p className="related-section-label">Navigation</p>

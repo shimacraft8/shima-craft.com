@@ -11,6 +11,7 @@ import {
   amamiWords,
   getWordById,
   WORD_CATEGORY_SLUGS,
+  WORD_REGION_SLUGS,
 } from "@/app/lib/amamiDialect";
 
 type Props = {
@@ -30,14 +31,14 @@ export function generateMetadata({ params }: Props): Metadata {
   const regionSummary = record.regions
     .map((entry) => `${entry.region}：${entry.forms.join("・")}`)
     .join("／");
-  const description = `${record.category}の語彙「${record.standardWord}」。${regionSummary}`;
+  const description = `「${record.standardWord}」は奄美方言で地域ごとにどう言うか。${regionSummary}`;
 
   return {
-    title: `${record.standardWord}｜奄美方言 語彙`,
+    title: `${record.standardWord}の奄美方言・地域別の言い方`,
     description,
     alternates: { canonical: `${AMAMI_DIALECT_PATH}/words/${record.id}` },
     openGraph: {
-      title: `${record.standardWord}｜奄美方言 語彙｜SHIMA CRAFT`,
+      title: `${record.standardWord}の奄美方言・地域別の言い方｜SHIMA CRAFT`,
       description,
       url: `${AMAMI_DIALECT_PATH}/words/${record.id}`,
       type: "article",
@@ -56,6 +57,9 @@ export default function WordDetailPage({ params }: Props) {
 
   const hasSourceUrl = record.sourceUrl && record.sourceUrl !== "未確認";
   const categorySlug = WORD_CATEGORY_SLUGS[record.category] ?? record.category;
+  const relatedWords = amamiWords
+    .filter((w) => w.category === record.category && w.id !== record.id)
+    .slice(0, 6);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -89,6 +93,7 @@ export default function WordDetailPage({ params }: Props) {
         <article className="dialect-detail">
           <p className="dialect-card-id">{record.id}</p>
           <h1>{record.standardWord}</h1>
+          <p className="dialect-detail-meaning">{record.standardWord}の奄美方言・地域別の言い方</p>
           <p className="dialect-detail-reading">
             <Link href={`${AMAMI_DIALECT_PATH}/words/category/${categorySlug}`}>
               {record.category}
@@ -98,16 +103,27 @@ export default function WordDetailPage({ params }: Props) {
           <section className="dialect-detail-section">
             <h2>地域別の記録形</h2>
             <div className="dialect-word-detail-regions">
-              {record.regions.map((entry) => (
-                <div className="dialect-word-detail-region" key={entry.region}>
-                  <h3>{entry.region}</h3>
-                  <ul>
-                    {entry.forms.map((form) => (
-                      <li key={form}>{form}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+              {record.regions.map((entry) => {
+                const regionSlug = WORD_REGION_SLUGS[entry.region];
+                return (
+                  <div className="dialect-word-detail-region" key={entry.region}>
+                    <h3>
+                      {regionSlug ? (
+                        <Link href={`${AMAMI_DIALECT_PATH}/regions/${regionSlug}`}>
+                          {entry.region}
+                        </Link>
+                      ) : (
+                        entry.region
+                      )}
+                    </h3>
+                    <ul>
+                      {entry.forms.map((form) => (
+                        <li key={form}>{form}</li>
+                      ))}
+                    </ul>
+                  </div>
+                );
+              })}
             </div>
           </section>
 
@@ -159,7 +175,29 @@ export default function WordDetailPage({ params }: Props) {
               ) : null}
             </dl>
           </details>
+
+          {relatedWords.length > 0 ? (
+            <section className="dialect-detail-section">
+              <h2>同じカテゴリの語彙</h2>
+              <div className="dialect-related-words">
+                {relatedWords.map((w) => (
+                  <Link key={w.id} href={`${AMAMI_DIALECT_PATH}/words/${w.id}`}>
+                    {w.standardWord}
+                  </Link>
+                ))}
+              </div>
+            </section>
+          ) : null}
         </article>
+
+        <div className="dialect-back-actions">
+          <Link href={`${AMAMI_DIALECT_PATH}/words`} className="btn btn-soft">
+            語彙一覧へ戻る
+          </Link>
+          <Link href={AMAMI_DIALECT_PATH} className="btn btn-soft">
+            辞書トップへ戻る
+          </Link>
+        </div>
 
         <div className="related-section">
           <p className="related-section-label">Navigation</p>

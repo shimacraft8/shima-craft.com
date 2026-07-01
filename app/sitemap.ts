@@ -5,6 +5,7 @@ import {
   amamiProverbs,
   amamiWords,
   wordCategories,
+  wordRegions,
 } from "@/app/lib/amamiDialect";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -130,11 +131,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.4,
   }));
 
+  const regionRoutes: MetadataRoute.Sitemap = wordRegions.map((region) => ({
+    url: `${site.url}/amami-dialect/regions/${region.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
   return [
     ...staticRoutes,
     ...proverbRoutes,
     ...greetingRoutes,
     ...wordCategoryRoutes,
     ...wordRoutes,
+    ...regionRoutes,
   ];
 }

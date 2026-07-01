@@ -65,6 +65,12 @@ export default function GreetingsPage() {
           </div>
         </section>
 
+        <div className="dialect-back-actions">
+          <Link href={AMAMI_DIALECT_PATH} className="btn btn-soft">
+            辞書トップへ戻る
+          </Link>
+        </div>
+
         <div className="related-section">
           <p className="related-section-label">Navigation</p>
           <div className="related-links">

@@ -11,7 +11,8 @@ export type TurnstileVerifyResult =
 export async function verifyTurnstileToken(
   token: string,
   remoteIp: string,
-  fetchImpl: typeof fetch = fetch
+  fetchImpl: typeof fetch = fetch,
+  requestId?: string
 ): Promise<TurnstileVerifyResult> {
   const secret = process.env.TURNSTILE_SECRET_KEY?.trim();
   if (!secret) {
@@ -33,15 +34,16 @@ export async function verifyTurnstileToken(
       body,
     });
     if (!res.ok) {
-      console.error("[colorize:turnstile] siteverify http error", { status: res.status });
+      console.error("[colorize:turnstile] siteverify http error", { requestId, status: res.status });
       return { ok: false, reason: "network_error" };
     }
     const data = (await res.json()) as { success?: boolean; "error-codes"?: string[] };
     if (data.success === true) return { ok: true };
-    console.error("[colorize:turnstile] siteverify rejected token", { errorCodes: data["error-codes"] });
+    console.error("[colorize:turnstile] siteverify rejected token", { requestId, errorCodes: data["error-codes"] });
     return { ok: false, reason: "invalid_token" };
   } catch (err) {
     console.error("[colorize:turnstile] siteverify threw", {
+      requestId,
       name: err instanceof Error ? err.name : typeof err,
       message: err instanceof Error ? err.message : String(err),
     });

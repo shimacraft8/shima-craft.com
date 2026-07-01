@@ -3346,6 +3346,18 @@ section {
   font-size: 0.94rem;
   line-height: 1.7;
 }
+.colorize-error-heading {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.colorize-error-meta {
+  color: #888 !important;
+  font-size: 0.78rem !important;
+  line-height: 1.6 !important;
+  word-break: break-all;
+}
 
 @media (max-width: 480px) {
   .colorize-result-actions {

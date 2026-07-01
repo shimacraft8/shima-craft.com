@@ -11,7 +11,12 @@ import {
   revokePreviewUrl,
   type PreparedImage,
 } from "./imageProcessing";
-import type { ColorizeApiResponse } from "@/lib/colorization/types";
+import {
+  COLORIZE_ERROR_HEADINGS,
+  COLORIZE_ERROR_IS_CONFIG_ISSUE,
+  type ColorizeApiResponse,
+  type ColorizeErrorCode,
+} from "@/lib/colorization/types";
 
 const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
@@ -21,6 +26,38 @@ type Props = {
   turnstileSiteKey: string;
   toolEnabled: boolean;
 };
+
+type ErrorDisplay = {
+  heading: string;
+  message: string;
+  errorCode: string;
+  retryable: boolean;
+  requestId: string | null;
+  /** trueの場合のみ「別の画像で試す」を表示する。設定不備等の場合は画像を疑わせない。 */
+  suggestDifferentImage: boolean;
+};
+
+function buildErrorDisplay(errorCode: ColorizeErrorCode, userMessage: string, retryable: boolean, requestId: string): ErrorDisplay {
+  return {
+    heading: COLORIZE_ERROR_HEADINGS[errorCode] ?? "エラーが発生しました",
+    message: userMessage,
+    errorCode,
+    retryable,
+    requestId,
+    suggestDifferentImage: !COLORIZE_ERROR_IS_CONFIG_ISSUE[errorCode],
+  };
+}
+
+function buildNetworkErrorDisplay(): ErrorDisplay {
+  return {
+    heading: "通信エラーが発生しました",
+    message: "ネットワークエラーが発生しました。接続を確認して再度お試しください。",
+    errorCode: "NETWORK_ERROR",
+    retryable: true,
+    requestId: null,
+    suggestDifferentImage: true,
+  };
+}
 
 export function PhotoColorizeClient({ turnstileSiteKey, toolEnabled }: Props) {
   const [phase, setPhase] = useState<Phase>("select");
@@ -33,7 +70,7 @@ export function PhotoColorizeClient({ turnstileSiteKey, toolEnabled }: Props) {
   const [submitting, setSubmitting] = useState(false);
   const [resultUrl, setResultUrl] = useState<string | null>(null);
   const [warnings, setWarnings] = useState<string[]>([]);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorDisplay, setErrorDisplay] = useState<ErrorDisplay | null>(null);
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const liveRegionRef = useRef<HTMLDivElement>(null);
@@ -54,7 +91,7 @@ export function PhotoColorizeClient({ turnstileSiteKey, toolEnabled }: Props) {
     setSubmitting(false);
     setResultUrl(null);
     setWarnings([]);
-    setErrorMessage(null);
+    setErrorDisplay(null);
     setPhase("select");
     if (fileInputRef.current) fileInputRef.current.value = "";
   }, [prepared]);
@@ -108,7 +145,7 @@ export function PhotoColorizeClient({ turnstileSiteKey, toolEnabled }: Props) {
     if (!prepared || !consent || !turnstileToken || submitting) return;
     setSubmitting(true);
     setPhase("processing");
-    setErrorMessage(null);
+    setErrorDisplay(null);
     trackEvent("colorize_start");
 
     try {
@@ -128,16 +165,19 @@ export function PhotoColorizeClient({ turnstileSiteKey, toolEnabled }: Props) {
         setWarnings(data.warnings);
         setPhase("done");
         trackEvent("colorize_success");
-      } else {
-        const message = data && !data.success ? data.message : "一時的なエラーが発生しました。時間をおいて再度お試しください。";
-        setErrorMessage(message);
+      } else if (data && !data.success) {
+        setErrorDisplay(buildErrorDisplay(data.errorCode, data.userMessage, data.retryable, data.requestId));
         setPhase("error");
-        trackEvent("colorize_error", { code: data && !data.success ? data.code : "unknown" });
+        trackEvent("colorize_error", { code: data.errorCode, requestId: data.requestId });
+      } else {
+        setErrorDisplay(buildNetworkErrorDisplay());
+        setPhase("error");
+        trackEvent("colorize_error", { code: "NETWORK_ERROR" });
       }
     } catch {
-      setErrorMessage("ネットワークエラーが発生しました。接続を確認して再度お試しください。");
+      setErrorDisplay(buildNetworkErrorDisplay());
       setPhase("error");
-      trackEvent("colorize_error", { code: "network_error" });
+      trackEvent("colorize_error", { code: "NETWORK_ERROR" });
     } finally {
       setSubmitting(false);
       setTurnstileToken(null);
@@ -149,7 +189,7 @@ export function PhotoColorizeClient({ turnstileSiteKey, toolEnabled }: Props) {
     trackEvent("colorize_retry", { mode: "same_image" });
     setResultUrl(null);
     setWarnings([]);
-    setErrorMessage(null);
+    setErrorDisplay(null);
     setConsent(false);
     setTurnstileToken(null);
     setTurnstileKey((k) => k + 1);
@@ -171,7 +211,14 @@ export function PhotoColorizeClient({ turnstileSiteKey, toolEnabled }: Props) {
       a.remove();
       URL.revokeObjectURL(objectUrl);
     } catch {
-      setErrorMessage("保存用の画像を取得できませんでした。画像を右クリック（長押し）して保存してください。");
+      setErrorDisplay({
+        heading: "保存に失敗しました",
+        message: "保存用の画像を取得できませんでした。画像を右クリック（長押し）して保存してください。",
+        errorCode: "DOWNLOAD_FAILED",
+        retryable: false,
+        requestId: null,
+        suggestDifferentImage: false,
+      });
     }
   }
 
@@ -190,7 +237,7 @@ export function PhotoColorizeClient({ turnstileSiteKey, toolEnabled }: Props) {
       <div ref={liveRegionRef} className="sr-only" aria-live="polite" aria-atomic="true">
         {phase === "processing" && "AIが色を推定しています。しばらくお待ちください。"}
         {phase === "done" && "カラー化が完了しました。"}
-        {phase === "error" && errorMessage}
+        {phase === "error" && errorDisplay && `${errorDisplay.heading} ${errorDisplay.message}`}
       </div>
 
       {phase === "select" && (
@@ -316,15 +363,22 @@ export function PhotoColorizeClient({ turnstileSiteKey, toolEnabled }: Props) {
         </div>
       )}
 
-      {phase === "error" && (
+      {phase === "error" && errorDisplay && (
         <div className="colorize-error" role="alert">
-          <p>{errorMessage}</p>
+          <h2 className="colorize-error-heading">{errorDisplay.heading}</h2>
+          <p>{errorDisplay.message}</p>
+          <p className="colorize-error-meta">
+            エラーコード: {errorDisplay.errorCode}
+            {errorDisplay.requestId && ` / お問い合わせ番号: ${errorDisplay.requestId}`}
+          </p>
           <div className="colorize-result-actions">
-            <button type="button" className="btn" onClick={handleRetrySameImage}>
-              同じ画像でもう一度試す
-            </button>
+            {errorDisplay.retryable && (
+              <button type="button" className="btn" onClick={handleRetrySameImage}>
+                同じ画像でもう一度試す
+              </button>
+            )}
             <button type="button" className="btn btn-ghost colorize-btn-ghost" onClick={handleRemoveImage}>
-              別の画像で試す
+              {errorDisplay.suggestDifferentImage ? "別の画像で試す" : "はじめからやり直す"}
             </button>
           </div>
         </div>

@@ -1,6 +1,7 @@
 // @vitest-environment node
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { NextRequest } from "next/server";
+import { COLORIZE_ERROR_RETRYABLE, type ColorizeErrorCode } from "@/lib/colorization/types";
 
 const verifyTurnstileTokenMock = vi.fn();
 const rateLimiterCheckMock = vi.fn();
@@ -46,6 +47,8 @@ function baseForm(overrides: Partial<{ consent: string; turnstileToken: string; 
   return form;
 }
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 let originalEnv: NodeJS.ProcessEnv;
 
 beforeEach(() => {
@@ -68,17 +71,16 @@ afterEach(() => {
 });
 
 describe("POST /api/tools/photo-colorize", () => {
-  it("正常系: 有効な画像・同意・turnstileで成功しresultUrlを返す", async () => {
+  it("正常系: 有効な画像・同意・turnstileで成功しresultUrl・requestIdを返す", async () => {
     const { POST } = await import("../route");
     const res = await POST(buildRequest(baseForm()));
     const json = await res.json();
     expect(res.status).toBe(200);
-    expect(json).toEqual({
-      success: true,
-      resultUrl: "https://replicate.delivery/result.png",
-      model: "piddnad/ddcolor",
-      warnings: ["low_resolution"], // 8x8はMIN_IMAGE_DIMENSION未満
-    });
+    expect(json.success).toBe(true);
+    expect(json.resultUrl).toBe("https://replicate.delivery/result.png");
+    expect(json.model).toBe("piddnad/ddcolor");
+    expect(json.warnings).toEqual(["low_resolution"]); // 8x8はMIN_IMAGE_DIMENSION未満
+    expect(json.requestId).toMatch(UUID_RE);
   });
 
   it("MIME偽装: 拡張子はjpgだが中身が画像でないファイルはUNSUPPORTED_TYPEになる", async () => {
@@ -88,7 +90,7 @@ describe("POST /api/tools/photo-colorize", () => {
     const res = await POST(buildRequest(baseForm({ image: fakeFile })));
     const json = await res.json();
     expect(res.status).toBe(400);
-    expect(json.code).toBe("UNSUPPORTED_TYPE");
+    expect(json.errorCode).toBe("UNSUPPORTED_TYPE");
   });
 
   it("過大ファイル: COLORIZE_MAX_BYTESを超えるとFILE_TOO_LARGEになる", async () => {
@@ -98,7 +100,7 @@ describe("POST /api/tools/photo-colorize", () => {
     const res = await POST(buildRequest(baseForm({ image: oversized })));
     const json = await res.json();
     expect(res.status).toBe(413);
-    expect(json.code).toBe("FILE_TOO_LARGE");
+    expect(json.errorCode).toBe("FILE_TOO_LARGE");
   });
 
   it("同意なし: consentが'true'以外だとCONSENT_REQUIREDになる", async () => {
@@ -106,7 +108,7 @@ describe("POST /api/tools/photo-colorize", () => {
     const res = await POST(buildRequest(baseForm({ consent: "false" })));
     const json = await res.json();
     expect(res.status).toBe(400);
-    expect(json.code).toBe("CONSENT_REQUIRED");
+    expect(json.errorCode).toBe("CONSENT_REQUIRED");
   });
 
   it("Turnstile失敗: siteverifyが失敗するとTURNSTILE_FAILEDになる", async () => {
@@ -115,7 +117,7 @@ describe("POST /api/tools/photo-colorize", () => {
     const res = await POST(buildRequest(baseForm()));
     const json = await res.json();
     expect(res.status).toBe(403);
-    expect(json.code).toBe("TURNSTILE_FAILED");
+    expect(json.errorCode).toBe("TURNSTILE_FAILED");
   });
 
   it("Turnstile未設定: not_configuredはSERVICE_DISABLEDになる(無防備実行の禁止)", async () => {
@@ -124,7 +126,7 @@ describe("POST /api/tools/photo-colorize", () => {
     const res = await POST(buildRequest(baseForm()));
     const json = await res.json();
     expect(res.status).toBe(503);
-    expect(json.code).toBe("SERVICE_DISABLED");
+    expect(json.errorCode).toBe("SERVICE_DISABLED");
   });
 
   it("レート制限: 上限に達しているとRATE_LIMITEDになる", async () => {
@@ -133,16 +135,7 @@ describe("POST /api/tools/photo-colorize", () => {
     const res = await POST(buildRequest(baseForm()));
     const json = await res.json();
     expect(res.status).toBe(429);
-    expect(json.code).toBe("RATE_LIMITED");
-  });
-
-  it("Replicate失敗: providerがMODEL_FAILEDを返すとそのまま伝える", async () => {
-    colorizeMock.mockResolvedValue({ ok: false, code: "MODEL_FAILED" });
-    const { POST } = await import("../route");
-    const res = await POST(buildRequest(baseForm()));
-    const json = await res.json();
-    expect(res.status).toBe(502);
-    expect(json.code).toBe("MODEL_FAILED");
+    expect(json.errorCode).toBe("RATE_LIMITED");
   });
 
   it("Replicateタイムアウト: providerがMODEL_TIMEOUTを返すと504になる", async () => {
@@ -151,7 +144,7 @@ describe("POST /api/tools/photo-colorize", () => {
     const res = await POST(buildRequest(baseForm()));
     const json = await res.json();
     expect(res.status).toBe(504);
-    expect(json.code).toBe("MODEL_TIMEOUT");
+    expect(json.errorCode).toBe("MODEL_TIMEOUT");
   });
 
   it("COLORIZE_ENABLED=falseの場合は即座にSERVICE_DISABLEDになる", async () => {
@@ -160,7 +153,7 @@ describe("POST /api/tools/photo-colorize", () => {
     const res = await POST(buildRequest(baseForm()));
     const json = await res.json();
     expect(res.status).toBe(503);
-    expect(json.code).toBe("SERVICE_DISABLED");
+    expect(json.errorCode).toBe("SERVICE_DISABLED");
     expect(colorizeMock).not.toHaveBeenCalled();
   });
 
@@ -169,7 +162,7 @@ describe("POST /api/tools/photo-colorize", () => {
     const res = await POST(buildRequest(baseForm({ image: null })));
     const json = await res.json();
     expect(res.status).toBe(400);
-    expect(json.code).toBe("INVALID_FILE");
+    expect(json.errorCode).toBe("INVALID_FILE");
   });
 
   it("クロスオリジンのリクエストは拒否する", async () => {
@@ -178,7 +171,7 @@ describe("POST /api/tools/photo-colorize", () => {
     const res = await POST(req);
     const json = await res.json();
     expect(res.status).toBe(400);
-    expect(json.code).toBe("INVALID_FILE");
+    expect(json.errorCode).toBe("INVALID_FILE");
     expect(colorizeMock).not.toHaveBeenCalled();
   });
 
@@ -191,9 +184,58 @@ describe("POST /api/tools/photo-colorize", () => {
     const res = await POST(buildRequest(baseForm()));
     const json = await res.json();
     expect(res.status).toBe(500);
-    expect(json.code).toBe("INTERNAL_ERROR");
+    expect(json.errorCode).toBe("INTERNAL_ERROR");
     const loggedText = consoleErrorSpy.mock.calls.map((call) => JSON.stringify(call)).join("\n");
     expect(loggedText).toContain("unexpected boom");
     consoleErrorSpy.mockRestore();
+  });
+
+  const replicateFailureCodes: Array<{ code: ColorizeErrorCode; httpStatus: number }> = [
+    { code: "REPLICATE_AUTH_FAILED", httpStatus: 502 },
+    { code: "REPLICATE_BILLING_REQUIRED", httpStatus: 502 },
+    { code: "MODEL_VERSION_INVALID", httpStatus: 502 },
+    { code: "MODEL_EXECUTION_FAILED", httpStatus: 502 },
+  ];
+
+  for (const { code, httpStatus } of replicateFailureCodes) {
+    it(`Replicate分類エラー: providerが${code}を返すとHTTP ${httpStatus}で errorCode/userMessage/retryable/requestId を返す`, async () => {
+      colorizeMock.mockResolvedValue({ ok: false, code });
+      const { POST } = await import("../route");
+      const res = await POST(buildRequest(baseForm()));
+      const json = await res.json();
+      expect(res.status).toBe(httpStatus);
+      expect(json.success).toBe(false);
+      expect(json.errorCode).toBe(code);
+      expect(typeof json.userMessage).toBe("string");
+      expect(json.userMessage.length).toBeGreaterThan(0);
+      expect(json.retryable).toBe(COLORIZE_ERROR_RETRYABLE[code]);
+      expect(json.requestId).toMatch(UUID_RE);
+      // 秘密情報・外部APIレスポンス全文・スタックトレースを含まない
+      expect(JSON.stringify(json)).not.toMatch(/token|secret|stack|Error:/i);
+    });
+  }
+
+  it("provider.colorizeとverifyTurnstileTokenへレスポンスと同じrequestIdが渡る(ログ追跡用)", async () => {
+    const { POST } = await import("../route");
+    const res = await POST(buildRequest(baseForm()));
+    const json = await res.json();
+
+    const [, colorizeOptions] = colorizeMock.mock.calls[0] as [unknown, { requestId: string }];
+    expect(colorizeOptions.requestId).toBe(json.requestId);
+
+    const turnstileArgs = verifyTurnstileTokenMock.mock.calls[0] as unknown[];
+    expect(turnstileArgs[3]).toBe(json.requestId);
+  });
+
+  it("失敗レスポンスは常にerrorCode/userMessage/retryable/requestIdの4項目を含む", async () => {
+    const { POST } = await import("../route");
+    const res = await POST(buildRequest(baseForm({ consent: "false" })));
+    const json = await res.json();
+    expect(json.success).toBe(false);
+    expect(json).toHaveProperty("errorCode");
+    expect(json).toHaveProperty("userMessage");
+    expect(json).toHaveProperty("retryable");
+    expect(json).toHaveProperty("requestId");
+    expect(json.requestId).toMatch(UUID_RE);
   });
 });

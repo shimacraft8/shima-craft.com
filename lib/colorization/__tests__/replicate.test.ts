@@ -4,8 +4,14 @@ import { ReplicateColorizationProvider } from "../replicate";
 const ORIGINAL_TOKEN = process.env.REPLICATE_API_TOKEN;
 const ORIGINAL_VERSION = process.env.REPLICATE_DDCOLOR_VERSION;
 
+const TEST_REQUEST_ID = "test-request-id-1234";
+
 function makeInput() {
   return { imageBuffer: Buffer.from("fake-image-bytes"), mimeType: "image/jpeg" as const };
+}
+
+function callOptions(signal: AbortSignal = new AbortController().signal) {
+  return { signal, requestId: TEST_REQUEST_ID };
 }
 
 afterEach(() => {
@@ -18,7 +24,7 @@ describe("ReplicateColorizationProvider", () => {
   it("REPLICATE_API_TOKEN未設定ならSERVICE_DISABLEDを返す(APIキーを露出させず安全に失敗)", async () => {
     delete process.env.REPLICATE_API_TOKEN;
     const provider = new ReplicateColorizationProvider(vi.fn() as unknown as typeof fetch);
-    const result = await provider.colorize(makeInput(), { signal: new AbortController().signal });
+    const result = await provider.colorize(makeInput(), callOptions());
     expect(result).toEqual({ ok: false, code: "SERVICE_DISABLED" });
   });
 
@@ -35,7 +41,7 @@ describe("ReplicateColorizationProvider", () => {
       }),
     });
     const provider = new ReplicateColorizationProvider(fetchMock as unknown as typeof fetch);
-    const result = await provider.colorize(makeInput(), { signal: new AbortController().signal });
+    const result = await provider.colorize(makeInput(), callOptions());
     expect(result).toEqual({
       ok: true,
       resultUrl: "https://replicate.delivery/output.png",
@@ -57,7 +63,7 @@ describe("ReplicateColorizationProvider", () => {
       }),
     });
     const provider = new ReplicateColorizationProvider(fetchMock as unknown as typeof fetch);
-    const result = await provider.colorize(makeInput(), { signal: new AbortController().signal });
+    const result = await provider.colorize(makeInput(), callOptions());
     expect(result.ok && result.resultUrl).toBe("https://replicate.delivery/first.png");
   });
 
@@ -85,7 +91,7 @@ describe("ReplicateColorizationProvider", () => {
         }),
       });
     const provider = new ReplicateColorizationProvider(fetchMock as unknown as typeof fetch);
-    const result = await provider.colorize(makeInput(), { signal: new AbortController().signal });
+    const result = await provider.colorize(makeInput(), callOptions());
     expect(result).toEqual({
       ok: true,
       resultUrl: "https://replicate.delivery/done.png",
@@ -95,8 +101,9 @@ describe("ReplicateColorizationProvider", () => {
     expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 
-  it("predictionがfailedならMODEL_FAILEDを返す", async () => {
+  it("predictionがfailedならMODEL_EXECUTION_FAILEDを返す", async () => {
     process.env.REPLICATE_API_TOKEN = "test-token";
+    const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
     const fetchMock = vi.fn().mockResolvedValue({
       ok: true,
       status: 200,
@@ -108,8 +115,11 @@ describe("ReplicateColorizationProvider", () => {
       }),
     });
     const provider = new ReplicateColorizationProvider(fetchMock as unknown as typeof fetch);
-    const result = await provider.colorize(makeInput(), { signal: new AbortController().signal });
-    expect(result).toEqual({ ok: false, code: "MODEL_FAILED" });
+    const result = await provider.colorize(makeInput(), callOptions());
+    expect(result).toEqual({ ok: false, code: "MODEL_EXECUTION_FAILED" });
+    const loggedText = consoleErrorSpy.mock.calls.map((call) => JSON.stringify(call)).join("\n");
+    expect(loggedText).toContain(TEST_REQUEST_ID);
+    consoleErrorSpy.mockRestore();
   });
 
   it("ポーリング予算を超えたらMODEL_TIMEOUTを返す", async () => {
@@ -124,16 +134,76 @@ describe("ReplicateColorizationProvider", () => {
       }),
     });
     const provider = new ReplicateColorizationProvider(fetchMock as unknown as typeof fetch, 500);
-    const result = await provider.colorize(makeInput(), { signal: new AbortController().signal });
+    const result = await provider.colorize(makeInput(), callOptions());
     expect(result).toEqual({ ok: false, code: "MODEL_TIMEOUT" });
   }, 10_000);
 
-  it("認証エラー(401)はSERVICE_DISABLEDとして扱う", async () => {
+  it("認証エラー(401/403)はREPLICATE_AUTH_FAILEDに分類する", async () => {
     process.env.REPLICATE_API_TOKEN = "invalid-token";
-    const fetchMock = vi.fn().mockResolvedValue({ ok: false, status: 401, json: async () => ({}) });
+    const fetchMock = vi.fn().mockResolvedValue({ ok: false, status: 401, json: async () => ({}), clone() { return this; } });
     const provider = new ReplicateColorizationProvider(fetchMock as unknown as typeof fetch);
-    const result = await provider.colorize(makeInput(), { signal: new AbortController().signal });
-    expect(result).toEqual({ ok: false, code: "SERVICE_DISABLED" });
+    const result = await provider.colorize(makeInput(), callOptions());
+    expect(result).toEqual({ ok: false, code: "REPLICATE_AUTH_FAILED" });
+  });
+
+  it("課金未設定(402)はREPLICATE_BILLING_REQUIREDに分類する", async () => {
+    process.env.REPLICATE_API_TOKEN = "test-token";
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: false,
+      status: 402,
+      json: async () => ({ detail: "You have not set up billing" }),
+      clone() { return this; },
+    });
+    const provider = new ReplicateColorizationProvider(fetchMock as unknown as typeof fetch);
+    const result = await provider.colorize(makeInput(), callOptions());
+    expect(result).toEqual({ ok: false, code: "REPLICATE_BILLING_REQUIRED" });
+  });
+
+  it("バージョン不正(404)はMODEL_VERSION_INVALIDに分類する", async () => {
+    process.env.REPLICATE_API_TOKEN = "test-token";
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: false,
+      status: 404,
+      json: async () => ({ detail: "Invalid version or not permitted" }),
+      clone() { return this; },
+    });
+    const provider = new ReplicateColorizationProvider(fetchMock as unknown as typeof fetch);
+    const result = await provider.colorize(makeInput(), callOptions());
+    expect(result).toEqual({ ok: false, code: "MODEL_VERSION_INVALID" });
+  });
+
+  it("入力スキーマ不一致(422)はMODEL_VERSION_INVALIDに分類する", async () => {
+    process.env.REPLICATE_API_TOKEN = "test-token";
+    const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: false,
+      status: 422,
+      json: async () => ({ detail: "Invalid version or not permitted", status: 422 }),
+      clone() {
+        return this;
+      },
+    });
+    const provider = new ReplicateColorizationProvider(fetchMock as unknown as typeof fetch);
+    const result = await provider.colorize(makeInput(), callOptions());
+    expect(result).toEqual({ ok: false, code: "MODEL_VERSION_INVALID" });
+    const loggedText = consoleErrorSpy.mock.calls.map((call) => JSON.stringify(call)).join("\n");
+    expect(loggedText).toContain("Invalid version");
+    expect(loggedText).toContain(TEST_REQUEST_ID);
+    expect(loggedText).not.toContain("test-token");
+    consoleErrorSpy.mockRestore();
+  });
+
+  it("その他の5xx等はMODEL_EXECUTION_FAILEDに分類する", async () => {
+    process.env.REPLICATE_API_TOKEN = "test-token";
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: false,
+      status: 500,
+      json: async () => ({ detail: "internal server error" }),
+      clone() { return this; },
+    });
+    const provider = new ReplicateColorizationProvider(fetchMock as unknown as typeof fetch);
+    const result = await provider.colorize(makeInput(), callOptions());
+    expect(result).toEqual({ ok: false, code: "MODEL_EXECUTION_FAILED" });
   });
 
   it("AbortErrorはMODEL_TIMEOUTとして扱う", async () => {
@@ -141,7 +211,7 @@ describe("ReplicateColorizationProvider", () => {
     const abortError = Object.assign(new Error("aborted"), { name: "AbortError" });
     const fetchMock = vi.fn().mockRejectedValue(abortError);
     const provider = new ReplicateColorizationProvider(fetchMock as unknown as typeof fetch);
-    const result = await provider.colorize(makeInput(), { signal: new AbortController().signal });
+    const result = await provider.colorize(makeInput(), callOptions());
     expect(result).toEqual({ ok: false, code: "MODEL_TIMEOUT" });
   });
 
@@ -159,7 +229,7 @@ describe("ReplicateColorizationProvider", () => {
       }),
     });
     const provider = new ReplicateColorizationProvider(fetchMock as unknown as typeof fetch);
-    const result = await provider.colorize(makeInput(), { signal: new AbortController().signal });
+    const result = await provider.colorize(makeInput(), callOptions());
     expect(result.ok && result.version).toBe("abc123version");
     const [, init] = fetchMock.mock.calls[0] as [string, { headers: Record<string, string>; body: string }];
     expect(init.headers.Authorization).toBe("Bearer test-token");
@@ -180,27 +250,7 @@ describe("ReplicateColorizationProvider", () => {
       }),
     });
     const provider = new ReplicateColorizationProvider(fetchMock as unknown as typeof fetch);
-    const result = await provider.colorize(makeInput(), { signal: new AbortController().signal });
+    const result = await provider.colorize(makeInput(), callOptions());
     expect(result.ok && result.version).toBe("ca494ba129e44e45f661d6ece83c4c98a9a7c774309beca01429b58fce8aa695");
-  });
-
-  it("Replicateがバージョン不正等で4xxを返した場合、エラー詳細を秘密情報を含めずログに残しMODEL_FAILEDを返す", async () => {
-    process.env.REPLICATE_API_TOKEN = "test-token";
-    const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
-    const fetchMock = vi.fn().mockResolvedValue({
-      ok: false,
-      status: 422,
-      json: async () => ({ detail: "Invalid version or not permitted", status: 422 }),
-      clone() {
-        return this;
-      },
-    });
-    const provider = new ReplicateColorizationProvider(fetchMock as unknown as typeof fetch);
-    const result = await provider.colorize(makeInput(), { signal: new AbortController().signal });
-    expect(result).toEqual({ ok: false, code: "MODEL_FAILED" });
-    const loggedText = consoleErrorSpy.mock.calls.map((call) => JSON.stringify(call)).join("\n");
-    expect(loggedText).toContain("Invalid version");
-    expect(loggedText).not.toContain("test-token");
-    consoleErrorSpy.mockRestore();
   });
 });

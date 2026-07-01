@@ -1,7 +1,9 @@
+import { randomUUID } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import {
   COLORIZE_ERROR_HTTP_STATUS,
   COLORIZE_ERROR_MESSAGES,
+  COLORIZE_ERROR_RETRYABLE,
   type ColorizeApiResponse,
   type ColorizeErrorCode,
 } from "@/lib/colorization/types";
@@ -16,9 +18,20 @@ export const maxDuration = 60;
 
 const DEFAULT_MAX_BYTES = 4_000_000;
 
-function errorResponse(code: ColorizeErrorCode): NextResponse<ColorizeApiResponse> {
+/**
+ * 失敗レスポンスを組み立てつつ、Vercel Runtime LogsでrequestId・errorCodeから
+ * 追跡できるよう1行ログを残す（秘密情報・スタックトレース・外部APIレスポンス全文は含めない）。
+ */
+function errorResponse(code: ColorizeErrorCode, requestId: string): NextResponse<ColorizeApiResponse> {
+  console.error("[colorize] request failed", { requestId, errorCode: code });
   return NextResponse.json(
-    { success: false, code, message: COLORIZE_ERROR_MESSAGES[code] },
+    {
+      success: false,
+      errorCode: code,
+      userMessage: COLORIZE_ERROR_MESSAGES[code],
+      retryable: COLORIZE_ERROR_RETRYABLE[code],
+      requestId,
+    },
     { status: COLORIZE_ERROR_HTTP_STATUS[code] }
   );
 }
@@ -37,67 +50,69 @@ function isSameOrigin(request: NextRequest): boolean {
 }
 
 export async function POST(request: NextRequest): Promise<NextResponse<ColorizeApiResponse>> {
+  const requestId = randomUUID();
+
   // ハンドラ内のどこで予期しない例外が起きても、Vercel側のFunction Invocation失敗(素の502)として
   // 落とすのではなく、必ず安全な日本語エラーとして返し、原因を秘密情報を含まない形でログに残す。
   try {
     if (process.env.COLORIZE_ENABLED === "false") {
-      return errorResponse("SERVICE_DISABLED");
+      return errorResponse("SERVICE_DISABLED", requestId);
     }
 
     if (!isSameOrigin(request)) {
-      return errorResponse("INVALID_FILE");
+      return errorResponse("INVALID_FILE", requestId);
     }
 
     let form: FormData;
     try {
       form = await request.formData();
     } catch (err) {
-      console.error("[colorize] formData parse failed", { name: errorName(err), message: errorMessage(err) });
-      return errorResponse("INVALID_FILE");
+      console.error("[colorize] formData parse failed", { requestId, name: errorName(err), message: errorMessage(err) });
+      return errorResponse("INVALID_FILE", requestId);
     }
 
     const consent = form.get("consent");
     if (consent !== "true") {
-      return errorResponse("CONSENT_REQUIRED");
+      return errorResponse("CONSENT_REQUIRED", requestId);
     }
 
     const turnstileToken = form.get("turnstileToken");
     if (typeof turnstileToken !== "string" || !turnstileToken) {
-      return errorResponse("TURNSTILE_FAILED");
+      return errorResponse("TURNSTILE_FAILED", requestId);
     }
 
     const ip = getClientIp(request);
 
-    const turnstileResult = await verifyTurnstileToken(turnstileToken, ip);
+    const turnstileResult = await verifyTurnstileToken(turnstileToken, ip, fetch, requestId);
     if (!turnstileResult.ok) {
-      return errorResponse(turnstileResult.reason === "not_configured" ? "SERVICE_DISABLED" : "TURNSTILE_FAILED");
+      return errorResponse(turnstileResult.reason === "not_configured" ? "SERVICE_DISABLED" : "TURNSTILE_FAILED", requestId);
     }
 
     const rateLimitResult = colorizeRateLimiter.check(ip);
     if (!rateLimitResult.ok) {
-      return errorResponse("RATE_LIMITED");
+      return errorResponse("RATE_LIMITED", requestId);
     }
 
     const file = form.get("image");
     if (!(file instanceof File) || file.size === 0) {
-      return errorResponse("INVALID_FILE");
+      return errorResponse("INVALID_FILE", requestId);
     }
 
     const maxBytes = Number(process.env.COLORIZE_MAX_BYTES ?? DEFAULT_MAX_BYTES);
     if (file.size > (Number.isFinite(maxBytes) && maxBytes > 0 ? maxBytes : DEFAULT_MAX_BYTES)) {
-      return errorResponse("FILE_TOO_LARGE");
+      return errorResponse("FILE_TOO_LARGE", requestId);
     }
 
     const buffer = Buffer.from(await file.arrayBuffer());
 
     const detectedType = detectImageType(buffer);
     if (!detectedType) {
-      return errorResponse("UNSUPPORTED_TYPE");
+      return errorResponse("UNSUPPORTED_TYPE", requestId);
     }
 
     const dimensions = decodeImageDimensions(buffer);
     if (!dimensions) {
-      return errorResponse("IMAGE_DECODE_FAILED");
+      return errorResponse("IMAGE_DECODE_FAILED", requestId);
     }
 
     const warnings: string[] = [];
@@ -112,11 +127,11 @@ export async function POST(request: NextRequest): Promise<NextResponse<ColorizeA
       const provider = getColorizationProvider();
       const result = await provider.colorize(
         { imageBuffer: buffer, mimeType: detectedType },
-        { signal: controller.signal }
+        { signal: controller.signal, requestId }
       );
 
       if (!result.ok) {
-        return errorResponse(result.code);
+        return errorResponse(result.code, requestId);
       }
 
       return NextResponse.json({
@@ -124,16 +139,17 @@ export async function POST(request: NextRequest): Promise<NextResponse<ColorizeA
         resultUrl: result.resultUrl,
         model: result.model,
         warnings,
+        requestId,
       });
     } catch (err) {
-      console.error("[colorize] provider.colorize threw", { name: errorName(err), message: errorMessage(err) });
-      return errorResponse("INTERNAL_ERROR");
+      console.error("[colorize] provider.colorize threw", { requestId, name: errorName(err), message: errorMessage(err) });
+      return errorResponse("INTERNAL_ERROR", requestId);
     } finally {
       clearTimeout(timeout);
     }
   } catch (err) {
-    console.error("[colorize] unhandled error in POST handler", { name: errorName(err), message: errorMessage(err) });
-    return errorResponse("INTERNAL_ERROR");
+    console.error("[colorize] unhandled error in POST handler", { requestId, name: errorName(err), message: errorMessage(err) });
+    return errorResponse("INTERNAL_ERROR", requestId);
   }
 }
 

@@ -1,5 +1,6 @@
 import type {
   ColorizationProvider,
+  ColorizeErrorCode,
   ColorizeProviderInput,
   ColorizeProviderResult,
 } from "@/lib/colorization/types";
@@ -39,6 +40,18 @@ function extractResultUrl(output: ReplicatePrediction["output"]): string | null 
   return null;
 }
 
+/**
+ * ReplicateのHTTPステータスを利用者向けエラーコードへ分類する。
+ * 401/403=APIトークン不正、402=課金未設定、404/422=バージョン不正・入力スキーマ不一致、
+ * それ以外は実行時の一時的な失敗として扱う。
+ */
+function classifyReplicateHttpError(status: number): ColorizeErrorCode {
+  if (status === 401 || status === 403) return "REPLICATE_AUTH_FAILED";
+  if (status === 402) return "REPLICATE_BILLING_REQUIRED";
+  if (status === 404 || status === 422) return "MODEL_VERSION_INVALID";
+  return "MODEL_EXECUTION_FAILED";
+}
+
 export class ReplicateColorizationProvider implements ColorizationProvider {
   constructor(
     private readonly fetchImpl: typeof fetch = fetch,
@@ -47,8 +60,9 @@ export class ReplicateColorizationProvider implements ColorizationProvider {
 
   async colorize(
     input: ColorizeProviderInput,
-    options: { signal: AbortSignal }
+    options: { signal: AbortSignal; requestId: string }
   ): Promise<ColorizeProviderResult> {
+    const { requestId } = options;
     // 環境変数はダッシュボードでの貼り付け時に前後改行/空白が混入することがあるため、
     // Replicate に送る直前で必ず trim する（例: ヘッダー注入エラーやバージョン不一致の原因になる）。
     const token = process.env.REPLICATE_API_TOKEN?.trim();
@@ -74,22 +88,26 @@ export class ReplicateColorizationProvider implements ColorizationProvider {
         signal: options.signal,
       });
 
-      if (createRes.status === 401 || createRes.status === 403) {
-        console.error("[colorize:replicate] auth rejected", { status: createRes.status });
-        return { ok: false, code: "SERVICE_DISABLED" };
-      }
       if (!createRes.ok) {
+        const code = classifyReplicateHttpError(createRes.status);
         console.error("[colorize:replicate] create prediction failed", {
+          requestId,
+          errorCode: code,
           status: createRes.status,
           detail: await safeErrorDetail(createRes),
         });
-        return { ok: false, code: "MODEL_FAILED" };
+        return { ok: false, code };
       }
       prediction = (await createRes.json()) as ReplicatePrediction;
     } catch (err) {
       if (isAbortError(err)) return { ok: false, code: "MODEL_TIMEOUT" };
-      console.error("[colorize:replicate] create prediction threw", { name: errorName(err), message: errorMessage(err) });
-      return { ok: false, code: "MODEL_FAILED" };
+      console.error("[colorize:replicate] create prediction threw", {
+        requestId,
+        errorCode: "MODEL_EXECUTION_FAILED",
+        name: errorName(err),
+        message: errorMessage(err),
+      });
+      return { ok: false, code: "MODEL_EXECUTION_FAILED" };
     }
 
     const deadline = Date.now() + this.pollBudgetMs;
@@ -101,40 +119,57 @@ export class ReplicateColorizationProvider implements ColorizationProvider {
         await sleep(POLL_INTERVAL_MS);
         const pollUrl = prediction.urls?.get;
         if (!pollUrl) {
-          console.error("[colorize:replicate] poll url missing", { status: prediction.status });
-          return { ok: false, code: "MODEL_FAILED" };
+          console.error("[colorize:replicate] poll url missing", {
+            requestId,
+            errorCode: "MODEL_EXECUTION_FAILED",
+            status: prediction.status,
+          });
+          return { ok: false, code: "MODEL_EXECUTION_FAILED" };
         }
         const pollRes = await this.fetchImpl(pollUrl, {
           headers: { Authorization: `Bearer ${token}` },
           signal: options.signal,
         });
         if (!pollRes.ok) {
+          const code = classifyReplicateHttpError(pollRes.status);
           console.error("[colorize:replicate] poll request failed", {
+            requestId,
+            errorCode: code,
             status: pollRes.status,
             detail: await safeErrorDetail(pollRes),
           });
-          return { ok: false, code: "MODEL_FAILED" };
+          return { ok: false, code };
         }
         prediction = (await pollRes.json()) as ReplicatePrediction;
       }
     } catch (err) {
       if (isAbortError(err)) return { ok: false, code: "MODEL_TIMEOUT" };
-      console.error("[colorize:replicate] poll threw", { name: errorName(err), message: errorMessage(err) });
-      return { ok: false, code: "MODEL_FAILED" };
+      console.error("[colorize:replicate] poll threw", {
+        requestId,
+        errorCode: "MODEL_EXECUTION_FAILED",
+        name: errorName(err),
+        message: errorMessage(err),
+      });
+      return { ok: false, code: "MODEL_EXECUTION_FAILED" };
     }
 
     if (prediction.status !== "succeeded") {
       console.error("[colorize:replicate] prediction did not succeed", {
+        requestId,
+        errorCode: "MODEL_EXECUTION_FAILED",
         status: prediction.status,
         error: safeStringify(prediction.error),
       });
-      return { ok: false, code: "MODEL_FAILED" };
+      return { ok: false, code: "MODEL_EXECUTION_FAILED" };
     }
 
     const resultUrl = extractResultUrl(prediction.output);
     if (!resultUrl) {
-      console.error("[colorize:replicate] succeeded but no result url in output");
-      return { ok: false, code: "MODEL_FAILED" };
+      console.error("[colorize:replicate] succeeded but no result url in output", {
+        requestId,
+        errorCode: "MODEL_EXECUTION_FAILED",
+      });
+      return { ok: false, code: "MODEL_EXECUTION_FAILED" };
     }
 
     return { ok: true, resultUrl, model: DDCOLOR_MODEL, version };

@@ -1,6 +1,11 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/app/lib/site";
-import { amamiGreetings, amamiProverbs } from "@/app/lib/amamiDialect";
+import {
+  amamiGreetings,
+  amamiProverbs,
+  amamiWords,
+  wordCategories,
+} from "@/app/lib/amamiDialect";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date("2026-07-01T00:00:00+09:00");
@@ -66,6 +71,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
+      url: `${site.url}/amami-dialect/words`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${site.url}/amami-dialect/search`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    {
       url: `${site.url}/amami-dialect/about`,
       lastModified: now,
       changeFrequency: "yearly",
@@ -93,5 +110,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.4,
   }));
 
-  return [...staticRoutes, ...proverbRoutes, ...greetingRoutes];
+  const wordCategoryRoutes: MetadataRoute.Sitemap = wordCategories.map((category) => ({
+    url: `${site.url}/amami-dialect/words/category/${category.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.5,
+  }));
+
+  const wordRoutes: MetadataRoute.Sitemap = amamiWords.map((record) => ({
+    url: `${site.url}/amami-dialect/words/${record.id}`,
+    lastModified: now,
+    changeFrequency: "yearly",
+    priority: 0.4,
+  }));
+
+  return [
+    ...staticRoutes,
+    ...proverbRoutes,
+    ...greetingRoutes,
+    ...wordCategoryRoutes,
+    ...wordRoutes,
+  ];
 }

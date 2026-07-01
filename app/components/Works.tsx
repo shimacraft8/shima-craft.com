@@ -2,7 +2,7 @@ import { Reveal } from "@/app/components/Reveal";
 import { TrackedLink } from "@/app/components/TrackedLink";
 
 type Work = {
-  kind: "制作サンプル" | "画面サンプル";
+  kind: "制作サンプル" | "画面サンプル" | "無料ツール";
   category: string;
   title: string;
   desc: string;
@@ -58,6 +58,16 @@ const WORKS: Work[] = [
     scope: "予約・顧客管理・問い合わせ管理などの画面レイアウト確認",
     url: "/system-samples",
     accent: "#E8735A",
+  },
+  {
+    kind: "無料ツール",
+    category: "AI画像処理",
+    title: "古い白黒写真をカラー化",
+    desc: "白黒写真をアップロードして、AIが自然な色を推定する無料ツールです。",
+    scope: "アップロード・カラー化・Before/After比較・保存までを画面上で体験",
+    url: "/tools/photo-colorize",
+    accent: "#F4A261",
+    linkLabel: "無料で試す",
   },
 ];
 

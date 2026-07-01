@@ -145,6 +145,9 @@ export default function ServicesPage() {
             <Link href="/web-check" className="related-link">
               Web導線かんたんチェック
             </Link>
+            <Link href="/tools/photo-colorize" className="related-link">
+              白黒写真を無料でカラー化
+            </Link>
             <Link href="/" className="related-link">
               SHIMA CRAFT トップへ
             </Link>

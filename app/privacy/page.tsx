@@ -63,6 +63,18 @@ export default function PrivacyPage() {
             </div>
           </div>
         </section>
+
+        <div className="related-section">
+          <p className="related-section-label">Related</p>
+          <div className="related-links">
+            <Link href="/tools/photo-colorize" className="related-link">
+              白黒写真を無料でカラー化
+            </Link>
+            <Link href="/services" className="related-link">
+              サービス一覧
+            </Link>
+          </div>
+        </div>
       </main>
       <Footer />
     </>

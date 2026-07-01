@@ -2800,3 +2800,337 @@ section {
     padding-bottom: calc(80px + env(safe-area-inset-bottom));
   }
 }
+
+/* ===== スクリーンリーダー専用テキスト ===== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ===== 白黒写真カラー化ツール（/tools/photo-colorize） ===== */
+.colorize-tool-container {
+  max-width: 640px;
+}
+.colorize-tool {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.colorize-tool--disabled {
+  padding: 24px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.03);
+  color: #555;
+  text-align: center;
+}
+
+/* ─── アップロード領域 ─── */
+.colorize-dropzone {
+  position: relative;
+  border: 2px dashed rgba(42, 157, 143, 0.35);
+  border-radius: 18px;
+  padding: clamp(32px, 6vw, 56px) 20px;
+  text-align: center;
+  background: rgba(42, 157, 143, 0.03);
+  transition: border-color 0.2s, background 0.2s;
+}
+.colorize-dropzone--active {
+  border-color: var(--secondary);
+  background: rgba(42, 157, 143, 0.08);
+}
+.colorize-dropzone-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+.colorize-dropzone-title {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.colorize-dropzone-sub {
+  font-size: 0.85rem;
+  color: #888;
+}
+.colorize-dropzone-btn {
+  margin-top: 8px;
+  display: inline-block;
+  padding: 12px 30px;
+  border-radius: 50px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+.colorize-file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+}
+.colorize-file-input:focus-visible + .colorize-dropzone-label .colorize-dropzone-btn,
+.colorize-dropzone-label:has(input:focus-visible) .colorize-dropzone-btn {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+.colorize-preparing {
+  margin-top: 14px;
+  font-size: 0.88rem;
+  color: var(--secondary);
+}
+.colorize-select-error {
+  margin-top: 14px;
+  font-size: 0.88rem;
+  color: var(--primary);
+}
+
+/* ─── 選択後プレビュー・同意 ─── */
+.colorize-ready {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.colorize-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.colorize-preview img {
+  max-width: 100%;
+  max-height: 360px;
+  border-radius: 14px;
+  box-shadow: 0 6px 24px rgba(26, 26, 26, 0.1);
+}
+.colorize-remove-btn {
+  background: none;
+  border: none;
+  color: var(--secondary);
+  text-decoration: underline;
+  font-size: 0.86rem;
+  cursor: pointer;
+  padding: 4px;
+}
+.colorize-remove-btn:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 2px;
+}
+.colorize-consent {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  padding: 18px 20px;
+}
+.colorize-consent-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: #444;
+  line-height: 1.7;
+  cursor: pointer;
+}
+.colorize-checkbox {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  accent-color: var(--secondary);
+  cursor: pointer;
+}
+.colorize-checkbox:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 2px;
+}
+.colorize-consent-label a {
+  color: var(--secondary);
+  text-decoration: underline;
+}
+.colorize-turnstile {
+  display: flex;
+  justify-content: center;
+}
+.colorize-start-btn {
+  width: 100%;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+}
+.colorize-start-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ─── 処理中 ─── */
+.colorize-processing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 40px 20px;
+  text-align: center;
+}
+.colorize-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(42, 157, 143, 0.2);
+  border-top-color: var(--secondary);
+  border-radius: 50%;
+  animation: colorize-spin 0.9s linear infinite;
+}
+@keyframes colorize-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .colorize-spinner {
+    animation: none;
+    border-top-color: rgba(42, 157, 143, 0.2);
+  }
+}
+.colorize-processing-note {
+  font-size: 0.85rem;
+  color: #888;
+  max-width: 440px;
+}
+
+/* ─── Before/After 比較スライダー ─── */
+.colorize-compare {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: 14px;
+  box-shadow: 0 6px 24px rgba(26, 26, 26, 0.1);
+  background: #eee;
+}
+.colorize-compare-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
+.colorize-compare-before-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.colorize-compare-range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  appearance: none;
+  background: transparent;
+  cursor: ew-resize;
+}
+.colorize-compare-range::-webkit-slider-runnable-track {
+  background: transparent;
+  height: 100%;
+}
+.colorize-compare-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 4px;
+  height: 100%;
+  background: #fff;
+  box-shadow: 0 0 0 2px var(--secondary), 0 2px 12px rgba(0, 0, 0, 0.35);
+  cursor: ew-resize;
+  border-radius: 2px;
+}
+.colorize-compare-range::-moz-range-track {
+  background: transparent;
+  height: 100%;
+}
+.colorize-compare-range::-moz-range-thumb {
+  width: 4px;
+  height: 100%;
+  background: #fff;
+  border: none;
+  box-shadow: 0 0 0 2px var(--secondary), 0 2px 12px rgba(0, 0, 0, 0.35);
+  cursor: ew-resize;
+  border-radius: 2px;
+}
+.colorize-compare-range:focus-visible::-webkit-slider-thumb {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+.colorize-compare-range:focus-visible::-moz-range-thumb {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* ─── 結果・エラー ─── */
+.colorize-result {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.colorize-warning {
+  font-size: 0.85rem;
+  color: var(--primary);
+}
+.colorize-result-note {
+  font-size: 0.82rem;
+  color: #888;
+  line-height: 1.7;
+}
+.colorize-result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.colorize-result-actions .btn {
+  border: none;
+  cursor: pointer;
+}
+.colorize-btn-ghost {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+}
+.colorize-btn-ghost:hover {
+  border-color: var(--secondary) !important;
+  color: var(--secondary);
+}
+.colorize-error {
+  padding: 24px;
+  border-radius: 14px;
+  background: rgba(232, 115, 90, 0.06);
+  border: 1px solid rgba(232, 115, 90, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.colorize-error > p {
+  color: var(--text);
+  font-size: 0.94rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 480px) {
+  .colorize-result-actions {
+    flex-direction: column;
+  }
+  .colorize-result-actions .btn {
+    width: 100%;
+    text-align: center;
+  }
+}

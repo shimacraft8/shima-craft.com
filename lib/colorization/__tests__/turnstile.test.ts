@@ -55,4 +55,24 @@ describe("verifyTurnstileToken", () => {
     const result = await verifyTurnstileToken("token", "1.2.3.4", fetchMock);
     expect(result).toEqual({ ok: false, reason: "network_error" });
   });
+
+  it("TURNSTILE_SECRET_KEYの前後に改行・空白があってもtrimして送信する(貼り付けミス対策)", async () => {
+    process.env.TURNSTILE_SECRET_KEY = "\ntest-secret\n  ";
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ success: true }),
+    });
+    const result = await verifyTurnstileToken("valid-token", "1.2.3.4", fetchMock as unknown as typeof fetch);
+    expect(result).toEqual({ ok: true });
+    const [, init] = fetchMock.mock.calls[0] as [string, { body: URLSearchParams }];
+    expect(init.body.get("secret")).toBe("test-secret");
+  });
+
+  it("TURNSTILE_SECRET_KEYが空白のみの場合はnot_configuredとして扱う", async () => {
+    process.env.TURNSTILE_SECRET_KEY = "   \n  ";
+    const fetchMock = vi.fn() as unknown as typeof fetch;
+    const result = await verifyTurnstileToken("some-token", "1.2.3.4", fetchMock);
+    expect(result).toEqual({ ok: false, reason: "not_configured" });
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
 });

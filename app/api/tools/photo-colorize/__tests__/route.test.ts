@@ -181,4 +181,19 @@ describe("POST /api/tools/photo-colorize", () => {
     expect(json.code).toBe("INVALID_FILE");
     expect(colorizeMock).not.toHaveBeenCalled();
   });
+
+  it("ハンドラ内で予期しない例外が投げられても素の502クラッシュではなくINTERNAL_ERROR(500)を安全に返す", async () => {
+    const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    rateLimiterCheckMock.mockImplementation(() => {
+      throw new Error("unexpected boom");
+    });
+    const { POST } = await import("../route");
+    const res = await POST(buildRequest(baseForm()));
+    const json = await res.json();
+    expect(res.status).toBe(500);
+    expect(json.code).toBe("INTERNAL_ERROR");
+    const loggedText = consoleErrorSpy.mock.calls.map((call) => JSON.stringify(call)).join("\n");
+    expect(loggedText).toContain("unexpected boom");
+    consoleErrorSpy.mockRestore();
+  });
 });

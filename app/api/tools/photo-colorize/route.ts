@@ -37,93 +37,110 @@ function isSameOrigin(request: NextRequest): boolean {
 }
 
 export async function POST(request: NextRequest): Promise<NextResponse<ColorizeApiResponse>> {
-  if (process.env.COLORIZE_ENABLED === "false") {
-    return errorResponse("SERVICE_DISABLED");
-  }
-
-  if (!isSameOrigin(request)) {
-    return errorResponse("INVALID_FILE");
-  }
-
-  let form: FormData;
+  // ハンドラ内のどこで予期しない例外が起きても、Vercel側のFunction Invocation失敗(素の502)として
+  // 落とすのではなく、必ず安全な日本語エラーとして返し、原因を秘密情報を含まない形でログに残す。
   try {
-    form = await request.formData();
-  } catch {
-    return errorResponse("INVALID_FILE");
-  }
-
-  const consent = form.get("consent");
-  if (consent !== "true") {
-    return errorResponse("CONSENT_REQUIRED");
-  }
-
-  const turnstileToken = form.get("turnstileToken");
-  if (typeof turnstileToken !== "string" || !turnstileToken) {
-    return errorResponse("TURNSTILE_FAILED");
-  }
-
-  const ip = getClientIp(request);
-
-  const turnstileResult = await verifyTurnstileToken(turnstileToken, ip);
-  if (!turnstileResult.ok) {
-    return errorResponse(turnstileResult.reason === "not_configured" ? "SERVICE_DISABLED" : "TURNSTILE_FAILED");
-  }
-
-  const rateLimitResult = colorizeRateLimiter.check(ip);
-  if (!rateLimitResult.ok) {
-    return errorResponse("RATE_LIMITED");
-  }
-
-  const file = form.get("image");
-  if (!(file instanceof File) || file.size === 0) {
-    return errorResponse("INVALID_FILE");
-  }
-
-  const maxBytes = Number(process.env.COLORIZE_MAX_BYTES ?? DEFAULT_MAX_BYTES);
-  if (file.size > (Number.isFinite(maxBytes) && maxBytes > 0 ? maxBytes : DEFAULT_MAX_BYTES)) {
-    return errorResponse("FILE_TOO_LARGE");
-  }
-
-  const buffer = Buffer.from(await file.arrayBuffer());
-
-  const detectedType = detectImageType(buffer);
-  if (!detectedType) {
-    return errorResponse("UNSUPPORTED_TYPE");
-  }
-
-  const dimensions = decodeImageDimensions(buffer);
-  if (!dimensions) {
-    return errorResponse("IMAGE_DECODE_FAILED");
-  }
-
-  const warnings: string[] = [];
-  if (dimensions.width < MIN_IMAGE_DIMENSION || dimensions.height < MIN_IMAGE_DIMENSION) {
-    warnings.push("low_resolution");
-  }
-
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 55_000);
-
-  try {
-    const provider = getColorizationProvider();
-    const result = await provider.colorize(
-      { imageBuffer: buffer, mimeType: detectedType },
-      { signal: controller.signal }
-    );
-
-    if (!result.ok) {
-      return errorResponse(result.code);
+    if (process.env.COLORIZE_ENABLED === "false") {
+      return errorResponse("SERVICE_DISABLED");
     }
 
-    return NextResponse.json({
-      success: true,
-      resultUrl: result.resultUrl,
-      model: result.model,
-      warnings,
-    });
-  } catch {
+    if (!isSameOrigin(request)) {
+      return errorResponse("INVALID_FILE");
+    }
+
+    let form: FormData;
+    try {
+      form = await request.formData();
+    } catch (err) {
+      console.error("[colorize] formData parse failed", { name: errorName(err), message: errorMessage(err) });
+      return errorResponse("INVALID_FILE");
+    }
+
+    const consent = form.get("consent");
+    if (consent !== "true") {
+      return errorResponse("CONSENT_REQUIRED");
+    }
+
+    const turnstileToken = form.get("turnstileToken");
+    if (typeof turnstileToken !== "string" || !turnstileToken) {
+      return errorResponse("TURNSTILE_FAILED");
+    }
+
+    const ip = getClientIp(request);
+
+    const turnstileResult = await verifyTurnstileToken(turnstileToken, ip);
+    if (!turnstileResult.ok) {
+      return errorResponse(turnstileResult.reason === "not_configured" ? "SERVICE_DISABLED" : "TURNSTILE_FAILED");
+    }
+
+    const rateLimitResult = colorizeRateLimiter.check(ip);
+    if (!rateLimitResult.ok) {
+      return errorResponse("RATE_LIMITED");
+    }
+
+    const file = form.get("image");
+    if (!(file instanceof File) || file.size === 0) {
+      return errorResponse("INVALID_FILE");
+    }
+
+    const maxBytes = Number(process.env.COLORIZE_MAX_BYTES ?? DEFAULT_MAX_BYTES);
+    if (file.size > (Number.isFinite(maxBytes) && maxBytes > 0 ? maxBytes : DEFAULT_MAX_BYTES)) {
+      return errorResponse("FILE_TOO_LARGE");
+    }
+
+    const buffer = Buffer.from(await file.arrayBuffer());
+
+    const detectedType = detectImageType(buffer);
+    if (!detectedType) {
+      return errorResponse("UNSUPPORTED_TYPE");
+    }
+
+    const dimensions = decodeImageDimensions(buffer);
+    if (!dimensions) {
+      return errorResponse("IMAGE_DECODE_FAILED");
+    }
+
+    const warnings: string[] = [];
+    if (dimensions.width < MIN_IMAGE_DIMENSION || dimensions.height < MIN_IMAGE_DIMENSION) {
+      warnings.push("low_resolution");
+    }
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 55_000);
+
+    try {
+      const provider = getColorizationProvider();
+      const result = await provider.colorize(
+        { imageBuffer: buffer, mimeType: detectedType },
+        { signal: controller.signal }
+      );
+
+      if (!result.ok) {
+        return errorResponse(result.code);
+      }
+
+      return NextResponse.json({
+        success: true,
+        resultUrl: result.resultUrl,
+        model: result.model,
+        warnings,
+      });
+    } catch (err) {
+      console.error("[colorize] provider.colorize threw", { name: errorName(err), message: errorMessage(err) });
+      return errorResponse("INTERNAL_ERROR");
+    } finally {
+      clearTimeout(timeout);
+    }
+  } catch (err) {
+    console.error("[colorize] unhandled error in POST handler", { name: errorName(err), message: errorMessage(err) });
     return errorResponse("INTERNAL_ERROR");
-  } finally {
-    clearTimeout(timeout);
   }
+}
+
+function errorName(err: unknown): string {
+  return err instanceof Error ? err.name : typeof err;
+}
+
+function errorMessage(err: unknown): string {
+  return err instanceof Error ? err.message : String(err);
 }

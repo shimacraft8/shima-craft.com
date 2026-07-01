@@ -13,7 +13,7 @@ export async function verifyTurnstileToken(
   remoteIp: string,
   fetchImpl: typeof fetch = fetch
 ): Promise<TurnstileVerifyResult> {
-  const secret = process.env.TURNSTILE_SECRET_KEY;
+  const secret = process.env.TURNSTILE_SECRET_KEY?.trim();
   if (!secret) {
     return { ok: false, reason: "not_configured" };
   }
@@ -32,10 +32,19 @@ export async function verifyTurnstileToken(
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body,
     });
-    if (!res.ok) return { ok: false, reason: "network_error" };
-    const data = (await res.json()) as { success?: boolean };
-    return data.success === true ? { ok: true } : { ok: false, reason: "invalid_token" };
-  } catch {
+    if (!res.ok) {
+      console.error("[colorize:turnstile] siteverify http error", { status: res.status });
+      return { ok: false, reason: "network_error" };
+    }
+    const data = (await res.json()) as { success?: boolean; "error-codes"?: string[] };
+    if (data.success === true) return { ok: true };
+    console.error("[colorize:turnstile] siteverify rejected token", { errorCodes: data["error-codes"] });
+    return { ok: false, reason: "invalid_token" };
+  } catch (err) {
+    console.error("[colorize:turnstile] siteverify threw", {
+      name: err instanceof Error ? err.name : typeof err,
+      message: err instanceof Error ? err.message : String(err),
+    });
     return { ok: false, reason: "network_error" };
   }
 }

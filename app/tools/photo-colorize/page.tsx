@@ -13,7 +13,7 @@ const PAGE_DESC =
   "白黒写真をアップロードすると、AIが自然な色を推定して無料でカラー化。スマホで撮影した古写真にも対応。奄美発のSHIMA CRAFTが提供するブラウザツールです。";
 
 export const metadata: Metadata = {
-  title: PAGE_TITLE,
+  title: { absolute: PAGE_TITLE },
   description: PAGE_DESC,
   alternates: { canonical: "/tools/photo-colorize" },
   openGraph: {

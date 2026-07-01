@@ -5,7 +5,7 @@ import { HeaderInner } from "@/app/components/HeaderInner";
 import { Footer } from "@/app/components/Footer";
 import { StickyContact } from "@/app/components/StickyContact";
 import { Breadcrumb } from "@/app/components/Breadcrumb";
-import { WordListClient } from "@/app/amami-dialect/_components/WordListClient";
+import { WordExplorer } from "@/app/amami-dialect/_components/WordExplorer";
 import {
   AMAMI_DIALECT_PATH,
   amamiWords,
@@ -16,6 +16,7 @@ import {
 
 type Props = {
   params: { category: string };
+  searchParams: Record<string, string | string[] | undefined>;
 };
 
 export function generateStaticParams() {
@@ -46,13 +47,14 @@ export function generateMetadata({ params }: Props): Metadata {
   };
 }
 
-export default function WordCategoryPage({ params }: Props) {
+export default function WordCategoryPage({ params, searchParams }: Props) {
   const category = wordCategories.find((c) => c.slug === params.category);
   if (!category) {
     notFound();
   }
 
   const items = getWordsByCategorySlug(params.category);
+  const relatedCategories = wordCategories.filter((c) => c.slug !== category.slug);
 
   return (
     <>
@@ -77,29 +79,38 @@ export default function WordCategoryPage({ params }: Props) {
 
         <section className="svc-section">
           <div className="container">
-            <WordListClient
-              items={items}
+            <WordExplorer
+              items={amamiWords}
               categories={wordCategories}
               regions={WORD_REGION_ORDER}
-              initialCategorySlug={category.slug}
+              searchParams={searchParams}
+              defaultCategorySlug={category.slug}
+              basePath={`${AMAMI_DIALECT_PATH}/words`}
             />
           </div>
         </section>
 
+        <div className="dialect-back-actions">
+          <Link href={`${AMAMI_DIALECT_PATH}/words`} className="btn btn-soft">
+            語彙一覧へ戻る
+          </Link>
+          <Link href={AMAMI_DIALECT_PATH} className="btn btn-soft">
+            辞書トップへ戻る
+          </Link>
+        </div>
+
         <div className="related-section">
           <p className="related-section-label">Navigation</p>
           <div className="related-links">
-            {wordCategories
-              .filter((c) => c.slug !== category.slug)
-              .map((c) => (
-                <Link
-                  key={c.slug}
-                  href={`${AMAMI_DIALECT_PATH}/words/category/${c.slug}`}
-                  className="related-link"
-                >
-                  {c.label}
-                </Link>
-              ))}
+            {relatedCategories.map((c) => (
+              <Link
+                key={c.slug}
+                href={`${AMAMI_DIALECT_PATH}/words/category/${c.slug}`}
+                className="related-link"
+              >
+                {c.label}
+              </Link>
+            ))}
             <Link href={`${AMAMI_DIALECT_PATH}/words`} className="related-link">
               語彙一覧（全{amamiWords.length}件）
             </Link>

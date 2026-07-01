@@ -112,6 +112,26 @@ export const WORD_REGION_ORDER = [
   "与論島",
 ];
 
+export const WORD_REGION_SLUGS: Record<string, string> = {
+  奄美大島: "amami-oshima",
+  喜界島: "kikai",
+  徳之島: "tokunoshima",
+  沖永良部島: "okinoerabu",
+  与論島: "yoron",
+};
+
+export const WORD_REGION_SLUG_TO_LABEL: Record<string, string> = Object.fromEntries(
+  Object.entries(WORD_REGION_SLUGS).map(([label, slug]) => [slug, label]),
+);
+
+export const wordRegions = WORD_REGION_ORDER.map((label) => ({
+  label,
+  slug: WORD_REGION_SLUGS[label],
+  count: amamiWords.filter((record) =>
+    record.regions.some((entry) => entry.region === label),
+  ).length,
+}));
+
 export const wordCategories = WORD_CATEGORY_ORDER.filter((category) =>
   amamiWords.some((record) => record.category === category),
 ).map((category) => ({
@@ -146,6 +166,96 @@ export function getWordsByCategorySlug(slug: string) {
     return [];
   }
   return amamiWords.filter((record) => record.category === label);
+}
+
+export function getWordsByRegionSlug(slug: string) {
+  const label = WORD_REGION_SLUG_TO_LABEL[slug];
+  if (!label) {
+    return [];
+  }
+  return amamiWords.filter((record) =>
+    record.regions.some((entry) => entry.region === label),
+  );
+}
+
+/** 指定地域について、カテゴリごとの件数を語彙カテゴリの表示順で集計する */
+export function regionCategoryBreakdown(regionLabel: string) {
+  const records = amamiWords.filter((record) =>
+    record.regions.some((entry) => entry.region === regionLabel),
+  );
+  return WORD_CATEGORY_ORDER.filter((category) =>
+    records.some((record) => record.category === category),
+  ).map((category) => ({
+    label: category,
+    slug: WORD_CATEGORY_SLUGS[category] ?? category,
+    count: records.filter((record) => record.category === category).length,
+  }));
+}
+
+export type WordSortKey = "standard" | "id" | "category" | "variants";
+
+export const WORD_SORT_OPTIONS: { value: WordSortKey; label: string }[] = [
+  { value: "standard", label: "標準語順" },
+  { value: "id", label: "ID順" },
+  { value: "category", label: "カテゴリ順" },
+  { value: "variants", label: "記録形の件数順" },
+];
+
+const jaCollator = new Intl.Collator("ja");
+
+export function totalVariantCount(record: WordRecord): number {
+  return record.regions.reduce((sum, entry) => sum + entry.forms.length, 0);
+}
+
+export function sortWordRecords(
+  records: WordRecord[],
+  sort: WordSortKey,
+): WordRecord[] {
+  const arr = [...records];
+  switch (sort) {
+    case "standard":
+      return arr.sort((a, b) => jaCollator.compare(a.standardWord, b.standardWord));
+    case "category":
+      return arr.sort((a, b) => {
+        const ai = WORD_CATEGORY_ORDER.indexOf(a.category as (typeof WORD_CATEGORY_ORDER)[number]);
+        const bi = WORD_CATEGORY_ORDER.indexOf(b.category as (typeof WORD_CATEGORY_ORDER)[number]);
+        if (ai !== bi) return ai - bi;
+        return a.id.localeCompare(b.id);
+      });
+    case "variants":
+      return arr.sort((a, b) => {
+        const diff = totalVariantCount(b) - totalVariantCount(a);
+        return diff !== 0 ? diff : a.id.localeCompare(b.id);
+      });
+    case "id":
+    default:
+      return arr.sort((a, b) => a.id.localeCompare(b.id));
+  }
+}
+
+export function isWordSortKey(value: string | null | undefined): value is WordSortKey {
+  return value === "standard" || value === "id" || value === "category" || value === "variants";
+}
+
+/** 全角/半角・ひらがな/カタカナのゆらぎを吸収したうえで、空白区切りのAND検索を行う */
+export function matchesQueryTokens(haystack: string, query: string): boolean {
+  const normalizedQuery = normalizeDialectSearch(query.trim());
+  if (!normalizedQuery) {
+    return true;
+  }
+  const tokens = normalizedQuery.split(/\s+/).filter(Boolean);
+  const normalizedHaystack = normalizeDialectSearch(haystack);
+  return tokens.every((token) => normalizedHaystack.includes(token));
+}
+
+/** カード表示用に、代表表記1〜2件＋「ほかN件」の形へ圧縮する（唯一の正解に見せないための注記付き） */
+export function representativeForms(forms: string[], limit = 2): string {
+  if (forms.length <= limit) {
+    return forms.join("・");
+  }
+  const shown = forms.slice(0, limit).join("・");
+  const rest = forms.length - limit;
+  return `${shown} ほか${rest}件`;
 }
 
 export function normalizeDialectSearch(value: string) {
@@ -202,10 +312,12 @@ export function toGreetingListItem(record: GreetingRecord): DialectListItem {
 }
 
 export function wordRegionSummary(record: WordRecord, limit = 3): string {
-  return record.regions
+  const shown = record.regions
     .slice(0, limit)
-    .map((entry) => `${entry.region}：${entry.forms.slice(0, 2).join("・")}`)
+    .map((entry) => `${entry.region}：${representativeForms(entry.forms, 2)}`)
     .join("／");
+  const rest = record.regions.length - limit;
+  return rest > 0 ? `${shown}／ほか${rest}地域の記録` : shown;
 }
 
 export function toWordListItem(record: WordRecord): DialectListItem {

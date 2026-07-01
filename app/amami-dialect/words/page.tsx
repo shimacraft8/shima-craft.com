@@ -4,13 +4,17 @@ import { HeaderInner } from "@/app/components/HeaderInner";
 import { Footer } from "@/app/components/Footer";
 import { StickyContact } from "@/app/components/StickyContact";
 import { Breadcrumb } from "@/app/components/Breadcrumb";
-import { WordListClient } from "@/app/amami-dialect/_components/WordListClient";
+import { WordExplorer } from "@/app/amami-dialect/_components/WordExplorer";
 import {
   AMAMI_DIALECT_PATH,
   amamiWords,
   wordCategories,
   WORD_REGION_ORDER,
 } from "@/app/lib/amamiDialect";
+
+type Props = {
+  searchParams: Record<string, string | string[] | undefined>;
+};
 
 const PAGE_DESC =
   "県公式資料「大島地区方言マップ」に基づく、家族・道具・自然・生き物・食事・あいさつの語彙一覧です。地域（奄美大島・喜界島・徳之島・沖永良部島・与論島）ごとの記録形を掲載しています。";
@@ -30,7 +34,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function WordsPage() {
+export default function WordsPage({ searchParams }: Props) {
   return (
     <>
       <HeaderInner />
@@ -54,13 +58,20 @@ export default function WordsPage() {
 
         <section className="svc-section">
           <div className="container">
-            <WordListClient
+            <WordExplorer
               items={amamiWords}
               categories={wordCategories}
               regions={WORD_REGION_ORDER}
+              searchParams={searchParams}
             />
           </div>
         </section>
+
+        <div className="dialect-back-actions">
+          <Link href={AMAMI_DIALECT_PATH} className="btn btn-soft">
+            辞書トップへ戻る
+          </Link>
+        </div>
 
         <div className="related-section">
           <p className="related-section-label">Navigation</p>

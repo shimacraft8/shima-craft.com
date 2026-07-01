@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { DialectListItem } from "@/app/lib/amamiDialect";
-import { normalizeDialectSearch } from "@/app/lib/amamiDialect";
+import { matchesQueryTokens } from "@/app/lib/amamiDialect";
 
 type FilterOption = {
   label: string;
@@ -27,26 +27,25 @@ export function DialectListClient({
   const [filter, setFilter] = useState("all");
 
   const filteredItems = useMemo(() => {
-    const normalizedQuery = normalizeDialectSearch(query.trim());
-
     return items.filter((item) => {
       const matchesFilter = filter === "all" || item.filterValue === filter;
-      if (!normalizedQuery) {
-        return matchesFilter;
+      if (!matchesFilter) {
+        return false;
+      }
+      if (!query.trim()) {
+        return true;
       }
 
-      const haystack = normalizeDialectSearch(
-        [
-          item.id,
-          item.title,
-          item.reading,
-          item.meaning,
-          item.description,
-          ...item.meta,
-        ].join(" "),
-      );
+      const haystack = [
+        item.id,
+        item.title,
+        item.reading,
+        item.meaning,
+        item.description,
+        ...item.meta,
+      ].join(" ");
 
-      return matchesFilter && haystack.includes(normalizedQuery);
+      return matchesQueryTokens(haystack, query);
     });
   }, [filter, items, query]);
 

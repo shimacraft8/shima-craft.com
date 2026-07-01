@@ -71,6 +71,9 @@ export default function GreetingsPage() {
             <Link href={`${AMAMI_DIALECT_PATH}/proverbs`} className="related-link">
               ことわざ一覧
             </Link>
+            <Link href={`${AMAMI_DIALECT_PATH}/words`} className="related-link">
+              語彙一覧
+            </Link>
             <Link href={`${AMAMI_DIALECT_PATH}/about`} className="related-link">
               掲載方針
             </Link>

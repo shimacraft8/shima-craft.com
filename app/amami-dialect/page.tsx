@@ -8,12 +8,14 @@ import {
   AMAMI_DIALECT_PATH,
   amamiGreetings,
   amamiProverbs,
+  amamiWords,
   toGreetingListItem,
   toProverbListItem,
+  wordCategories,
 } from "@/app/lib/amamiDialect";
 
 const PAGE_DESC =
-  "奄美大島の方言に関する公開用辞書です。ことわざとあいさつを、原資料の確認状況が分かる形で掲載しています。";
+  "奄美大島の方言に関する公開用辞書です。ことわざ・あいさつに加え、家族・道具・自然・生き物・食事の語彙を、地域差と原資料の確認状況が分かる形で掲載しています。";
 
 export const metadata: Metadata = {
   title: "奄美方言辞書",
@@ -72,11 +74,42 @@ export default function AmamiDialectPage() {
                 <strong>あいさつ</strong>
                 <em>{amamiGreetings.length}件</em>
               </Link>
+              <Link className="dialect-nav-card" href={`${AMAMI_DIALECT_PATH}/words`}>
+                <span>WORDS</span>
+                <strong>語彙</strong>
+                <em>{amamiWords.length}件</em>
+              </Link>
+              <Link className="dialect-nav-card" href={`${AMAMI_DIALECT_PATH}/search`}>
+                <span>SEARCH</span>
+                <strong>横断検索</strong>
+                <em>すべてから検索</em>
+              </Link>
               <Link className="dialect-nav-card" href={`${AMAMI_DIALECT_PATH}/about`}>
                 <span>ABOUT</span>
                 <strong>掲載方針</strong>
                 <em>出典と注意</em>
               </Link>
+            </div>
+          </div>
+        </section>
+
+        <section className="svc-section" style={{ background: "#fff" }}>
+          <div className="container">
+            <h2 className="svc-title">語彙カテゴリ</h2>
+            <p className="dialect-meaning" style={{ marginBottom: 16 }}>
+              家族・道具・自然・生き物・食事・あいさつの語彙を、地域（奄美大島・喜界島・徳之島・沖永良部島・与論島）ごとに掲載しています。
+            </p>
+            <div className="dialect-category-grid">
+              {wordCategories.map((category) => (
+                <Link
+                  key={category.slug}
+                  className="dialect-category-card"
+                  href={`${AMAMI_DIALECT_PATH}/words/category/${category.slug}`}
+                >
+                  <strong>{category.label}</strong>
+                  <em>{category.count}件</em>
+                </Link>
+              ))}
             </div>
           </div>
         </section>

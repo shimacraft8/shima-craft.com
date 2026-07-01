@@ -4,25 +4,25 @@ import { HeaderInner } from "@/app/components/HeaderInner";
 import { Footer } from "@/app/components/Footer";
 import { StickyContact } from "@/app/components/StickyContact";
 import { Breadcrumb } from "@/app/components/Breadcrumb";
-import { DialectListClient } from "@/app/amami-dialect/_components/DialectListClient";
+import { WordListClient } from "@/app/amami-dialect/_components/WordListClient";
 import {
   AMAMI_DIALECT_PATH,
-  amamiProverbs,
-  proverbSourcePages,
-  toProverbListItem,
+  amamiWords,
+  wordCategories,
+  WORD_REGION_ORDER,
 } from "@/app/lib/amamiDialect";
 
 const PAGE_DESC =
-  "石崎公曹の奄美のことわざをもとにした、奄美方言ことわざの公開用一覧です。";
+  "県公式資料「大島地区方言マップ」に基づく、家族・道具・自然・生き物・食事・あいさつの語彙一覧です。地域（奄美大島・喜界島・徳之島・沖永良部島・与論島）ごとの記録形を掲載しています。";
 
 export const metadata: Metadata = {
-  title: "奄美方言ことわざ一覧",
+  title: "奄美方言 語彙一覧",
   description: PAGE_DESC,
-  alternates: { canonical: `${AMAMI_DIALECT_PATH}/proverbs` },
+  alternates: { canonical: `${AMAMI_DIALECT_PATH}/words` },
   openGraph: {
-    title: "奄美方言ことわざ一覧｜SHIMA CRAFT",
+    title: "奄美方言 語彙一覧｜SHIMA CRAFT",
     description: PAGE_DESC,
-    url: `${AMAMI_DIALECT_PATH}/proverbs`,
+    url: `${AMAMI_DIALECT_PATH}/words`,
     type: "website",
     locale: "ja_JP",
     siteName: "SHIMA CRAFT",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ProverbsPage() {
+export default function WordsPage() {
   return (
     <>
       <HeaderInner />
@@ -39,28 +39,25 @@ export default function ProverbsPage() {
           items={[
             { label: "トップ", href: "/" },
             { label: "奄美方言辞書", href: AMAMI_DIALECT_PATH },
-            { label: "ことわざ" },
+            { label: "語彙" },
           ]}
         />
 
         <div className="inner-hero dialect-hero">
-          <p className="inner-hero-area">PROVERBS</p>
-          <h1>奄美方言ことわざ一覧</h1>
+          <p className="inner-hero-area">WORDS</p>
+          <h1>奄美方言 語彙一覧</h1>
           <p className="inner-hero-lead">
-            公開用データとして整理した{amamiProverbs.length}件を掲載しています。現代使用や地域差は、確認できた範囲を超えて断定しません。
+            県公式資料「大島地区方言マップ」に基づく{amamiWords.length}語を掲載しています。
+            同じ概念でも地域（奄美大島・喜界島・徳之島・沖永良部島・与論島）によって記録形が異なるため、地域ごとにそのまま並べています。
           </p>
         </div>
 
         <section className="svc-section">
           <div className="container">
-            <DialectListClient
-              items={amamiProverbs.map(toProverbListItem)}
-              filterLabel="掲載ページ"
-              searchLabel="ことわざ検索"
-              filterOptions={proverbSourcePages.map((page) => ({
-                label: page,
-                value: page,
-              }))}
+            <WordListClient
+              items={amamiWords}
+              categories={wordCategories}
+              regions={WORD_REGION_ORDER}
             />
           </div>
         </section>
@@ -68,11 +65,11 @@ export default function ProverbsPage() {
         <div className="related-section">
           <p className="related-section-label">Navigation</p>
           <div className="related-links">
+            <Link href={`${AMAMI_DIALECT_PATH}/proverbs`} className="related-link">
+              ことわざ一覧
+            </Link>
             <Link href={`${AMAMI_DIALECT_PATH}/greetings`} className="related-link">
               あいさつ一覧
-            </Link>
-            <Link href={`${AMAMI_DIALECT_PATH}/words`} className="related-link">
-              語彙一覧
             </Link>
             <Link href={`${AMAMI_DIALECT_PATH}/about`} className="related-link">
               掲載方針
@@ -85,4 +82,3 @@ export default function ProverbsPage() {
     </>
   );
 }
-

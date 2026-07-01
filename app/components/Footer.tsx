@@ -12,6 +12,9 @@ export function Footer() {
         height={42}
       />
       <nav className="footer-nav" aria-label="フッターナビゲーション">
+        <Link href="/amami-dialect" className="footer-nav-link">
+          奄美方言辞書
+        </Link>
         <Link href="/web-check" className="footer-nav-link">
           Web導線チェック
         </Link>

@@ -1775,6 +1775,299 @@ section {
   color: var(--secondary);
 }
 
+/* ===== 奄美方言辞書 ===== */
+.dialect-hero .inner-hero-lead {
+  max-width: 720px;
+}
+.dialect-nav-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.dialect-nav-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 150px;
+  padding: 24px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid rgba(42, 157, 143, 0.18);
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+.dialect-nav-card:hover {
+  border-color: var(--secondary);
+  transform: translateY(-3px);
+}
+.dialect-nav-card span,
+.dialect-card-id,
+.dialect-count {
+  font-family: var(--en);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--secondary);
+  text-transform: uppercase;
+}
+.dialect-nav-card strong {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  line-height: 1.45;
+  margin: 14px 0 auto;
+}
+.dialect-nav-card em {
+  font-style: normal;
+  font-size: 0.9rem;
+  color: #777;
+}
+.dialect-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 260px);
+  gap: 14px;
+  align-items: end;
+  margin-bottom: 18px;
+}
+.dialect-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.dialect-field span {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #666;
+}
+.dialect-field input,
+.dialect-field select {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid rgba(26, 26, 26, 0.13);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+  padding: 10px 14px;
+  outline: none;
+}
+.dialect-field input:focus,
+.dialect-field select:focus {
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.12);
+}
+.dialect-count {
+  margin: 0 0 18px;
+  color: #999;
+}
+.dialect-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+}
+.dialect-card-grid-compact {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.dialect-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 260px;
+  padding: 24px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+}
+.dialect-card h2,
+.dialect-card h3 {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1.08rem;
+  line-height: 1.55;
+  margin: 0;
+}
+.dialect-card h2 a,
+.dialect-card h3 a {
+  color: var(--text);
+  text-decoration: none;
+}
+.dialect-card h2 a:hover,
+.dialect-card h3 a:hover {
+  color: var(--secondary);
+}
+.dialect-reading {
+  color: var(--primary);
+  font-weight: 700;
+  line-height: 1.7;
+}
+.dialect-meaning {
+  color: #3f3f3f;
+  font-size: 0.93rem;
+  line-height: 1.75;
+}
+.dialect-description {
+  color: #666;
+  font-size: 0.86rem;
+  line-height: 1.72;
+}
+.dialect-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: auto;
+}
+.dialect-meta span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(42, 157, 143, 0.08);
+  color: #4b7770;
+  font-size: 0.75rem;
+  line-height: 1.3;
+}
+.dialect-empty {
+  padding: 44px 24px;
+  text-align: center;
+  border-radius: 14px;
+  background: #fff;
+  color: #777;
+}
+.dialect-detail {
+  max-width: 840px;
+  margin: 0 auto;
+  padding: clamp(64px, 10vw, 110px) clamp(20px, 6vw, 80px)
+    clamp(48px, 8vw, 80px);
+}
+.dialect-detail h1 {
+  font-family: var(--serif);
+  font-size: clamp(1.55rem, 4vw, 2.5rem);
+  line-height: 1.42;
+  margin: 10px 0 16px;
+}
+.dialect-detail-reading {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  line-height: 1.8;
+  margin-bottom: 12px;
+}
+.dialect-detail-meaning {
+  color: #333;
+  font-size: clamp(1.02rem, 2vw, 1.2rem);
+  line-height: 1.9;
+  margin-bottom: 34px;
+}
+.dialect-detail-section,
+.dialect-source,
+.dialect-note {
+  margin-top: 24px;
+  padding: 24px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+}
+.dialect-detail-section h2,
+.dialect-note h2 {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  margin-bottom: 12px;
+}
+.dialect-detail-section p,
+.dialect-note p {
+  color: #4a4a4a;
+  line-height: 1.85;
+}
+.dialect-note {
+  background: rgba(244, 162, 97, 0.08);
+  border-color: rgba(244, 162, 97, 0.2);
+}
+.dialect-source summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--secondary);
+}
+.dialect-source summary::marker {
+  color: var(--secondary);
+}
+.dialect-facts {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 14px;
+}
+.dialect-facts div {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+.dialect-facts div:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+.dialect-facts dt {
+  color: #888;
+  font-size: 0.82rem;
+}
+.dialect-facts dd {
+  color: #333;
+  line-height: 1.7;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.dialect-facts a {
+  color: var(--secondary);
+}
+.dialect-policy {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.dialect-policy code {
+  display: inline-block;
+  margin: 0 0.25em;
+  padding: 0.05em 0.4em;
+  border-radius: 4px;
+  background: rgba(42, 157, 143, 0.08);
+  color: #3f6f68;
+  font-size: 0.9em;
+}
+.not-found-section {
+  min-height: 72vh;
+  padding: clamp(120px, 16vw, 170px) clamp(20px, 6vw, 80px)
+    clamp(72px, 10vw, 110px);
+  text-align: center;
+}
+.not-found-section h1 {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  margin-bottom: 14px;
+}
+.not-found-section p {
+  color: #555;
+  margin-bottom: 28px;
+}
+@media (max-width: 860px) {
+  .dialect-nav-grid,
+  .dialect-card-grid-compact {
+    grid-template-columns: 1fr;
+  }
+  .dialect-controls {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 560px) {
+  .dialect-card {
+    min-height: 0;
+  }
+  .dialect-facts div {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+}
+
 /* アクセシビリティ：モーション低減設定を尊重 */
 @media (prefers-reduced-motion: reduce) {
   *,

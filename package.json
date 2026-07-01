@@ -5,6 +5,8 @@
   "description": "SHIMA CRAFT — 鹿児島・離島の事業者さん向け Web制作・空撮・映像制作のポートフォリオサイト",
   "scripts": {
     "dev": "next dev",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run typecheck",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

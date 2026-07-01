@@ -1,0 +1,71 @@
+{
+  "dataset": "amami-greetings-public",
+  "generatedAt": "2026-07-01T00:00:00+09:00",
+  "count": 4,
+  "records": [
+    {
+      "id": "GREET-001",
+      "title": "うがみんしょうらん",
+      "reading": "未確認",
+      "meaning": "未確認",
+      "otherTranslations": "未確認",
+      "timeOfDay": "未確認",
+      "politeness": "行政広報、地域イベント、大勢への呼びかけなど、 改まった場でも使用されることを確認。",
+      "usageRegion": "未確認",
+      "evidenceLevel": "source_recorded",
+      "evidenceLabel": "原資料収録確認",
+      "publicationStatus": "条件付き公開",
+      "source": "未確認",
+      "sourceUrl": "未確認",
+      "caution": "未確認"
+    },
+    {
+      "id": "GREET-002",
+      "title": "ありがっさまりょうた",
+      "reading": "未確認",
+      "meaning": "未確認",
+      "otherTranslations": "未確認",
+      "timeOfDay": "未確認",
+      "politeness": "丁寧な感謝表現として資料上使用されている。 敬語等級や相手別の使い分けは未確認。",
+      "usageRegion": "未確認",
+      "evidenceLevel": "source_recorded",
+      "evidenceLabel": "原資料収録確認",
+      "publicationStatus": "条件付き公開",
+      "source": "未確認",
+      "sourceUrl": "未確認",
+      "caution": "未確認"
+    },
+    {
+      "id": "GREET-003",
+      "title": "いもーれ",
+      "reading": "未確認",
+      "meaning": "未確認",
+      "otherTranslations": "未確認",
+      "timeOfDay": "未確認",
+      "politeness": "公的広報や来訪者への呼びかけで使用されることを確認。 丁寧さの等級や「いらっしゃいませ」との対応関係は未確認。",
+      "usageRegion": "未確認",
+      "evidenceLevel": "source_recorded",
+      "evidenceLabel": "原資料収録確認",
+      "publicationStatus": "条件付き公開",
+      "source": "未確認",
+      "sourceUrl": "未確認",
+      "caution": "未確認"
+    },
+    {
+      "id": "GREET-004",
+      "title": "すかまやうがみんしょうらん",
+      "reading": "未確認",
+      "meaning": "未確認",
+      "otherTranslations": "未確認",
+      "timeOfDay": "未確認",
+      "politeness": "「おはようございます」と訳される例を確認。 敬語等級や普通体との対立は未確認。",
+      "usageRegion": "未確認",
+      "evidenceLevel": "source_recorded",
+      "evidenceLabel": "原資料収録確認",
+      "publicationStatus": "条件付き公開",
+      "source": "未確認",
+      "sourceUrl": "未確認",
+      "caution": "未確認"
+    }
+  ]
+}

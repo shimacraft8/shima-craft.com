@@ -3,19 +3,23 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { trackEvent } from "@/app/components/TrackedLink";
 import { BeforeAfterSlider } from "./BeforeAfterSlider";
-import { TurnstileWidget } from "./TurnstileWidget";
 import {
   ImageProcessingError,
   buildDownloadFilename,
-  prepareImageForUpload,
+  prepareImageForColorize,
   revokePreviewUrl,
   type PreparedImage,
 } from "./imageProcessing";
 import {
+  colorizeInBrowser,
+  newClientSessionId,
+} from "@/lib/colorization/browser/browserColorize";
+import {
   COLORIZE_ERROR_HEADINGS,
-  COLORIZE_ERROR_IS_CONFIG_ISSUE,
-  type ColorizeApiResponse,
-  type ColorizeErrorCode,
+  COLORIZE_ERROR_IS_ENVIRONMENT_ISSUE,
+  COLORIZE_ERROR_NEXT_ACTIONS,
+  ColorizeError,
+  type ColorizeProgress,
 } from "@/lib/colorization/types";
 
 const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp"];
@@ -23,7 +27,6 @@ const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 type Phase = "select" | "ready" | "processing" | "done" | "error";
 
 type Props = {
-  turnstileSiteKey: string;
   toolEnabled: boolean;
 };
 
@@ -32,69 +35,84 @@ type ErrorDisplay = {
   message: string;
   errorCode: string;
   retryable: boolean;
-  requestId: string | null;
-  /** trueの場合のみ「別の画像で試す」を表示する。設定不備等の場合は画像を疑わせない。 */
+  clientSessionId: string | null;
+  nextAction: string | null;
+  /** trueの場合のみ「別の画像で試す」を表示する。端末・通信起因の場合は画像を疑わせない。 */
   suggestDifferentImage: boolean;
 };
 
-function buildErrorDisplay(errorCode: ColorizeErrorCode, userMessage: string, retryable: boolean, requestId: string): ErrorDisplay {
+function buildErrorDisplay(err: ColorizeError): ErrorDisplay {
   return {
-    heading: COLORIZE_ERROR_HEADINGS[errorCode] ?? "エラーが発生しました",
-    message: userMessage,
-    errorCode,
-    retryable,
-    requestId,
-    suggestDifferentImage: !COLORIZE_ERROR_IS_CONFIG_ISSUE[errorCode],
+    heading: COLORIZE_ERROR_HEADINGS[err.errorCode] ?? "エラーが発生しました",
+    message: err.message,
+    errorCode: err.errorCode,
+    retryable: err.errorCode !== "UNSUPPORTED_BROWSER" && err.errorCode !== "WASM_INITIALIZATION_FAILED",
+    clientSessionId: err.clientSessionId,
+    nextAction: COLORIZE_ERROR_NEXT_ACTIONS[err.errorCode] ?? null,
+    suggestDifferentImage: !COLORIZE_ERROR_IS_ENVIRONMENT_ISSUE[err.errorCode],
   };
 }
 
-function buildNetworkErrorDisplay(): ErrorDisplay {
-  return {
-    heading: "通信エラーが発生しました",
-    message: "ネットワークエラーが発生しました。接続を確認して再度お試しください。",
-    errorCode: "NETWORK_ERROR",
-    retryable: true,
-    requestId: null,
-    suggestDifferentImage: true,
-  };
+function progressLabel(p: ColorizeProgress | null): string {
+  if (!p) return "準備しています…";
+  switch (p.stage) {
+    case "downloading_model": {
+      if (p.totalBytes) {
+        const pct = Math.min(100, Math.round((p.loadedBytes / p.totalBytes) * 100));
+        return `カラー化モデルをダウンロード中… ${pct}%`;
+      }
+      return `カラー化モデルをダウンロード中… ${(p.loadedBytes / 1e6).toFixed(0)}MB`;
+    }
+    case "initializing":
+      return "カラー化モデルを準備しています…";
+    case "inferring":
+      return "AIが色を推定しています…";
+    case "compositing":
+      return "元の写真と色を合成しています…";
+  }
 }
 
-export function PhotoColorizeClient({ turnstileSiteKey, toolEnabled }: Props) {
+export function PhotoColorizeClient({ toolEnabled }: Props) {
   const [phase, setPhase] = useState<Phase>("select");
   const [prepared, setPrepared] = useState<PreparedImage | null>(null);
   const [preparing, setPreparing] = useState(false);
   const [selectError, setSelectError] = useState<string | null>(null);
   const [consent, setConsent] = useState(false);
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
-  const [turnstileKey, setTurnstileKey] = useState(0);
-  const [submitting, setSubmitting] = useState(false);
+  const [progress, setProgress] = useState<ColorizeProgress | null>(null);
   const [resultUrl, setResultUrl] = useState<string | null>(null);
   const [warnings, setWarnings] = useState<string[]>([]);
   const [errorDisplay, setErrorDisplay] = useState<ErrorDisplay | null>(null);
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const liveRegionRef = useRef<HTMLDivElement>(null);
+  const abortRef = useRef<AbortController | null>(null);
+  const runIdRef = useRef(0);
 
   useEffect(() => {
-    return () => revokePreviewUrl(prepared?.previewUrl);
+    return () => {
+      abortRef.current?.abort();
+      revokePreviewUrl(prepared?.previewUrl);
+      revokePreviewUrl(resultUrl);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const resetAll = useCallback(() => {
+    abortRef.current?.abort();
+    runIdRef.current += 1;
     revokePreviewUrl(prepared?.previewUrl);
+    revokePreviewUrl(resultUrl);
     setPrepared(null);
     setPreparing(false);
     setSelectError(null);
     setConsent(false);
-    setTurnstileToken(null);
-    setTurnstileKey((k) => k + 1);
-    setSubmitting(false);
+    setProgress(null);
     setResultUrl(null);
     setWarnings([]);
     setErrorDisplay(null);
     setPhase("select");
     if (fileInputRef.current) fileInputRef.current.value = "";
-  }, [prepared]);
+  }, [prepared, resultUrl]);
 
   const handleFile = useCallback(
     async (file: File | null | undefined) => {
@@ -110,7 +128,7 @@ export function PhotoColorizeClient({ turnstileSiteKey, toolEnabled }: Props) {
       setPrepared(null);
       setPreparing(true);
       try {
-        const result = await prepareImageForUpload(file);
+        const result = await prepareImageForColorize(file);
         setPrepared(result);
         setPhase("ready");
         trackEvent("colorize_file_select");
@@ -142,92 +160,106 @@ export function PhotoColorizeClient({ turnstileSiteKey, toolEnabled }: Props) {
   }
 
   async function handleStart() {
-    if (!prepared || !consent || !turnstileToken || submitting) return;
-    setSubmitting(true);
+    if (!prepared || !consent || phase === "processing") return;
+    const controller = new AbortController();
+    abortRef.current = controller;
+    const runId = ++runIdRef.current;
+    const clientSessionId = newClientSessionId();
+
     setPhase("processing");
+    setProgress(null);
     setErrorDisplay(null);
     trackEvent("colorize_start");
 
     try {
-      const formData = new FormData();
-      formData.set("image", prepared.blob, "upload.jpg");
-      formData.set("consent", "true");
-      formData.set("turnstileToken", turnstileToken);
+      const output = await colorizeInBrowser(
+        {
+          fullRgba: prepared.fullRgba,
+          width: prepared.width,
+          height: prepared.height,
+          smallRgba: prepared.smallRgba,
+        },
+        {
+          signal: controller.signal,
+          clientSessionId,
+          onProgress: (p) => {
+            if (runIdRef.current === runId) setProgress(p);
+          },
+        }
+      );
+      if (runIdRef.current !== runId) return; // キャンセル・リセット後に完了した結果は捨てる
 
-      const res = await fetch("/api/tools/photo-colorize", {
-        method: "POST",
-        body: formData,
+      // 結果を JPEG の object URL にする（画像はブラウザ内のみ・保存もローカル）
+      const canvas = document.createElement("canvas");
+      canvas.width = output.width;
+      canvas.height = output.height;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) throw new ColorizeError("INTERNAL_ERROR", clientSessionId);
+      const pixels = new Uint8ClampedArray(output.rgba.length);
+      pixels.set(output.rgba);
+      ctx.putImageData(new ImageData(pixels, output.width, output.height), 0, 0);
+      const blob = await new Promise<Blob | null>((resolve) =>
+        canvas.toBlob((b) => resolve(b), "image/jpeg", 0.92)
+      );
+      if (!blob) throw new ColorizeError("INTERNAL_ERROR", clientSessionId);
+      if (runIdRef.current !== runId) return;
+
+      revokePreviewUrl(resultUrl);
+      setResultUrl(URL.createObjectURL(blob));
+      setWarnings([...prepared.warnings, ...output.warnings]);
+      setPhase("done");
+      trackEvent("colorize_success", {
+        backend: output.backend,
+        inferMs: Math.round(output.timings.inferMs),
+        modelDownloadMs: Math.round(output.timings.modelDownloadMs),
       });
-      const data = (await res.json().catch(() => null)) as ColorizeApiResponse | null;
-
-      if (res.ok && data && data.success) {
-        setResultUrl(data.resultUrl);
-        setWarnings(data.warnings);
-        setPhase("done");
-        trackEvent("colorize_success");
-      } else if (data && !data.success) {
-        setErrorDisplay(buildErrorDisplay(data.errorCode, data.userMessage, data.retryable, data.requestId));
-        setPhase("error");
-        trackEvent("colorize_error", { code: data.errorCode, requestId: data.requestId });
-      } else {
-        setErrorDisplay(buildNetworkErrorDisplay());
-        setPhase("error");
-        trackEvent("colorize_error", { code: "NETWORK_ERROR" });
+    } catch (err) {
+      if (runIdRef.current !== runId) return;
+      const colorizeErr =
+        err instanceof ColorizeError ? err : new ColorizeError("INTERNAL_ERROR", clientSessionId, err);
+      if (colorizeErr.errorCode === "PROCESS_CANCELLED") {
+        setPhase("ready");
+        setProgress(null);
+        trackEvent("colorize_cancel");
+        return;
       }
-    } catch {
-      setErrorDisplay(buildNetworkErrorDisplay());
+      setErrorDisplay(buildErrorDisplay(colorizeErr));
       setPhase("error");
-      trackEvent("colorize_error", { code: "NETWORK_ERROR" });
+      trackEvent("colorize_error", { code: colorizeErr.errorCode, clientSessionId });
     } finally {
-      setSubmitting(false);
-      setTurnstileToken(null);
-      setTurnstileKey((k) => k + 1);
+      if (runIdRef.current === runId) abortRef.current = null;
     }
+  }
+
+  function handleCancel() {
+    abortRef.current?.abort();
   }
 
   function handleRetrySameImage() {
     trackEvent("colorize_retry", { mode: "same_image" });
+    revokePreviewUrl(resultUrl);
     setResultUrl(null);
     setWarnings([]);
     setErrorDisplay(null);
-    setConsent(false);
-    setTurnstileToken(null);
-    setTurnstileKey((k) => k + 1);
+    setProgress(null);
     setPhase("ready");
   }
 
-  async function handleDownload() {
+  function handleDownload() {
     if (!resultUrl) return;
     trackEvent("colorize_download");
-    try {
-      const res = await fetch(resultUrl);
-      const blob = await res.blob();
-      const objectUrl = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = objectUrl;
-      a.download = buildDownloadFilename();
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(objectUrl);
-    } catch {
-      setErrorDisplay({
-        heading: "保存に失敗しました",
-        message: "保存用の画像を取得できませんでした。画像を右クリック（長押し）して保存してください。",
-        errorCode: "DOWNLOAD_FAILED",
-        retryable: false,
-        requestId: null,
-        suggestDifferentImage: false,
-      });
-    }
+    const a = document.createElement("a");
+    a.href = resultUrl;
+    a.download = buildDownloadFilename();
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
   }
 
   if (!toolEnabled) {
     return (
       <div className="colorize-tool colorize-tool--disabled" role="status">
-        <p>
-          現在この機能は準備中のため、ご利用いただけません。しばらくしてから再度お試しください。
-        </p>
+        <p>現在、試験提供を一時停止しています。しばらくしてから再度お試しください。</p>
       </div>
     );
   }
@@ -235,7 +267,7 @@ export function PhotoColorizeClient({ turnstileSiteKey, toolEnabled }: Props) {
   return (
     <div className="colorize-tool">
       <div ref={liveRegionRef} className="sr-only" aria-live="polite" aria-atomic="true">
-        {phase === "processing" && "AIが色を推定しています。しばらくお待ちください。"}
+        {phase === "processing" && progressLabel(progress)}
         {phase === "done" && "カラー化が完了しました。"}
         {phase === "error" && errorDisplay && `${errorDisplay.heading} ${errorDisplay.message}`}
       </div>
@@ -265,6 +297,10 @@ export function PhotoColorizeClient({ turnstileSiteKey, toolEnabled }: Props) {
             onChange={handleInputChange}
             className="colorize-file-input"
           />
+          <p className="colorize-dropzone-privacy">
+            この写真は端末内（お使いのブラウザの中）で処理されます。写真はSHIMA
+            CRAFTや外部AIサービスへ送信されません。
+          </p>
           {preparing && (
             <p className="colorize-preparing" role="status">
               画像を準備しています…
@@ -282,7 +318,13 @@ export function PhotoColorizeClient({ turnstileSiteKey, toolEnabled }: Props) {
         <div className="colorize-ready">
           <div className="colorize-preview">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={prepared.previewUrl} alt="アップロードした白黒写真のプレビュー" />
+            <img src={prepared.previewUrl} alt="選択した白黒写真のプレビュー" />
+            {prepared.resizedFrom && (
+              <p className="colorize-resize-note">
+                端末で安全に処理するため、{prepared.resizedFrom.width}×{prepared.resizedFrom.height}
+                の元画像を{prepared.width}×{prepared.height}へ縮小して処理します。
+              </p>
+            )}
             <button type="button" className="colorize-remove-btn" onClick={handleRemoveImage}>
               画像を削除して選び直す
             </button>
@@ -297,39 +339,40 @@ export function PhotoColorizeClient({ turnstileSiteKey, toolEnabled }: Props) {
                 className="colorize-checkbox"
               />
               <span>
-                自分が権利を持つ画像であること、色はAIによる推定であり元の色を正確に復元するものではないこと、アップロードした画像をSHIMA
-                CRAFTが学習・広告・事例へ無断利用しないことを理解の上、
+                自分が権利を持つ画像であること、色はAIによる推定であり元の色を正確に復元するものではないことを理解の上、
                 <a href="/privacy" target="_blank" rel="noopener noreferrer">
                   プライバシーポリシー
                 </a>
-                に同意します。
+                に同意します。写真は端末内で処理され、SHIMA CRAFTへ送信されません。
               </span>
             </label>
           </div>
-
-          {turnstileSiteKey && (
-            <TurnstileWidget key={turnstileKey} siteKey={turnstileSiteKey} onToken={setTurnstileToken} />
-          )}
 
           <button
             type="button"
             className="btn colorize-start-btn"
             onClick={handleStart}
-            disabled={!consent || !turnstileToken || submitting}
-            aria-disabled={!consent || !turnstileToken || submitting}
+            disabled={!consent}
+            aria-disabled={!consent}
           >
             カラー化を開始する
           </button>
+          <p className="colorize-first-run-note">
+            初回はカラー化モデル（約44〜69MB）の読み込みに時間がかかる場合があります。2回目以降はブラウザに保存されたモデルを使うため速くなります。
+          </p>
         </div>
       )}
 
       {phase === "processing" && (
         <div className="colorize-processing" role="status">
           <span className="colorize-spinner" aria-hidden="true" />
-          <p>AIが色を推定しています…</p>
+          <p>{progressLabel(progress)}</p>
           <p className="colorize-processing-note">
-            画像の内容により、最大1分ほどかかる場合があります。処理中はこのページを離れずにお待ちください。
+            すべてお使いの端末内で処理しています。端末の性能により数秒〜1分ほどかかる場合があります。
           </p>
+          <button type="button" className="btn btn-ghost colorize-btn-ghost" onClick={handleCancel}>
+            キャンセル
+          </button>
         </div>
       )}
 
@@ -346,8 +389,13 @@ export function PhotoColorizeClient({ turnstileSiteKey, toolEnabled }: Props) {
               ※ 元の画像の解像度が低いため、仕上がりの色にじみが目立つ場合があります。
             </p>
           )}
+          {warnings.includes("structure_diff") && (
+            <p className="colorize-warning">
+              ※ 変換の過程で明るさがわずかに変化しています。気になる場合は元の画像も保存してください。
+            </p>
+          )}
           <p className="colorize-result-note">
-            色はAIによる推定です。当時の実際の色を正確に復元するものではありません。結果画像はこの画面を離れると再表示できない場合がありますので、保存したい場合は先に保存してください。
+            色はAIによる推定です。当時の実際の色を正確に復元するものではありません。結果画像はこの画面を離れると再表示できなくなるため、保存したい場合は先に保存してください。
           </p>
           <div className="colorize-result-actions">
             <button type="button" className="btn" onClick={handleDownload}>
@@ -367,9 +415,10 @@ export function PhotoColorizeClient({ turnstileSiteKey, toolEnabled }: Props) {
         <div className="colorize-error" role="alert">
           <h2 className="colorize-error-heading">{errorDisplay.heading}</h2>
           <p>{errorDisplay.message}</p>
+          {errorDisplay.nextAction && <p>{errorDisplay.nextAction}</p>}
           <p className="colorize-error-meta">
             エラーコード: {errorDisplay.errorCode}
-            {errorDisplay.requestId && ` / お問い合わせ番号: ${errorDisplay.requestId}`}
+            {errorDisplay.clientSessionId && ` / セッションID: ${errorDisplay.clientSessionId}`}
           </p>
           <div className="colorize-result-actions">
             {errorDisplay.retryable && (

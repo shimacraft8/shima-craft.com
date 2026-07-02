@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { clampChroma, grayStructureMAD, upsampleAb } from "../abProcessing";
+import { boostChroma, clampChroma, grayStructureMAD, upsampleAb } from "../abProcessing";
 
 describe("upsampleAb", () => {
   it("同一サイズなら値を保持する", () => {
@@ -48,6 +48,43 @@ describe("clampChroma", () => {
     expect(n).toBe(1);
     expect(Math.hypot(a[0], b[0])).toBeCloseTo(60, 4);
     expect(a[0] / b[0]).toBeCloseTo(80 / 60, 4); // 色相維持
+  });
+});
+
+describe("boostChroma（あざやか仕上がり）", () => {
+  it("低〜中彩度は約gain倍に増幅され、色相（a:b比）は保存される", () => {
+    const a = new Float32Array([10]);
+    const b = new Float32Array([20]);
+    boostChroma(a, b, 1, 1.45, 42, 60);
+    expect(Math.hypot(a[0], b[0])).toBeCloseTo(Math.hypot(10, 20) * 1.45, 3);
+    expect(a[0] / b[0]).toBeCloseTo(10 / 20, 5);
+  });
+
+  it("増幅後もchromaが上限を超えない（ソフトニー圧縮）", () => {
+    const a = new Float32Array([40, 55]);
+    const b = new Float32Array([30, 20]); // chroma 50, 58.5
+    boostChroma(a, b, 2, 1.45, 42, 60);
+    for (let i = 0; i < 2; i++) {
+      expect(Math.hypot(a[i], b[i])).toBeLessThanOrEqual(60);
+    }
+  });
+
+  it("無彩色(ab=0)は変化しない（NaNを出さない）", () => {
+    const a = new Float32Array([0]);
+    const b = new Float32Array([0]);
+    boostChroma(a, b, 1);
+    expect(a[0]).toBe(0);
+    expect(b[0]).toBe(0);
+    expect(Number.isNaN(a[0])).toBe(false);
+  });
+
+  it("増幅は単調（元のchromaが大きいほど結果も大きい）", () => {
+    const a = new Float32Array([10, 20, 35, 50]);
+    const b = new Float32Array([0, 0, 0, 0]);
+    boostChroma(a, b, 4, 1.45, 42, 60);
+    for (let i = 1; i < 4; i++) {
+      expect(a[i]).toBeGreaterThan(a[i - 1]);
+    }
   });
 });
 

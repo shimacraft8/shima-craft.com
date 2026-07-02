@@ -48,6 +48,35 @@ export function upsampleAb(
 }
 
 export const DEFAULT_MAX_CHROMA = 60;
+/** 「あざやか」仕上がりの chroma 増幅率。1.45 は実写比較で選定（一眼レフ風の色乗りと自然さの均衡点）。 */
+export const VIVID_CHROMA_GAIN = 1.45;
+/** ソフトニーの開始 chroma。これ以上は tanh で滑らかに圧縮し、過飽和・色つぶれを防ぐ。 */
+export const VIVID_CHROMA_KNEE = 42;
+
+/**
+ * chroma をソフトニー付きで増幅する（「あざやか」仕上がり）。
+ * L（輝度）には触れないため構造は変化しない。色相も保存される。
+ * knee 以下は線形に gain 倍、超過分は tanh で max へ漸近させる。
+ */
+export function boostChroma(
+  a: Float32Array,
+  b: Float32Array,
+  pixelCount: number,
+  gain: number = VIVID_CHROMA_GAIN,
+  knee: number = VIVID_CHROMA_KNEE,
+  maxChroma: number = DEFAULT_MAX_CHROMA
+): void {
+  const range = maxChroma - knee;
+  for (let i = 0; i < pixelCount; i++) {
+    const c = Math.hypot(a[i], b[i]);
+    if (c < 1e-6) continue;
+    const boosted = c * gain;
+    const compressed = boosted <= knee ? boosted : knee + range * Math.tanh((boosted - knee) / range);
+    const s = compressed / c;
+    a[i] *= s;
+    b[i] *= s;
+  }
+}
 
 /**
  * chroma (√(a²+b²)) が maxChroma を超える画素を等比で縮めて過剰彩度・色にじみを抑える。

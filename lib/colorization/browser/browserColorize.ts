@@ -13,7 +13,7 @@
 
 import { ColorizeError, type ColorizeProgress, type ColorizeResult } from "@/lib/colorization/types";
 import { rgbaToL, labToRgba } from "./labColor";
-import { upsampleAb, clampChroma, grayStructureMAD } from "./abProcessing";
+import { upsampleAb, boostChroma, clampChroma, grayStructureMAD } from "./abProcessing";
 import {
   MODEL_INPUT_SIZE,
   createSession,
@@ -29,6 +29,14 @@ export type ColorizeInput = {
   /** 同じ画像を 256x256 に縮小した RGBA。 */
   smallRgba: Uint8ClampedArray;
 };
+
+/**
+ * 仕上がりの色の濃さ。
+ * - vivid: chroma をソフトニー付きで増幅（一眼レフ風の色乗り。既定）
+ * - soft: モデル出力の控えめな彩度のまま
+ * どちらも輝度・形状には影響しない。
+ */
+export type ColorizeFinish = "vivid" | "soft";
 
 export type ColorizeOutput = ColorizeResult & {
   /** 元画像と同一寸法の結果 RGBA（ImageData 化は呼び出し側で行う）。 */
@@ -101,6 +109,7 @@ export async function colorizeInBrowser(
     signal: AbortSignal;
     onProgress?: (p: ColorizeProgress) => void;
     clientSessionId?: string;
+    finish?: ColorizeFinish;
   }
 ): Promise<ColorizeOutput> {
   const sessionId = options.clientSessionId ?? newClientSessionId();
@@ -168,6 +177,9 @@ export async function colorizeInBrowser(
   const warnings: string[] = [];
   try {
     const { a, b } = upsampleAb(abData, MODEL_INPUT_SIZE, width, height);
+    if ((options.finish ?? "vivid") === "vivid") {
+      boostChroma(a, b, pixelCount);
+    }
     clampChroma(a, b, pixelCount);
     rgba = new Uint8ClampedArray(pixelCount * 4);
     labToRgba(lFull, a, b, rgba, pixelCount);

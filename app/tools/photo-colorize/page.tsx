@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { cookies, headers } from "next/headers";
 import { HeaderInner } from "@/app/components/HeaderInner";
 import { Footer } from "@/app/components/Footer";
 import { StickyContact } from "@/app/components/StickyContact";
 import { Breadcrumb } from "@/app/components/Breadcrumb";
 import { TrackedLink } from "@/app/components/TrackedLink";
 import { mailtoHref, site } from "@/app/lib/site";
-import { PhotoColorizeClient } from "./PhotoColorizeClient";
+import { getViewer } from "@/lib/auth/access";
+import { TRIAL_COOKIE_NAME, getTrialQuota, hashIdentity, ipHashFromHeaders, trialCookieLimit } from "@/lib/trial/trial";
+import { signOutAction } from "@/app/login/actions";
+import { PhotoColorizeClient, type ColorizeAccessMode } from "./PhotoColorizeClient";
 
-const PAGE_TITLE = "白黒写真を無料でカラー化｜古写真をAI着色 - SHIMA CRAFT";
+const PAGE_TITLE = "白黒写真をカラー化｜古写真をAI着色サービス - SHIMA CRAFT";
 const PAGE_DESC =
-  "白黒写真を選ぶと、AIが端末内（ブラウザの中）で自然な色を推定して無料でカラー化。写真は外部へ送信されません。スマホで撮影した古写真にも対応。奄美発のSHIMA CRAFTが提供するブラウザツールです。";
+  "古い白黒写真を、AIが端末内（ブラウザの中）で自然な色を推定してカラー化する会員制サービス。写真は外部へ送信されません。未会員の方も3回まで無料でお試しいただけます。奄美発のSHIMA CRAFTが提供します。";
 
 export const metadata: Metadata = {
   title: { absolute: PAGE_TITLE },
@@ -61,13 +65,13 @@ const NOTES = [
   "人物の輪郭や構図を新しく生成する機能ではないため、顔や傷、破損箇所の修復・復元は行いません。",
   "初回はカラー化モデル（約44〜69MB）の読み込みに時間がかかる場合があります。2回目以降はブラウザのキャッシュにより速くなります。",
   "自分が権利を持つ画像のみご利用ください。",
-  "本ツールは現在試験提供中です。利用条件は今後変更する場合があります。",
+  "会員の方の利用状況（日時・成功/失敗・画像の縦横サイズ・処理方式など）は、サービス運営のため記録します。画像そのものは記録しません。",
 ];
 
 const FAQS = [
   {
-    q: "本当に無料ですか？",
-    a: "はい、無料でご利用いただけます。カラー化はお使いの端末のブラウザ内で行われるため、回数の上限もありません。なお本ツールは試験提供中のため、利用条件は今後変更する場合があります。",
+    q: "利用料金はいくらですか？",
+    a: "ご利用料金・利用回数・契約条件は、ご利用内容に応じて個別にご案内します。SHIMA CRAFTへお問い合わせください。未会員の方も、お試しとして3回まで無料でカラー化をご利用いただけます（成功した生成のみカウントされます）。",
   },
   {
     q: "写真はどこかへ送信・保存されますか？",
@@ -75,7 +79,7 @@ const FAQS = [
   },
   {
     q: "元の色を再現できますか？",
-    a: "いいえ、正確な復元ではありません。AIが写真の濃淡から自然に見える色を推定して着色しており、当時の実際の色と一致することを保証するものではありません。",
+    a: "いいえ、正確な復元ではありません。AIが写真の濃淡から自然に見える色を推定して着色しており、当時の実際の色と一致することを保証するものではありません。仕上がりは「あざやか」「ひかえめ」の2種類から選べます。",
   },
   {
     q: "スマホで撮影した古写真でも使えますか？",
@@ -83,7 +87,7 @@ const FAQS = [
   },
   {
     q: "顔や傷も修復されますか？",
-    a: "いいえ、顔の欠損修復や傷・破損箇所の修復は行いません。本ツールは元の写真の明るさ・輪郭をそのまま保ち、色だけを推定して重ねる方式のため、人物や構図が変わることはありません。",
+    a: "いいえ、顔の欠損修復や傷・破損箇所の修復は行いません。本サービスは元の写真の明るさ・輪郭をそのまま保ち、色だけを推定して重ねる方式のため、人物や構図が変わることはありません。",
   },
   {
     q: "どの画像形式に対応していますか？",
@@ -101,23 +105,18 @@ const jsonLd = {
         {
           "@type": "ListItem",
           position: 2,
-          name: "白黒写真を無料でカラー化",
+          name: "白黒写真カラー化サービス",
           item: `${site.url}/tools/photo-colorize`,
         },
       ],
     },
     {
       "@type": "WebApplication",
-      name: "白黒写真カラー化ツール",
+      name: "白黒写真カラー化サービス",
       url: `${site.url}/tools/photo-colorize`,
       applicationCategory: "PhotographyApplication",
       operatingSystem: "Any (Webブラウザ)",
       description: PAGE_DESC,
-      offers: {
-        "@type": "Offer",
-        price: "0",
-        priceCurrency: "JPY",
-      },
       provider: {
         "@type": "Organization",
         name: site.name,
@@ -135,10 +134,38 @@ const jsonLd = {
   ],
 };
 
-// ブラウザ内処理のためTurnstile・回数制限は不要。COLORIZE_ENABLED=false が緊急停止スイッチ。
-const toolEnabled = process.env.COLORIZE_ENABLED !== "false";
+const BLOCKED_MESSAGE =
+  "現在、このアカウントではカラー化サービスをご利用いただけません。契約状況についてSHIMA CRAFTへお問い合わせください。";
 
-export default function PhotoColorizePage() {
+export default async function PhotoColorizePage() {
+  // COLORIZE_ENABLED=false が緊急停止スイッチ（このページは動的レンダリングのため即時反映）
+  const toolEnabled = process.env.COLORIZE_ENABLED !== "false";
+
+  const viewer = await getViewer();
+
+  let accessMode: ColorizeAccessMode;
+  let trialRemaining = 0;
+  const trialLimit = trialCookieLimit();
+
+  if (viewer.kind === "anonymous") {
+    accessMode = "trial";
+    try {
+      const cookieValue = cookies().get(TRIAL_COOKIE_NAME)?.value;
+      const ipHash = ipHashFromHeaders(headers());
+      // Cookie未発行の閲覧者はIP側のカウントだけで残回数を見積もる
+      const cookieHash = hashIdentity(cookieValue ?? `nocookie:${ipHash}`);
+      const quota = await getTrialQuota(cookieHash, ipHash);
+      trialRemaining = quota.remaining;
+    } catch {
+      // 残回数が取得できなくても表示は継続（開始時にサーバーが最終判定する）
+      trialRemaining = trialLimit;
+    }
+  } else if (viewer.canColorize) {
+    accessMode = "member";
+  } else {
+    accessMode = "blocked";
+  }
+
   return (
     <>
       <script
@@ -151,26 +178,68 @@ export default function PhotoColorizePage() {
         <Breadcrumb
           items={[
             { label: "トップ", href: "/" },
-            { label: "白黒写真を無料でカラー化" },
+            { label: "白黒写真カラー化サービス" },
           ]}
         />
 
         <div className="inner-hero">
-          <p className="inner-hero-area">無料ツール・AI画像処理（試験提供中）</p>
-          <h1>古い白黒写真を無料でカラー化</h1>
+          <p className="inner-hero-area">会員サービス・AI画像処理</p>
+          <h1>古い白黒写真をカラー化</h1>
           <p className="inner-hero-lead">
-            白黒写真を選ぶと、AIが自然な色を推定してカラー化する無料ツールです。処理はすべてお使いの端末内（ブラウザの中）で行われ、写真は外部へ送信されません。色は推定であり、当時の実際の色を正確に復元するものではありません。奄美発のSHIMA
-            CRAFTが提供するブラウザツールです。
+            白黒写真を選ぶと、AIが自然な色を推定してカラー化する会員制サービスです。処理はすべてお使いの端末内（ブラウザの中）で行われ、写真は外部へ送信されません。色は推定であり、当時の実際の色を正確に復元するものではありません。奄美発のSHIMA
+            CRAFTが提供しています。未会員の方も3回まで無料でお試しいただけます。
           </p>
         </div>
 
         <section className="svc-section">
           <div className="container colorize-tool-container">
-            <PhotoColorizeClient toolEnabled={toolEnabled} />
+            {viewer.kind !== "anonymous" && (
+              <div className="colorize-account-bar">
+                <span>
+                  ログイン中：{viewer.profile.display_name || viewer.profile.email}
+                  {viewer.kind === "admin" && (
+                    <>
+                      {" "}
+                      / <Link href="/admin">管理画面</Link>
+                    </>
+                  )}
+                </span>
+                <form action={signOutAction}>
+                  <button type="submit" className="colorize-logout-btn">
+                    ログアウト
+                  </button>
+                </form>
+              </div>
+            )}
+            <PhotoColorizeClient
+              toolEnabled={toolEnabled}
+              accessMode={accessMode}
+              trialRemaining={trialRemaining}
+              trialLimit={trialLimit}
+              blockedMessage={BLOCKED_MESSAGE}
+              contactHref={mailtoHref}
+            />
           </div>
         </section>
 
         <section className="svc-section" style={{ background: "#fff" }}>
+          <div className="container">
+            <h2 className="svc-title">ご利用料金</h2>
+            <p className="svc-lead">
+              ご利用料金・利用回数・契約条件は、ご利用内容に応じて個別にご案内します。まずはお気軽にお問い合わせください。
+            </p>
+            <TrackedLink
+              href={mailtoHref}
+              className="btn"
+              eventName="contact_click"
+              eventParams={{ location: "photo_colorize_pricing", method: "email" }}
+            >
+              利用料金について問い合わせる
+            </TrackedLink>
+          </div>
+        </section>
+
+        <section className="svc-section">
           <div className="container">
             <h2 className="svc-title">対応できる写真</h2>
             <ul className="svc-list">
@@ -181,7 +250,7 @@ export default function PhotoColorizePage() {
           </div>
         </section>
 
-        <section className="svc-section">
+        <section className="svc-section" style={{ background: "#fff" }}>
           <div className="container">
             <h2 className="svc-title">きれいに仕上げるコツ</h2>
             <ul className="svc-list">
@@ -192,7 +261,7 @@ export default function PhotoColorizePage() {
           </div>
         </section>
 
-        <section className="svc-section" style={{ background: "#fff" }}>
+        <section className="svc-section">
           <div className="container">
             <h2 className="svc-title">注意事項</h2>
             <ul className="svc-list">
@@ -203,7 +272,7 @@ export default function PhotoColorizePage() {
           </div>
         </section>
 
-        <section className="svc-section">
+        <section className="svc-section" style={{ background: "#fff" }}>
           <div className="container">
             <h2 className="svc-title">よくある質問</h2>
             <div className="svc-faq-list">

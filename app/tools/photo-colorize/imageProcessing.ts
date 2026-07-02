@@ -28,6 +28,8 @@ export type PreparedImage = {
   previewUrl: string;
   /** 元画像から縮小したかどうか（画面で明示するため）。 */
   resizedFrom: { width: number; height: number } | null;
+  /** 元ファイルのバイト数（利用ログ用。ファイル名・内容は保持しない）。 */
+  sourceFileSize: number;
   /** 低解像度警告など。 */
   warnings: string[];
 };
@@ -125,6 +127,7 @@ export async function prepareImageForColorize(file: File): Promise<PreparedImage
     smallRgba: smallData.data,
     previewUrl: URL.createObjectURL(blob),
     resizedFrom: target.resized ? orig : null,
+    sourceFileSize: file.size,
     warnings,
   };
 }

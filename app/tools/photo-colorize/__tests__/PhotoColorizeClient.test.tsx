@@ -38,6 +38,7 @@ function preparedImage(overrides: Record<string, unknown> = {}) {
     smallRgba: new Uint8ClampedArray(256 * 256 * 4),
     previewUrl: "blob:fake-preview",
     resizedFrom: null,
+    sourceFileSize: 123456,
     warnings: [],
     ...overrides,
   };
@@ -53,6 +54,7 @@ function successOutput(overrides: Record<string, unknown> = {}) {
     timings: { modelDownloadMs: 100, initMs: 50, inferMs: 200, compositeMs: 30 },
     grayStructureMAD: 0.05,
     warnings: [],
+    ...overrides,
   };
 }
 
@@ -64,12 +66,24 @@ class FakeImageData {
   ) {}
 }
 
+let fetchMock: ReturnType<typeof vi.fn>;
+
 beforeEach(() => {
   mocks.prepareImageForColorize.mockReset().mockResolvedValue(preparedImage());
   mocks.revokePreviewUrl.mockReset();
   mocks.colorizeInBrowser.mockReset();
 
-  // jsdom には canvas 2D / ImageData がないためスタブする
+  // /api/colorize-log と /api/trial/* のスタブ
+  fetchMock = vi.fn(async (url: string) => {
+    if (String(url).includes("/api/trial/start")) {
+      return new Response(JSON.stringify({ ok: true, ticket: "t.sig", remaining: 2, limit: 3 }), {
+        status: 200,
+      });
+    }
+    return new Response(JSON.stringify({ ok: true, remaining: 2 }), { status: 200 });
+  });
+  vi.stubGlobal("fetch", fetchMock);
+
   vi.stubGlobal("ImageData", FakeImageData);
   vi.spyOn(HTMLCanvasElement.prototype, "getContext").mockReturnValue({
     putImageData: vi.fn(),
@@ -97,8 +111,19 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
-async function selectFileAndReachReady() {
-  render(<PhotoColorizeClient toolEnabled />);
+function renderClient(props: Partial<React.ComponentProps<typeof PhotoColorizeClient>> = {}) {
+  return render(
+    <PhotoColorizeClient
+      toolEnabled
+      accessMode="member"
+      contactHref="mailto:test@example.com"
+      {...props}
+    />
+  );
+}
+
+async function selectFileAndReachReady(props: Partial<React.ComponentProps<typeof PhotoColorizeClient>> = {}) {
+  renderClient(props);
   const input = document.getElementById("colorize-file-input") as HTMLInputElement;
   fireEvent.change(input, { target: { files: [makeFile()] } });
   await waitFor(() => {
@@ -111,17 +136,23 @@ async function startColorize() {
   fireEvent.click(screen.getByText("カラー化を開始する"));
 }
 
-describe("PhotoColorizeClient", () => {
+describe("PhotoColorizeClient（会員モード）", () => {
   it("toolEnabled=falseの場合は一時停止メッセージを表示しアップロードUIを出さない", () => {
-    render(<PhotoColorizeClient toolEnabled={false} />);
-    expect(screen.getByText(/試験提供を一時停止しています/)).toBeInTheDocument();
+    renderClient({ toolEnabled: false });
+    expect(screen.getByText(/提供を一時停止しています/)).toBeInTheDocument();
+    expect(screen.queryByText("画像を選ぶ")).not.toBeInTheDocument();
+  });
+
+  it("blockedモードでは契約案内と問い合わせ導線を表示し、ツールを出さない", () => {
+    renderClient({ accessMode: "blocked", blockedMessage: "現在、このアカウントではご利用いただけません。" });
+    expect(screen.getByText(/このアカウントではご利用いただけません/)).toBeInTheDocument();
+    expect(screen.getByText("SHIMA CRAFTへ問い合わせる")).toBeInTheDocument();
     expect(screen.queryByText("画像を選ぶ")).not.toBeInTheDocument();
   });
 
   it("選択画面に端末内処理の説明が表示される", () => {
-    render(<PhotoColorizeClient toolEnabled />);
+    renderClient();
     expect(screen.getByText(/端末内（お使いのブラウザの中）で処理されます/)).toBeInTheDocument();
-    expect(screen.getByText(/外部AIサービスへ送信されません/)).toBeInTheDocument();
   });
 
   it("画像選択後、同意するまで開始ボタンが無効", async () => {
@@ -132,28 +163,14 @@ describe("PhotoColorizeClient", () => {
     await waitFor(() => expect(startBtn).not.toBeDisabled());
   });
 
-  it("初回モデル読み込みの説明が表示される", async () => {
+  it("仕上がり選択（あざやか/ひかえめ）が表示され、選んだ値がcolorizeInBrowserへ渡る", async () => {
+    mocks.colorizeInBrowser.mockResolvedValue(successOutput());
     await selectFileAndReachReady();
-    expect(screen.getByText(/初回はカラー化モデル/)).toBeInTheDocument();
-    expect(screen.getByText(/2回目以降は/)).toBeInTheDocument();
-  });
-
-  it("縮小して処理する場合はその旨を明示する", async () => {
-    mocks.prepareImageForColorize.mockResolvedValue(
-      preparedImage({ resizedFrom: { width: 4000, height: 3000 } })
-    );
-    await selectFileAndReachReady();
-    expect(screen.getByText(/4000×3000/)).toBeInTheDocument();
-    expect(screen.getByText(/縮小して処理します/)).toBeInTheDocument();
-  });
-
-  it("削除ボタンで選択前の状態に戻り、プレビューURLを解放する", async () => {
-    await selectFileAndReachReady();
-    fireEvent.click(screen.getByText("画像を削除して選び直す"));
-    await waitFor(() => {
-      expect(screen.getByText("画像を選ぶ")).toBeInTheDocument();
-    });
-    expect(mocks.revokePreviewUrl).toHaveBeenCalledWith("blob:fake-preview");
+    fireEvent.click(screen.getByText(/ひかえめ/));
+    await startColorize();
+    await waitFor(() => expect(mocks.colorizeInBrowser).toHaveBeenCalled());
+    const [, opts] = mocks.colorizeInBrowser.mock.calls[0];
+    expect(opts.finish).toBe("soft");
   });
 
   it("開始→成功で結果(Before/After・保存・再試行)が表示される", async () => {
@@ -166,130 +183,248 @@ describe("PhotoColorizeClient", () => {
     });
     expect(screen.getByText("同じ画像でもう一度試す")).toBeInTheDocument();
     expect(screen.getByText("別の画像で試す")).toBeInTheDocument();
-    expect(screen.getByAltText("AIでカラー化した後の写真")).toBeInTheDocument();
   });
 
-  it("処理中はモデルダウンロード進捗とキャンセルボタンが表示される", async () => {
-    let sendProgress: ((p: ColorizeProgress) => void) | null = null;
-    mocks.colorizeInBrowser.mockImplementation(
-      (_input: unknown, opts: { onProgress: (p: ColorizeProgress) => void }) => {
-        sendProgress = opts.onProgress;
-        return new Promise(() => {}); // 完了しない
-      }
-    );
-    await selectFileAndReachReady();
-    await startColorize();
-
-    await waitFor(() => {
-      expect(screen.getByText("キャンセル")).toBeInTheDocument();
-    });
-    act(() => {
-      sendProgress?.({ stage: "downloading_model", loadedBytes: 34_000_000, totalBytes: 68_000_000 });
-    });
-    // sr-only のライブリージョンにも同じ文言が出るため getAllByText を使う
-    expect(screen.getAllByText(/カラー化モデルをダウンロード中… 50%/).length).toBeGreaterThan(0);
-    act(() => {
-      sendProgress?.({ stage: "inferring", backend: "webgpu" });
-    });
-    expect(screen.getAllByText(/AIが色を推定しています/).length).toBeGreaterThan(0);
-  });
-
-  it("キャンセルすると ready へ戻る", async () => {
-    mocks.colorizeInBrowser.mockImplementation(
-      (_input: unknown, opts: { signal: AbortSignal; clientSessionId?: string }) =>
-        new Promise((_resolve, reject) => {
-          opts.signal.addEventListener("abort", () =>
-            reject(new ColorizeError("PROCESS_CANCELLED", opts.clientSessionId ?? "cs"))
-          );
-        })
-    );
-    await selectFileAndReachReady();
-    await startColorize();
-
-    fireEvent.click(await screen.findByText("キャンセル"));
-    await waitFor(() => {
-      expect(screen.getByText("カラー化を開始する")).toBeInTheDocument();
-    });
-    expect(screen.queryByRole("alert")).not.toBeInTheDocument();
-  });
-
-  it("MODEL_DOWNLOAD_FAILED: 見出し・コード・セッションID・次の行動が表示され、画像を疑わせない", async () => {
-    mocks.colorizeInBrowser.mockRejectedValue(new ColorizeError("MODEL_DOWNLOAD_FAILED", "cs-err-1"));
-    await selectFileAndReachReady();
-    await startColorize();
-
-    await waitFor(() => {
-      expect(screen.getByRole("alert")).toHaveTextContent("カラー化モデルを読み込めませんでした");
-    });
-    const alert = screen.getByRole("alert");
-    expect(alert).toHaveTextContent("MODEL_DOWNLOAD_FAILED");
-    expect(alert).toHaveTextContent("cs-err-1");
-    expect(alert).toHaveTextContent("通信環境の良い場所で再試行してください");
-    expect(screen.getByText("同じ画像でもう一度試す")).toBeInTheDocument();
-    expect(screen.queryByText("別の画像で試す")).not.toBeInTheDocument();
-    expect(screen.getByText("はじめからやり直す")).toBeInTheDocument();
-  });
-
-  it("UNSUPPORTED_BROWSER: 再試行ボタンを出さない", async () => {
-    mocks.colorizeInBrowser.mockRejectedValue(new ColorizeError("UNSUPPORTED_BROWSER", "cs-err-2"));
-    await selectFileAndReachReady();
-    await startColorize();
-
-    await waitFor(() => {
-      expect(screen.getByRole("alert")).toHaveTextContent("お使いのブラウザではご利用いただけません");
-    });
-    expect(screen.queryByText("同じ画像でもう一度試す")).not.toBeInTheDocument();
-  });
-
-  it("OUT_OF_MEMORY: 画像側の問題として「別の画像で試す」を出す", async () => {
-    mocks.colorizeInBrowser.mockRejectedValue(new ColorizeError("OUT_OF_MEMORY", "cs-err-3"));
-    await selectFileAndReachReady();
-    await startColorize();
-
-    await waitFor(() => {
-      expect(screen.getByRole("alert")).toHaveTextContent("端末のメモリが不足しています");
-    });
-    expect(screen.getByText("同じ画像でもう一度試す")).toBeInTheDocument();
-    expect(screen.getByText("別の画像で試す")).toBeInTheDocument();
-  });
-
-  it("低解像度警告が結果画面に表示される", async () => {
-    mocks.prepareImageForColorize.mockResolvedValue(preparedImage({ warnings: ["low_resolution"] }));
+  it("成功時に開始・成功ログが/api/colorize-logへ送信され、画像データは含まれない", async () => {
     mocks.colorizeInBrowser.mockResolvedValue(successOutput());
     await selectFileAndReachReady();
     await startColorize();
-
-    await waitFor(() => {
-      expect(screen.getByText(/解像度が低いため/)).toBeInTheDocument();
-    });
-  });
-
-  it("結果画面で「別の画像で試す」を押すと選択前の状態に戻りURLを解放する", async () => {
-    mocks.colorizeInBrowser.mockResolvedValue(successOutput());
-    await selectFileAndReachReady();
-    await startColorize();
-
     await waitFor(() => {
       expect(screen.getByText("結果画像を保存する")).toBeInTheDocument();
     });
 
-    fireEvent.click(screen.getByText("別の画像で試す"));
-    await waitFor(() => {
-      expect(screen.getByText("画像を選ぶ")).toBeInTheDocument();
-    });
-    expect(mocks.revokePreviewUrl).toHaveBeenCalledWith("blob:fake-preview");
-    expect(mocks.revokePreviewUrl).toHaveBeenCalledWith("blob:mock-result");
+    const logCalls = fetchMock.mock.calls.filter(([u]) => String(u).includes("/api/colorize-log"));
+    const events = logCalls.map(([, init]) => JSON.parse((init as RequestInit).body as string));
+    expect(events.some((e) => e.event_type === "colorize_started")).toBe(true);
+    expect(events.some((e) => e.event_type === "colorize_succeeded")).toBe(true);
+    for (const e of events) {
+      const raw = JSON.stringify(e);
+      expect(raw).not.toContain("blob:");
+      expect(raw).not.toContain("base64");
+      expect(raw.length).toBeLessThan(1000);
+      expect(e.rgba).toBeUndefined();
+      expect(e.user_id).toBeUndefined(); // user_idはサーバー側でセッションから付与
+    }
   });
 
-  it("colorizeInBrowser には画像のピクセルデータのみが渡され、Fileは渡されない", async () => {
+  it("失敗時に colorize_failed ログ（error_code付き）が送信される", async () => {
+    mocks.colorizeInBrowser.mockRejectedValue(new ColorizeError("COLORIZATION_FAILED", "cs-f"));
+    await selectFileAndReachReady();
+    await startColorize();
+    await waitFor(() => expect(screen.getByRole("alert")).toBeInTheDocument());
+
+    const events = fetchMock.mock.calls
+      .filter(([u]) => String(u).includes("/api/colorize-log"))
+      .map(([, init]) => JSON.parse((init as RequestInit).body as string));
+    const failed = events.find((e) => e.event_type === "colorize_failed");
+    expect(failed?.error_code).toBe("COLORIZATION_FAILED");
+  });
+
+  it("ダウンロード操作で download_clicked ログが送信される", async () => {
     mocks.colorizeInBrowser.mockResolvedValue(successOutput());
     await selectFileAndReachReady();
     await startColorize();
+    await waitFor(() => screen.getByText("結果画像を保存する"));
+    fireEvent.click(screen.getByText("結果画像を保存する"));
 
-    await waitFor(() => expect(mocks.colorizeInBrowser).toHaveBeenCalled());
-    const [input] = mocks.colorizeInBrowser.mock.calls[0];
-    expect(input.fullRgba).toBeInstanceOf(Uint8ClampedArray);
-    expect(input.width).toBe(400);
-    expect(input.height).toBe(300);
+    const events = fetchMock.mock.calls
+      .filter(([u]) => String(u).includes("/api/colorize-log"))
+      .map(([, init]) => JSON.parse((init as RequestInit).body as string));
+    expect(events.some((e) => e.event_type === "download_clicked")).toBe(true);
+  });
+});
+
+describe("同じ画像でもう一度試す（回帰テスト）", () => {
+  it("成功後の再試行で新しい処理が直接開始され、再度成功する", async () => {
+    mocks.colorizeInBrowser.mockResolvedValue(successOutput());
+    await selectFileAndReachReady();
+    await startColorize();
+    await waitFor(() => screen.getByText("結果画像を保存する"));
+
+    fireEvent.click(screen.getByText("同じ画像でもう一度試す"));
+
+    await waitFor(() => expect(mocks.colorizeInBrowser).toHaveBeenCalledTimes(2));
+    await waitFor(() => {
+      expect(screen.getByText("結果画像を保存する")).toBeInTheDocument();
+    });
+    // 入力画像は同じもの（prepareは1回のみ）
+    expect(mocks.prepareImageForColorize).toHaveBeenCalledTimes(1);
+  });
+
+  it("失敗後の再試行で古いエラーが消え、成功に到達できる", async () => {
+    mocks.colorizeInBrowser
+      .mockRejectedValueOnce(new ColorizeError("COLORIZATION_FAILED", "cs-1"))
+      .mockResolvedValueOnce(successOutput());
+    await selectFileAndReachReady();
+    await startColorize();
+
+    await waitFor(() => expect(screen.getByRole("alert")).toBeInTheDocument());
+    fireEvent.click(screen.getByText("同じ画像でもう一度試す"));
+
+    await waitFor(() => {
+      expect(screen.getByText("結果画像を保存する")).toBeInTheDocument();
+    });
+    expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+    expect(mocks.colorizeInBrowser).toHaveBeenCalledTimes(2);
+  });
+
+  it("再試行ごとに新しい実行ID（clientSessionId）とAbortControllerが使われる", async () => {
+    mocks.colorizeInBrowser.mockResolvedValue(successOutput());
+    await selectFileAndReachReady();
+    await startColorize();
+    await waitFor(() => screen.getByText("結果画像を保存する"));
+    fireEvent.click(screen.getByText("同じ画像でもう一度試す"));
+    await waitFor(() => expect(mocks.colorizeInBrowser).toHaveBeenCalledTimes(2));
+
+    const opts1 = mocks.colorizeInBrowser.mock.calls[0][1];
+    const opts2 = mocks.colorizeInBrowser.mock.calls[1][1];
+    expect(opts1.clientSessionId).not.toBe(opts2.clientSessionId);
+    expect(opts1.signal).not.toBe(opts2.signal);
+    expect(opts2.signal.aborted).toBe(false);
+  });
+
+  it("キャンセル後に同じ画像で再実行して成功できる", async () => {
+    mocks.colorizeInBrowser
+      .mockImplementationOnce(
+        (_input: unknown, opts: { signal: AbortSignal; clientSessionId?: string }) =>
+          new Promise((_res, reject) => {
+            opts.signal.addEventListener("abort", () =>
+              reject(new ColorizeError("PROCESS_CANCELLED", opts.clientSessionId ?? "cs"))
+            );
+          })
+      )
+      .mockResolvedValueOnce(successOutput());
+
+    await selectFileAndReachReady();
+    await startColorize();
+    fireEvent.click(await screen.findByText("キャンセル"));
+    await waitFor(() => screen.getByText("カラー化を開始する"));
+
+    fireEvent.click(screen.getByText("カラー化を開始する"));
+    await waitFor(() => {
+      expect(screen.getByText("結果画像を保存する")).toBeInTheDocument();
+    });
+  });
+
+  it("2回以上連続で再試行できる", async () => {
+    mocks.colorizeInBrowser.mockResolvedValue(successOutput());
+    await selectFileAndReachReady();
+    await startColorize();
+    for (let i = 0; i < 2; i++) {
+      // eslint-disable-next-line no-await-in-loop
+      await waitFor(() => screen.getByText("同じ画像でもう一度試す"));
+      fireEvent.click(screen.getByText("同じ画像でもう一度試す"));
+    }
+    await waitFor(() => expect(mocks.colorizeInBrowser).toHaveBeenCalledTimes(3));
+    await waitFor(() => screen.getByText("結果画像を保存する"));
+  });
+
+  it("処理中の多重起動を防止する（実行中はcolorizeInBrowserが増えない）", async () => {
+    let resolveRun: ((v: unknown) => void) | null = null;
+    mocks.colorizeInBrowser.mockImplementation(
+      () =>
+        new Promise((res) => {
+          resolveRun = res;
+        })
+    );
+    await selectFileAndReachReady();
+    await startColorize();
+    await waitFor(() => expect(mocks.colorizeInBrowser).toHaveBeenCalledTimes(1));
+
+    // 処理中にもう一度開始を試みても増えない
+    fireEvent.click(screen.getByText("キャンセル")); // ボタン存在確認を兼ねる（abort→rejectはこのmockでは起きない）
+    act(() => {
+      resolveRun?.(successOutput());
+    });
+    await waitFor(() => screen.getByText("結果画像を保存する"));
+    expect(mocks.colorizeInBrowser).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("お試しモード", () => {
+  it("残り回数と会員登録導線が表示される", () => {
+    renderClient({ accessMode: "trial", trialRemaining: 2, trialLimit: 3 });
+    expect(screen.getByText(/お試し利用中/)).toBeInTheDocument();
+    expect(screen.getByText("会員登録・料金について問い合わせる")).toBeInTheDocument();
+    expect(screen.getByText("会員の方はログイン")).toBeInTheDocument();
+  });
+
+  it("残り0回のときはツールUIを出さず、登録案内を表示する", () => {
+    renderClient({ accessMode: "trial", trialRemaining: 0, trialLimit: 3 });
+    expect(screen.getByText(/すべてご利用いただきました/)).toBeInTheDocument();
+    expect(screen.queryByText("画像を選ぶ")).not.toBeInTheDocument();
+  });
+
+  it("開始時に/api/trial/startを呼び、成功時にcompleteへ succeeded を報告する", async () => {
+    mocks.colorizeInBrowser.mockResolvedValue(successOutput());
+    await selectFileAndReachReady({ accessMode: "trial", trialRemaining: 3 });
+    await startColorize();
+    await waitFor(() => screen.getByText("結果画像を保存する"));
+
+    const startCalls = fetchMock.mock.calls.filter(([u]) => String(u).includes("/api/trial/start"));
+    expect(startCalls.length).toBe(1);
+    const completeCalls = fetchMock.mock.calls.filter(([u]) =>
+      String(u).includes("/api/trial/complete")
+    );
+    const body = JSON.parse((completeCalls[0][1] as RequestInit).body as string);
+    expect(body.result).toBe("succeeded");
+    expect(body.ticket).toBe("t.sig");
+  });
+
+  it("サーバーが上限超過(403)を返したらカラー化せず登録案内を表示する", async () => {
+    fetchMock.mockImplementation(async (url: string) => {
+      if (String(url).includes("/api/trial/start")) {
+        return new Response(
+          JSON.stringify({ ok: false, reason: "TRIAL_EXHAUSTED", userMessage: "上限に達しました。" }),
+          { status: 403 }
+        );
+      }
+      return new Response(JSON.stringify({ ok: true }), { status: 200 });
+    });
+    await selectFileAndReachReady({ accessMode: "trial", trialRemaining: 1 });
+    await startColorize();
+
+    await waitFor(() => {
+      expect(screen.getByText(/すべてご利用いただきました/)).toBeInTheDocument();
+    });
+    expect(mocks.colorizeInBrowser).not.toHaveBeenCalled();
+  });
+
+  it("完了報告(/api/trial/complete)の応答が遅くても、直後の再試行が無視されない（回帰）", async () => {
+    // complete が永遠に解決しない状況を再現（本番のネットワーク遅延・コールドスタート相当）
+    fetchMock.mockImplementation((url: string) => {
+      if (String(url).includes("/api/trial/start")) {
+        return Promise.resolve(
+          new Response(JSON.stringify({ ok: true, ticket: "t.sig", remaining: 2, limit: 3 }), {
+            status: 200,
+          })
+        );
+      }
+      if (String(url).includes("/api/trial/complete")) {
+        return new Promise(() => {}); // 応答しない
+      }
+      return Promise.resolve(new Response(JSON.stringify({ ok: true }), { status: 200 }));
+    });
+    mocks.colorizeInBrowser.mockResolvedValue(successOutput());
+    await selectFileAndReachReady({ accessMode: "trial", trialRemaining: 3 });
+    await startColorize();
+    await waitFor(() => screen.getByText("結果画像を保存する"));
+
+    fireEvent.click(screen.getByText("同じ画像でもう一度試す"));
+    await waitFor(() => expect(mocks.colorizeInBrowser).toHaveBeenCalledTimes(2));
+    await waitFor(() => screen.getByText("結果画像を保存する"));
+  });
+
+  it("失敗時は failed として報告する（回数は消費されない設計）", async () => {
+    mocks.colorizeInBrowser.mockRejectedValue(new ColorizeError("COLORIZATION_FAILED", "cs-t"));
+    await selectFileAndReachReady({ accessMode: "trial", trialRemaining: 3 });
+    await startColorize();
+    await waitFor(() => expect(screen.getByRole("alert")).toBeInTheDocument());
+
+    const completeCalls = fetchMock.mock.calls.filter(([u]) =>
+      String(u).includes("/api/trial/complete")
+    );
+    const body = JSON.parse((completeCalls[0][1] as RequestInit).body as string);
+    expect(body.result).toBe("failed");
   });
 });

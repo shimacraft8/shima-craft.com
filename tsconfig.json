@@ -18,5 +18,12 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", "garage-mock"]
+  "exclude": [
+    "node_modules",
+    "garage-mock",
+    "blog-line-auto-delivery-mvp",
+    "shimacraft-instagram",
+    "shima-line-operations-complete",
+    "supabase"
+  ]
 }

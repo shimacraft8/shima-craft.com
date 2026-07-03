@@ -14,12 +14,18 @@
 #   4. 初期管理者（INITIAL_ADMIN_EMAIL）へ招待メールを送信
 #
 # 使い方:
-#   INITIAL_ADMIN_EMAIL=<管理者メール> bash scripts/setup-production.sh
+#   SUPABASE_PROJECT_REF=<専用プロジェクトref> INITIAL_ADMIN_EMAIL=<管理者メール> bash scripts/setup-production.sh
 # ─────────────────────────────────────────────────────────────
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-PROJECT_REF="wlpcbrbeeepoopjeipci"
+# 会員制サービス「専用」のSupabaseプロジェクトrefを指定すること。
+# 注意: wlpcbrbeeepoopjeipci は別システム(shima-craft-business-system)専用のため使用禁止。
+PROJECT_REF="${SUPABASE_PROJECT_REF:?SUPABASE_PROJECT_REF を指定してください（会員制サービス専用プロジェクトのref）}"
+if [ "$PROJECT_REF" = "wlpcbrbeeepoopjeipci" ]; then
+  echo "エラー: そのrefは別システム(business-system)のプロジェクトです。専用プロジェクトを作成してください。" >&2
+  exit 1
+fi
 SITE_URL="https://shima-craft.com"
 
 if [ -z "${INITIAL_ADMIN_EMAIL:-}" ]; then

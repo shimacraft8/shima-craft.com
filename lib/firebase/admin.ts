@@ -12,6 +12,20 @@ import { getFirestore, type Firestore } from "firebase-admin/firestore";
 
 let cached: { app: App; auth: Auth; db: Firestore } | null = null;
 
+/**
+ * Firebase Admin が利用可能な環境変数を持つか。
+ * 未設定の環境（Firebaseプロジェクト構築前のデプロイ等）では、
+ * 呼び出し側が「未ログイン扱い」へ安全に縮退できるようにするための判定。
+ */
+export function isAdminConfigured(): boolean {
+  if (process.env.FIRESTORE_EMULATOR_HOST) return Boolean(process.env.FIREBASE_PROJECT_ID);
+  return Boolean(
+    process.env.FIREBASE_PROJECT_ID &&
+      process.env.FIREBASE_CLIENT_EMAIL &&
+      process.env.FIREBASE_PRIVATE_KEY
+  );
+}
+
 function normalizePrivateKey(raw: string): string {
   // Vercel等に貼り付けると改行が \n エスケープされることがあるため復元する。
   // 前後のダブルクォートも取り除く。

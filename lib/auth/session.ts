@@ -1,6 +1,6 @@
 import "server-only";
 import { cookies } from "next/headers";
-import { adminAuth } from "@/lib/firebase/admin";
+import { adminAuth, isAdminConfigured } from "@/lib/firebase/admin";
 import type { DecodedIdToken } from "firebase-admin/auth";
 
 /**
@@ -35,6 +35,9 @@ export async function verifySessionCookie(cookie: string): Promise<DecodedIdToke
 
 /** リクエストの Session Cookie から検証済みトークンを得る（無ければ null）。 */
 export async function getVerifiedSession(): Promise<DecodedIdToken | null> {
+  // Firebase未設定の環境（プロジェクト構築前のデプロイ等）では未ログイン扱いにし、
+  // 既存ページを500で壊さず「ログインが必要」導線を表示する。
+  if (!isAdminConfigured()) return null;
   const cookie = cookies().get(SESSION_COOKIE_NAME)?.value;
   if (!cookie) return null;
   return verifySessionCookie(cookie);

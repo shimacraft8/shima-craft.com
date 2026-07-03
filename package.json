@@ -11,20 +11,24 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:rls": "bash scripts/run-rls-tests.sh"
+    "test:firebase": "bash scripts/run-firebase-tests.sh"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.0",
     "@supabase/supabase-js": "^2.110.0",
+    "firebase": "^12.15.0",
+    "firebase-admin": "^14.1.0",
     "framer-motion": "^11.3.31",
     "image-size": "^2.0.2",
     "lucide-react": "^0.468.0",
     "next": "^14.2.35",
     "qrcode.react": "^4.2.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "resend": "^6.16.0"
   },
   "devDependencies": {
+    "@firebase/rules-unit-testing": "^5.0.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@types/node": "^20.16.5",

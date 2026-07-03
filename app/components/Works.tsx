@@ -63,11 +63,11 @@ const WORKS: Work[] = [
     kind: "会員サービス",
     category: "AI画像処理",
     title: "古い白黒写真をカラー化",
-    desc: "白黒写真を選ぶと、AIが端末内で自然な色を推定してカラー化する会員制サービスです。",
-    scope: "画像選択・カラー化・Before/After比較・保存まで。未会員の方も3回まで無料でお試し可能",
+    desc: "白黒写真を選ぶと、AIが端末内で自然な色を推定してカラー化するサービスです。",
+    scope: "画像選択・カラー化・Before/After比較・保存まで。ご利用にはSHIMA CRAFT発行のアカウントが必要です",
     url: "/tools/photo-colorize",
     accent: "#F4A261",
-    linkLabel: "お試し・ログイン",
+    linkLabel: "詳しく見る",
   },
 ];
 

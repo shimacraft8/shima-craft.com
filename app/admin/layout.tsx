@@ -34,6 +34,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <p className="admin-nav-title">管理画面</p>
           <Link href="/admin">ダッシュボード</Link>
           <Link href="/admin/users">ユーザー管理</Link>
+          <Link href="/admin/invitations">招待</Link>
           <Link href="/admin/logs">利用ログ</Link>
           <Link href="/admin/audit-logs">監査ログ</Link>
           <Link href="/tools/photo-colorize">カラー化ツールへ</Link>

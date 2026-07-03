@@ -41,3 +41,11 @@ next-env.d.ts
 
 # External project nested here (has its own git repo)
 garage-mock/
+
+# Firebase
+.firebaserc
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+*firebase-adminsdk*.json
+serviceAccount*.json

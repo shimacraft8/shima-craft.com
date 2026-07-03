@@ -1,10 +1,8 @@
 import Link from "next/link";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { COLORIZE_LOG_EVENT_TYPES, type ColorizationLog } from "@/lib/supabase/types";
+import { findMemberIdsBySearch, listLogs, resolveMemberLabels } from "@/lib/members/admin-queries";
+import { COLORIZE_LOG_EVENT_TYPES } from "@/lib/members/types";
 
 export const dynamic = "force-dynamic";
-
-const PAGE_SIZE = 50;
 
 const EVENT_LABELS: Record<string, string> = {
   colorize_started: "カラー化開始",
@@ -16,69 +14,42 @@ const EVENT_LABELS: Record<string, string> = {
   download_clicked: "ダウンロード操作",
 };
 
-type LogWithProfile = ColorizationLog & {
-  profiles: { display_name: string; email: string } | null;
-};
-
 type SearchParams = {
   user?: string;
-  from?: string;
-  to?: string;
-  result?: string;
   event?: string;
-  error?: string;
+  result?: string;
   mode?: string;
-  page?: string;
+  error?: string;
+  cursor?: string;
 };
 
 export default async function AdminLogsPage({ searchParams }: { searchParams: SearchParams }) {
-  const supabase = createSupabaseServerClient();
-  const page = Math.max(1, Number(searchParams.page) || 1);
-  const from = (page - 1) * PAGE_SIZE;
-
-  // ユーザー絞り込み（メール・表示名の部分一致 → id解決）
-  let userIds: string[] | null = null;
+  // ユーザー絞り込み（メール前方一致 → uid解決）
+  let userId: string | undefined;
   const userQuery = (searchParams.user ?? "").trim();
   if (userQuery) {
-    const { data: matched } = await supabase
-      .from("profiles")
-      .select("id")
-      .or(`display_name.ilike.%${userQuery}%,email.ilike.%${userQuery}%`)
-      .limit(100);
-    userIds = (matched ?? []).map((m) => m.id as string);
-    if (userIds.length === 0) userIds = ["00000000-0000-0000-0000-000000000000"];
+    const ids = await findMemberIdsBySearch(userQuery);
+    userId = ids[0] ?? "__no_match__";
   }
 
-  let query = supabase
-    .from("colorization_logs")
-    .select("*, profiles(display_name, email)", { count: "exact" })
-    .order("created_at", { ascending: false })
-    .range(from, from + PAGE_SIZE - 1);
+  const result = searchParams.result === "succeeded" || searchParams.result === "failed" ? searchParams.result : undefined;
+  const eventType = COLORIZE_LOG_EVENT_TYPES.includes(searchParams.event as never) ? searchParams.event : undefined;
+  const mode = searchParams.mode === "webgpu" || searchParams.mode === "wasm" ? searchParams.mode : undefined;
 
-  if (userIds) query = query.in("user_id", userIds);
-  if (searchParams.from) query = query.gte("created_at", `${searchParams.from}T00:00:00`);
-  if (searchParams.to) query = query.lte("created_at", `${searchParams.to}T23:59:59`);
-  if (searchParams.result === "succeeded") query = query.eq("event_type", "colorize_succeeded");
-  if (searchParams.result === "failed") query = query.eq("event_type", "colorize_failed");
-  if (COLORIZE_LOG_EVENT_TYPES.includes(searchParams.event as never)) {
-    query = query.eq("event_type", searchParams.event);
-  }
-  if (searchParams.error) query = query.ilike("error_code", `%${searchParams.error.trim()}%`);
-  if (searchParams.mode === "webgpu" || searchParams.mode === "wasm") {
-    query = query.eq("processing_mode", searchParams.mode);
-  }
+  const { items: logs, nextCursor } = await listLogs({
+    userId,
+    result,
+    eventType,
+    processingMode: mode,
+    errorCode: searchParams.error?.trim() || undefined,
+    cursor: searchParams.cursor ?? null,
+  });
+  const labels = await resolveMemberLabels(logs.map((l) => l.userId));
 
-  const { data, count } = await query;
-  const logs = (data ?? []) as LogWithProfile[];
-  const total = count ?? 0;
-  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
-
-  const pageHref = (p: number) => {
+  const nextHref = (cursor: string) => {
     const params = new URLSearchParams();
-    for (const [k, v] of Object.entries(searchParams)) {
-      if (v && k !== "page") params.set(k, v);
-    }
-    params.set("page", String(p));
+    for (const [k, v] of Object.entries(searchParams)) if (v && k !== "cursor") params.set(k, v);
+    params.set("cursor", cursor);
     return `/admin/logs?${params.toString()}`;
   };
 
@@ -88,16 +59,8 @@ export default async function AdminLogsPage({ searchParams }: { searchParams: Se
 
       <form method="GET" className="admin-filter-form">
         <label className="admin-filter-field">
-          <span>ユーザー（表示名・メール）</span>
+          <span>ユーザー（メール前方一致）</span>
           <input type="text" name="user" defaultValue={searchParams.user ?? ""} />
-        </label>
-        <label className="admin-filter-field">
-          <span>開始日</span>
-          <input type="date" name="from" defaultValue={searchParams.from ?? ""} />
-        </label>
-        <label className="admin-filter-field">
-          <span>終了日</span>
-          <input type="date" name="to" defaultValue={searchParams.to ?? ""} />
         </label>
         <label className="admin-filter-field">
           <span>成功・失敗</span>
@@ -112,15 +75,9 @@ export default async function AdminLogsPage({ searchParams }: { searchParams: Se
           <select name="event" defaultValue={searchParams.event ?? ""}>
             <option value="">すべて</option>
             {COLORIZE_LOG_EVENT_TYPES.map((e) => (
-              <option key={e} value={e}>
-                {EVENT_LABELS[e] ?? e}
-              </option>
+              <option key={e} value={e}>{EVENT_LABELS[e] ?? e}</option>
             ))}
           </select>
-        </label>
-        <label className="admin-filter-field">
-          <span>エラーコード</span>
-          <input type="text" name="error" defaultValue={searchParams.error ?? ""} />
         </label>
         <label className="admin-filter-field">
           <span>処理方式</span>
@@ -130,9 +87,11 @@ export default async function AdminLogsPage({ searchParams }: { searchParams: Se
             <option value="wasm">WASM</option>
           </select>
         </label>
-        <button type="submit" className="admin-btn admin-btn--ghost">
-          絞り込む
-        </button>
+        <label className="admin-filter-field">
+          <span>エラーコード</span>
+          <input type="text" name="error" defaultValue={searchParams.error ?? ""} />
+        </label>
+        <button type="submit" className="admin-btn admin-btn--ghost">絞り込む</button>
       </form>
 
       <div className="admin-table-wrap">
@@ -155,45 +114,38 @@ export default async function AdminLogsPage({ searchParams }: { searchParams: Se
               </tr>
             </thead>
             <tbody>
-              {logs.map((log) => (
-                <tr key={log.id}>
-                  <td>{new Date(log.created_at).toLocaleString("ja-JP")}</td>
-                  <td>{log.profiles?.display_name || "（未設定）"}</td>
-                  <td>{log.profiles?.email || "（削除済み）"}</td>
-                  <td>{EVENT_LABELS[log.event_type] ?? log.event_type}</td>
-                  <td>
-                    {log.event_type === "colorize_succeeded" ? (
-                      <span className="admin-badge admin-badge--ok">成功</span>
-                    ) : log.event_type === "colorize_failed" ? (
-                      <span className="admin-badge admin-badge--bad">失敗</span>
-                    ) : (
-                      <span className="admin-badge">{log.status || "-"}</span>
-                    )}
-                  </td>
-                  <td>{log.duration_ms != null ? `${(log.duration_ms / 1000).toFixed(1)}s` : "-"}</td>
-                  <td>{log.processing_mode ?? "-"}</td>
-                  <td>
-                    {log.image_width && log.image_height
-                      ? `${log.image_width}×${log.image_height}`
-                      : "-"}
-                  </td>
-                  <td>{log.error_code ?? "-"}</td>
-                  <td>
-                    {log.browser_name ?? "-"} / {log.device_type ?? "-"}
-                  </td>
-                </tr>
-              ))}
+              {logs.map((log) => {
+                const m = labels.get(log.userId);
+                return (
+                  <tr key={log.id}>
+                    <td>{new Date(log.createdAt).toLocaleString("ja-JP")}</td>
+                    <td>{m?.displayName || "（未設定）"}</td>
+                    <td>{m?.email || "（削除済み）"}</td>
+                    <td>{EVENT_LABELS[log.eventType] ?? log.eventType}</td>
+                    <td>
+                      {log.eventType === "colorize_succeeded" ? (
+                        <span className="admin-badge admin-badge--ok">成功</span>
+                      ) : log.eventType === "colorize_failed" ? (
+                        <span className="admin-badge admin-badge--bad">失敗</span>
+                      ) : (
+                        <span className="admin-badge">{log.status || "-"}</span>
+                      )}
+                    </td>
+                    <td>{log.durationMs != null ? `${(log.durationMs / 1000).toFixed(1)}s` : "-"}</td>
+                    <td>{log.processingMode ?? "-"}</td>
+                    <td>{log.imageWidth && log.imageHeight ? `${log.imageWidth}×${log.imageHeight}` : "-"}</td>
+                    <td>{log.errorCode ?? "-"}</td>
+                    <td>{log.browserName ?? "-"} / {log.deviceType ?? "-"}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         )}
       </div>
 
       <div className="admin-pagination">
-        {page > 1 && <Link href={pageHref(page - 1)}>← 前へ</Link>}
-        <span>
-          {page} / {totalPages}ページ（全{total}件）
-        </span>
-        {page < totalPages && <Link href={pageHref(page + 1)}>次へ →</Link>}
+        {nextCursor ? <Link href={nextHref(nextCursor)}>次のページ →</Link> : <span>最後のページです</span>}
       </div>
     </>
   );

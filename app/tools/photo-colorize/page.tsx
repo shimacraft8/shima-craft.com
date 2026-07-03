@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { cookies, headers } from "next/headers";
 import { HeaderInner } from "@/app/components/HeaderInner";
 import { Footer } from "@/app/components/Footer";
 import { StickyContact } from "@/app/components/StickyContact";
@@ -8,13 +7,13 @@ import { Breadcrumb } from "@/app/components/Breadcrumb";
 import { TrackedLink } from "@/app/components/TrackedLink";
 import { mailtoHref, site } from "@/app/lib/site";
 import { getViewer } from "@/lib/auth/access";
-import { TRIAL_COOKIE_NAME, getTrialQuota, hashIdentity, ipHashFromHeaders, trialCookieLimit } from "@/lib/trial/trial";
 import { signOutAction } from "@/app/login/actions";
-import { PhotoColorizeClient, type ColorizeAccessMode } from "./PhotoColorizeClient";
+import { PhotoColorizeClient } from "./PhotoColorizeClient";
+import { ColorizeLoginPrompt } from "./ColorizeLoginPrompt";
 
 const PAGE_TITLE = "白黒写真をカラー化｜古写真をAI着色サービス - SHIMA CRAFT";
 const PAGE_DESC =
-  "古い白黒写真を、AIが端末内（ブラウザの中）で自然な色を推定してカラー化する会員制サービス。写真は外部へ送信されません。未会員の方も3回まで無料でお試しいただけます。奄美発のSHIMA CRAFTが提供します。";
+  "古い白黒写真を、AIが端末内（ブラウザの中）で自然な色を推定してカラー化するサービス。写真は外部へ送信されません。ご利用にはSHIMA CRAFTが発行したアカウントが必要です。奄美発のSHIMA CRAFTが提供します。";
 
 export const metadata: Metadata = {
   title: { absolute: PAGE_TITLE },
@@ -27,14 +26,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ja_JP",
     siteName: "SHIMA CRAFT",
-    images: [
-      {
-        url: "/hero.jpg",
-        width: 1200,
-        height: 630,
-        alt: "奄美大島の空撮写真 — SHIMA CRAFT",
-      },
-    ],
+    images: [{ url: "/hero.jpg", width: 1200, height: 630, alt: "奄美大島の空撮写真 — SHIMA CRAFT" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -63,15 +55,14 @@ const NOTES = [
   "写真が外部へ送信されないため、SHIMA CRAFTが利用者の画像をAI学習・広告・制作事例へ利用することもありません。",
   "結果の色はAIによる推定です。当時の実際の色を正確に復元・保証するものではありません。",
   "人物の輪郭や構図を新しく生成する機能ではないため、顔や傷、破損箇所の修復・復元は行いません。",
-  "初回はカラー化モデル（約44〜69MB）の読み込みに時間がかかる場合があります。2回目以降はブラウザのキャッシュにより速くなります。",
   "自分が権利を持つ画像のみご利用ください。",
   "会員の方の利用状況（日時・成功/失敗・画像の縦横サイズ・処理方式など）は、サービス運営のため記録します。画像そのものは記録しません。",
 ];
 
 const FAQS = [
   {
-    q: "利用料金はいくらですか？",
-    a: "ご利用料金・利用回数・契約条件は、ご利用内容に応じて個別にご案内します。SHIMA CRAFTへお問い合わせください。未会員の方も、お試しとして3回まで無料でカラー化をご利用いただけます（成功した生成のみカウントされます）。",
+    q: "利用するにはどうすればよいですか？",
+    a: "ご利用にはSHIMA CRAFTが発行したアカウントが必要です。Googleアカウントでのログインに対応しています。ご利用料金・利用回数・契約条件は、ご利用内容に応じて個別にご案内しますので、まずはお問い合わせください。",
   },
   {
     q: "写真はどこかへ送信・保存されますか？",
@@ -117,11 +108,7 @@ const jsonLd = {
       applicationCategory: "PhotographyApplication",
       operatingSystem: "Any (Webブラウザ)",
       description: PAGE_DESC,
-      provider: {
-        "@type": "Organization",
-        name: site.name,
-        url: site.url,
-      },
+      provider: { "@type": "Organization", name: site.name, url: site.url },
     },
     {
       "@type": "FAQPage",
@@ -140,31 +127,7 @@ const BLOCKED_MESSAGE =
 export default async function PhotoColorizePage() {
   // COLORIZE_ENABLED=false が緊急停止スイッチ（このページは動的レンダリングのため即時反映）
   const toolEnabled = process.env.COLORIZE_ENABLED !== "false";
-
   const viewer = await getViewer();
-
-  let accessMode: ColorizeAccessMode;
-  let trialRemaining = 0;
-  const trialLimit = trialCookieLimit();
-
-  if (viewer.kind === "anonymous") {
-    accessMode = "trial";
-    try {
-      const cookieValue = cookies().get(TRIAL_COOKIE_NAME)?.value;
-      const ipHash = ipHashFromHeaders(headers());
-      // Cookie未発行の閲覧者はIP側のカウントだけで残回数を見積もる
-      const cookieHash = hashIdentity(cookieValue ?? `nocookie:${ipHash}`);
-      const quota = await getTrialQuota(cookieHash, ipHash);
-      trialRemaining = quota.remaining;
-    } catch {
-      // 残回数が取得できなくても表示は継続（開始時にサーバーが最終判定する）
-      trialRemaining = trialLimit;
-    }
-  } else if (viewer.canColorize) {
-    accessMode = "member";
-  } else {
-    accessMode = "blocked";
-  }
 
   return (
     <>
@@ -175,19 +138,14 @@ export default async function PhotoColorizePage() {
       />
       <HeaderInner />
       <main>
-        <Breadcrumb
-          items={[
-            { label: "トップ", href: "/" },
-            { label: "白黒写真カラー化サービス" },
-          ]}
-        />
+        <Breadcrumb items={[{ label: "トップ", href: "/" }, { label: "白黒写真カラー化サービス" }]} />
 
         <div className="inner-hero">
           <p className="inner-hero-area">会員サービス・AI画像処理</p>
           <h1>古い白黒写真をカラー化</h1>
           <p className="inner-hero-lead">
-            白黒写真を選ぶと、AIが自然な色を推定してカラー化する会員制サービスです。処理はすべてお使いの端末内（ブラウザの中）で行われ、写真は外部へ送信されません。色は推定であり、当時の実際の色を正確に復元するものではありません。奄美発のSHIMA
-            CRAFTが提供しています。未会員の方も3回まで無料でお試しいただけます。
+            白黒写真を選ぶと、AIが自然な色を推定してカラー化するサービスです。処理はすべてお使いの端末内（ブラウザの中）で行われ、写真は外部へ送信されません。色は推定であり、当時の実際の色を正確に復元するものではありません。奄美発のSHIMA
+            CRAFTが提供しています。ご利用にはSHIMA CRAFTが発行したアカウントが必要です。
           </p>
         </div>
 
@@ -196,7 +154,7 @@ export default async function PhotoColorizePage() {
             {viewer.kind !== "anonymous" && (
               <div className="colorize-account-bar">
                 <span>
-                  ログイン中：{viewer.profile.display_name || viewer.profile.email}
+                  ログイン中：{viewer.member.displayName || viewer.member.email}
                   {viewer.kind === "admin" && (
                     <>
                       {" "}
@@ -205,26 +163,34 @@ export default async function PhotoColorizePage() {
                   )}
                 </span>
                 <form action={signOutAction}>
-                  <button type="submit" className="colorize-logout-btn">
-                    ログアウト
-                  </button>
+                  <button type="submit" className="colorize-logout-btn">ログアウト</button>
                 </form>
               </div>
             )}
-            <PhotoColorizeClient
-              toolEnabled={toolEnabled}
-              accessMode={accessMode}
-              trialRemaining={trialRemaining}
-              trialLimit={trialLimit}
-              blockedMessage={BLOCKED_MESSAGE}
-              contactHref={mailtoHref}
-            />
+
+            {/* 未ログインには操作UI・モデル読み込みコンポーネントを一切描画しない */}
+            {viewer.kind === "anonymous" ? (
+              <ColorizeLoginPrompt contactHref={mailtoHref} />
+            ) : !toolEnabled ? (
+              <div className="colorize-tool colorize-tool--disabled" role="status">
+                <p>現在、提供を一時停止しています。しばらくしてから再度お試しください。</p>
+              </div>
+            ) : viewer.canColorize ? (
+              <PhotoColorizeClient contactHref={mailtoHref} />
+            ) : (
+              <div className="colorize-tool colorize-tool--disabled" role="status">
+                <p>{BLOCKED_MESSAGE}</p>
+                <p>
+                  <a href={mailtoHref} className="btn">SHIMA CRAFTへ問い合わせる</a>
+                </p>
+              </div>
+            )}
           </div>
         </section>
 
         <section className="svc-section" style={{ background: "#fff" }}>
           <div className="container">
-            <h2 className="svc-title">ご利用料金</h2>
+            <h2 className="svc-title">ご利用について</h2>
             <p className="svc-lead">
               ご利用料金・利用回数・契約条件は、ご利用内容に応じて個別にご案内します。まずはお気軽にお問い合わせください。
             </p>
@@ -234,7 +200,7 @@ export default async function PhotoColorizePage() {
               eventName="contact_click"
               eventParams={{ location: "photo_colorize_pricing", method: "email" }}
             >
-              利用料金について問い合わせる
+              利用について問い合わせる
             </TrackedLink>
           </div>
         </section>
@@ -288,9 +254,7 @@ export default async function PhotoColorizePage() {
 
         <div className="page-cta-block">
           <h2>ホームページ制作もあわせてご相談ください</h2>
-          <p>
-            古い写真の整理やデジタル活用のほか、ホームページ制作・リニューアルについてもご相談いただけます。
-          </p>
+          <p>古い写真の整理やデジタル活用のほか、ホームページ制作・リニューアルについてもご相談いただけます。</p>
           <div className="page-cta-btns">
             <TrackedLink
               href={mailtoHref}
@@ -314,15 +278,9 @@ export default async function PhotoColorizePage() {
         <div className="related-section">
           <p className="related-section-label">Related</p>
           <div className="related-links">
-            <Link href="/services" className="related-link">
-              サービス一覧
-            </Link>
-            <Link href="/privacy" className="related-link">
-              プライバシーポリシー
-            </Link>
-            <Link href="/" className="related-link">
-              SHIMA CRAFT トップへ
-            </Link>
+            <Link href="/services" className="related-link">サービス一覧</Link>
+            <Link href="/privacy" className="related-link">プライバシーポリシー</Link>
+            <Link href="/" className="related-link">SHIMA CRAFT トップへ</Link>
           </div>
         </div>
       </main>

@@ -3491,23 +3491,49 @@ section {
   color: var(--secondary);
 }
 
-.colorize-trial-bar {
+/* 未ログイン導線 / Googleログイン */
+.colorize-login-prompt {
   background: #fff;
   border: 1px solid rgba(42, 157, 143, 0.35);
   border-radius: 12px;
-  padding: 16px 18px;
-  margin-bottom: 18px;
-  font-size: 0.92rem;
+  padding: 28px 22px;
+  text-align: center;
 }
-.colorize-trial-actions {
+.colorize-login-title {
+  font-size: 1.15rem;
+  margin-bottom: 10px;
+}
+.colorize-login-sub {
+  color: #888;
+  font-size: 0.88rem;
+  margin-top: 6px;
+}
+.colorize-login-actions {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  margin-top: 12px;
+  justify-content: center;
+  margin-top: 16px;
 }
-.colorize-trial-btn {
+.auth-note {
+  font-size: 0.85rem;
+  color: #888;
+  margin-top: 10px;
+}
+.auth-google {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.auth-google-btn {
+  width: 100%;
+  text-align: center;
   border: none;
   cursor: pointer;
+}
+.auth-google-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .colorize-finish {

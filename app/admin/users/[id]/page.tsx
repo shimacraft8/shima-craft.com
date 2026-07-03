@@ -1,28 +1,19 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
-import type { Profile } from "@/lib/supabase/types";
-import { EditUserForm } from "./EditUserForm";
+import { getMember } from "@/lib/members/repo";
+import { getViewer } from "@/lib/auth/access";
+import { EditMemberForm } from "./EditMemberForm";
 
 export const dynamic = "force-dynamic";
 
+const UID_RE = /^[A-Za-z0-9_-]{6,128}$/;
+
 export default async function AdminUserDetailPage({ params }: { params: { id: string } }) {
-  if (!/^[0-9a-f-]{36}$/.test(params.id)) notFound();
+  if (!UID_RE.test(params.id)) notFound();
 
-  const supabase = createSupabaseServerClient();
-  const [{ data: profile }, { data: lastLog }, { data: currentUser }] = await Promise.all([
-    supabase.from("profiles").select("*").eq("id", params.id).maybeSingle<Profile>(),
-    supabase
-      .from("colorization_logs")
-      .select("created_at")
-      .eq("user_id", params.id)
-      .order("created_at", { ascending: false })
-      .limit(1)
-      .maybeSingle<{ created_at: string }>(),
-    supabase.auth.getUser().then((r) => ({ data: r.data.user })),
-  ]);
-
-  if (!profile) notFound();
+  const [member, viewer] = await Promise.all([getMember(params.id), getViewer()]);
+  if (!member) notFound();
+  const isSelf = viewer.kind !== "anonymous" && viewer.member.uid === member.uid;
 
   return (
     <>
@@ -34,25 +25,25 @@ export default async function AdminUserDetailPage({ params }: { params: { id: st
         <div className="admin-card">
           <p className="admin-card-label">作成日</p>
           <p style={{ fontSize: "0.95rem", marginTop: 4 }}>
-            {new Date(profile.created_at).toLocaleString("ja-JP")}
+            {new Date(member.createdAt).toLocaleString("ja-JP")}
           </p>
         </div>
         <div className="admin-card">
           <p className="admin-card-label">最終ログイン</p>
           <p style={{ fontSize: "0.95rem", marginTop: 4 }}>
-            {profile.last_login_at ? new Date(profile.last_login_at).toLocaleString("ja-JP") : "-"}
+            {member.lastLoginAt ? new Date(member.lastLoginAt).toLocaleString("ja-JP") : "-"}
           </p>
         </div>
         <div className="admin-card">
           <p className="admin-card-label">最終利用日時</p>
           <p style={{ fontSize: "0.95rem", marginTop: 4 }}>
-            {lastLog ? new Date(lastLog.created_at).toLocaleString("ja-JP") : "-"}
+            {member.lastUsedAt ? new Date(member.lastUsedAt).toLocaleString("ja-JP") : "-"}
           </p>
         </div>
       </div>
-      <EditUserForm profile={profile} isSelf={currentUser?.id === profile.id} />
+      <EditMemberForm member={member} isSelf={isSelf} />
       <p style={{ marginTop: 12, fontSize: "0.85rem" }}>
-        <Link href={`/admin/logs?user=${encodeURIComponent(profile.email)}`}>
+        <Link href={`/admin/logs?user=${encodeURIComponent(member.email)}`}>
           このユーザーの利用ログを見る →
         </Link>
       </p>

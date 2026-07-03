@@ -1,69 +1,37 @@
 import Link from "next/link";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
-import type { AdminAuditLog } from "@/lib/supabase/types";
+import { listAuditLogs, resolveMemberLabels } from "@/lib/members/admin-queries";
 
 export const dynamic = "force-dynamic";
 
-const PAGE_SIZE = 50;
-
 const ACTION_LABELS: Record<string, string> = {
-  initial_admin_ensured: "初期管理者の設定",
-  user_created: "ユーザー作成",
-  user_updated: "ユーザー更新",
-  user_suspended: "利用停止",
-  user_reactivated: "利用再開",
-  user_deleted: "ユーザー削除（無効化）",
-  password_reset_email_sent: "パスワード再設定メール送信",
-};
-
-type AuditWithProfiles = AdminAuditLog & {
-  admin: { display_name: string; email: string } | null;
-  target: { display_name: string; email: string } | null;
+  invitation_created: "招待作成",
+  invitation_resent: "招待再送",
+  invitation_revoked: "招待取消",
+  member_updated: "ユーザー更新",
+  member_suspended: "利用停止",
+  member_reactivated: "利用再開",
+  member_deleted: "ユーザー削除（無効化）",
 };
 
 export default async function AdminAuditLogsPage({
   searchParams,
 }: {
-  searchParams: { page?: string; action?: string };
+  searchParams: { action?: string; cursor?: string };
 }) {
-  const supabase = createSupabaseServerClient();
-  const page = Math.max(1, Number(searchParams.page) || 1);
-  const from = (page - 1) * PAGE_SIZE;
+  const action = searchParams.action || undefined;
+  const { items: logs, nextCursor } = await listAuditLogs({ action, cursor: searchParams.cursor ?? null });
 
-  let query = supabase
-    .from("admin_audit_logs")
-    .select(
-      "*, admin:profiles!admin_audit_logs_admin_user_id_fkey(display_name, email)",
-      { count: "exact" }
-    )
-    .order("created_at", { ascending: false })
-    .range(from, from + PAGE_SIZE - 1);
-
-  if (searchParams.action) query = query.eq("action", searchParams.action);
-
-  const { data, count } = await query;
-  const logs = (data ?? []) as unknown as AuditWithProfiles[];
-
-  // target_user_id はFKを張っていないため表示名を別途解決する
-  const targetIds = Array.from(new Set(logs.map((l) => l.target_user_id).filter(Boolean))) as string[];
-  const targetMap = new Map<string, { display_name: string; email: string }>();
-  if (targetIds.length > 0) {
-    const { data: targets } = await supabase
-      .from("profiles")
-      .select("id, display_name, email")
-      .in("id", targetIds);
-    for (const t of targets ?? []) {
-      targetMap.set(t.id as string, { display_name: t.display_name, email: t.email });
-    }
+  const ids: string[] = [];
+  for (const l of logs) {
+    ids.push(l.adminUserId);
+    if (l.targetUserId) ids.push(l.targetUserId);
   }
+  const labels = await resolveMemberLabels(ids);
 
-  const total = count ?? 0;
-  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
-
-  const pageHref = (p: number) => {
+  const nextHref = (cursor: string) => {
     const params = new URLSearchParams();
-    if (searchParams.action) params.set("action", searchParams.action);
-    params.set("page", String(p));
+    if (action) params.set("action", action);
+    params.set("cursor", cursor);
     return `/admin/audit-logs?${params.toString()}`;
   };
 
@@ -80,15 +48,11 @@ export default async function AdminAuditLogsPage({
           <select name="action" defaultValue={searchParams.action ?? ""}>
             <option value="">すべて</option>
             {Object.entries(ACTION_LABELS).map(([k, v]) => (
-              <option key={k} value={k}>
-                {v}
-              </option>
+              <option key={k} value={k}>{v}</option>
             ))}
           </select>
         </label>
-        <button type="submit" className="admin-btn admin-btn--ghost">
-          絞り込む
-        </button>
+        <button type="submit" className="admin-btn admin-btn--ghost">絞り込む</button>
       </form>
 
       <div className="admin-table-wrap">
@@ -109,20 +73,21 @@ export default async function AdminAuditLogsPage({
             </thead>
             <tbody>
               {logs.map((log) => {
-                const target = log.target_user_id ? targetMap.get(log.target_user_id) : null;
+                const adminM = labels.get(log.adminUserId);
+                const targetM = log.targetUserId ? labels.get(log.targetUserId) : null;
                 return (
                   <tr key={log.id}>
-                    <td>{new Date(log.created_at).toLocaleString("ja-JP")}</td>
-                    <td>{log.admin?.display_name || log.admin?.email || "（削除済み）"}</td>
+                    <td>{new Date(log.createdAt).toLocaleString("ja-JP")}</td>
+                    <td>{adminM?.displayName || adminM?.email || "（削除済み）"}</td>
                     <td>{ACTION_LABELS[log.action] ?? log.action}</td>
-                    <td>{target ? target.display_name || target.email : log.target_user_id ? "（削除済み）" : "-"}</td>
+                    <td>{targetM ? targetM.displayName || targetM.email : log.targetUserId ? "（対象なし表示）" : "-"}</td>
                     <td style={{ whiteSpace: "normal", maxWidth: 260, fontSize: "0.75rem" }}>
-                      {log.before_data ? JSON.stringify(log.before_data) : "-"}
+                      {log.beforeData ? JSON.stringify(log.beforeData) : "-"}
                     </td>
                     <td style={{ whiteSpace: "normal", maxWidth: 260, fontSize: "0.75rem" }}>
-                      {log.after_data ? JSON.stringify(log.after_data) : "-"}
+                      {log.afterData ? JSON.stringify(log.afterData) : "-"}
                     </td>
-                    <td style={{ fontSize: "0.72rem" }}>{log.request_id}</td>
+                    <td style={{ fontSize: "0.72rem" }}>{log.requestId}</td>
                   </tr>
                 );
               })}
@@ -132,11 +97,7 @@ export default async function AdminAuditLogsPage({
       </div>
 
       <div className="admin-pagination">
-        {page > 1 && <Link href={pageHref(page - 1)}>← 前へ</Link>}
-        <span>
-          {page} / {totalPages}ページ（全{total}件）
-        </span>
-        {page < totalPages && <Link href={pageHref(page + 1)}>次へ →</Link>}
+        {nextCursor ? <Link href={nextHref(nextCursor)}>次のページ →</Link> : <span>最後のページです</span>}
       </div>
     </>
   );

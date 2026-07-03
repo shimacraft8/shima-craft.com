@@ -1,0 +1,15 @@
+rules_version = '2';
+
+// SHIMA CRAFT 会員制カラー化サービス — Firestore Security Rules
+//
+// 方針: クライアント(Web/モバイル)SDKからの直接アクセスは全面拒否(deny-all)。
+// すべての読み書きは Firebase Admin SDK を使うサーバー側でのみ行い、
+// 認証・認可はサーバーコード(verifySessionCookie + member docの確認)で担保する。
+// Admin SDK は Rules をバイパスするため、この deny-all は Admin 操作を妨げない。
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

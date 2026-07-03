@@ -1,46 +1,31 @@
 import "server-only";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { canUseColorize, type Profile } from "@/lib/supabase/types";
-
-/** ページ・API・Server Actionから見た閲覧者の状態。 */
-export type Viewer =
-  | { kind: "anonymous" }
-  | { kind: "member"; profile: Profile; canColorize: boolean }
-  | { kind: "admin"; profile: Profile; canColorize: boolean };
+import { getVerifiedSession } from "@/lib/auth/session";
+import { getMember } from "@/lib/members/repo";
+import { canUseColorize, type Member } from "@/lib/members/types";
 
 /**
- * セッションと profiles をサーバー側で照合して閲覧者を判定する。
- * roleはDBの値のみを根拠とし、Cookie・クライアント送信値では判定しない。
+ * ページ・API・Server Actionから見た閲覧者の状態。
+ * 認可の根拠は「有効なSession Cookie」＋「Firestore member docのrole/status」であり、
+ * クライアント送信値（userId/role/status）やCookie値の中身は信用しない。
  */
+export type Viewer =
+  | { kind: "anonymous" }
+  | { kind: "member"; member: Member; canColorize: boolean }
+  | { kind: "admin"; member: Member; canColorize: boolean };
+
 export async function getViewer(): Promise<Viewer> {
-  const supabase = createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return { kind: "anonymous" };
+  const decoded = await getVerifiedSession();
+  if (!decoded) return { kind: "anonymous" };
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", user.id)
-    .maybeSingle<Profile>();
+  const member = await getMember(decoded.uid);
+  // memberが存在しない/削除済みは会員として扱わない（招待未完了のGoogleアカウント等）
+  if (!member || member.accountStatus === "deleted") return { kind: "anonymous" };
 
-  // profiles行が無い/取得できない場合は会員として扱わない
-  if (!profile) return { kind: "anonymous" };
-  if (profile.account_status !== "active") {
-    // 停止・削除済みはセッションがあっても member 扱いにしない
-    // （ログイン時にも弾くが、停止処理がセッション存続中に行われた場合の防御）
-    return {
-      kind: profile.role === "admin" ? "admin" : "member",
-      profile,
-      canColorize: false,
-    };
-  }
-
+  const isAdmin = member.role === "admin" && member.accountStatus === "active";
   return {
-    kind: profile.role === "admin" ? "admin" : "member",
-    profile,
-    canColorize: canUseColorize(profile),
+    kind: isAdmin ? "admin" : "member",
+    member,
+    canColorize: canUseColorize(member),
   };
 }
 
@@ -55,21 +40,30 @@ export class AdminRequiredError extends Error {
  * admin必須の処理の前段で必ず呼ぶ。admin以外には存在を悟らせないよう
  * 呼び出し側で404等へ変換する。
  *
- * 認可の根拠はDBの role/account_status。追加防御として、環境変数
- * ADMIN_EMAIL_ALLOWLIST（カンマ区切り）が設定されている場合は
- * メールがその一覧に含まれることも要求する（allowlist単独では認可しない）。
+ * 認可の根拠はFirestore member docの role/accountStatus（source of truth）。
+ * 追加防御として ADMIN_EMAIL_ALLOWLIST が設定されていれば、メール一致も要求する
+ * （allowlist単独では認可しない）。custom claimだけには依存しない。
  */
-export async function requireAdmin(): Promise<Profile> {
+export async function requireAdmin(): Promise<Member> {
   const viewer = await getViewer();
-  if (viewer.kind !== "admin" || viewer.profile.account_status !== "active") {
+  if (viewer.kind !== "admin") {
     throw new AdminRequiredError();
   }
   const allowlist = (process.env.ADMIN_EMAIL_ALLOWLIST ?? "")
     .split(",")
     .map((s) => s.trim().toLowerCase())
     .filter(Boolean);
-  if (allowlist.length > 0 && !allowlist.includes(viewer.profile.email.toLowerCase())) {
+  if (allowlist.length > 0 && !allowlist.includes(viewer.member.emailLower)) {
     throw new AdminRequiredError();
   }
-  return viewer.profile;
+  return viewer.member;
+}
+
+/** カラー化APIで使う: 有効な会員かつ利用可能な契約状態であることを要求。 */
+export async function requireColorizeMember(): Promise<Member> {
+  const viewer = await getViewer();
+  if (viewer.kind === "anonymous" || !viewer.canColorize) {
+    throw new AdminRequiredError(); // 呼び出し側で403へ変換（存在は問わない）
+  }
+  return viewer.member;
 }

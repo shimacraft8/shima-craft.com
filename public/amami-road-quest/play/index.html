@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="奄美の道を、行く前にゲーム感覚で体験。Street Viewと冒険マップが連動するSHIMA CRAFTの無料Webアプリ。" />
+  <meta name="theme-color" content="#0d5b55" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="robots" content="noindex" />
+  <link rel="canonical" href="https://shima-craft.com/amami-road-quest" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://maps.googleapis.com https://maps.gstatic.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://maps.gstatic.com https://maps.googleapis.com; frame-src https://www.google.com https://maps.google.com; connect-src 'self' https://maps.googleapis.com; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="src/styles.css" />
+  <title>奄美ロードクエスト | SHIMA CRAFT</title>
+</head>
+<body>
+  <a class="skip-link" href="#main">メインコンテンツへ</a>
+
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="奄美ロードクエスト ホーム">
+      <img src="assets/icon.svg" alt="" width="42" height="42" />
+      <span><strong>奄美ロードクエスト</strong><small>by SHIMA CRAFT</small></span>
+    </a>
+    <nav aria-label="メインメニュー">
+      <button class="ghost-button" id="helpButton" type="button">遊び方</button>
+      <button class="ghost-button" id="settingsButton" type="button">実写設定</button>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="home-screen" id="home" aria-labelledby="heroTitle">
+      <div class="hero-copy">
+        <p class="eyebrow">REAL SCENERY × ISLAND ADVENTURE</p>
+        <h1 id="heroTitle">奄美の道を、<br /><span>行く前に冒険する。</span></h1>
+        <p class="hero-description">目的地までの道をゲーム感覚で予習。景色を進み、分岐を覚え、チェックポイントを集めてゴールを目指そう。</p>
+        <div class="feature-pills" aria-label="特徴">
+          <span>登録不要</span><span>無料</span><span>スマホ対応</span><span>運転前・同乗者向け</span>
+        </div>
+      </div>
+
+      <div class="hero-island" aria-hidden="true">
+        <div class="sun"></div>
+        <div class="cloud cloud-a"></div>
+        <div class="cloud cloud-b"></div>
+        <div class="island-layer island-back"></div>
+        <div class="island-layer island-front"></div>
+        <div class="hero-road"><span class="hero-car">🚙</span></div>
+        <div class="guide-bubble"><span class="guide-avatar">🐦</span><p>ぼくはルリ。<br />島の道を案内するよ！</p></div>
+      </div>
+
+      <form class="quest-builder" id="questForm">
+        <div class="builder-heading">
+          <div><span class="step-badge">01</span><h2>冒険を選ぶ</h2></div>
+          <p>まずは厳選5ルートから開始</p>
+        </div>
+
+        <div class="route-grid" id="routeGrid" role="radiogroup" aria-label="ルート選択"></div>
+
+        <div class="builder-options">
+          <fieldset>
+            <legend>移動スタイル</legend>
+            <label class="choice-chip"><input type="radio" name="vehicle" value="car" checked /><span>🚙 ドライブ</span></label>
+            <label class="choice-chip"><input type="radio" name="vehicle" value="walk" /><span>🚶 散策</span></label>
+          </fieldset>
+          <fieldset>
+            <legend>再生スピード</legend>
+            <label class="choice-chip"><input type="radio" name="speed" value="1" /><span>じっくり</span></label>
+            <label class="choice-chip"><input type="radio" name="speed" value="2" checked /><span>おすすめ</span></label>
+            <label class="choice-chip"><input type="radio" name="speed" value="4" /><span>高速</span></label>
+          </fieldset>
+        </div>
+
+        <div class="mode-notice" id="modeNotice">
+          <span class="status-dot"></span>
+          <div><strong>デモ景観モード</strong><small>APIキーなしで全機能を体験できます。実写は設定から切り替え。</small></div>
+        </div>
+
+        <button class="primary-button start-button" id="startButton" type="submit">
+          <span>冒険をはじめる</span><span aria-hidden="true">→</span>
+        </button>
+      </form>
+    </section>
+
+    <section class="play-screen" id="play" hidden aria-labelledby="questTitle">
+      <div class="play-shell">
+        <div class="quest-hud">
+          <div class="hud-left">
+            <button class="icon-button" id="exitButton" type="button" aria-label="冒険を終了して戻る">←</button>
+            <div><p class="hud-kicker" id="questCode">QUEST 01</p><h2 id="questTitle">ルート名</h2></div>
+          </div>
+          <div class="hud-right">
+            <div class="mode-badge" id="viewerModeBadge">DEMO</div>
+            <div class="score-box"><span>SCORE</span><strong id="scoreValue">0</strong></div>
+          </div>
+        </div>
+
+        <div class="panorama-stage" id="panoramaStage">
+          <div class="demo-panorama" id="demoPanorama" aria-label="デモ景観">
+            <div class="demo-sky"></div>
+            <div class="demo-sea"></div>
+            <div class="demo-mountains"></div>
+            <div class="demo-road"></div>
+            <div class="demo-palms"><i></i><i></i><i></i><i></i></div>
+            <div class="motion-lines"></div>
+            <div class="scene-caption"><span id="sceneLabel">奄美の海岸道路</span><small id="sceneSubLabel">デモ景観で進行中</small></div>
+          </div>
+          <div class="embed-panorama" id="embedPanorama" hidden></div>
+
+          <div class="stage-topbar">
+            <div class="next-marker"><span>次の目印</span><strong id="nextCheckpointLabel">海が見えるカーブ</strong><small id="nextCheckpointDistance">あと 1.2 km</small></div>
+            <button class="compact-button" id="recenterButton" type="button" aria-label="Street Viewを進行方向へ戻す">進行方向へ戻す</button>
+          </div>
+
+          <div class="stage-center-event" id="floatingEvent" aria-live="polite" hidden></div>
+
+          <div class="start-overlay" id="startOverlay" hidden>
+            <div class="start-overlay-inner">
+              <p class="event-kicker">READY</p>
+              <p class="start-overlay-route" id="startOverlayRoute">ルート名</p>
+              <button class="primary-button start-journey-button" id="beginJourneyButton" type="button">出発する</button>
+              <p class="start-overlay-hint">出発すると景色が自動で進みます。いつでも一時停止できます。</p>
+            </div>
+          </div>
+
+          <div class="stage-controls" aria-label="再生操作">
+            <button class="control-button" id="backButton" type="button" aria-label="少し戻る">−10秒</button>
+            <button class="play-button" id="playPauseButton" type="button" aria-label="一時停止">Ⅱ</button>
+            <button class="control-button" id="forwardButton" type="button" aria-label="少し進む">+10秒</button>
+            <label class="speed-select">速度
+              <select id="speedSelect" aria-label="再生速度">
+                <option value="1">×1</option>
+                <option value="2" selected>×2</option>
+                <option value="4">×4</option>
+                <option value="8">×8</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <section class="route-dashboard" aria-label="ルート進行状況">
+          <div class="map-card">
+            <div class="map-heading"><div><span>ADVENTURE MAP</span><strong id="mapRouteName">奄美空港 → あやまる岬</strong></div><span id="progressPercent">0%</span></div>
+            <svg class="route-map" id="routeMap" viewBox="0 0 1000 320" role="img" aria-label="現在地と目的地を示す冒険マップ">
+              <defs>
+                <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity=".25" /></filter>
+                <linearGradient id="routeGradient" x1="0" x2="1"><stop offset="0" stop-color="#f27963"/><stop offset="1" stop-color="#f7c75e"/></linearGradient>
+              </defs>
+              <path id="routeShadow" fill="none" stroke="#d7e5de" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" />
+              <path id="routeBase" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" />
+              <path id="routeDone" fill="none" stroke="url(#routeGradient)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" />
+              <g id="checkpointLayer"></g>
+              <g id="vehicleMarker" filter="url(#shadow)"><circle r="25" fill="#0d5b55"/><text text-anchor="middle" dominant-baseline="central" font-size="24">🚙</text></g>
+            </svg>
+            <div class="progress-track" aria-hidden="true"><span id="progressBar"></span></div>
+            <div class="map-stats">
+              <div><span>残り距離</span><strong id="remainingDistance">0 km</strong></div>
+              <div><span>発見</span><strong id="discoveryCount">0 / 3</strong></div>
+              <div><span>ルート正解率</span><strong id="accuracyValue">—</strong></div>
+            </div>
+          </div>
+
+          <aside class="journey-card">
+            <div class="guide-mini"><span>🐦</span><div><strong>ルリのナビ</strong><p id="guideMessage">景色を楽しみながら進もう！</p></div></div>
+            <ol class="journey-list" id="journeyList"></ol>
+            <div class="safety-note"><strong>安全のお願い</strong><p>運転中の操作は禁止です。旅行前、停車中、または同乗者が利用してください。</p></div>
+          </aside>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-backdrop" id="eventModal" hidden>
+    <section class="modal-card event-card" role="dialog" aria-modal="true" aria-labelledby="eventTitle">
+      <button class="modal-close" data-close-modal type="button" aria-label="閉じる">×</button>
+      <div class="event-icon" id="eventIcon">◆</div>
+      <p class="event-kicker" id="eventKicker">CHECK POINT</p>
+      <h2 id="eventTitle">海が見えてきました</h2>
+      <p id="eventDescription">奄美らしい景色を発見しました。</p>
+      <div id="eventInteractive"></div>
+      <button class="primary-button" id="eventContinueButton" type="button">冒険を続ける</button>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="goalModal" hidden>
+    <section class="modal-card goal-card" role="dialog" aria-modal="true" aria-labelledby="goalTitle">
+      <div class="confetti" aria-hidden="true"></div>
+      <div class="goal-emblem">🏁</div>
+      <p class="event-kicker">MISSION COMPLETE</p>
+      <h2 id="goalTitle">目的地に到着！</h2>
+      <p id="goalSubtitle">ルートをクリアしました。</p>
+      <div class="goal-stats">
+        <div><span>獲得ポイント</span><strong id="goalScore">0</strong></div>
+        <div><span>発見</span><strong id="goalDiscovery">0 / 3</strong></div>
+        <div><span>正解率</span><strong id="goalAccuracy">—</strong></div>
+      </div>
+      <div class="title-earned"><span>獲得した称号</span><strong id="earnedTitle">島旅ビギナー</strong></div>
+      <div class="goal-actions">
+        <button class="secondary-button" id="replayButton" type="button">もう一度</button>
+        <button class="primary-button" id="nextQuestButton" type="button">次の冒険へ</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="settingsModal" hidden>
+    <section class="modal-card settings-card" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+      <button class="modal-close" data-close-modal type="button" aria-label="閉じる">×</button>
+      <p class="event-kicker">STREET VIEW SETTINGS</p>
+      <h2 id="settingsTitle">実写モード設定</h2>
+      <p id="siteKeyNotice" hidden>このサイトでは実写Street Viewが有効になっています。以下の設定は不要です。</p>
+      <p>この画面はサイト運営者・検証用です。Google Maps Embed APIキーを入力すると、ルート上の実写Street Viewを自動表示します。キーは必ず利用ドメインに制限してください。APIキーがなくても、デモ景観ですべての機能を利用できます。</p>
+      <label class="field-label">Google Maps Embed APIキー
+        <input id="apiKeyInput" type="password" inputmode="text" autocomplete="off" placeholder="Google Maps Embed API key" />
+      </label>
+      <label class="toggle-row"><input id="rememberKeyInput" type="checkbox" /><span>この端末に保存する</span></label>
+      <div class="settings-warning"><strong>無料運用の前提</strong><p>Maps Embed APIを使用します。Google Cloudの請求先登録は必要ですが、公式ドキュメント上はEmbed API自体は無料です。料金・規約は公開前に再確認してください。</p></div>
+      <div class="settings-actions">
+        <button class="secondary-button" id="clearKeyButton" type="button">キーを削除</button>
+        <button class="primary-button" id="saveSettingsButton" type="button">保存して切り替える</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="helpModal" hidden>
+    <section class="modal-card help-card" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+      <button class="modal-close" data-close-modal type="button" aria-label="閉じる">×</button>
+      <p class="event-kicker">HOW TO PLAY</p>
+      <h2 id="helpTitle">遊び方</h2>
+      <ol class="help-steps">
+        <li><span>1</span><div><strong>ルートを選ぶ</strong><p>行く予定の場所や気になる道を選択します。</p></div></li>
+        <li><span>2</span><div><strong>景色を進む</strong><p>再生・停止・速度変更で、自分のペースで予習します。</p></div></li>
+        <li><span>3</span><div><strong>目印を覚える</strong><p>チェックポイントと分岐クイズで実際の道を確認します。</p></div></li>
+        <li><span>4</span><div><strong>ゴールする</strong><p>ポイントと称号を獲得し、次のルートへ進みます。</p></div></li>
+      </ol>
+      <button class="primary-button" data-close-modal type="button">わかった</button>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <div class="sr-only" id="liveRegion" aria-live="assertive"></div>
+
+  <footer class="site-footer"><p>© 2026 SHIMA CRAFT / 奄美ロードクエスト</p><p>実際の交通規制・道路状況・施設営業情報は、必ず公式情報で確認してください。</p></footer>
+
+  <script src="config.js"></script>
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>

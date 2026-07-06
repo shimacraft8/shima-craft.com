@@ -1,0 +1,18 @@
+{
+  "name": "奄美ロードクエスト",
+  "short_name": "AMAMI QUEST",
+  "description": "奄美の道を、行く前にゲーム感覚で体験するWebアプリ",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f8f4e8",
+  "theme_color": "#0d5b55",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

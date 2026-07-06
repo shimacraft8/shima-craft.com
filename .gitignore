@@ -49,3 +49,6 @@ firestore-debug.log
 ui-debug.log
 *firebase-adminsdk*.json
 serviceAccount*.json
+
+# amami-road-quest: build-time generated, never commit
+public/amami-road-quest/play/config.js

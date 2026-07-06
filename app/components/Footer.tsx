@@ -15,6 +15,9 @@ export function Footer() {
         <Link href="/amami-dialect" className="footer-nav-link">
           奄美方言辞書
         </Link>
+        <Link href="/amami-road-quest" className="footer-nav-link">
+          奄美ロードクエスト
+        </Link>
         <Link href="/web-check" className="footer-nav-link">
           Web導線チェック
         </Link>

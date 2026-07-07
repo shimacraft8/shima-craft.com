@@ -20,12 +20,14 @@ import {
   grayStructureMAD,
   meanChroma,
   hueConcentration,
+  normalizeChroma,
   removeCastAdaptive,
+  protectShadows,
   protectHighlights,
   CHROMA_QUALITY_THRESHOLD,
   HUE_CONCENTRATION_CAST_THRESHOLD,
 } from "./abProcessing";
-import { claheRgba } from "./clahe";
+import { claheRgba, stretchLevels } from "./clahe";
 import {
   MODELS,
   createSessionForModel,
@@ -209,10 +211,12 @@ async function inferTileAb(
     throw new ColorizeError("INTERNAL_ERROR", sessionId, new Error("tile rgba size mismatch"));
   }
 
+  // レベル補正: 退色写真の圧縮された輝度レンジを回復（フルレンジ画像には no-op）。
+  const leveledRgba = stretchLevels(modelRgba, size, size);
   // CLAHE: 古い退色写真の局所コントラストを強化してモデルの色推定精度を向上させる。
   // タイルサイズ = size/8 で常に 8×8 タイルになるよう自動調整。claheClip=null なら無効（バリエーション用）。
   const enhancedRgba =
-    claheClip === null ? modelRgba : claheRgba(modelRgba, size, size, Math.round(size / 8), claheClip);
+    claheClip === null ? leveledRgba : claheRgba(leveledRgba, size, size, Math.round(size / 8), claheClip);
   const feed =
     model.inputKind === "L"
       ? rgbaToL(enhancedRgba, size * size)
@@ -262,10 +266,11 @@ async function inferTileAb(
   if (!retryRgba || retryRgba.length !== retrySize * retrySize * 4) {
     return { a, b, retriedWith: `${retryModelId}:no_rgba` };
   }
+  const retryLeveled = stretchLevels(retryRgba, retrySize, retrySize);
   const retryEnhanced =
     claheClip === null
-      ? retryRgba
-      : claheRgba(retryRgba, retrySize, retrySize, Math.round(retrySize / 8), claheClip);
+      ? retryLeveled
+      : claheRgba(retryLeveled, retrySize, retrySize, Math.round(retrySize / 8), claheClip);
   const retryFeed =
     retryModel.inputKind === "L"
       ? rgbaToL(retryEnhanced, retrySize * retrySize)
@@ -439,6 +444,11 @@ export async function colorizeInBrowser(
     } else {
       removeCastAdaptive(aMerged, bMerged, lFull, pixelCount);
     }
+    // 彩度正規化: センタリング後の色相差を増幅して肌・布・背景の色分離を回復する。
+    // 彩度不足（mean chroma < 11）の出力のみ対象で、既に十分カラフルな出力には作用しない。
+    normalizeChroma(aMerged, bMerged, pixelCount);
+    // シャドウ保護: 深い影（L<15）の赤茶の濁りを輝度に応じてフェード。
+    protectShadows(aMerged, bMerged, lFull, pixelCount);
     // ハイライト保護: L>75 の画素の彩度を輝度に応じてフェード。
     // 白い布・明るい背景が黄ばんだり茶色になるのを防ぐ。
     protectHighlights(aMerged, bMerged, lFull, pixelCount);

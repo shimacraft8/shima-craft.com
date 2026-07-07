@@ -200,6 +200,61 @@ export function removeCastAdaptive(
   }
 }
 
+/** normalizeChroma の目標 mean chroma。自然なカラー写真の下限程度（実写平均は 12-18）。 */
+export const CHROMA_NORMALIZE_TARGET = 11;
+/** normalizeChroma の増幅上限。ノイズの過剰増幅と不自然な発色を防ぐ。 */
+export const CHROMA_NORMALIZE_MAX_GAIN = 1.8;
+
+/**
+ * 彩度正規化: mean chroma が目標を下回る場合、差分を等比で増幅して色分離を回復する。
+ *
+ * 色かぶり補正（removeCastAdaptive）で ab 分布を中立へセンタリングした後に適用する前提。
+ * センタリング後の増幅は「全体を派手にする」のではなく「肌・布・背景などの
+ * 色相差を拡大する」効果になるため、セピアに潰れた出力の色分離が改善する。
+ * mean chroma が既に目標以上の出力（うまくカラー化できたケース）には何もしない。
+ *
+ * @returns 適用した gain（1.0 = 変更なし）
+ */
+export function normalizeChroma(
+  a: Float32Array,
+  b: Float32Array,
+  pixelCount: number,
+  target: number = CHROMA_NORMALIZE_TARGET,
+  maxGain: number = CHROMA_NORMALIZE_MAX_GAIN
+): number {
+  const m = meanChroma(a, b, pixelCount);
+  // ほぼ無彩色（失敗出力）は増幅してもノイズしか出ないため対象外
+  if (m < 1.5 || m >= target) return 1;
+  const gain = Math.min(maxGain, target / m);
+  boostChroma(a, b, pixelCount, gain);
+  return gain;
+}
+
+/**
+ * シャドウ保護: 暗い画素の彩度を輝度に応じて低減する。
+ *
+ * 旧写真の深い影にモデルが乗せがちな赤茶色の濁りを防ぐ。
+ * 現実の深い影はほぼ無彩色のため、L=threshold で係数 1.0、L=0 で係数 0.0 に線形フェード。
+ * threshold 超の画素には一切触れない。
+ *
+ * @param threshold この輝度値（CIE L、0-100）未満の画素からフェード開始。デフォルト 15
+ */
+export function protectShadows(
+  a: Float32Array,
+  b: Float32Array,
+  L: Float32Array,
+  pixelCount: number,
+  threshold = 15
+): void {
+  for (let i = 0; i < pixelCount; i++) {
+    if (L[i] < threshold) {
+      const factor = L[i] / threshold;
+      a[i] *= factor;
+      b[i] *= factor;
+    }
+  }
+}
+
 /**
  * ハイライト保護: 明るい画素の彩度を輝度に応じて低減する。
  *

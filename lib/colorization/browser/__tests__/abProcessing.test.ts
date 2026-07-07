@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { boostChroma, clampChroma, grayStructureMAD, hueConcentration, meanChroma, protectHighlights, removeCast, removeCastAdaptive, upsampleAb } from "../abProcessing";
+import { boostChroma, clampChroma, grayStructureMAD, hueConcentration, meanChroma, normalizeChroma, protectHighlights, protectShadows, removeCast, removeCastAdaptive, upsampleAb } from "../abProcessing";
 
 describe("upsampleAb", () => {
   it("同一サイズなら値を保持する", () => {
@@ -172,6 +172,86 @@ describe("removeCastAdaptive", () => {
     removeCastAdaptive(a, b, L, 2);
     expect(a[0]).toBeCloseTo(0, 5);
     expect(b[1]).toBeCloseTo(0, 5);
+  });
+});
+
+describe("normalizeChroma", () => {
+  it("彩度不足の出力を目標へ増幅する（gain > 1）", () => {
+    // mean chroma ≈ 5 → target 11 だが maxGain=1.8 でキャップ
+    const a = new Float32Array([5, -5, 3]);
+    const b = new Float32Array([0, 0, 4]);
+    const gain = normalizeChroma(a, b, 3, 11, 1.8);
+    expect(gain).toBeCloseTo(1.8, 5);
+    expect(Math.abs(a[0])).toBeGreaterThan(5);
+  });
+
+  it("目標未満だがキャップ内なら target/mean の gain を適用", () => {
+    const a = new Float32Array([8, 8]);
+    const b = new Float32Array([0, 0]); // mean chroma = 8
+    const gain = normalizeChroma(a, b, 2, 11, 1.8);
+    expect(gain).toBeCloseTo(11 / 8, 4);
+    expect(a[0]).toBeCloseTo(11, 3);
+  });
+
+  it("既に目標以上の出力には何もしない（gain=1）", () => {
+    const a = new Float32Array([15, 15]);
+    const b = new Float32Array([0, 0]);
+    const aCopy = a.slice(0);
+    const gain = normalizeChroma(a, b, 2, 11, 1.8);
+    expect(gain).toBe(1);
+    expect(a[0]).toBe(aCopy[0]);
+  });
+
+  it("ほぼ無彩色（失敗出力）には何もしない", () => {
+    const a = new Float32Array([1, 1]);
+    const b = new Float32Array([0.5, 0.5]);
+    const gain = normalizeChroma(a, b, 2, 11, 1.8);
+    expect(gain).toBe(1);
+    expect(a[0]).toBe(1);
+  });
+
+  it("色相（a:b 比）は保存される", () => {
+    const a = new Float32Array([6]);
+    const b = new Float32Array([3]);
+    normalizeChroma(a, b, 1, 11, 1.8);
+    expect(a[0] / b[0]).toBeCloseTo(2, 4);
+  });
+});
+
+describe("protectShadows", () => {
+  it("threshold 超の画素には触れない", () => {
+    const a = new Float32Array([10, 20]);
+    const b = new Float32Array([5, 8]);
+    const L = new Float32Array([30, 80]);
+    protectShadows(a, b, L, 2, 15);
+    expect(a[0]).toBe(10);
+    expect(a[1]).toBe(20);
+  });
+
+  it("L=0 の画素は ab がゼロになる（純黒）", () => {
+    const a = new Float32Array([12]);
+    const b = new Float32Array([-8]);
+    const L = new Float32Array([0]);
+    protectShadows(a, b, L, 1, 15);
+    expect(a[0]).toBeCloseTo(0, 5);
+    expect(b[0]).toBeCloseTo(0, 5);
+  });
+
+  it("L=7.5 では彩度が半減（factor=0.5）", () => {
+    const a = new Float32Array([20]);
+    const b = new Float32Array([10]);
+    const L = new Float32Array([7.5]);
+    protectShadows(a, b, L, 1, 15);
+    expect(a[0]).toBeCloseTo(10, 4);
+    expect(b[0]).toBeCloseTo(5, 4);
+  });
+
+  it("色相（a:b 比）を保存したまま彩度を減らす", () => {
+    const a = new Float32Array([9]);
+    const b = new Float32Array([12]);
+    const L = new Float32Array([5]);
+    protectShadows(a, b, L, 1, 15);
+    expect(a[0] / b[0]).toBeCloseTo(9 / 12, 5);
   });
 });
 

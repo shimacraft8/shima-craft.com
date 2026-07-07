@@ -10,6 +10,60 @@
  */
 
 /**
+ * レベル補正: 輝度ヒストグラムの 1%/99% パーセンタイルを [0, 255] へ線形伸長する。
+ *
+ * 退色した古い写真は輝度レンジが圧縮されている（例: [40, 200]）ため、
+ * モデルが「白い布」「深い影」を認識しづらく色推定が濁る。
+ * CLAHE の前にグローバルなレンジ回復を行うことで局所均一化の効果も高まる。
+ *
+ * 既にフルレンジに近い画像（p99-p1 >= 235）はコピーせず元バッファをそのまま返す（no-op）。
+ * レンジが極端に狭い画像（p99-p1 < 24）はほぼ均一とみなし増幅しない（ノイズ爆発防止）。
+ *
+ * 適用対象はモデル入力用 RGBA のみ。結果合成に使う元解像度 L は変更しない。
+ */
+export function stretchLevels(
+  rgba: Uint8ClampedArray,
+  width: number,
+  height: number
+): Uint8ClampedArray {
+  const n = width * height;
+  if (n === 0) return rgba;
+  const hist = new Uint32Array(256);
+  for (let i = 0; i < n; i++) {
+    const p = i * 4;
+    hist[Math.round(0.299 * rgba[p] + 0.587 * rgba[p + 1] + 0.114 * rgba[p + 2])]++;
+  }
+  const lowCount = n * 0.01;
+  const highCount = n * 0.99;
+  let cum = 0;
+  let p1 = 0;
+  let p99 = 255;
+  for (let i = 0; i < 256; i++) {
+    cum += hist[i];
+    if (cum <= lowCount) p1 = i;
+    if (cum < highCount) p99 = Math.min(255, i + 1);
+  }
+  const range = p99 - p1;
+  if (range >= 235 || range < 24) return rgba;
+
+  const scale = 255 / range;
+  const lut = new Uint8ClampedArray(256);
+  for (let i = 0; i < 256; i++) {
+    lut[i] = Math.max(0, Math.min(255, Math.round((i - p1) * scale)));
+  }
+  const out = new Uint8ClampedArray(rgba.length);
+  for (let i = 0; i < n; i++) {
+    const p = i * 4;
+    // 入力は近似グレースケール前提のため輝度 LUT を各チャンネルへ適用
+    out[p] = lut[rgba[p]];
+    out[p + 1] = lut[rgba[p + 1]];
+    out[p + 2] = lut[rgba[p + 2]];
+    out[p + 3] = rgba[p + 3];
+  }
+  return out;
+}
+
+/**
  * CLAHE を RGBA バッファの輝度チャンネルに適用して新しい RGBA を返す。
  * 入力が近似グレースケール（古い B&W 写真スキャン）を前提とし、
  * 輝度を均一化してから R=G=B に書き戻す（色相情報は破棄・モデルが推定するため問題なし）。

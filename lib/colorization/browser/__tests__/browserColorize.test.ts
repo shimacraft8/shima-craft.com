@@ -205,6 +205,52 @@ describe("colorizeInBrowser", () => {
       expect(out.rgba[i * 4 + 1]).toBe(out.rgba[i * 4 + 2]);
     }
   });
+
+  it("quality=high は vividRgba を生成する", async () => {
+    mocks.createSessionForModel.mockResolvedValue(makeReadySession(20, "wasm", "ddcolor"));
+    const out = await colorizeInBrowser(grayInput(4, 4, 100), {
+      signal: new AbortController().signal,
+      quality: "high",
+    });
+    expect(out.vividRgba).toBeDefined();
+    expect(out.vividRgba!.length).toBe(4 * 4 * 4);
+  });
+
+  it("quality=standard は vividRgba を生成しない", async () => {
+    mocks.createSessionForModel.mockResolvedValue(makeReadySession(20, "wasm", "siggraph17"));
+    const out = await colorizeInBrowser(grayInput(4, 4, 100), {
+      signal: new AbortController().signal,
+      quality: "standard",
+    });
+    expect(out.vividRgba).toBeUndefined();
+  });
+
+  it("quality=high で ab=0 のとき retriedWith が設定される（両モデルとも無彩色）", async () => {
+    mocks.createSessionForModel.mockResolvedValue(makeReadySession(0, "wasm", "ddcolor"));
+    const out = await colorizeInBrowser(grayInput(4, 4, 100), {
+      signal: new AbortController().signal,
+      quality: "high",
+    });
+    expect(out.retriedWith).toBeDefined();
+    expect(typeof out.retriedWith).toBe("string");
+  });
+
+  it("ab に十分なクロマがあれば retriedWith は undefined", async () => {
+    mocks.createSessionForModel.mockResolvedValue(makeReadySession(20, "wasm", "ddcolor"));
+    const out = await colorizeInBrowser(grayInput(4, 4, 100), {
+      signal: new AbortController().signal,
+      quality: "high",
+    });
+    expect(out.retriedWith).toBeUndefined();
+  });
+
+  it("通常処理では collageTiles が undefined", async () => {
+    mocks.createSessionForModel.mockResolvedValue(makeReadySession(10, "wasm", "siggraph17"));
+    const out = await colorizeInBrowser(grayInput(8, 8, 128), {
+      signal: new AbortController().signal,
+    });
+    expect(out.collageTiles).toBeUndefined();
+  });
 });
 
 describe("modelIdForQuality", () => {

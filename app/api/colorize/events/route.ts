@@ -22,8 +22,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   const viewer = await getViewer();
+  // 無料公開モードの匿名ユーザーは Firestore へ書かず 200 OK を返す（ログ省略）
   if (viewer.kind === "anonymous") {
-    return NextResponse.json({ ok: false, reason: "UNAUTHENTICATED" }, { status: 401 });
+    return NextResponse.json({ ok: true });
   }
 
   let body: Record<string, unknown>;

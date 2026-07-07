@@ -30,6 +30,7 @@ type Phase = "select" | "ready" | "processing" | "done" | "error";
 
 type Props = {
   contactHref: string;
+  isAnonymous: boolean;
 };
 
 type ErrorDisplay = {
@@ -41,6 +42,10 @@ type ErrorDisplay = {
   nextAction: string | null;
   suggestDifferentImage: boolean;
 };
+
+type ExecutionResult =
+  | { ok: true; executionId: string; remaining: number | null }
+  | { ok: false; reason: "DAILY_LIMIT" | "ERROR" };
 
 function buildErrorDisplay(err: ColorizeError): ErrorDisplay {
   return {
@@ -87,7 +92,7 @@ function sendEvent(payload: Record<string, unknown>): void {
   }
 }
 
-export function PhotoColorizeClient({ contactHref }: Props) {
+export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
   const [phase, setPhase] = useState<Phase>("select");
   const [prepared, setPrepared] = useState<PreparedImage | null>(null);
   const [preparing, setPreparing] = useState(false);
@@ -98,8 +103,16 @@ export function PhotoColorizeClient({ contactHref }: Props) {
   const [quality, setQuality] = useState<ColorizeQuality>("high");
   const [progress, setProgress] = useState<ColorizeProgress | null>(null);
   const [resultUrl, setResultUrl] = useState<string | null>(null);
+  /** 高品質モード時の候補2（あざやか）URL。 */
+  const [vividResultUrl, setVividResultUrl] = useState<string | null>(null);
+  /** 高品質モードで2候補が揃ったとき、どちらをプレビューするか。 */
+  const [activeCandidate, setActiveCandidate] = useState<"natural" | "vivid">("natural");
   const [warnings, setWarnings] = useState<string[]>([]);
   const [errorDisplay, setErrorDisplay] = useState<ErrorDisplay | null>(null);
+  /** 無料枠の残り回数（匿名ユーザーのみ有効。null = 会員 or まだ確認していない）。 */
+  const [dailyRemaining, setDailyRemaining] = useState<number | null>(null);
+  /** 1日の無料枠を使い切ったかどうか。 */
+  const [dailyLimitHit, setDailyLimitHit] = useState(false);
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const liveRegionRef = useRef<HTMLDivElement>(null);
@@ -117,6 +130,7 @@ export function PhotoColorizeClient({ contactHref }: Props) {
       abortRef.current?.abort();
       revokePreviewUrl(prepared?.previewUrl);
       revokePreviewUrl(resultUrl);
+      revokePreviewUrl(vividResultUrl);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -126,17 +140,21 @@ export function PhotoColorizeClient({ contactHref }: Props) {
     runIdRef.current += 1;
     revokePreviewUrl(prepared?.previewUrl);
     revokePreviewUrl(resultUrl);
+    revokePreviewUrl(vividResultUrl);
     setPrepared(null);
     setPreparing(false);
     setSelectError(null);
     setConsent(false);
     setProgress(null);
     setResultUrl(null);
+    setVividResultUrl(null);
+    setActiveCandidate("natural");
     setWarnings([]);
     setErrorDisplay(null);
+    setDailyLimitHit(false);
     setPhase("select");
     if (fileInputRef.current) fileInputRef.current.value = "";
-  }, [prepared, resultUrl]);
+  }, [prepared, resultUrl, vividResultUrl]);
 
   const handleFile = useCallback(
     async (file: File | null | undefined) => {
@@ -181,9 +199,9 @@ export function PhotoColorizeClient({ contactHref }: Props) {
     resetAll();
   }
 
-  /** サーバーへ実行許可を要求し、executionIdを得る（モデル読込はこの後に開始）。 */
-  async function requestExecution(retryOf: string | null): Promise<string | null> {
-    if (!prepared) return null;
+  /** サーバーへ実行許可を要求し、executionIdと残り回数を得る（モデル読込はこの後に開始）。 */
+  async function requestExecution(retryOf: string | null): Promise<ExecutionResult> {
+    if (!prepared) return { ok: false, reason: "ERROR" };
     try {
       const res = await fetch("/api/colorize/executions", {
         method: "POST",
@@ -196,11 +214,26 @@ export function PhotoColorizeClient({ contactHref }: Props) {
           retryOfExecutionId: retryOf,
         }),
       });
-      const data = (await res.json().catch(() => null)) as { ok?: boolean; executionId?: string } | null;
-      if (res.ok && data?.ok && data.executionId) return data.executionId;
-      return null;
+      const data = (await res.json().catch(() => null)) as {
+        ok?: boolean;
+        executionId?: string;
+        remaining?: number;
+        reason?: string;
+      } | null;
+
+      if (res.status === 429 && data?.reason === "DAILY_LIMIT") {
+        return { ok: false, reason: "DAILY_LIMIT" };
+      }
+      if (res.ok && data?.ok && data.executionId) {
+        return {
+          ok: true,
+          executionId: data.executionId,
+          remaining: typeof data.remaining === "number" ? data.remaining : null,
+        };
+      }
+      return { ok: false, reason: "ERROR" };
     } catch {
-      return null;
+      return { ok: false, reason: "ERROR" };
     }
   }
 
@@ -211,7 +244,6 @@ export function PhotoColorizeClient({ contactHref }: Props) {
   ) {
     if (!prepared || inFlightRef.current) return;
     inFlightRef.current = true;
-    // 実行のたびに新しいAbortController・実行IDを作る
     const controller = new AbortController();
     abortRef.current = controller;
     const runId = ++runIdRef.current;
@@ -221,22 +253,30 @@ export function PhotoColorizeClient({ contactHref }: Props) {
     setPhase("processing");
     setProgress(null);
     setErrorDisplay(null);
+    setDailyLimitHit(false);
     trackEvent("colorize_start");
 
     // 実行許可（fail-closed）: これが取れないとモデルを読み込まない
-    const executionId = await requestExecution(retryOf);
+    const execResult = await requestExecution(retryOf);
     if (runIdRef.current !== runId) {
       inFlightRef.current = false;
       return;
     }
-    if (!executionId) {
+    if (!execResult.ok) {
       inFlightRef.current = false;
-      setErrorDisplay(
-        buildErrorDisplay(new ColorizeError("INTERNAL_ERROR", clientSessionId))
-      );
-      setPhase("error");
+      if (execResult.reason === "DAILY_LIMIT") {
+        setDailyLimitHit(true);
+        setDailyRemaining(0);
+        setPhase("error");
+      } else {
+        setErrorDisplay(buildErrorDisplay(new ColorizeError("INTERNAL_ERROR", clientSessionId)));
+        setPhase("error");
+      }
       return;
     }
+
+    const { executionId, remaining } = execResult;
+    if (remaining !== null) setDailyRemaining(remaining);
     lastExecutionIdRef.current = executionId;
 
     const startedAt = performance.now();
@@ -269,6 +309,7 @@ export function PhotoColorizeClient({ contactHref }: Props) {
       );
       if (runIdRef.current !== runId) return;
 
+      // 候補1: 自然（高品質）or ユーザー選択の仕上がり（標準）
       const canvas = document.createElement("canvas");
       canvas.width = output.width;
       canvas.height = output.height;
@@ -287,12 +328,34 @@ export function PhotoColorizeClient({ contactHref }: Props) {
       lastResultMetaRef.current = { mode: output.backend, executionId };
 
       revokePreviewUrl(resultUrl);
+      revokePreviewUrl(vividResultUrl);
       setResultUrl(URL.createObjectURL(blob));
+      setVividResultUrl(null);
+      setActiveCandidate("natural");
+
+      // 候補2（あざやか）: 高品質モードのみ
+      if (output.vividRgba && selectedQuality === "high") {
+        const vividCanvas = document.createElement("canvas");
+        vividCanvas.width = output.width;
+        vividCanvas.height = output.height;
+        const vividCtx = vividCanvas.getContext("2d");
+        if (vividCtx) {
+          const vividPixels = new Uint8ClampedArray(output.vividRgba.length);
+          vividPixels.set(output.vividRgba);
+          vividCtx.putImageData(new ImageData(vividPixels, output.width, output.height), 0, 0);
+          const vividBlob = await new Promise<Blob | null>((resolve) =>
+            vividCanvas.toBlob((b) => resolve(b), "image/jpeg", 0.92)
+          );
+          if (vividBlob && runIdRef.current === runId) {
+            setVividResultUrl(URL.createObjectURL(vividBlob));
+          }
+        }
+      }
+
       setWarnings([...prepared.warnings, ...output.warnings]);
       setPhase("done");
       trackEvent("colorize_success", { backend: output.backend, quality: selectedQuality });
 
-      // 完了ログはawaitしない（応答待ちで再試行が無反応になるのを避ける）
       sendEvent({
         executionId,
         eventType: "colorize_succeeded",
@@ -303,6 +366,8 @@ export function PhotoColorizeClient({ contactHref }: Props) {
         outputWidth: output.width,
         outputHeight: output.height,
         durationMs,
+        retriedWith: output.retriedWith ?? null,
+        collageTiles: output.collageTiles ?? null,
       });
     } catch (err) {
       if (runIdRef.current !== runId) return;
@@ -365,36 +430,41 @@ export function PhotoColorizeClient({ contactHref }: Props) {
 
   /**
    * 「同じ画像でもう一度試す」：状態を消してから**すぐに再実行**する。
-   * 新しいexecutionId・新しいAbortControllerで実行される（retryOfに前回IDを付す）。
    */
   function handleRetrySameImage() {
     if (inFlightRef.current) return;
     trackEvent("colorize_retry", { mode: "same_image" });
     const retryOf = lastExecutionIdRef.current;
     revokePreviewUrl(resultUrl);
+    revokePreviewUrl(vividResultUrl);
     setResultUrl(null);
+    setVividResultUrl(null);
+    setActiveCandidate("natural");
     setWarnings([]);
     setErrorDisplay(null);
+    setDailyLimitHit(false);
     setProgress(null);
     setPhase("ready");
     void runColorize(finish, quality, retryOf);
   }
 
   function handleDownload() {
-    if (!resultUrl) return;
+    const url = activeCandidate === "vivid" && vividResultUrl ? vividResultUrl : resultUrl;
+    if (!url) return;
     trackEvent("colorize_download");
     const executionId = lastResultMetaRef.current?.executionId ?? lastExecutionIdRef.current;
     if (executionId) {
-      // 「ダウンロード完了」ではなく「ダウンロード操作を実行」として記録
       sendEvent({ executionId, eventType: "download_clicked", status: "clicked" });
     }
     const a = document.createElement("a");
-    a.href = resultUrl;
+    a.href = url;
     a.download = buildDownloadFilename();
     document.body.appendChild(a);
     a.click();
     a.remove();
   }
+
+  const displayUrl = activeCandidate === "vivid" && vividResultUrl ? vividResultUrl : resultUrl;
 
   return (
     <div className="colorize-tool">
@@ -403,6 +473,15 @@ export function PhotoColorizeClient({ contactHref }: Props) {
         {phase === "done" && "カラー化が完了しました。"}
         {phase === "error" && errorDisplay && `${errorDisplay.heading} ${errorDisplay.message}`}
       </div>
+
+      {/* 匿名ユーザーへの無料枠インジケーター */}
+      {isAnonymous && (
+        <p className="colorize-free-limit-note">
+          {dailyRemaining !== null
+            ? `本日あと${dailyRemaining}回ご利用いただけます（1日3回まで無料、日本時間0時リセット）`
+            : "1日3回まで無料でご利用いただけます（日本時間0時リセット）"}
+        </p>
+      )}
 
       {phase === "select" && (
         <div
@@ -542,14 +621,36 @@ export function PhotoColorizeClient({ contactHref }: Props) {
         </div>
       )}
 
-      {phase === "done" && resultUrl && prepared && (
+      {phase === "done" && displayUrl && prepared && (
         <div className="colorize-result">
           <BeforeAfterSlider
             beforeSrc={prepared.previewUrl}
-            afterSrc={resultUrl}
+            afterSrc={displayUrl}
             width={prepared.width}
             height={prepared.height}
           />
+
+          {/* 高品質モードの仕上がり候補切替 */}
+          {quality === "high" && vividResultUrl && (
+            <div className="colorize-finish colorize-finish--result">
+              <span>仕上がり：</span>
+              <button
+                type="button"
+                className={`colorize-finish-toggle${activeCandidate === "natural" ? " is-active" : ""}`}
+                onClick={() => setActiveCandidate("natural")}
+              >
+                自然
+              </button>
+              <button
+                type="button"
+                className={`colorize-finish-toggle${activeCandidate === "vivid" ? " is-active" : ""}`}
+                onClick={() => setActiveCandidate("vivid")}
+              >
+                あざやか
+              </button>
+            </div>
+          )}
+
           <div className="colorize-finish colorize-finish--result">
             <span>画質：</span>
             <button
@@ -611,30 +712,48 @@ export function PhotoColorizeClient({ contactHref }: Props) {
         </div>
       )}
 
-      {phase === "error" && errorDisplay && (
+      {phase === "error" && (
         <div className="colorize-error" role="alert">
-          <h2 className="colorize-error-heading">{errorDisplay.heading}</h2>
-          <p>{errorDisplay.message}</p>
-          {errorDisplay.nextAction && <p>{errorDisplay.nextAction}</p>}
-          <p className="colorize-error-meta">
-            エラーコード: {errorDisplay.errorCode}
-            {errorDisplay.clientSessionId && ` / セッションID: ${errorDisplay.clientSessionId}`}
-          </p>
-          <div className="colorize-result-actions">
-            {errorDisplay.retryable && (
-              <button type="button" className="btn" onClick={handleRetrySameImage}>
-                同じ画像でもう一度試す
-              </button>
-            )}
-            <button type="button" className="btn btn-ghost colorize-btn-ghost" onClick={handleRemoveImage}>
-              {errorDisplay.suggestDifferentImage ? "別の画像で試す" : "はじめからやり直す"}
-            </button>
-          </div>
-          {!errorDisplay.retryable && (
-            <p style={{ marginTop: 10, fontSize: "0.85rem" }}>
-              解決しない場合は <a href={contactHref}>SHIMA CRAFTへお問い合わせ</a> ください。
-            </p>
-          )}
+          {dailyLimitHit ? (
+            <>
+              <h2 className="colorize-error-heading">本日の無料回数を使い切りました</h2>
+              <p>1日3回まで無料でご利用いただけます。日本時間0時にリセットされます。</p>
+              <p style={{ marginTop: 8 }}>
+                回数制限なしでご利用いただける会員プランについては{" "}
+                <a href={contactHref}>SHIMA CRAFTへお問い合わせ</a> ください。
+              </p>
+              <div className="colorize-result-actions">
+                <button type="button" className="btn btn-ghost colorize-btn-ghost" onClick={handleRemoveImage}>
+                  はじめからやり直す
+                </button>
+              </div>
+            </>
+          ) : errorDisplay ? (
+            <>
+              <h2 className="colorize-error-heading">{errorDisplay.heading}</h2>
+              <p>{errorDisplay.message}</p>
+              {errorDisplay.nextAction && <p>{errorDisplay.nextAction}</p>}
+              <p className="colorize-error-meta">
+                エラーコード: {errorDisplay.errorCode}
+                {errorDisplay.clientSessionId && ` / セッションID: ${errorDisplay.clientSessionId}`}
+              </p>
+              <div className="colorize-result-actions">
+                {errorDisplay.retryable && (
+                  <button type="button" className="btn" onClick={handleRetrySameImage}>
+                    同じ画像でもう一度試す
+                  </button>
+                )}
+                <button type="button" className="btn btn-ghost colorize-btn-ghost" onClick={handleRemoveImage}>
+                  {errorDisplay.suggestDifferentImage ? "別の画像で試す" : "はじめからやり直す"}
+                </button>
+              </div>
+              {!errorDisplay.retryable && (
+                <p style={{ marginTop: 10, fontSize: "0.85rem" }}>
+                  解決しない場合は <a href={contactHref}>SHIMA CRAFTへお問い合わせ</a> ください。
+                </p>
+              )}
+            </>
+          ) : null}
         </div>
       )}
     </div>

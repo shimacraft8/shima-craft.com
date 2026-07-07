@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { boostChroma, clampChroma, grayStructureMAD, upsampleAb } from "../abProcessing";
+import { boostChroma, clampChroma, grayStructureMAD, meanChroma, upsampleAb } from "../abProcessing";
 
 describe("upsampleAb", () => {
   it("同一サイズなら値を保持する", () => {
@@ -98,5 +98,26 @@ describe("grayStructureMAD", () => {
     const a = new Float32Array([0, 100]);
     const b = new Float32Array([10, 90]);
     expect(grayStructureMAD(a, b, 2)).toBeCloseTo(10, 5);
+  });
+});
+
+describe("meanChroma", () => {
+  it("すべて無彩色なら 0", () => {
+    const a = new Float32Array([0, 0, 0]);
+    const b = new Float32Array([0, 0, 0]);
+    expect(meanChroma(a, b, 3)).toBe(0);
+  });
+
+  it("純粋な a 方向の chroma を返す", () => {
+    const a = new Float32Array([3, 4]);
+    const b = new Float32Array([4, 3]);
+    // hypot(3,4) = 5, hypot(4,3) = 5 → mean = 5
+    expect(meanChroma(a, b, 2)).toBeCloseTo(5, 5);
+  });
+
+  it("1 ピクセルのみ", () => {
+    const a = new Float32Array([30]);
+    const b = new Float32Array([40]);
+    expect(meanChroma(a, b, 1)).toBeCloseTo(50, 5);
   });
 });

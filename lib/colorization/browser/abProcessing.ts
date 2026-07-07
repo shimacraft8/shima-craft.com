@@ -101,6 +101,16 @@ export function clampChroma(
   return clamped;
 }
 
+/** mean chroma √(a²+b²) 全画素平均。4未満ならほぼ白黒の失敗出力とみなす。 */
+export function meanChroma(a: Float32Array, b: Float32Array, pixelCount: number): number {
+  let sum = 0;
+  for (let i = 0; i < pixelCount; i++) sum += Math.hypot(a[i], b[i]);
+  return sum / pixelCount;
+}
+
+/** mean chroma がこの値未満なら「ほぼ白黒のまま」として失敗判定する */
+export const CHROMA_QUALITY_THRESHOLD = 4.0;
+
 /** 元画像 L と結果 L のグレースケール構造差（平均絶対差, L 0-100スケール）。 */
 export function grayStructureMAD(
   originalL: Float32Array,

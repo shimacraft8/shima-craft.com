@@ -105,7 +105,7 @@ afterEach(() => {
 });
 
 function renderClient() {
-  return render(<PhotoColorizeClient contactHref="mailto:test@example.com" />);
+  return render(<PhotoColorizeClient contactHref="mailto:test@example.com" isAnonymous={false} />);
 }
 
 async function selectFileAndReachReady() {

@@ -1,29 +1,42 @@
 /**
  * ブラウザ内カラー化パイプライン本体。
  *
- * 1. 元画像から Lab の L（輝度）を抽出
- * 2. 256x256 の L のみをモデルへ入力し、ab（色差）だけを推定させる
- * 3. ab を元解像度へバイリニア拡大し、「元画像の L」と再合成
- * 4. 過剰彩度を抑制し、元画像と同一寸法の RGBA を返す
+ * 1. コラージュ検出 → タイル分割カラー化（分割が見つかった場合）
+ * 2. 元画像から Lab の L（輝度）を抽出
+ * 3. 256x256 または 512x512 をモデルへ入力し ab（色差）を推定
+ * 4. 品質チェック → ほぼ白黒なら別モデルで内部再試行
+ * 5. ab を元解像度へバイリニア拡大し「元画像の L」と再合成
+ * 6. 2候補（自然 / あざやか）を生成し UI で選択可能にする
  *
- * 画像データはこの関数の引数として渡されたメモリ上にのみ存在し、
- * ネットワークへは一切送信されない（fetch するのは同一オリジンの
- * モデル・ランタイムのみ）。
+ * 画像データはブラウザメモリ内にのみ存在し、外部へ送信されない。
  */
 
 import { ColorizeError, type ColorizeProgress, type ColorizeResult } from "@/lib/colorization/types";
 import { rgbaToL, rgbaToGrayPlanarRGB, labToRgba } from "./labColor";
-import { upsampleAb, boostChroma, clampChroma, grayStructureMAD } from "./abProcessing";
+import {
+  upsampleAb,
+  boostChroma,
+  clampChroma,
+  grayStructureMAD,
+  meanChroma,
+  CHROMA_QUALITY_THRESHOLD,
+} from "./abProcessing";
 import {
   MODELS,
   createSessionForModel,
   selectBackend,
   type ColorizeModelId,
   type OrtTensor,
+  type ReadySession,
 } from "./ortRuntime";
+import {
+  detectHorizontalSplits,
+  splitIntoTiles,
+  stitchAbChannels,
+  type CollageTile,
+} from "./collage";
 
 export type ColorizeInput = {
-  /** 処理対象画像（EXIF反映・縮小済み）の RGBA。 */
   fullRgba: Uint8ClampedArray;
   width: number;
   height: number;
@@ -34,17 +47,16 @@ export type ColorizeInput = {
 };
 
 /**
- * 仕上がりの色の濃さ（標準モデルのみ有効）。
- * - vivid: chroma をソフトニー付きで増幅（一眼レフ風の色乗り。既定）
+ * 仕上がりの色の濃さ（標準モデルでの候補1に影響）。
+ * - vivid: chroma をソフトニー付きで増幅（一眼レフ風。既定）
  * - soft: モデル出力の控えめな彩度のまま
- * どちらも輝度・形状には影響しない。
  */
 export type ColorizeFinish = "vivid" | "soft";
 
 /**
  * カラー化の品質モード。
  * - standard: siggraph17（軽量・高速。256入力）
- * - high: DDColor（人物の肌色・発色が自然。512入力・大きめのモデル）
+ * - high: DDColor（人物の肌色・発色が自然。512入力）
  */
 export type ColorizeQuality = "standard" | "high";
 
@@ -53,13 +65,21 @@ export function modelIdForQuality(quality: ColorizeQuality): ColorizeModelId {
 }
 
 export type ColorizeOutput = ColorizeResult & {
-  /** 元画像と同一寸法の結果 RGBA（ImageData 化は呼び出し側で行う）。 */
+  /** 元画像と同一寸法の結果 RGBA（候補1: 自然 / standard+soft の場合は通常仕上がり）。 */
   rgba: Uint8ClampedArray;
+  /**
+   * 候補2（あざやか）。高品質モードでは vivid boost 適用版。
+   * standard モードでは rgba と同一（finish 切替がすでに候補の役割を果たすため）。
+   */
+  vividRgba?: Uint8ClampedArray;
   width: number;
   height: number;
+  /** 内部再試行が発生した場合に記録するモデル名（ログ用）。 */
+  retriedWith?: string;
+  /** コラージュ分割枚数（0 = 通常処理、1以上 = タイル数）。 */
+  collageTiles?: number;
 };
 
-/** 結果と元画像の輝度構造差がこの値（L 0-100 スケール）を超えたら警告を付ける。 */
 export const GRAY_STRUCTURE_WARN_THRESHOLD = 1.0;
 
 export function newClientSessionId(): string {
@@ -95,7 +115,6 @@ function looksLikeNetworkError(err: unknown): boolean {
   );
 }
 
-/** 例外を利用者向けエラーコードへ分類する。 */
 export function classifyError(
   err: unknown,
   phase: "session" | "inference" | "composite",
@@ -112,10 +131,114 @@ export function classifyError(
   return new ColorizeError("INTERNAL_ERROR", sessionId, err);
 }
 
-/** ブラウザがブラウザ内推論の前提（WebAssembly）を満たすか。 */
 export function isBrowserSupported(win: { WebAssembly?: unknown } = window): boolean {
   return typeof win.WebAssembly === "object" && win.WebAssembly !== null;
 }
+
+// ---- タイル単位の推論 ----
+
+type TileAbResult = {
+  a: Float32Array;
+  b: Float32Array;
+  retriedWith?: string;
+};
+
+/**
+ * 1タイル分の推論を実行して ab チャンネルを返す。
+ * 品質チェック → ほぼ白黒なら別モデルで内部再試行する。
+ */
+async function inferTileAb(
+  tile: Pick<CollageTile, "fullRgba" | "smallRgba" | "largeRgba" | "width" | "height">,
+  modelId: ColorizeModelId,
+  ready: ReadySession,
+  onProgress: (p: ColorizeProgress) => void,
+  signal: AbortSignal,
+  sessionId: string
+): Promise<TileAbResult> {
+  const model = MODELS[modelId];
+  const size = model.inputSize;
+  const modelRgba = size === 256 ? tile.smallRgba : tile.largeRgba;
+  if (!modelRgba || modelRgba.length !== size * size * 4) {
+    throw new ColorizeError("INTERNAL_ERROR", sessionId, new Error("tile rgba size mismatch"));
+  }
+
+  const feed =
+    model.inputKind === "L"
+      ? rgbaToL(modelRgba, size * size)
+      : rgbaToGrayPlanarRGB(modelRgba, size * size);
+  const dims = model.inputKind === "L" ? [1, 1, size, size] : [1, 3, size, size];
+  const tensor = new (ready.ort.Tensor as new (t: string, d: Float32Array, dims: number[]) => OrtTensor)(
+    "float32",
+    feed,
+    dims
+  );
+  const outputs = await ready.session.run({ [model.inputName]: tensor });
+  const out: OrtTensor | undefined =
+    outputs.output_ab ?? outputs.output ?? Object.values(outputs)[0];
+  if (!out || !(out.data instanceof Float32Array)) {
+    throw new Error("unexpected model output");
+  }
+  const { a, b } = upsampleAb(out.data, size, tile.width, tile.height);
+
+  // 品質チェック: ほぼ白黒 → 別モデルで内部再試行
+  const chroma = meanChroma(a, b, tile.width * tile.height);
+  if (chroma >= CHROMA_QUALITY_THRESHOLD) {
+    return { a, b };
+  }
+
+  const retryModelId: ColorizeModelId = modelId === "ddcolor" ? "siggraph17" : "ddcolor";
+  console.info(
+    `[colorize] gray output (chroma=${chroma.toFixed(2)}) with ${modelId}, retrying with ${retryModelId}`
+  );
+  throwIfAborted(signal, sessionId);
+
+  const preferred = selectBackend();
+  let retryReady: ReadySession | null = null;
+  try {
+    retryReady = await createSessionForModel(retryModelId, preferred, onProgress, signal);
+  } catch {
+    try {
+      retryReady = await createSessionForModel(retryModelId, "wasm", onProgress, signal);
+    } catch (e) {
+      console.warn(`[colorize] retry session init failed:`, e);
+      return { a, b, retriedWith: `${retryModelId}:session_failed` };
+    }
+  }
+
+  const retryModel = MODELS[retryModelId];
+  const retrySize = retryModel.inputSize;
+  const retryRgba = retrySize === 256 ? tile.smallRgba : tile.largeRgba;
+  if (!retryRgba || retryRgba.length !== retrySize * retrySize * 4) {
+    return { a, b, retriedWith: `${retryModelId}:no_rgba` };
+  }
+  const retryFeed =
+    retryModel.inputKind === "L"
+      ? rgbaToL(retryRgba, retrySize * retrySize)
+      : rgbaToGrayPlanarRGB(retryRgba, retrySize * retrySize);
+  const retryDims = retryModel.inputKind === "L" ? [1, 1, retrySize, retrySize] : [1, 3, retrySize, retrySize];
+  try {
+    const retryTensor = new (retryReady.ort.Tensor as new (t: string, d: Float32Array, dims: number[]) => OrtTensor)(
+      "float32",
+      retryFeed,
+      retryDims
+    );
+    const retryOutputs = await retryReady.session.run({ [retryModel.inputName]: retryTensor });
+    const retryOut: OrtTensor | undefined =
+      retryOutputs.output_ab ?? retryOutputs.output ?? Object.values(retryOutputs)[0];
+    if (retryOut && retryOut.data instanceof Float32Array) {
+      const { a: ra, b: rb } = upsampleAb(retryOut.data, retrySize, tile.width, tile.height);
+      if (meanChroma(ra, rb, tile.width * tile.height) >= CHROMA_QUALITY_THRESHOLD) {
+        return { a: ra, b: rb, retriedWith: retryModelId };
+      }
+    }
+  } catch (e) {
+    console.warn(`[colorize] retry inference failed:`, e);
+  }
+  // 両方失敗 → 元の結果で続行（エラーにはせず最善を返す）
+  return { a, b, retriedWith: `${retryModelId}:still_gray` };
+}
+
+// ---- メイン ----
 
 export async function colorizeInBrowser(
   input: ColorizeInput,
@@ -137,32 +260,25 @@ export async function colorizeInBrowser(
   const modelId = modelIdForQuality(quality);
   const model = MODELS[modelId];
   const size = model.inputSize;
-  const modelPixels = size * size;
 
-  if (!isBrowserSupported()) {
-    throw new ColorizeError("UNSUPPORTED_BROWSER", sessionId);
-  }
-  // モデル入力サイズに合致した縮小RGBAを選ぶ（256=smallRgba / 512=largeRgba）
+  if (!isBrowserSupported()) throw new ColorizeError("UNSUPPORTED_BROWSER", sessionId);
+
   const modelRgba = size === 256 ? input.smallRgba : input.largeRgba;
   if (
     input.fullRgba.length !== pixelCount * 4 ||
     !modelRgba ||
-    modelRgba.length !== modelPixels * 4
+    modelRgba.length !== size * size * 4
   ) {
     throw new ColorizeError("INTERNAL_ERROR", sessionId, new Error("input size mismatch"));
   }
   throwIfAborted(signal, sessionId);
 
-  // --- 輝度抽出（元画像の L は最後まで保持し、そのまま結果に使う） ---
+  // 元画像の輝度（最後まで保持し結果に使う）
   const lFull = rgbaToL(input.fullRgba, pixelCount);
-  // モデル入力テンソル（L 1ch もしくは グレーRGB 3ch）
-  const feed: Float32Array =
-    model.inputKind === "L" ? rgbaToL(modelRgba, modelPixels) : rgbaToGrayPlanarRGB(modelRgba, modelPixels);
-  const dims = model.inputKind === "L" ? [1, 1, size, size] : [1, 3, size, size];
   throwIfAborted(signal, sessionId);
 
-  // --- セッション準備（WebGPU 失敗時は WASM へ自動フォールバック） ---
-  let ready;
+  // セッション準備（WebGPU 失敗 → WASM 自動フォールバック）
+  let ready: ReadySession;
   const preferred = selectBackend();
   try {
     ready = await createSessionForModel(modelId, preferred, onProgress, signal);
@@ -180,47 +296,85 @@ export async function colorizeInBrowser(
   }
   throwIfAborted(signal, sessionId);
 
-  // --- 推論（入力は輝度/グレーのみ・出力は ab のみ） ---
   onProgress({ stage: "inferring", backend: ready.backend });
+
+  // コラージュ検出
+  const standardSize = MODELS.siggraph17.inputSize;
+  const highSize = MODELS.ddcolor.inputSize;
+  const collageSplits = detectHorizontalSplits(input.fullRgba, width, height);
+
+  let aMerged: Float32Array;
+  let bMerged: Float32Array;
+  let retriedWith: string | undefined;
+  let collageTiles = 0;
   const t0 = performance.now();
-  let abData: Float32Array;
+
   try {
-    const inputTensor = new ready.ort.Tensor("float32", feed, dims);
-    const outputs = await ready.session.run({ [ready.model.inputName]: inputTensor });
-    const out: OrtTensor | undefined =
-      outputs.output_ab ?? outputs.output ?? Object.values(outputs)[0];
-    if (!out || !(out.data instanceof Float32Array)) {
-      throw new Error("unexpected model output");
+    if (collageSplits.length > 0) {
+      collageTiles = collageSplits.length + 1;
+      const tiles = splitIntoTiles(input.fullRgba, width, height, collageSplits, standardSize, highSize);
+      const results: { a: Float32Array; b: Float32Array; width: number; height: number }[] = [];
+      for (const tile of tiles) {
+        throwIfAborted(signal, sessionId);
+        const r = await inferTileAb(tile, modelId, ready, onProgress, signal, sessionId);
+        if (r.retriedWith && !retriedWith) retriedWith = r.retriedWith;
+        results.push({ a: r.a, b: r.b, width: tile.width, height: tile.height });
+      }
+      const merged = stitchAbChannels(results, width, height);
+      aMerged = merged.a;
+      bMerged = merged.b;
+    } else {
+      const r = await inferTileAb(
+        { fullRgba: input.fullRgba, smallRgba: input.smallRgba, largeRgba: input.largeRgba ?? new Uint8ClampedArray(0), width, height },
+        modelId,
+        ready,
+        onProgress,
+        signal,
+        sessionId
+      );
+      aMerged = r.a;
+      bMerged = r.b;
+      retriedWith = r.retriedWith;
     }
-    abData = out.data;
   } catch (err) {
     throw classifyError(err, "inference", sessionId);
   }
+
   const inferMs = performance.now() - t0;
   throwIfAborted(signal, sessionId);
 
-  // --- 再合成（元画像の L + 推定 ab、寸法は元画像と完全一致） ---
+  // 再合成（元画像の L + 推定 ab）
   onProgress({ stage: "compositing" });
   const t1 = performance.now();
   let rgba: Uint8ClampedArray;
+  let vividRgba: Uint8ClampedArray | undefined;
   let mad: number;
   const warnings: string[] = [];
+
   try {
-    const { a, b } = upsampleAb(abData, size, width, height);
-    // DDColor(高品質)は既に十分に鮮やかなため vivid 増幅は行わない。
-    // 標準(siggraph17)のみ vivid で色乗りを補う。
+    // 候補1: 自然 / standard+soft の場合はそのまま
+    const aN = aMerged.slice(0);
+    const bN = bMerged.slice(0);
     if (quality === "standard" && (options.finish ?? "vivid") === "vivid") {
-      boostChroma(a, b, pixelCount);
+      boostChroma(aN, bN, pixelCount);
     }
-    clampChroma(a, b, pixelCount);
+    clampChroma(aN, bN, pixelCount);
     rgba = new Uint8ClampedArray(pixelCount * 4);
-    labToRgba(lFull, a, b, rgba, pixelCount);
+    labToRgba(lFull, aN, bN, rgba, pixelCount);
+
+    // 候補2: あざやか（high quality でのみ別候補として提供）
+    if (quality === "high") {
+      const aV = aMerged.slice(0);
+      const bV = bMerged.slice(0);
+      boostChroma(aV, bV, pixelCount);
+      clampChroma(aV, bV, pixelCount);
+      vividRgba = new Uint8ClampedArray(pixelCount * 4);
+      labToRgba(lFull, aV, bV, vividRgba, pixelCount);
+    }
 
     const lResult = rgbaToL(rgba, pixelCount);
     mad = grayStructureMAD(lFull, lResult, pixelCount);
-    if (mad > GRAY_STRUCTURE_WARN_THRESHOLD) {
-      warnings.push("structure_diff");
-    }
+    if (mad > GRAY_STRUCTURE_WARN_THRESHOLD) warnings.push("structure_diff");
   } catch (err) {
     throw classifyError(err, "composite", sessionId);
   }
@@ -228,6 +382,7 @@ export async function colorizeInBrowser(
 
   return {
     rgba,
+    vividRgba,
     width,
     height,
     backend: ready.backend,
@@ -240,5 +395,7 @@ export async function colorizeInBrowser(
     },
     grayStructureMAD: mad,
     warnings,
+    retriedWith,
+    collageTiles: collageTiles > 0 ? collageTiles : undefined,
   };
 }

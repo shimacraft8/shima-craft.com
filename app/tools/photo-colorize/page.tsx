@@ -125,8 +125,9 @@ const BLOCKED_MESSAGE =
   "現在、このアカウントではカラー化サービスをご利用いただけません。契約状況についてSHIMA CRAFTへお問い合わせください。";
 
 export default async function PhotoColorizePage() {
-  // COLORIZE_ENABLED=false が緊急停止スイッチ（このページは動的レンダリングのため即時反映）
   const toolEnabled = process.env.COLORIZE_ENABLED !== "false";
+  // COLORIZE_REQUIRE_LOGIN=true のときは会員専用（未ログインはログイン画面へ）
+  const requireLogin = process.env.COLORIZE_REQUIRE_LOGIN === "true";
   const viewer = await getViewer();
 
   return (
@@ -168,15 +169,18 @@ export default async function PhotoColorizePage() {
               </div>
             )}
 
-            {/* 未ログインには操作UI・モデル読み込みコンポーネントを一切描画しない */}
-            {viewer.kind === "anonymous" ? (
+            {/* 未ログインかつ会員必須 → ログイン誘導 */}
+            {viewer.kind === "anonymous" && requireLogin ? (
               <ColorizeLoginPrompt contactHref={mailtoHref} />
             ) : !toolEnabled ? (
               <div className="colorize-tool colorize-tool--disabled" role="status">
                 <p>現在、提供を一時停止しています。しばらくしてから再度お試しください。</p>
               </div>
+            ) : viewer.kind === "anonymous" ? (
+              /* 無料公開モード: 1日3回まで */
+              <PhotoColorizeClient contactHref={mailtoHref} isAnonymous={true} />
             ) : viewer.canColorize ? (
-              <PhotoColorizeClient contactHref={mailtoHref} />
+              <PhotoColorizeClient contactHref={mailtoHref} isAnonymous={false} />
             ) : (
               <div className="colorize-tool colorize-tool--disabled" role="status">
                 <p>{BLOCKED_MESSAGE}</p>

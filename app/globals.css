@@ -3836,3 +3836,11 @@ section {
     padding: 18px 14px 40px;
   }
 }
+
+/* TEMP: Hide Amami Road Quest links until development is complete. */
+a[href="/amami-road-quest"],
+a[href="/amami-road-quest/"],
+a[href^="/amami-road-quest/"] {
+  display: none !important;
+}
+

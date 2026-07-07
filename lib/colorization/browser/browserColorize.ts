@@ -19,8 +19,10 @@ import {
   clampChroma,
   grayStructureMAD,
   meanChroma,
+  removeCast,
   CHROMA_QUALITY_THRESHOLD,
 } from "./abProcessing";
+import { claheRgba } from "./clahe";
 import {
   MODELS,
   createSessionForModel,
@@ -162,10 +164,13 @@ async function inferTileAb(
     throw new ColorizeError("INTERNAL_ERROR", sessionId, new Error("tile rgba size mismatch"));
   }
 
+  // CLAHE: 古い退色写真の局所コントラストを強化してモデルの色推定精度を向上させる。
+  // タイルサイズ = size/8 で常に 8×8 タイルになるよう自動調整。
+  const enhancedRgba = claheRgba(modelRgba, size, size, Math.round(size / 8));
   const feed =
     model.inputKind === "L"
-      ? rgbaToL(modelRgba, size * size)
-      : rgbaToGrayPlanarRGB(modelRgba, size * size);
+      ? rgbaToL(enhancedRgba, size * size)
+      : rgbaToGrayPlanarRGB(enhancedRgba, size * size);
   const dims = model.inputKind === "L" ? [1, 1, size, size] : [1, 3, size, size];
   const tensor = new (ready.ort.Tensor as new (t: string, d: Float32Array, dims: number[]) => OrtTensor)(
     "float32",
@@ -211,10 +216,11 @@ async function inferTileAb(
   if (!retryRgba || retryRgba.length !== retrySize * retrySize * 4) {
     return { a, b, retriedWith: `${retryModelId}:no_rgba` };
   }
+  const retryEnhanced = claheRgba(retryRgba, retrySize, retrySize, Math.round(retrySize / 8));
   const retryFeed =
     retryModel.inputKind === "L"
-      ? rgbaToL(retryRgba, retrySize * retrySize)
-      : rgbaToGrayPlanarRGB(retryRgba, retrySize * retrySize);
+      ? rgbaToL(retryEnhanced, retrySize * retrySize)
+      : rgbaToGrayPlanarRGB(retryEnhanced, retrySize * retrySize);
   const retryDims = retryModel.inputKind === "L" ? [1, 1, retrySize, retrySize] : [1, 3, retrySize, retrySize];
   try {
     const retryTensor = new (retryReady.ort.Tensor as new (t: string, d: Float32Array, dims: number[]) => OrtTensor)(
@@ -352,6 +358,10 @@ export async function colorizeInBrowser(
   const warnings: string[] = [];
 
   try {
+    // 色かぶり補正: モデルが旧写真に対して出しやすい暖色バイアスを半減させる。
+    // sliceの前に in-place で適用することで全候補が補正後の ab から派生する。
+    removeCast(aMerged, bMerged, pixelCount);
+
     // 候補1: 自然 / standard+soft の場合はそのまま
     const aN = aMerged.slice(0);
     const bN = bMerged.slice(0);

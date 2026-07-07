@@ -111,6 +111,33 @@ export function meanChroma(a: Float32Array, b: Float32Array, pixelCount: number)
 /** mean chroma がこの値未満なら「ほぼ白黒のまま」として失敗判定する */
 export const CHROMA_QUALITY_THRESHOLD = 4.0;
 
+/**
+ * 色かぶり補正: 全画素の ab 平均を計算し、その fraction だけ ab を中立方向へシフトする。
+ * DDColor などのモデルが旧写真に対して出しやすい暖色バイアス（b が正方向に偏る）を除去する。
+ * L（輝度）は一切変更しない。
+ *
+ * @param strength 0=補正なし、1=完全に中立化。0.5 が推奨（過補正を防ぎつつバイアスを半減）。
+ */
+export function removeCast(
+  a: Float32Array,
+  b: Float32Array,
+  pixelCount: number,
+  strength = 0.5
+): void {
+  let sumA = 0;
+  let sumB = 0;
+  for (let i = 0; i < pixelCount; i++) {
+    sumA += a[i];
+    sumB += b[i];
+  }
+  const shiftA = (sumA / pixelCount) * strength;
+  const shiftB = (sumB / pixelCount) * strength;
+  for (let i = 0; i < pixelCount; i++) {
+    a[i] -= shiftA;
+    b[i] -= shiftB;
+  }
+}
+
 /** 元画像 L と結果 L のグレースケール構造差（平均絶対差, L 0-100スケール）。 */
 export function grayStructureMAD(
   originalL: Float32Array,

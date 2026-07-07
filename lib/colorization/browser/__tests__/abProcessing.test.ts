@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { boostChroma, clampChroma, grayStructureMAD, meanChroma, upsampleAb } from "../abProcessing";
+import { boostChroma, clampChroma, grayStructureMAD, meanChroma, removeCast, upsampleAb } from "../abProcessing";
 
 describe("upsampleAb", () => {
   it("同一サイズなら値を保持する", () => {
@@ -119,5 +119,62 @@ describe("meanChroma", () => {
     const a = new Float32Array([30]);
     const b = new Float32Array([40]);
     expect(meanChroma(a, b, 1)).toBeCloseTo(50, 5);
+  });
+});
+
+describe("removeCast", () => {
+  it("strength=1.0 で全体平均を完全に除去する", () => {
+    const a = new Float32Array([10, 20, 30]);
+    const b = new Float32Array([5, 5, 5]);
+    removeCast(a, b, 3, 1.0);
+    const meanA = (a[0] + a[1] + a[2]) / 3;
+    const meanB = (b[0] + b[1] + b[2]) / 3;
+    expect(meanA).toBeCloseTo(0, 5);
+    expect(meanB).toBeCloseTo(0, 5);
+  });
+
+  it("strength=0.5 で平均を半分にする", () => {
+    // 元 mean = 10
+    const a = new Float32Array([10, 10, 10]);
+    const b = new Float32Array([0, 0, 0]);
+    removeCast(a, b, 3, 0.5);
+    expect(a[0]).toBeCloseTo(5, 5);
+    expect(a[1]).toBeCloseTo(5, 5);
+    expect(a[2]).toBeCloseTo(5, 5);
+  });
+
+  it("relative な値の差は保存される", () => {
+    const a = new Float32Array([0, 10, 20]);
+    const b = new Float32Array([0, 0, 0]);
+    removeCast(a, b, 3, 1.0);
+    // 差分 (10, 10) は不変
+    expect(a[1] - a[0]).toBeCloseTo(10, 5);
+    expect(a[2] - a[1]).toBeCloseTo(10, 5);
+  });
+
+  it("strength=0 で何も変わらない", () => {
+    const a = new Float32Array([5, 10, 15]);
+    const b = new Float32Array([2, 4, 6]);
+    const aCopy = a.slice(0);
+    const bCopy = b.slice(0);
+    removeCast(a, b, 3, 0);
+    for (let i = 0; i < 3; i++) {
+      expect(a[i]).toBe(aCopy[i]);
+      expect(b[i]).toBe(bCopy[i]);
+    }
+  });
+
+  it("暖色バイアス（a>0, b>0）を除去するとより中立になる", () => {
+    // 暖色バイアスの模擬: 全画素が a=8, b=15 シフト
+    const base = 5;
+    const bias = { a: 8, b: 15 };
+    const a = new Float32Array([base + bias.a, -base + bias.a, base + bias.a]);
+    const b = new Float32Array([base + bias.b, base + bias.b, -base + bias.b]);
+    removeCast(a, b, 3, 0.5);
+    const meanA = (a[0] + a[1] + a[2]) / 3;
+    const meanB = (b[0] + b[1] + b[2]) / 3;
+    // 補正後の平均は元の半分に近づくはず
+    expect(Math.abs(meanA)).toBeLessThan(Math.abs(bias.a));
+    expect(Math.abs(meanB)).toBeLessThan(Math.abs(bias.b));
   });
 });

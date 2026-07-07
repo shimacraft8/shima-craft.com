@@ -14,6 +14,7 @@ import {
   colorizeInBrowser,
   newClientSessionId,
   type ColorizeFinish,
+  type ColorizeQuality,
 } from "@/lib/colorization/browser/browserColorize";
 import {
   COLORIZE_ERROR_HEADINGS,
@@ -93,6 +94,8 @@ export function PhotoColorizeClient({ contactHref }: Props) {
   const [selectError, setSelectError] = useState<string | null>(null);
   const [consent, setConsent] = useState(false);
   const [finish, setFinish] = useState<ColorizeFinish>("vivid");
+  /** 品質モード。高品質(DDColor)を既定にして「発色が甘い」不満に応える。 */
+  const [quality, setQuality] = useState<ColorizeQuality>("high");
   const [progress, setProgress] = useState<ColorizeProgress | null>(null);
   const [resultUrl, setResultUrl] = useState<string | null>(null);
   const [warnings, setWarnings] = useState<string[]>([]);
@@ -201,7 +204,11 @@ export function PhotoColorizeClient({ contactHref }: Props) {
     }
   }
 
-  async function runColorize(selectedFinish: ColorizeFinish, retryOf: string | null) {
+  async function runColorize(
+    selectedFinish: ColorizeFinish,
+    selectedQuality: ColorizeQuality,
+    retryOf: string | null
+  ) {
     if (!prepared || inFlightRef.current) return;
     inFlightRef.current = true;
     // 実行のたびに新しいAbortController・実行IDを作る
@@ -240,11 +247,13 @@ export function PhotoColorizeClient({ contactHref }: Props) {
           width: prepared.width,
           height: prepared.height,
           smallRgba: prepared.smallRgba,
+          largeRgba: prepared.largeRgba,
         },
         {
           signal: controller.signal,
           clientSessionId,
           finish: selectedFinish,
+          quality: selectedQuality,
           onProgress: (p) => {
             if (runIdRef.current !== runId) return;
             setProgress(p);
@@ -281,7 +290,7 @@ export function PhotoColorizeClient({ contactHref }: Props) {
       setResultUrl(URL.createObjectURL(blob));
       setWarnings([...prepared.warnings, ...output.warnings]);
       setPhase("done");
-      trackEvent("colorize_success", { backend: output.backend });
+      trackEvent("colorize_success", { backend: output.backend, quality: selectedQuality });
 
       // 完了ログはawaitしない（応答待ちで再試行が無反応になるのを避ける）
       sendEvent({
@@ -329,15 +338,24 @@ export function PhotoColorizeClient({ contactHref }: Props) {
 
   async function handleStart() {
     if (!consent) return;
-    await runColorize(finish, null);
+    await runColorize(finish, quality, null);
   }
 
-  /** 結果画面での仕上がり切替（同じ画像で再実行）。 */
+  /** 結果画面での仕上がり切替（同じ画像で再実行・標準モデルのみ有効）。 */
   async function handleFinishChange(next: ColorizeFinish) {
     if (next === finish || inFlightRef.current) return;
     setFinish(next);
     if (phase === "done") {
-      await runColorize(next, lastExecutionIdRef.current);
+      await runColorize(next, quality, lastExecutionIdRef.current);
+    }
+  }
+
+  /** 結果画面での品質切替（標準⇔高品質を同じ画像で再生成）。 */
+  async function handleQualityChange(next: ColorizeQuality) {
+    if (next === quality || inFlightRef.current) return;
+    setQuality(next);
+    if (phase === "done") {
+      await runColorize(finish, next, lastExecutionIdRef.current);
     }
   }
 
@@ -359,7 +377,7 @@ export function PhotoColorizeClient({ contactHref }: Props) {
     setErrorDisplay(null);
     setProgress(null);
     setPhase("ready");
-    void runColorize(finish, retryOf);
+    void runColorize(finish, quality, retryOf);
   }
 
   function handleDownload() {
@@ -441,22 +459,42 @@ export function PhotoColorizeClient({ contactHref }: Props) {
           </div>
 
           <fieldset className="colorize-finish">
-            <legend>仕上がりの色</legend>
+            <legend>画質モード</legend>
             <label className="colorize-finish-option">
-              <input type="radio" name="colorize-finish" checked={finish === "vivid"} onChange={() => setFinish("vivid")} />
+              <input type="radio" name="colorize-quality" checked={quality === "high"} onChange={() => setQuality("high")} />
               <span>
-                あざやか（おすすめ）
-                <small>デジタルカメラで撮ったような色乗りに調整します</small>
+                高品質（おすすめ）
+                <small>人物の肌色や発色が自然。初回のみ大きめのモデルを読み込みます</small>
               </span>
             </label>
             <label className="colorize-finish-option">
-              <input type="radio" name="colorize-finish" checked={finish === "soft"} onChange={() => setFinish("soft")} />
+              <input type="radio" name="colorize-quality" checked={quality === "standard"} onChange={() => setQuality("standard")} />
               <span>
-                ひかえめ
-                <small>AIの推定した控えめな色をそのまま使います</small>
+                標準（高速・軽量）
+                <small>短時間で仕上がります。発色は控えめです</small>
               </span>
             </label>
           </fieldset>
+
+          {quality === "standard" && (
+            <fieldset className="colorize-finish">
+              <legend>仕上がりの色</legend>
+              <label className="colorize-finish-option">
+                <input type="radio" name="colorize-finish" checked={finish === "vivid"} onChange={() => setFinish("vivid")} />
+                <span>
+                  あざやか（おすすめ）
+                  <small>デジタルカメラで撮ったような色乗りに調整します</small>
+                </span>
+              </label>
+              <label className="colorize-finish-option">
+                <input type="radio" name="colorize-finish" checked={finish === "soft"} onChange={() => setFinish("soft")} />
+                <span>
+                  ひかえめ
+                  <small>AIの推定した控えめな色をそのまま使います</small>
+                </span>
+              </label>
+            </fieldset>
+          )}
 
           <div className="colorize-consent">
             <label className="colorize-consent-label">
@@ -484,7 +522,9 @@ export function PhotoColorizeClient({ contactHref }: Props) {
             カラー化を開始する
           </button>
           <p className="colorize-first-run-note">
-            初回はカラー化モデル（約44〜69MB）の読み込みに時間がかかる場合があります。2回目以降はブラウザに保存されたモデルを使うため速くなります。
+            {quality === "high"
+              ? "高品質モードは初回にカラー化モデル（お使いの環境により約120〜240MB）を読み込むため、初回のみ時間がかかります。2回目以降はブラウザに保存されたモデルを使うため速くなります。通信量が気になる場合はWi-Fi環境をおすすめします。"
+              : "標準モードは初回にカラー化モデル（約44〜69MB）を読み込みます。2回目以降はブラウザに保存されたモデルを使うため速くなります。"}
           </p>
         </div>
       )}
@@ -511,22 +551,41 @@ export function PhotoColorizeClient({ contactHref }: Props) {
             height={prepared.height}
           />
           <div className="colorize-finish colorize-finish--result">
-            <span>仕上がり：</span>
+            <span>画質：</span>
             <button
               type="button"
-              className={`colorize-finish-toggle${finish === "vivid" ? " is-active" : ""}`}
-              onClick={() => void handleFinishChange("vivid")}
+              className={`colorize-finish-toggle${quality === "high" ? " is-active" : ""}`}
+              onClick={() => void handleQualityChange("high")}
             >
-              あざやか
+              高品質
             </button>
             <button
               type="button"
-              className={`colorize-finish-toggle${finish === "soft" ? " is-active" : ""}`}
-              onClick={() => void handleFinishChange("soft")}
+              className={`colorize-finish-toggle${quality === "standard" ? " is-active" : ""}`}
+              onClick={() => void handleQualityChange("standard")}
             >
-              ひかえめ
+              標準
             </button>
           </div>
+          {quality === "standard" && (
+            <div className="colorize-finish colorize-finish--result">
+              <span>仕上がり：</span>
+              <button
+                type="button"
+                className={`colorize-finish-toggle${finish === "vivid" ? " is-active" : ""}`}
+                onClick={() => void handleFinishChange("vivid")}
+              >
+                あざやか
+              </button>
+              <button
+                type="button"
+                className={`colorize-finish-toggle${finish === "soft" ? " is-active" : ""}`}
+                onClick={() => void handleFinishChange("soft")}
+              >
+                ひかえめ
+              </button>
+            </div>
+          )}
           {warnings.includes("low_resolution") && (
             <p className="colorize-warning">
               ※ 元の画像の解像度が低いため、仕上がりの色にじみが目立つ場合があります。

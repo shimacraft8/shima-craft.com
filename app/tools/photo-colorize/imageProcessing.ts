@@ -8,7 +8,10 @@
  * - カラー化モデル入力用の 256x256 縮小版も同時に作る
  */
 
-import { MODEL_INPUT_SIZE } from "@/lib/colorization/browser/ortRuntime";
+import { MODELS } from "@/lib/colorization/browser/ortRuntime";
+
+const STANDARD_SIZE = MODELS.siggraph17.inputSize; // 256
+const HIGH_SIZE = MODELS.ddcolor.inputSize; // 512
 
 /** 通常端末での処理上限（長辺px）。 */
 export const MAX_DIMENSION = 2400;
@@ -22,8 +25,10 @@ export type PreparedImage = {
   fullRgba: Uint8ClampedArray;
   width: number;
   height: number;
-  /** モデル入力用 256x256 の RGBA。 */
+  /** 標準モデル(siggraph17)入力用 256x256 の RGBA。 */
   smallRgba: Uint8ClampedArray;
+  /** 高品質モデル(DDColor)入力用 512x512 の RGBA。 */
+  largeRgba: Uint8ClampedArray;
   /** Before 表示用の object URL（不要になったら revokePreviewUrl で解放）。 */
   previewUrl: string;
   /** 元画像から縮小したかどうか（画面で明示するため）。 */
@@ -98,18 +103,23 @@ export async function prepareImageForColorize(file: File): Promise<PreparedImage
 
   const fullData = ctx.getImageData(0, 0, target.width, target.height);
 
-  const small = document.createElement("canvas");
-  small.width = MODEL_INPUT_SIZE;
-  small.height = MODEL_INPUT_SIZE;
-  const smallCtx = small.getContext("2d");
-  if (!smallCtx) {
-    bitmap.close();
-    throw new ImageProcessingError("画像の処理に対応していないブラウザです。");
-  }
-  smallCtx.fillStyle = "#ffffff";
-  smallCtx.fillRect(0, 0, MODEL_INPUT_SIZE, MODEL_INPUT_SIZE);
-  smallCtx.drawImage(bitmap, 0, 0, MODEL_INPUT_SIZE, MODEL_INPUT_SIZE);
-  const smallData = smallCtx.getImageData(0, 0, MODEL_INPUT_SIZE, MODEL_INPUT_SIZE);
+  // モデル入力用の縮小版を2種類作る（256=標準 / 512=高品質）。
+  const drawSquare = (size: number): Uint8ClampedArray => {
+    const c = document.createElement("canvas");
+    c.width = size;
+    c.height = size;
+    const cx = c.getContext("2d");
+    if (!cx) {
+      bitmap.close();
+      throw new ImageProcessingError("画像の処理に対応していないブラウザです。");
+    }
+    cx.fillStyle = "#ffffff";
+    cx.fillRect(0, 0, size, size);
+    cx.drawImage(bitmap, 0, 0, size, size);
+    return cx.getImageData(0, 0, size, size).data;
+  };
+  const smallData = drawSquare(STANDARD_SIZE);
+  const largeData = drawSquare(HIGH_SIZE);
   bitmap.close();
 
   const blob = await canvasToBlob(canvas, 0.92);
@@ -124,7 +134,8 @@ export async function prepareImageForColorize(file: File): Promise<PreparedImage
     fullRgba: fullData.data,
     width: target.width,
     height: target.height,
-    smallRgba: smallData.data,
+    smallRgba: smallData,
+    largeRgba: largeData,
     previewUrl: URL.createObjectURL(blob),
     resizedFrom: target.resized ? orig : null,
     sourceFileSize: file.size,

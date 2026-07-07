@@ -1,0 +1,37 @@
+{
+  "webgpu": {
+    "model": "ddcolor_webgpu",
+    "total": 242236989,
+    "parts": [
+      {
+        "name": "ddcolor_webgpu.onnx.part0",
+        "bytes": 94371840
+      },
+      {
+        "name": "ddcolor_webgpu.onnx.part1",
+        "bytes": 94371840
+      },
+      {
+        "name": "ddcolor_webgpu.onnx.part2",
+        "bytes": 53493309
+      }
+    ],
+    "sha256": "b010709d6bd2903d"
+  },
+  "wasm": {
+    "model": "ddcolor_wasm",
+    "total": 121313106,
+    "parts": [
+      {
+        "name": "ddcolor_wasm.onnx.part0",
+        "bytes": 94371840
+      },
+      {
+        "name": "ddcolor_wasm.onnx.part1",
+        "bytes": 26941266
+      }
+    ],
+    "sha256": "74abe0fe5e4a873b"
+  },
+  "inputSize": 512
+}

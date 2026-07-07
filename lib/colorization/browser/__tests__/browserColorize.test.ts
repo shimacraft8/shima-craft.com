@@ -1,18 +1,20 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ColorizeError } from "@/lib/colorization/types";
-import { MODEL_INPUT_SIZE } from "../ortRuntime";
+import { MODELS } from "../ortRuntime";
 import {
   classifyError,
   colorizeInBrowser,
   isBrowserSupported,
+  modelIdForQuality,
   newClientSessionId,
   type ColorizeInput,
 } from "../browserColorize";
 
-const SMALL = MODEL_INPUT_SIZE * MODEL_INPUT_SIZE;
+const SMALL = MODELS.siggraph17.inputSize * MODELS.siggraph17.inputSize; // 256^2
+const LARGE = MODELS.ddcolor.inputSize * MODELS.ddcolor.inputSize; // 512^2
 
 const mocks = vi.hoisted(() => ({
-  createSession: vi.fn(),
+  createSessionForModel: vi.fn(),
   selectBackend: vi.fn(() => "wasm" as "wasm" | "webgpu"),
 }));
 
@@ -20,16 +22,22 @@ vi.mock("../ortRuntime", async (importOriginal) => {
   const original = await importOriginal<typeof import("../ortRuntime")>();
   return {
     ...original,
-    createSession: mocks.createSession,
+    createSessionForModel: mocks.createSessionForModel,
     selectBackend: mocks.selectBackend,
   };
 });
 
-function makeReadySession(abValue = 0, backend: "wasm" | "webgpu" = "wasm") {
+function makeReadySession(
+  abValue = 0,
+  backend: "wasm" | "webgpu" = "wasm",
+  modelId: "siggraph17" | "ddcolor" = "siggraph17"
+) {
+  const model = MODELS[modelId];
+  const outN = model.inputSize * model.inputSize;
   return {
     session: {
       run: vi.fn(async () => ({
-        output_ab: { data: new Float32Array(2 * SMALL).fill(abValue) },
+        output_ab: { data: new Float32Array(2 * outN).fill(abValue) },
       })),
       release: vi.fn(async () => {}),
     },
@@ -45,6 +53,7 @@ function makeReadySession(abValue = 0, backend: "wasm" | "webgpu" = "wasm") {
       },
     },
     backend,
+    model,
     modelDownloadMs: 5,
     initMs: 7,
   };
@@ -53,17 +62,15 @@ function makeReadySession(abValue = 0, backend: "wasm" | "webgpu" = "wasm") {
 function grayInput(width: number, height: number, value = 128): ColorizeInput {
   const fullRgba = new Uint8ClampedArray(width * height * 4);
   const smallRgba = new Uint8ClampedArray(SMALL * 4);
-  for (let i = 0; i < width * height; i++) {
-    fullRgba.set([value, value, value, 255], i * 4);
-  }
-  for (let i = 0; i < SMALL; i++) {
-    smallRgba.set([value, value, value, 255], i * 4);
-  }
-  return { fullRgba, width, height, smallRgba };
+  const largeRgba = new Uint8ClampedArray(LARGE * 4);
+  for (let i = 0; i < width * height; i++) fullRgba.set([value, value, value, 255], i * 4);
+  for (let i = 0; i < SMALL; i++) smallRgba.set([value, value, value, 255], i * 4);
+  for (let i = 0; i < LARGE; i++) largeRgba.set([value, value, value, 255], i * 4);
+  return { fullRgba, width, height, smallRgba, largeRgba };
 }
 
 beforeEach(() => {
-  mocks.createSession.mockReset();
+  mocks.createSessionForModel.mockReset();
   mocks.selectBackend.mockReset();
   mocks.selectBackend.mockReturnValue("wasm");
 });
@@ -74,7 +81,7 @@ afterEach(() => {
 
 describe("colorizeInBrowser", () => {
   it("出力の幅・高さ・画素数が入力画像と完全一致する", async () => {
-    mocks.createSession.mockResolvedValue(makeReadySession(0));
+    mocks.createSessionForModel.mockResolvedValue(makeReadySession(0));
     const input = grayInput(7, 5);
     const out = await colorizeInBrowser(input, { signal: new AbortController().signal });
     expect(out.width).toBe(7);
@@ -83,7 +90,7 @@ describe("colorizeInBrowser", () => {
   });
 
   it("ab=0（無彩色）の推定なら入力の輝度をそのまま保持する", async () => {
-    mocks.createSession.mockResolvedValue(makeReadySession(0));
+    mocks.createSessionForModel.mockResolvedValue(makeReadySession(0));
     const input = grayInput(4, 4, 180);
     const out = await colorizeInBrowser(input, { signal: new AbortController().signal });
     for (let i = 0; i < 16; i++) {
@@ -95,7 +102,7 @@ describe("colorizeInBrowser", () => {
 
   it("処理中に画像データを外部へ送信しない（fetchが呼ばれない）", async () => {
     const fetchSpy = vi.spyOn(globalThis, "fetch");
-    mocks.createSession.mockResolvedValue(makeReadySession(10));
+    mocks.createSessionForModel.mockResolvedValue(makeReadySession(10));
     await colorizeInBrowser(grayInput(3, 3), { signal: new AbortController().signal });
     expect(fetchSpy).not.toHaveBeenCalled();
   });
@@ -106,7 +113,7 @@ describe("colorizeInBrowser", () => {
     await expect(
       colorizeInBrowser(grayInput(2, 2), { signal: controller.signal })
     ).rejects.toMatchObject({ errorCode: "PROCESS_CANCELLED" });
-    expect(mocks.createSession).not.toHaveBeenCalled();
+    expect(mocks.createSessionForModel).not.toHaveBeenCalled();
   });
 
   it("入力サイズ不一致は INTERNAL_ERROR", async () => {
@@ -118,17 +125,17 @@ describe("colorizeInBrowser", () => {
 
   it("webgpu のセッション作成失敗時は wasm へフォールバックする", async () => {
     mocks.selectBackend.mockReturnValue("webgpu");
-    mocks.createSession
+    mocks.createSessionForModel
       .mockRejectedValueOnce(new Error("webgpu init failed"))
       .mockResolvedValueOnce(makeReadySession(0, "wasm"));
     const out = await colorizeInBrowser(grayInput(2, 2), { signal: new AbortController().signal });
     expect(out.backend).toBe("wasm");
-    expect(mocks.createSession).toHaveBeenNthCalledWith(1, "webgpu", expect.anything(), expect.anything());
-    expect(mocks.createSession).toHaveBeenNthCalledWith(2, "wasm", expect.anything(), expect.anything());
+    expect(mocks.createSessionForModel).toHaveBeenNthCalledWith(1, "siggraph17", "webgpu", expect.anything(), expect.anything());
+    expect(mocks.createSessionForModel).toHaveBeenNthCalledWith(2, "siggraph17", "wasm", expect.anything(), expect.anything());
   });
 
   it("wasm セッションのネットワーク失敗は MODEL_DOWNLOAD_FAILED", async () => {
-    mocks.createSession.mockRejectedValue(new Error("model fetch failed: HTTP 404"));
+    mocks.createSessionForModel.mockRejectedValue(new Error("model fetch failed: HTTP 404"));
     await expect(
       colorizeInBrowser(grayInput(2, 2), { signal: new AbortController().signal })
     ).rejects.toMatchObject({ errorCode: "MODEL_DOWNLOAD_FAILED" });
@@ -139,19 +146,71 @@ describe("colorizeInBrowser", () => {
     ready.session.run = vi.fn(async () => {
       throw new Error("op error");
     });
-    mocks.createSession.mockResolvedValue(ready);
+    mocks.createSessionForModel.mockResolvedValue(ready);
     await expect(
       colorizeInBrowser(grayInput(2, 2), { signal: new AbortController().signal })
     ).rejects.toMatchObject({ errorCode: "COLORIZATION_FAILED" });
   });
 
   it("clientSessionId が結果とエラーの両方に引き継がれる", async () => {
-    mocks.createSession.mockResolvedValue(makeReadySession(0));
+    mocks.createSessionForModel.mockResolvedValue(makeReadySession(0));
     const out = await colorizeInBrowser(grayInput(2, 2), {
       signal: new AbortController().signal,
       clientSessionId: "test-session-1",
     });
     expect(out.clientSessionId).toBe("test-session-1");
+  });
+
+  it("quality=standard は siggraph17 モデル・256入力で呼ぶ", async () => {
+    mocks.createSessionForModel.mockResolvedValue(makeReadySession(0, "wasm", "siggraph17"));
+    await colorizeInBrowser(grayInput(3, 3), {
+      signal: new AbortController().signal,
+      quality: "standard",
+    });
+    expect(mocks.createSessionForModel).toHaveBeenCalledWith("siggraph17", "wasm", expect.anything(), expect.anything());
+  });
+
+  it("quality=high は ddcolor モデル・512入力(3ch)で呼び、出力が入力と同寸法", async () => {
+    const ready = makeReadySession(0, "wasm", "ddcolor");
+    mocks.createSessionForModel.mockResolvedValue(ready);
+    const out = await colorizeInBrowser(grayInput(6, 4), {
+      signal: new AbortController().signal,
+      quality: "high",
+    });
+    expect(mocks.createSessionForModel).toHaveBeenCalledWith("ddcolor", "wasm", expect.anything(), expect.anything());
+    const feeds = (ready.session.run.mock.calls[0] as unknown[])[0] as { input?: { dims: number[] } };
+    expect(feeds.input).toBeDefined();
+    expect(feeds.input!.dims).toEqual([1, 3, 512, 512]);
+    expect(out.width).toBe(6);
+    expect(out.height).toBe(4);
+  });
+
+  it("quality=high で largeRgba が無ければ INTERNAL_ERROR", async () => {
+    mocks.createSessionForModel.mockResolvedValue(makeReadySession(0, "wasm", "ddcolor"));
+    const input = grayInput(4, 4);
+    delete (input as { largeRgba?: Uint8ClampedArray }).largeRgba;
+    await expect(
+      colorizeInBrowser(input, { signal: new AbortController().signal, quality: "high" })
+    ).rejects.toMatchObject({ errorCode: "INTERNAL_ERROR" });
+  });
+
+  it("高品質(DDColor)は vivid 増幅を適用しない（無彩色推定なら灰色のまま）", async () => {
+    mocks.createSessionForModel.mockResolvedValue(makeReadySession(0, "wasm", "ddcolor"));
+    const out = await colorizeInBrowser(grayInput(4, 4, 150), {
+      signal: new AbortController().signal,
+      quality: "high",
+    });
+    for (let i = 0; i < 16; i++) {
+      expect(out.rgba[i * 4]).toBe(out.rgba[i * 4 + 1]);
+      expect(out.rgba[i * 4 + 1]).toBe(out.rgba[i * 4 + 2]);
+    }
+  });
+});
+
+describe("modelIdForQuality", () => {
+  it("standard→siggraph17 / high→ddcolor", () => {
+    expect(modelIdForQuality("standard")).toBe("siggraph17");
+    expect(modelIdForQuality("high")).toBe("ddcolor");
   });
 });
 

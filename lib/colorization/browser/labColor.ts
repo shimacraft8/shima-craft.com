@@ -45,6 +45,26 @@ export function rgbaToL(rgba: Uint8ClampedArray, pixelCount: number): Float32Arr
 }
 
 /**
+ * RGBA から「グレー3ch planar (0..1)」の Float32Array を作る（DDColor入力用）。
+ * 各画素の輝度(luma)をグレー値とし、[R平面, G平面, B平面] の順に同値を並べる。
+ * 形状は [3, N]（NCHW の C=3）。輝度・輪郭は元画像由来のみを使う。
+ */
+export function rgbaToGrayPlanarRGB(rgba: Uint8ClampedArray, pixelCount: number): Float32Array {
+  const out = new Float32Array(3 * pixelCount);
+  for (let i = 0; i < pixelCount; i++) {
+    const r = srgbToLinear(rgba[i * 4] / 255);
+    const g = srgbToLinear(rgba[i * 4 + 1] / 255);
+    const b = srgbToLinear(rgba[i * 4 + 2] / 255);
+    const yLin = 0.2126729 * r + 0.7151522 * g + 0.072175 * b;
+    const gray = linearToSrgb(yLin < 0 ? 0 : yLin > 1 ? 1 : yLin);
+    out[i] = gray;
+    out[pixelCount + i] = gray;
+    out[2 * pixelCount + i] = gray;
+  }
+  return out;
+}
+
+/**
  * L (0..100) と ab を RGBA へ再合成して out に書き込む。
  * L は元画像由来のものを渡すこと（モデル出力で置き換えない）。
  */

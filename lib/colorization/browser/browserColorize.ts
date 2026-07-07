@@ -12,12 +12,13 @@
  */
 
 import { ColorizeError, type ColorizeProgress, type ColorizeResult } from "@/lib/colorization/types";
-import { rgbaToL, labToRgba } from "./labColor";
+import { rgbaToL, rgbaToGrayPlanarRGB, labToRgba } from "./labColor";
 import { upsampleAb, boostChroma, clampChroma, grayStructureMAD } from "./abProcessing";
 import {
-  MODEL_INPUT_SIZE,
-  createSession,
+  MODELS,
+  createSessionForModel,
   selectBackend,
+  type ColorizeModelId,
   type OrtTensor,
 } from "./ortRuntime";
 
@@ -26,17 +27,30 @@ export type ColorizeInput = {
   fullRgba: Uint8ClampedArray;
   width: number;
   height: number;
-  /** 同じ画像を 256x256 に縮小した RGBA。 */
+  /** 同じ画像を 256x256 に縮小した RGBA（標準モデル=siggraph17 用）。 */
   smallRgba: Uint8ClampedArray;
+  /** 同じ画像を 512x512 に縮小した RGBA（高品質モデル=DDColor 用・任意）。 */
+  largeRgba?: Uint8ClampedArray;
 };
 
 /**
- * 仕上がりの色の濃さ。
+ * 仕上がりの色の濃さ（標準モデルのみ有効）。
  * - vivid: chroma をソフトニー付きで増幅（一眼レフ風の色乗り。既定）
  * - soft: モデル出力の控えめな彩度のまま
  * どちらも輝度・形状には影響しない。
  */
 export type ColorizeFinish = "vivid" | "soft";
+
+/**
+ * カラー化の品質モード。
+ * - standard: siggraph17（軽量・高速。256入力）
+ * - high: DDColor（人物の肌色・発色が自然。512入力・大きめのモデル）
+ */
+export type ColorizeQuality = "standard" | "high";
+
+export function modelIdForQuality(quality: ColorizeQuality): ColorizeModelId {
+  return quality === "high" ? "ddcolor" : "siggraph17";
+}
 
 export type ColorizeOutput = ColorizeResult & {
   /** 元画像と同一寸法の結果 RGBA（ImageData 化は呼び出し側で行う）。 */
@@ -110,6 +124,7 @@ export async function colorizeInBrowser(
     onProgress?: (p: ColorizeProgress) => void;
     clientSessionId?: string;
     finish?: ColorizeFinish;
+    quality?: ColorizeQuality;
   }
 ): Promise<ColorizeOutput> {
   const sessionId = options.clientSessionId ?? newClientSessionId();
@@ -117,31 +132,45 @@ export async function colorizeInBrowser(
   const { signal } = options;
   const { width, height } = input;
   const pixelCount = width * height;
-  const smallCount = MODEL_INPUT_SIZE * MODEL_INPUT_SIZE;
+
+  const quality: ColorizeQuality = options.quality ?? "standard";
+  const modelId = modelIdForQuality(quality);
+  const model = MODELS[modelId];
+  const size = model.inputSize;
+  const modelPixels = size * size;
 
   if (!isBrowserSupported()) {
     throw new ColorizeError("UNSUPPORTED_BROWSER", sessionId);
   }
-  if (input.fullRgba.length !== pixelCount * 4 || input.smallRgba.length !== smallCount * 4) {
+  // モデル入力サイズに合致した縮小RGBAを選ぶ（256=smallRgba / 512=largeRgba）
+  const modelRgba = size === 256 ? input.smallRgba : input.largeRgba;
+  if (
+    input.fullRgba.length !== pixelCount * 4 ||
+    !modelRgba ||
+    modelRgba.length !== modelPixels * 4
+  ) {
     throw new ColorizeError("INTERNAL_ERROR", sessionId, new Error("input size mismatch"));
   }
   throwIfAborted(signal, sessionId);
 
   // --- 輝度抽出（元画像の L は最後まで保持し、そのまま結果に使う） ---
   const lFull = rgbaToL(input.fullRgba, pixelCount);
-  const lSmall = rgbaToL(input.smallRgba, smallCount);
+  // モデル入力テンソル（L 1ch もしくは グレーRGB 3ch）
+  const feed: Float32Array =
+    model.inputKind === "L" ? rgbaToL(modelRgba, modelPixels) : rgbaToGrayPlanarRGB(modelRgba, modelPixels);
+  const dims = model.inputKind === "L" ? [1, 1, size, size] : [1, 3, size, size];
   throwIfAborted(signal, sessionId);
 
   // --- セッション準備（WebGPU 失敗時は WASM へ自動フォールバック） ---
   let ready;
   const preferred = selectBackend();
   try {
-    ready = await createSession(preferred, onProgress, signal);
+    ready = await createSessionForModel(modelId, preferred, onProgress, signal);
   } catch (err) {
     if (isAbortError(err) || signal.aborted) throw new ColorizeError("PROCESS_CANCELLED", sessionId, err);
     if (preferred === "webgpu") {
       try {
-        ready = await createSession("wasm", onProgress, signal);
+        ready = await createSessionForModel(modelId, "wasm", onProgress, signal);
       } catch (err2) {
         throw classifyError(err2, "session", sessionId);
       }
@@ -151,14 +180,15 @@ export async function colorizeInBrowser(
   }
   throwIfAborted(signal, sessionId);
 
-  // --- 推論（入力は L のみ・出力は ab のみ） ---
+  // --- 推論（入力は輝度/グレーのみ・出力は ab のみ） ---
   onProgress({ stage: "inferring", backend: ready.backend });
   const t0 = performance.now();
   let abData: Float32Array;
   try {
-    const inputTensor = new ready.ort.Tensor("float32", lSmall, [1, 1, MODEL_INPUT_SIZE, MODEL_INPUT_SIZE]);
-    const outputs = await ready.session.run({ input_l: inputTensor });
-    const out: OrtTensor | undefined = outputs.output_ab ?? Object.values(outputs)[0];
+    const inputTensor = new ready.ort.Tensor("float32", feed, dims);
+    const outputs = await ready.session.run({ [ready.model.inputName]: inputTensor });
+    const out: OrtTensor | undefined =
+      outputs.output_ab ?? outputs.output ?? Object.values(outputs)[0];
     if (!out || !(out.data instanceof Float32Array)) {
       throw new Error("unexpected model output");
     }
@@ -176,8 +206,10 @@ export async function colorizeInBrowser(
   let mad: number;
   const warnings: string[] = [];
   try {
-    const { a, b } = upsampleAb(abData, MODEL_INPUT_SIZE, width, height);
-    if ((options.finish ?? "vivid") === "vivid") {
+    const { a, b } = upsampleAb(abData, size, width, height);
+    // DDColor(高品質)は既に十分に鮮やかなため vivid 増幅は行わない。
+    // 標準(siggraph17)のみ vivid で色乗りを補う。
+    if (quality === "standard" && (options.finish ?? "vivid") === "vivid") {
       boostChroma(a, b, pixelCount);
     }
     clampChroma(a, b, pixelCount);

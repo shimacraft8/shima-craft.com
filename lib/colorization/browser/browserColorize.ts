@@ -19,9 +19,11 @@ import {
   clampChroma,
   grayStructureMAD,
   meanChroma,
+  hueConcentration,
   removeCastAdaptive,
   protectHighlights,
   CHROMA_QUALITY_THRESHOLD,
+  HUE_CONCENTRATION_CAST_THRESHOLD,
 } from "./abProcessing";
 import { claheRgba } from "./clahe";
 import {
@@ -34,8 +36,10 @@ import {
 } from "./ortRuntime";
 import {
   detectHorizontalSplits,
+  detectVerticalSplits,
   splitIntoTiles,
   stitchAbChannels,
+  type CollageAxis,
   type CollageTile,
 } from "./collage";
 
@@ -67,6 +71,43 @@ export function modelIdForQuality(quality: ColorizeQuality): ColorizeModelId {
   return quality === "high" ? "ddcolor" : "siggraph17";
 }
 
+/**
+ * 再生成バリエーション: 「同じ画像でもう一度試す」のたびに設定を変えて別の仕上がりを出す。
+ *
+ * ONNX 推論は決定論的なため、同一入力・同一設定では毎回ピクセル単位で同じ結果になる。
+ * 試行回数（attempt）に応じてモデル・CLAHE・色かぶり補正強度を切り替えることで、
+ * 再生成のたびに実際に異なる候補を提示する。4 パターンで循環する。
+ */
+export type PipelineVariant = {
+  modelId: ColorizeModelId;
+  /** CLAHE の clipLimit。null = CLAHE を適用しない */
+  claheClip: number | null;
+  /** 色かぶり補正のプロファイル */
+  castProfile: "adaptive" | "strong";
+};
+
+export function variantForAttempt(quality: ColorizeQuality, attempt: number): PipelineVariant {
+  const idx = ((attempt % 4) + 4) % 4;
+  if (quality === "high") {
+    // 高品質: モデル切替（ddcolor⇔siggraph17）が最も見た目が変わる
+    const table: PipelineVariant[] = [
+      { modelId: "ddcolor", claheClip: 2.0, castProfile: "adaptive" },
+      { modelId: "siggraph17", claheClip: 2.0, castProfile: "adaptive" },
+      { modelId: "ddcolor", claheClip: null, castProfile: "strong" },
+      { modelId: "siggraph17", claheClip: null, castProfile: "strong" },
+    ];
+    return table[idx];
+  }
+  // 標準: 大きいモデルの追加ダウンロードを強制しないよう siggraph17 のまま前処理・補正を変える
+  const table: PipelineVariant[] = [
+    { modelId: "siggraph17", claheClip: 2.0, castProfile: "adaptive" },
+    { modelId: "siggraph17", claheClip: null, castProfile: "adaptive" },
+    { modelId: "siggraph17", claheClip: 3.5, castProfile: "strong" },
+    { modelId: "siggraph17", claheClip: null, castProfile: "strong" },
+  ];
+  return table[idx];
+}
+
 export type ColorizeOutput = ColorizeResult & {
   /** 元画像と同一寸法の結果 RGBA（候補1: 自然 / standard+soft の場合は通常仕上がり）。 */
   rgba: Uint8ClampedArray;
@@ -81,6 +122,8 @@ export type ColorizeOutput = ColorizeResult & {
   retriedWith?: string;
   /** コラージュ分割枚数（0 = 通常処理、1以上 = タイル数）。 */
   collageTiles?: number;
+  /** 適用した再生成バリエーション番号（0 = 初回設定。ログ用）。 */
+  variant?: number;
 };
 
 export const GRAY_STRUCTURE_WARN_THRESHOLD = 1.0;
@@ -156,7 +199,8 @@ async function inferTileAb(
   ready: ReadySession,
   onProgress: (p: ColorizeProgress) => void,
   signal: AbortSignal,
-  sessionId: string
+  sessionId: string,
+  claheClip: number | null = 2.0
 ): Promise<TileAbResult> {
   const model = MODELS[modelId];
   const size = model.inputSize;
@@ -166,8 +210,9 @@ async function inferTileAb(
   }
 
   // CLAHE: 古い退色写真の局所コントラストを強化してモデルの色推定精度を向上させる。
-  // タイルサイズ = size/8 で常に 8×8 タイルになるよう自動調整。
-  const enhancedRgba = claheRgba(modelRgba, size, size, Math.round(size / 8));
+  // タイルサイズ = size/8 で常に 8×8 タイルになるよう自動調整。claheClip=null なら無効（バリエーション用）。
+  const enhancedRgba =
+    claheClip === null ? modelRgba : claheRgba(modelRgba, size, size, Math.round(size / 8), claheClip);
   const feed =
     model.inputKind === "L"
       ? rgbaToL(enhancedRgba, size * size)
@@ -217,7 +262,10 @@ async function inferTileAb(
   if (!retryRgba || retryRgba.length !== retrySize * retrySize * 4) {
     return { a, b, retriedWith: `${retryModelId}:no_rgba` };
   }
-  const retryEnhanced = claheRgba(retryRgba, retrySize, retrySize, Math.round(retrySize / 8));
+  const retryEnhanced =
+    claheClip === null
+      ? retryRgba
+      : claheRgba(retryRgba, retrySize, retrySize, Math.round(retrySize / 8), claheClip);
   const retryFeed =
     retryModel.inputKind === "L"
       ? rgbaToL(retryEnhanced, retrySize * retrySize)
@@ -255,6 +303,8 @@ export async function colorizeInBrowser(
     clientSessionId?: string;
     finish?: ColorizeFinish;
     quality?: ColorizeQuality;
+    /** 再生成の試行回数（0 = 初回）。増えるたびに別バリエーションで生成する。 */
+    variant?: number;
   }
 ): Promise<ColorizeOutput> {
   const sessionId = options.clientSessionId ?? newClientSessionId();
@@ -264,7 +314,9 @@ export async function colorizeInBrowser(
   const pixelCount = width * height;
 
   const quality: ColorizeQuality = options.quality ?? "standard";
-  const modelId = modelIdForQuality(quality);
+  const variant = options.variant ?? 0;
+  const pipeline = variantForAttempt(quality, variant);
+  const modelId = pipeline.modelId;
   const model = MODELS[modelId];
   const size = model.inputSize;
 
@@ -305,10 +357,18 @@ export async function colorizeInBrowser(
 
   onProgress({ stage: "inferring", backend: ready.backend });
 
-  // コラージュ検出
+  // コラージュ検出（上下並び → 左右並びの順に判定）
   const standardSize = MODELS.siggraph17.inputSize;
   const highSize = MODELS.ddcolor.inputSize;
-  const collageSplits = detectHorizontalSplits(input.fullRgba, width, height);
+  let collageAxis: CollageAxis = "horizontal";
+  let collageSplits = detectHorizontalSplits(input.fullRgba, width, height);
+  if (collageSplits.length === 0) {
+    const vSplits = detectVerticalSplits(input.fullRgba, width, height);
+    if (vSplits.length > 0) {
+      collageAxis = "vertical";
+      collageSplits = vSplits;
+    }
+  }
 
   let aMerged: Float32Array;
   let bMerged: Float32Array;
@@ -319,13 +379,19 @@ export async function colorizeInBrowser(
   try {
     if (collageSplits.length > 0) {
       collageTiles = collageSplits.length + 1;
-      const tiles = splitIntoTiles(input.fullRgba, width, height, collageSplits, standardSize, highSize);
-      const results: { a: Float32Array; b: Float32Array; width: number; height: number }[] = [];
+      const tiles = splitIntoTiles(
+        input.fullRgba, width, height, collageSplits, standardSize, highSize, collageAxis
+      );
+      const results: {
+        a: Float32Array; b: Float32Array; width: number; height: number; startX: number; startY: number;
+      }[] = [];
       for (const tile of tiles) {
         throwIfAborted(signal, sessionId);
-        const r = await inferTileAb(tile, modelId, ready, onProgress, signal, sessionId);
+        const r = await inferTileAb(tile, modelId, ready, onProgress, signal, sessionId, pipeline.claheClip);
         if (r.retriedWith && !retriedWith) retriedWith = r.retriedWith;
-        results.push({ a: r.a, b: r.b, width: tile.width, height: tile.height });
+        results.push({
+          a: r.a, b: r.b, width: tile.width, height: tile.height, startX: tile.startX, startY: tile.startY,
+        });
       }
       const merged = stitchAbChannels(results, width, height);
       aMerged = merged.a;
@@ -337,7 +403,8 @@ export async function colorizeInBrowser(
         ready,
         onProgress,
         signal,
-        sessionId
+        sessionId,
+        pipeline.claheClip
       );
       aMerged = r.a;
       bMerged = r.b;
@@ -359,9 +426,19 @@ export async function colorizeInBrowser(
   const warnings: string[] = [];
 
   try {
-    // 輝度適応型色かぶり補正: 暗部(strength≈0.3)〜明部(strength≈0.85)で連続変化。
-    // 均一 strength=0.5 より白い布・空など明るい領域をより強く中立化できる。
-    removeCastAdaptive(aMerged, bMerged, lFull, pixelCount);
+    // 色validity判定: 出力の色相集中度が高い（ほぼ全画素が同一色相＝セピア一色）なら
+    // 単色かぶりとみなし、色かぶり補正を自動的に強モードへ引き上げる。
+    const concentration = hueConcentration(aMerged, bMerged, pixelCount);
+    const strongCast =
+      pipeline.castProfile === "strong" || concentration > HUE_CONCENTRATION_CAST_THRESHOLD;
+
+    // 輝度適応型色かぶり補正: 暗部〜明部で強度を連続変化させる。
+    // 均一 strength より白い布・空など明るい領域をより強く中立化できる。
+    if (strongCast) {
+      removeCastAdaptive(aMerged, bMerged, lFull, pixelCount, 0.55, 0.95);
+    } else {
+      removeCastAdaptive(aMerged, bMerged, lFull, pixelCount);
+    }
     // ハイライト保護: L>75 の画素の彩度を輝度に応じてフェード。
     // 白い布・明るい背景が黄ばんだり茶色になるのを防ぐ。
     protectHighlights(aMerged, bMerged, lFull, pixelCount);
@@ -411,5 +488,6 @@ export async function colorizeInBrowser(
     warnings,
     retriedWith,
     collageTiles: collageTiles > 0 ? collageTiles : undefined,
+    variant,
   };
 }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { boostChroma, clampChroma, grayStructureMAD, meanChroma, protectHighlights, removeCast, removeCastAdaptive, upsampleAb } from "../abProcessing";
+import { boostChroma, clampChroma, grayStructureMAD, hueConcentration, meanChroma, protectHighlights, removeCast, removeCastAdaptive, upsampleAb } from "../abProcessing";
 
 describe("upsampleAb", () => {
   it("同一サイズなら値を保持する", () => {
@@ -85,6 +85,45 @@ describe("boostChroma（あざやか仕上がり）", () => {
     for (let i = 1; i < 4; i++) {
       expect(a[i]).toBeGreaterThan(a[i - 1]);
     }
+  });
+});
+
+describe("hueConcentration", () => {
+  it("全画素が同一色相なら 1.0", () => {
+    const a = new Float32Array([10, 20, 5]);
+    const b = new Float32Array([10, 20, 5]); // すべて同方向 (1,1)
+    expect(hueConcentration(a, b, 3)).toBeCloseTo(1.0, 5);
+  });
+
+  it("正反対の色相が同量なら 0 に近い", () => {
+    const a = new Float32Array([10, -10]);
+    const b = new Float32Array([5, -5]);
+    expect(hueConcentration(a, b, 2)).toBeCloseTo(0, 5);
+  });
+
+  it("全画素が無彩色なら 0", () => {
+    const a = new Float32Array([0, 0]);
+    const b = new Float32Array([0, 0]);
+    expect(hueConcentration(a, b, 2)).toBe(0);
+  });
+
+  it("セピア一色（b>0 に偏り）は高い集中度を示す", () => {
+    // 典型的なセピア失敗出力: aわずかに正、bが大きく正
+    const n = 100;
+    const a = new Float32Array(n);
+    const b = new Float32Array(n);
+    for (let i = 0; i < n; i++) {
+      a[i] = 5 + (i % 3);
+      b[i] = 15 + (i % 5);
+    }
+    expect(hueConcentration(a, b, n)).toBeGreaterThan(0.95);
+  });
+
+  it("多方向に分散した色は低い集中度を示す", () => {
+    // 4方向に均等分散
+    const a = new Float32Array([10, -10, 0, 0]);
+    const b = new Float32Array([0, 0, 10, -10]);
+    expect(hueConcentration(a, b, 4)).toBeLessThan(0.1);
   });
 });
 

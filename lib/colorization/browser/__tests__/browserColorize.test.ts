@@ -7,6 +7,7 @@ import {
   isBrowserSupported,
   modelIdForQuality,
   newClientSessionId,
+  variantForAttempt,
   type ColorizeInput,
 } from "../browserColorize";
 
@@ -257,6 +258,83 @@ describe("modelIdForQuality", () => {
   it("standard→siggraph17 / high→ddcolor", () => {
     expect(modelIdForQuality("standard")).toBe("siggraph17");
     expect(modelIdForQuality("high")).toBe("ddcolor");
+  });
+});
+
+describe("variantForAttempt（再生成バリエーション）", () => {
+  it("attempt=0 は選択品質どおりのモデル・CLAHE有効・adaptive補正", () => {
+    const v = variantForAttempt("high", 0);
+    expect(v.modelId).toBe("ddcolor");
+    expect(v.claheClip).not.toBeNull();
+    expect(v.castProfile).toBe("adaptive");
+  });
+
+  it("high: attempt=1 でモデルが siggraph17 に切り替わる", () => {
+    expect(variantForAttempt("high", 1).modelId).toBe("siggraph17");
+  });
+
+  it("high: 連続する attempt で少なくとも1要素が異なる（決定論の解消）", () => {
+    for (let i = 0; i < 4; i++) {
+      const cur = variantForAttempt("high", i);
+      const next = variantForAttempt("high", i + 1);
+      const differs =
+        cur.modelId !== next.modelId ||
+        cur.claheClip !== next.claheClip ||
+        cur.castProfile !== next.castProfile;
+      expect(differs).toBe(true);
+    }
+  });
+
+  it("standard: モデルは常に siggraph17（大モデルの強制DLを避ける）", () => {
+    for (let i = 0; i < 8; i++) {
+      expect(variantForAttempt("standard", i).modelId).toBe("siggraph17");
+    }
+  });
+
+  it("standard: 連続する attempt で設定が変化する", () => {
+    for (let i = 0; i < 4; i++) {
+      const cur = variantForAttempt("standard", i);
+      const next = variantForAttempt("standard", i + 1);
+      const differs = cur.claheClip !== next.claheClip || cur.castProfile !== next.castProfile;
+      expect(differs).toBe(true);
+    }
+  });
+
+  it("4パターンで循環する", () => {
+    expect(variantForAttempt("high", 4)).toEqual(variantForAttempt("high", 0));
+    expect(variantForAttempt("standard", 5)).toEqual(variantForAttempt("standard", 1));
+  });
+});
+
+describe("colorizeInBrowser のバリエーション適用", () => {
+  it("variant=1 + quality=high は siggraph17 でセッションを作る", async () => {
+    mocks.createSessionForModel.mockResolvedValue(makeReadySession(20, "wasm", "siggraph17"));
+    const out = await colorizeInBrowser(grayInput(4, 4, 100), {
+      signal: new AbortController().signal,
+      quality: "high",
+      variant: 1,
+    });
+    expect(mocks.createSessionForModel).toHaveBeenCalledWith("siggraph17", "wasm", expect.anything(), expect.anything());
+    expect(out.variant).toBe(1);
+  });
+
+  it("variant 未指定は 0 として出力に記録される", async () => {
+    mocks.createSessionForModel.mockResolvedValue(makeReadySession(20, "wasm", "siggraph17"));
+    const out = await colorizeInBrowser(grayInput(4, 4, 100), {
+      signal: new AbortController().signal,
+      quality: "standard",
+    });
+    expect(out.variant).toBe(0);
+  });
+
+  it("variant=4 は variant=0 と同じモデル（循環）", async () => {
+    mocks.createSessionForModel.mockResolvedValue(makeReadySession(20, "wasm", "ddcolor"));
+    await colorizeInBrowser(grayInput(4, 4, 100), {
+      signal: new AbortController().signal,
+      quality: "high",
+      variant: 4,
+    });
+    expect(mocks.createSessionForModel).toHaveBeenCalledWith("ddcolor", "wasm", expect.anything(), expect.anything());
   });
 });
 

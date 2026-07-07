@@ -112,6 +112,28 @@ export function meanChroma(a: Float32Array, b: Float32Array, pixelCount: number)
 export const CHROMA_QUALITY_THRESHOLD = 4.0;
 
 /**
+ * 色相集中度: ab ベクトル和の大きさ / chroma 総和。[0, 1]。
+ * 1.0 = 全画素が同一色相（セピア一色に染まった失敗出力の特徴）、
+ * 0 付近 = 色相が多方向に分散（正常なカラー化）。
+ * 0.7 超なら「ほぼ単色のかぶり」とみなし、色かぶり補正を強化する判断材料に使う。
+ */
+export function hueConcentration(a: Float32Array, b: Float32Array, pixelCount: number): number {
+  let sumA = 0;
+  let sumB = 0;
+  let sumC = 0;
+  for (let i = 0; i < pixelCount; i++) {
+    sumA += a[i];
+    sumB += b[i];
+    sumC += Math.hypot(a[i], b[i]);
+  }
+  if (sumC < 1e-6) return 0;
+  return Math.min(1, Math.hypot(sumA, sumB) / sumC);
+}
+
+/** hueConcentration がこの値を超えたら単色かぶりと判定し removeCastAdaptive を強モードにする */
+export const HUE_CONCENTRATION_CAST_THRESHOLD = 0.7;
+
+/**
  * 色かぶり補正: 全画素の ab 平均を計算し、その fraction だけ ab を中立方向へシフトする。
  * DDColor などのモデルが旧写真に対して出しやすい暖色バイアス（b が正方向に偏る）を除去する。
  * L（輝度）は一切変更しない。

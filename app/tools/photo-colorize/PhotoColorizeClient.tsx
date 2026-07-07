@@ -124,6 +124,12 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
   const lastResultMetaRef = useRef<{ mode?: string; executionId?: string } | null>(null);
   /** 直近のexecutionId（download_clickedログ用） */
   const lastExecutionIdRef = useRef<string | null>(null);
+  /**
+   * 同一画像での再生成回数。推論は決定論的なため、この回数をバリエーション番号として
+   * colorizeInBrowser に渡し、再生成のたびに異なる仕上がりパターンを生成する。
+   * 新しい画像を選ぶとリセット。
+   */
+  const attemptRef = useRef(0);
 
   useEffect(() => {
     return () => {
@@ -152,6 +158,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
     setWarnings([]);
     setErrorDisplay(null);
     setDailyLimitHit(false);
+    attemptRef.current = 0;
     setPhase("select");
     if (fileInputRef.current) fileInputRef.current.value = "";
   }, [prepared, resultUrl, vividResultUrl]);
@@ -170,6 +177,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
       try {
         const result = await prepareImageForColorize(file);
         setPrepared(result);
+        attemptRef.current = 0;
         setPhase("ready");
         trackEvent("colorize_file_select");
       } catch (err) {
@@ -294,6 +302,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
           clientSessionId,
           finish: selectedFinish,
           quality: selectedQuality,
+          variant: attemptRef.current,
           onProgress: (p) => {
             if (runIdRef.current !== runId) return;
             setProgress(p);
@@ -368,6 +377,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
         durationMs,
         retriedWith: output.retriedWith ?? null,
         collageTiles: output.collageTiles ?? null,
+        variant: output.variant ?? 0,
       });
     } catch (err) {
       if (runIdRef.current !== runId) return;
@@ -430,10 +440,12 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
 
   /**
    * 「同じ画像でもう一度試す」：状態を消してから**すぐに再実行**する。
+   * 推論は決定論的なので、attempt を進めて別バリエーション（モデル・前処理・補正の組合せ）で生成する。
    */
   function handleRetrySameImage() {
     if (inFlightRef.current) return;
-    trackEvent("colorize_retry", { mode: "same_image" });
+    attemptRef.current += 1;
+    trackEvent("colorize_retry", { mode: "same_image", variant: attemptRef.current });
     const retryOf = lastExecutionIdRef.current;
     revokePreviewUrl(resultUrl);
     revokePreviewUrl(vividResultUrl);
@@ -699,6 +711,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
           )}
           <p className="colorize-result-note">
             色はAIによる推定です。当時の実際の色を正確に復元するものではありません。結果画像はこの画面を離れると再表示できなくなるため、保存したい場合は先に保存してください。
+            「同じ画像でもう一度試す」を押すと、AIの設定を変えた別の仕上がりパターンで再生成します。
           </p>
           <div className="colorize-result-actions">
             <button type="button" className="btn" onClick={handleDownload}>結果画像を保存する</button>

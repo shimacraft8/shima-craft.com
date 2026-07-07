@@ -33,6 +33,7 @@ export class GoogleEmbedPanoramaProvider {
     this.iframe.title = `${route.shortTitle}のGoogle Street View`;
     this.iframe.loading = 'eager';
     this.iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+    this.iframe.allow = 'accelerometer; gyroscope; fullscreen';
     this.iframe.allowFullscreen = true;
     this.iframe.addEventListener('load', () => this.clearNotice(), { once: true });
     this.container.append(this.notice, this.iframe);

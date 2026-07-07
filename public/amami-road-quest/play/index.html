@@ -24,7 +24,7 @@
     </a>
     <nav aria-label="メインメニュー">
       <button class="ghost-button" id="helpButton" type="button">遊び方</button>
-      <button class="ghost-button" id="settingsButton" type="button">実写設定</button>
+      <button class="ghost-button" id="settingsButton" type="button" hidden>実写設定</button>
     </nav>
   </header>
 
@@ -140,7 +140,11 @@
 
         <section class="route-dashboard" aria-label="ルート進行状況">
           <div class="map-card">
-            <div class="map-heading"><div><span>ADVENTURE MAP</span><strong id="mapRouteName">奄美空港 → あやまる岬</strong></div><span id="progressPercent">0%</span></div>
+            <div class="map-heading"><div><span id="mapModeLabel">REAL MAP</span><strong id="mapRouteName">奄美空港 → あやまる岬</strong></div><span id="progressPercent">0%</span></div>
+            <div class="real-map" id="realMap" hidden>
+              <iframe id="realMapFrame" title="現在地周辺のGoogleマップ" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              <div class="real-map-marker" id="realMapMarker" aria-hidden="true">🚙</div>
+            </div>
             <svg class="route-map" id="routeMap" viewBox="0 0 1000 320" role="img" aria-label="現在地と目的地を示す冒険マップ">
               <defs>
                 <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity=".25" /></filter>

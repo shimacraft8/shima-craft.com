@@ -14,13 +14,14 @@ const elements = {
   demoPanorama: $('#demoPanorama'), embedPanorama: $('#embedPanorama'), sceneLabel: $('#sceneLabel'), sceneSubLabel: $('#sceneSubLabel'),
   nextCheckpointLabel: $('#nextCheckpointLabel'), nextCheckpointDistance: $('#nextCheckpointDistance'), floatingEvent: $('#floatingEvent'),
   playPauseButton: $('#playPauseButton'), backButton: $('#backButton'), forwardButton: $('#forwardButton'), speedSelect: $('#speedSelect'),
-  routeShadow: $('#routeShadow'), routeBase: $('#routeBase'), routeDone: $('#routeDone'), checkpointLayer: $('#checkpointLayer'), vehicleMarker: $('#vehicleMarker'),
+  routeMap: $('#routeMap'), routeShadow: $('#routeShadow'), routeBase: $('#routeBase'), routeDone: $('#routeDone'), checkpointLayer: $('#checkpointLayer'), vehicleMarker: $('#vehicleMarker'),
+  realMap: $('#realMap'), realMapFrame: $('#realMapFrame'), realMapMarker: $('#realMapMarker'), mapModeLabel: $('#mapModeLabel'),
   progressPercent: $('#progressPercent'), progressBar: $('#progressBar'), remainingDistance: $('#remainingDistance'), discoveryCount: $('#discoveryCount'), accuracyValue: $('#accuracyValue'),
   mapRouteName: $('#mapRouteName'), guideMessage: $('#guideMessage'), journeyList: $('#journeyList'),
   eventModal: $('#eventModal'), eventIcon: $('#eventIcon'), eventKicker: $('#eventKicker'), eventTitle: $('#eventTitle'), eventDescription: $('#eventDescription'), eventInteractive: $('#eventInteractive'), eventContinueButton: $('#eventContinueButton'),
   goalModal: $('#goalModal'), goalTitle: $('#goalTitle'), goalSubtitle: $('#goalSubtitle'), goalScore: $('#goalScore'), goalDiscovery: $('#goalDiscovery'), goalAccuracy: $('#goalAccuracy'), earnedTitle: $('#earnedTitle'),
   settingsModal: $('#settingsModal'), helpModal: $('#helpModal'), apiKeyInput: $('#apiKeyInput'), rememberKeyInput: $('#rememberKeyInput'),
-  startOverlay: $('#startOverlay'), startOverlayRoute: $('#startOverlayRoute'), beginJourneyButton: $('#beginJourneyButton'), siteKeyNotice: $('#siteKeyNotice'),
+  settingsButton: $('#settingsButton'), startOverlay: $('#startOverlay'), startOverlayRoute: $('#startOverlayRoute'), beginJourneyButton: $('#beginJourneyButton'), siteKeyNotice: $('#siteKeyNotice'),
   toast: $('#toast'), liveRegion: $('#liveRegion')
 };
 
@@ -41,8 +42,12 @@ const state = {
   activeModal: null,
   lastFocused: null,
   currentSample: null,
-  vehicle: 'car'
+  vehicle: 'car',
+  lastMapUpdateAt: 0,
+  lastMapIndex: -1
 };
+
+const GOOGLE_MAP_EMBED_BASE = 'https://www.google.com/maps/embed/v1/view';
 
 function renderRouteCards() {
   const progress = loadProgress();
@@ -58,12 +63,13 @@ function renderRouteCards() {
     button.style.setProperty('--card-a', route.theme[0]);
     button.style.setProperty('--card-b', route.theme[1]);
     const stars = '★'.repeat(route.difficulty) + '☆'.repeat(3 - route.difficulty);
+    button.setAttribute('aria-label', `${route.shortTitle}、${route.title}`);
     button.innerHTML = `
       <span class="route-icon" aria-hidden="true">${route.icon}</span>
       <small>${route.code}${result?.completed ? ' · CLEAR' : ''}</small>
-      <strong>${route.title}</strong>
-      <p>${route.subtitle}</p>
-      <span class="route-meta"><span>${stars}</span><span>${route.duration}</span>${result?.bestScore ? `<span>${result.bestScore}pt</span>` : ''}</span>`;
+      <strong>${route.shortTitle}</strong>
+      <p><span>${route.title}</span>${route.subtitle}</p>
+      <span class="route-meta"><span>${stars}</span><span>${route.duration}</span><span>目印 ${route.checkpoints.length}</span>${result?.bestScore ? `<span>${result.bestScore}pt</span>` : ''}</span>`;
     button.addEventListener('click', () => selectRoute(route.id));
     elements.routeGrid.append(button);
   });
@@ -102,6 +108,34 @@ function createProvider(route, initialSample) {
   return provider;
 }
 
+function buildMapEmbedUrl(apiKey, sample) {
+  const params = new URLSearchParams({
+    key: apiKey,
+    center: `${sample.point[0].toFixed(6)},${sample.point[1].toFixed(6)}`,
+    zoom: '14',
+    maptype: 'roadmap'
+  });
+  return `${GOOGLE_MAP_EMBED_BASE}?${params.toString()}`;
+}
+
+function updateRealMap(sample, force = false) {
+  const apiKey = loadApiKey();
+  const hasLiveMap = Boolean(apiKey && sample);
+  elements.realMap.hidden = !hasLiveMap;
+  elements.routeMap.hidden = hasLiveMap;
+  elements.routeMap.style.display = hasLiveMap ? 'none' : '';
+  elements.mapModeLabel.textContent = hasLiveMap ? 'REAL MAP' : 'ADVENTURE MAP';
+  if (!hasLiveMap) return;
+
+  const emoji = state.vehicle === 'walk' ? '🚶' : '🚙';
+  elements.realMapMarker.textContent = emoji;
+  const now = Date.now();
+  if (!force && (sample.index === state.lastMapIndex || now - state.lastMapUpdateAt < 3500)) return;
+  state.lastMapIndex = sample.index;
+  state.lastMapUpdateAt = now;
+  elements.realMapFrame.src = buildMapEmbedUrl(apiKey, sample);
+}
+
 function startQuest(routeId = state.selectedRouteId) {
   cleanupQuest();
   const route = getRouteById(routeId);
@@ -114,6 +148,8 @@ function startQuest(routeId = state.selectedRouteId) {
   state.vehicle = selectedRadio('vehicle', 'car');
   state.baseDurationSeconds = 55 + route.difficulty * 18;
   state.currentSample = samplePath(state.path, 0);
+  state.lastMapUpdateAt = 0;
+  state.lastMapIndex = -1;
   state.provider = createProvider(route, state.currentSample);
   state.playing = false;
   state.lastFrame = performance.now();
@@ -201,6 +237,7 @@ function updateDisplay() {
   const sample = samplePath(state.path, state.progress);
   state.currentSample = sample;
   state.provider?.update?.({ ...sample, progress: state.progress, playing: state.playing });
+  updateRealMap(sample);
   const percent = Math.round(state.progress * 100);
   elements.scoreValue.textContent = state.game.score.toLocaleString('ja-JP');
   elements.progressPercent.textContent = `${percent}%`;
@@ -376,11 +413,15 @@ function showToast(message) {
 function updateModeNotice() {
   const apiKey = loadApiKey();
   elements.modeNotice.innerHTML = apiKey
-    ? '<span class="status-dot"></span><div><strong>実写Street Viewモード</strong><small>Google Maps Embed APIを使用します。エラー時はデモへ切り替えます。</small></div>'
+    ? '<span class="status-dot"></span><div><strong>実写Street Viewモード</strong><small>実際の景色を見ながら、出発前に道の雰囲気を確認できます。</small></div>'
     : '<span class="status-dot"></span><div><strong>デモ景観モード</strong><small>APIキーなしで全機能を体験できます。実写は設定から切り替え。</small></div>';
 }
 
 function openSettings() {
+  if (loadSiteConfigKey()) {
+    showToast('このサイトでは実写Street Viewが有効です');
+    return;
+  }
   elements.siteKeyNotice.hidden = !loadSiteConfigKey();
   elements.apiKeyInput.value = loadApiKey();
   elements.rememberKeyInput.checked = isApiKeyRemembered();
@@ -404,7 +445,7 @@ function saveSettings() {
 function bindEvents() {
   elements.questForm.addEventListener('submit', (event) => { event.preventDefault(); startQuest(); });
   $('#exitButton').addEventListener('click', endQuest);
-  $('#settingsButton').addEventListener('click', openSettings);
+  elements.settingsButton.addEventListener('click', openSettings);
   $('#helpButton').addEventListener('click', () => openModal(elements.helpModal));
   $('#saveSettingsButton').addEventListener('click', saveSettings);
   $('#clearKeyButton').addEventListener('click', () => { clearApiKey(); elements.apiKeyInput.value = ''; elements.rememberKeyInput.checked = false; updateModeNotice(); showToast('APIキーを削除しました'); });
@@ -462,6 +503,7 @@ function bindEvents() {
 function init() {
   renderRouteCards();
   updateModeNotice();
+  elements.settingsButton.hidden = Boolean(loadSiteConfigKey());
   bindEvents();
   window.addEventListener('offline', () => showToast('オフラインになりました。実写表示には接続が必要です'));
   window.addEventListener('online', () => showToast('接続が回復しました'));

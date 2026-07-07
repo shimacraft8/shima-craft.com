@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { boostChroma, clampChroma, grayStructureMAD, meanChroma, removeCast, upsampleAb } from "../abProcessing";
+import { boostChroma, clampChroma, grayStructureMAD, meanChroma, protectHighlights, removeCast, removeCastAdaptive, upsampleAb } from "../abProcessing";
 
 describe("upsampleAb", () => {
   it("同一サイズなら値を保持する", () => {
@@ -85,6 +85,101 @@ describe("boostChroma（あざやか仕上がり）", () => {
     for (let i = 1; i < 4; i++) {
       expect(a[i]).toBeGreaterThan(a[i - 1]);
     }
+  });
+});
+
+describe("removeCastAdaptive", () => {
+  it("明部画素（L=90）は暗部画素より強く補正される", () => {
+    const a = new Float32Array([10, 10, 10]);
+    const b = new Float32Array([15, 15, 15]);
+    const L = new Float32Array([10, 50, 90]);
+    removeCastAdaptive(a, b, L, 3, 0.3, 0.85, 20, 80);
+    // 明部(idx=2) が最も強く補正され残差が最小
+    expect(Math.abs(a[2])).toBeLessThan(Math.abs(a[1]));
+    expect(Math.abs(a[1])).toBeLessThan(Math.abs(a[0]));
+  });
+
+  it("全画素が同じ輝度なら均一な補正になる", () => {
+    const a = new Float32Array([10, 10, 10]);
+    const b = new Float32Array([5, 5, 5]);
+    const L = new Float32Array([50, 50, 50]);
+    removeCastAdaptive(a, b, L, 3);
+    expect(a[0]).toBeCloseTo(a[1], 5);
+    expect(a[1]).toBeCloseTo(a[2], 5);
+  });
+
+  it("L < shadowL では shadowStrength で補正される", () => {
+    const mean = 10;
+    const a = new Float32Array([mean, mean]);
+    const b = new Float32Array([0, 0]);
+    const L = new Float32Array([10, 10]);
+    removeCastAdaptive(a, b, L, 2, 0.3, 0.85, 20, 80);
+    expect(a[0]).toBeCloseTo(mean * 0.7, 4);
+  });
+
+  it("L > highlightL では highlightStrength で補正される", () => {
+    const mean = 10;
+    const a = new Float32Array([mean, mean]);
+    const b = new Float32Array([0, 0]);
+    const L = new Float32Array([90, 90]);
+    removeCastAdaptive(a, b, L, 2, 0.3, 0.85, 20, 80);
+    expect(a[0]).toBeCloseTo(mean * (1 - 0.85), 4);
+  });
+
+  it("ab=0 の画素は変化しない", () => {
+    const a = new Float32Array([0, 0]);
+    const b = new Float32Array([0, 0]);
+    const L = new Float32Array([30, 80]);
+    removeCastAdaptive(a, b, L, 2);
+    expect(a[0]).toBeCloseTo(0, 5);
+    expect(b[1]).toBeCloseTo(0, 5);
+  });
+});
+
+describe("protectHighlights", () => {
+  it("threshold 未満の画素には触れない", () => {
+    const a = new Float32Array([10, 20]);
+    const b = new Float32Array([5, 8]);
+    const L = new Float32Array([50, 70]);
+    protectHighlights(a, b, L, 2, 75);
+    expect(a[0]).toBe(10);
+    expect(a[1]).toBe(20);
+  });
+
+  it("L=100 の画素は ab がゼロになる（純白）", () => {
+    const a = new Float32Array([15]);
+    const b = new Float32Array([20]);
+    const L = new Float32Array([100]);
+    protectHighlights(a, b, L, 1, 75);
+    expect(a[0]).toBeCloseTo(0, 5);
+    expect(b[0]).toBeCloseTo(0, 5);
+  });
+
+  it("L=threshold の画素は変化しない（factor=1.0）", () => {
+    const a = new Float32Array([15]);
+    const b = new Float32Array([20]);
+    const L = new Float32Array([75]);
+    protectHighlights(a, b, L, 1, 75);
+    expect(a[0]).toBeCloseTo(15, 4);
+    expect(b[0]).toBeCloseTo(20, 4);
+  });
+
+  it("L=87.5 では彩度が半減（factor=0.5）", () => {
+    const a = new Float32Array([20]);
+    const b = new Float32Array([10]);
+    const L = new Float32Array([87.5]);
+    protectHighlights(a, b, L, 1, 75);
+    expect(a[0]).toBeCloseTo(10, 4);
+    expect(b[0]).toBeCloseTo(5, 4);
+  });
+
+  it("色相（a:b 比）を保存したまま彩度を減らす", () => {
+    const a = new Float32Array([12]);
+    const b = new Float32Array([9]);
+    const origRatio = 12 / 9;
+    const L = new Float32Array([90]);
+    protectHighlights(a, b, L, 1, 75);
+    expect(a[0] / b[0]).toBeCloseTo(origRatio, 5);
   });
 });
 

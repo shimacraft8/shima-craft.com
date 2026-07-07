@@ -138,6 +138,72 @@ export function removeCast(
   }
 }
 
+/**
+ * 輝度適応型の色かぶり補正。グローバルな暖色バイアスを輝度に応じた強度で除去する。
+ *
+ * 均一な strength=0.5 の removeCast と異なり、明るい画素ほど強く補正する:
+ * - 暗部 (L < shadowL): shadowStrength（弱め。影は暖色になりうる）
+ * - 中間調 (L = 50 前後): 中間強度
+ * - 明部 (L > highlightL): highlightStrength（強め。白い布・明るい背景は中立に近いはず）
+ *
+ * @param shadowStrength  暗部（L≤shadowL）に適用する補正強度。デフォルト 0.3
+ * @param highlightStrength 明部（L≥highlightL）に適用する補正強度。デフォルト 0.85
+ */
+export function removeCastAdaptive(
+  a: Float32Array,
+  b: Float32Array,
+  L: Float32Array,
+  pixelCount: number,
+  shadowStrength = 0.3,
+  highlightStrength = 0.85,
+  shadowL = 20,
+  highlightL = 80
+): void {
+  let sumA = 0;
+  let sumB = 0;
+  for (let i = 0; i < pixelCount; i++) {
+    sumA += a[i];
+    sumB += b[i];
+  }
+  const castA = sumA / pixelCount;
+  const castB = sumB / pixelCount;
+  const strengthRange = highlightStrength - shadowStrength;
+  const lRange = highlightL - shadowL;
+
+  for (let i = 0; i < pixelCount; i++) {
+    const t = Math.max(0, Math.min(1, (L[i] - shadowL) / lRange));
+    const strength = shadowStrength + t * strengthRange;
+    a[i] -= castA * strength;
+    b[i] -= castB * strength;
+  }
+}
+
+/**
+ * ハイライト保護: 明るい画素の彩度を輝度に応じて低減する。
+ *
+ * 白い布・明るい空・明るい背景が黄ばんだり茶色になるのを防ぐ。
+ * L=threshold で彩度係数 1.0、L=100 で係数 0.0 に線形フェード。
+ * threshold 未満の画素には一切触れない。
+ *
+ * @param threshold この輝度値（CIE L、0-100）を超えた画素からフェード開始。デフォルト 75
+ */
+export function protectHighlights(
+  a: Float32Array,
+  b: Float32Array,
+  L: Float32Array,
+  pixelCount: number,
+  threshold = 75
+): void {
+  const range = 100 - threshold;
+  for (let i = 0; i < pixelCount; i++) {
+    if (L[i] > threshold) {
+      const factor = (100 - L[i]) / range;
+      a[i] *= factor;
+      b[i] *= factor;
+    }
+  }
+}
+
 /** 元画像 L と結果 L のグレースケール構造差（平均絶対差, L 0-100スケール）。 */
 export function grayStructureMAD(
   originalL: Float32Array,

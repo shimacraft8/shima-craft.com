@@ -19,7 +19,8 @@ import {
   clampChroma,
   grayStructureMAD,
   meanChroma,
-  removeCast,
+  removeCastAdaptive,
+  protectHighlights,
   CHROMA_QUALITY_THRESHOLD,
 } from "./abProcessing";
 import { claheRgba } from "./clahe";
@@ -358,9 +359,12 @@ export async function colorizeInBrowser(
   const warnings: string[] = [];
 
   try {
-    // 色かぶり補正: モデルが旧写真に対して出しやすい暖色バイアスを半減させる。
-    // sliceの前に in-place で適用することで全候補が補正後の ab から派生する。
-    removeCast(aMerged, bMerged, pixelCount);
+    // 輝度適応型色かぶり補正: 暗部(strength≈0.3)〜明部(strength≈0.85)で連続変化。
+    // 均一 strength=0.5 より白い布・空など明るい領域をより強く中立化できる。
+    removeCastAdaptive(aMerged, bMerged, lFull, pixelCount);
+    // ハイライト保護: L>75 の画素の彩度を輝度に応じてフェード。
+    // 白い布・明るい背景が黄ばんだり茶色になるのを防ぐ。
+    protectHighlights(aMerged, bMerged, lFull, pixelCount);
 
     // 候補1: 自然 / standard+soft の場合はそのまま
     const aN = aMerged.slice(0);

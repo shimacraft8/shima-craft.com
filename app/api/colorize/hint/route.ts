@@ -1,33 +1,31 @@
 /**
- * Claude Vision 色ヒント API。
+ * Gemini Vision 色ヒント API。
  *
- * 会員向け機能として、白黒写真のサムネイルを受け取り Claude Vision で解析し、
+ * 会員向け機能として、白黒写真のサムネイルを受け取り Gemini Vision で解析し、
  * 各セマンティック領域（人物の肌・軍服・背景の樹木 等）の期待される色を
  * CIE Lab ab 値として返す。
  *
  * この値を ONNX モデルの推定結果にブレンドすることで、歴史的・文脈的に正確な
  * 色が反映された仕上がりを実現する。
  *
- * 画像はこのルートからのみ Anthropic API（Claude）へ送信される。
- * 画像はサーバーに保存しない。Anthropic の利用規約に従い処理される。
+ * 画像はこのルートからのみ Google Gemini API へ送信される。
+ * 画像はサーバーに保存しない。Google の利用規約に従い処理される。
  *
  * 匿名ユーザーはアクセス不可（COLORIZE_ENABLED=false 時も 503 を返す）。
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import Anthropic from "@anthropic-ai/sdk";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { isSameOrigin } from "@/lib/http/origin";
 import { getViewer } from "@/lib/auth/access";
 import type { ColorHintPayload } from "@/lib/colorization/colorHints";
 
 export const runtime = "nodejs";
-// Claude Vision のレスポンスを待つため長めに設定
 export const maxDuration = 30;
 
 const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp"] as const;
 type AllowedMimeType = (typeof ALLOWED_MIME_TYPES)[number];
 
-/** Claude への色ヒント要求プロンプト */
 const HINT_PROMPT = `You are analyzing a black and white photograph to provide colorization guidance.
 
 Examine the image carefully. Identify the subject matter, time period, cultural context, and all major semantic regions visible.
@@ -116,17 +114,14 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ ok: false, reason: "BAD_ORIGIN" }, { status: 403 });
   }
 
-  // カラー化機能停止時は使用不可
   if (process.env.COLORIZE_ENABLED === "false") {
     return NextResponse.json({ ok: false, reason: "SERVICE_UNAVAILABLE" }, { status: 503 });
   }
 
-  // API キーが未設定なら機能を無効化（エラーにせず空レスポンス）
-  if (!process.env.ANTHROPIC_API_KEY) {
+  if (!process.env.GOOGLE_AI_API_KEY) {
     return NextResponse.json({ ok: false, reason: "NOT_CONFIGURED" }, { status: 503 });
   }
 
-  // 会員のみ利用可能
   const viewer = await getViewer();
   if (viewer.kind === "anonymous") {
     return NextResponse.json({ ok: false, reason: "MEMBERS_ONLY" }, { status: 403 });
@@ -138,7 +133,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   let body: { image?: unknown; mimeType?: unknown };
   try {
     const raw = await request.text();
-    // base64 画像 1 枚: JPEG 256×256 で最大 ~100KB → base64 で ~133KB。余裕を持ち 300KB を上限
     if (raw.length > 300_000) {
       return NextResponse.json({ ok: false, reason: "IMAGE_TOO_LARGE" }, { status: 413 });
     }
@@ -157,31 +151,19 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   try {
-    const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-    const response = await anthropic.messages.create({
-      model: "claude-haiku-4-5-20251001",
-      max_tokens: 1024,
-      messages: [
-        {
-          role: "user",
-          content: [
-            {
-              type: "image",
-              source: { type: "base64", media_type: mimeType, data: imageData },
-            },
-            { type: "text", text: HINT_PROMPT },
-          ],
-        },
-      ],
-    });
+    const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY);
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    const text =
-      response.content[0]?.type === "text" ? response.content[0].text.trim() : "";
+    const result = await model.generateContent([
+      { inlineData: { data: imageData, mimeType } },
+      HINT_PROMPT,
+    ]);
 
-    // JSON ブロックを抽出（```json ... ``` や余分なテキストを除去）
+    const text = result.response.text().trim();
+
     const jsonMatch = text.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
-      console.warn("[colorize-hint] no JSON in Claude response:", text.slice(0, 200));
+      console.warn("[colorize-hint] no JSON in Gemini response:", text.slice(0, 200));
       return NextResponse.json({ ok: false, reason: "PARSE_FAILED" }, { status: 500 });
     }
 
@@ -200,15 +182,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     return NextResponse.json({ ok: true, hints });
   } catch (err) {
-    // err は Anthropic SDK の APIError サブクラス。err.status / err.type / err.error に詳細が入る
-    const apiErr = err as Record<string, unknown>;
-    console.error("[colorize-hint] Anthropic API error", {
-      status: apiErr.status,
-      errType: apiErr.type,
-      message: (apiErr.error as Record<string, unknown> | null)?.error
-        ? JSON.stringify((apiErr.error as Record<string, unknown>).error)
-        : String(err),
-    });
+    console.error("[colorize-hint] Gemini API error:", String(err));
     return NextResponse.json({ ok: false, reason: "API_ERROR" }, { status: 500 });
   }
 }

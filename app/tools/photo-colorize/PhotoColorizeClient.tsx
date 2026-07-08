@@ -137,8 +137,8 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
    * null = 取得前 or 取得失敗（ヒントなしで動作）。
    */
   const colorHintsRef = useRef<ColorHintPayload | null>(null);
-  /** ヒント取得中かどうか（UI 表示用） */
-  const [hintLoading, setHintLoading] = useState(false);
+  /** Claude Vision ヒント取得状態（UI 表示・イベントログ用） */
+  const [hintStatus, setHintStatus] = useState<"idle" | "loading" | "success" | "failed">("idle");
 
   useEffect(() => {
     return () => {
@@ -169,7 +169,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
     setDailyLimitHit(false);
     attemptRef.current = 0;
     colorHintsRef.current = null;
-    setHintLoading(false);
+    setHintStatus("idle");
     setPhase("select");
     if (fileInputRef.current) fileInputRef.current.value = "";
   }, [prepared, resultUrl, vividResultUrl]);
@@ -233,10 +233,10 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
         // 会員: 画像選択後すぐにバックグラウンドでヒント取得を開始する。
         // ユーザーが設定を確認している間（約10〜30秒）に完了するため体感遅延なし。
         if (!isAnonymous && result.smallRgba) {
-          setHintLoading(true);
+          setHintStatus("loading");
           void fetchColorHints(result.smallRgba).then((hints) => {
             colorHintsRef.current = hints;
-            setHintLoading(false);
+            setHintStatus(hints ? "success" : "failed");
           });
         }
       } catch (err) {
@@ -438,6 +438,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
         retriedWith: output.retriedWith ?? null,
         collageTiles: output.collageTiles ?? null,
         variant: output.variant ?? 0,
+        hintApplied: colorHintsRef.current !== null,
       });
     } catch (err) {
       if (runIdRef.current !== runId) return;
@@ -648,9 +649,11 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
             </fieldset>
           )}
 
-          {!isAnonymous && hintLoading && (
-            <p className="colorize-hint-loading">
-              Claudeが写真の内容を解析中…（色精度が向上します）
+          {!isAnonymous && hintStatus !== "idle" && (
+            <p className={`colorize-hint-status colorize-hint-status--${hintStatus}`}>
+              {hintStatus === "loading" && "Claudeが写真の内容を解析中…"}
+              {hintStatus === "success" && "Claude解析完了 — より正確な色が適用されます"}
+              {hintStatus === "failed" && "Claude解析スキップ — 通常品質で処理します"}
             </p>
           )}
 

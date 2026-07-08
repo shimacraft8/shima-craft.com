@@ -584,7 +584,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
           <p className="colorize-dropzone-privacy">
             {isAnonymous
               ? "この写真は端末内（お使いのブラウザの中）で処理されます。写真はSHIMA CRAFTや外部AIサービスへ送信されません。"
-              : "会員機能として、色解析の精度向上のため写真の縮小版（256×256px）をSHIMA CRAFTサーバー経由でClaude（Anthropic社）に送信します。写真はサーバーに保存されません。"}
+              : "会員機能として、色解析の精度向上のため写真の縮小版（256×256px）をSHIMA CRAFTサーバー経由でGroq AI（Meta Llama 4）に送信します。写真はサーバーに保存されません。"}
           </p>
           {preparing && (
             <p className="colorize-preparing" role="status">画像を準備しています…</p>
@@ -651,9 +651,9 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
 
           {!isAnonymous && hintStatus !== "idle" && (
             <p className={`colorize-hint-status colorize-hint-status--${hintStatus}`}>
-              {hintStatus === "loading" && "Claudeが写真の内容を解析中…"}
-              {hintStatus === "success" && "Claude解析完了 — より正確な色が適用されます"}
-              {hintStatus === "failed" && "Claude解析スキップ — 通常品質で処理します"}
+              {hintStatus === "loading" && "AIが写真の内容を解析中…"}
+              {hintStatus === "success" && "AI解析完了 — より正確な色が適用されます"}
+              {hintStatus === "failed" && "AI解析スキップ — 通常品質で処理します"}
             </p>
           )}
 
@@ -671,7 +671,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
                 に同意します。
                 {isAnonymous
                   ? "写真は端末内で処理され、SHIMA CRAFTへ送信されません。"
-                  : "色解析のため写真の縮小版（256×256px）をSHIMA CRAFTサーバー経由でClaude（Anthropic社）に送信することに同意します。"}
+                  : "色解析のため写真の縮小版（256×256px）をSHIMA CRAFTサーバー経由でGroq AI（Meta Llama 4）に送信することに同意します。"}
               </span>
             </label>
           </div>

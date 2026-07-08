@@ -1,21 +1,21 @@
 /**
- * Gemini Vision 色ヒント API。
+ * Groq Vision 色ヒント API。
  *
- * 会員向け機能として、白黒写真のサムネイルを受け取り Gemini Vision で解析し、
+ * 会員向け機能として、白黒写真のサムネイルを受け取り Groq (Llama 4 Scout) で解析し、
  * 各セマンティック領域（人物の肌・軍服・背景の樹木 等）の期待される色を
  * CIE Lab ab 値として返す。
  *
  * この値を ONNX モデルの推定結果にブレンドすることで、歴史的・文脈的に正確な
  * 色が反映された仕上がりを実現する。
  *
- * 画像はこのルートからのみ Google Gemini API へ送信される。
- * 画像はサーバーに保存しない。Google の利用規約に従い処理される。
+ * 画像はこのルートからのみ Groq API へ送信される。
+ * 画像はサーバーに保存しない。Groq の利用規約に従い処理される。
  *
  * 匿名ユーザーはアクセス不可（COLORIZE_ENABLED=false 時も 503 を返す）。
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import Groq from "groq-sdk";
 import { isSameOrigin } from "@/lib/http/origin";
 import { getViewer } from "@/lib/auth/access";
 import type { ColorHintPayload } from "@/lib/colorization/colorHints";
@@ -118,7 +118,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ ok: false, reason: "SERVICE_UNAVAILABLE" }, { status: 503 });
   }
 
-  if (!process.env.GOOGLE_AI_API_KEY) {
+  if (!process.env.GROQ_API_KEY) {
     return NextResponse.json({ ok: false, reason: "NOT_CONFIGURED" }, { status: 503 });
   }
 
@@ -151,19 +151,33 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   try {
-    const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-lite" });
+    const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-    const result = await model.generateContent([
-      { inlineData: { data: imageData, mimeType } },
-      HINT_PROMPT,
-    ]);
+    const response = await groq.chat.completions.create({
+      model: "meta-llama/llama-4-scout-17b-16e-instruct",
+      max_tokens: 1024,
+      messages: [
+        {
+          role: "user",
+          content: [
+            {
+              type: "image_url",
+              image_url: { url: `data:${mimeType};base64,${imageData}` },
+            },
+            {
+              type: "text",
+              text: HINT_PROMPT,
+            },
+          ],
+        },
+      ],
+    });
 
-    const text = result.response.text().trim();
+    const text = response.choices[0]?.message?.content?.trim() ?? "";
 
     const jsonMatch = text.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
-      console.warn("[colorize-hint] no JSON in Gemini response:", text.slice(0, 200));
+      console.warn("[colorize-hint] no JSON in Groq response:", text.slice(0, 200));
       return NextResponse.json({ ok: false, reason: "PARSE_FAILED" }, { status: 500 });
     }
 
@@ -182,7 +196,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     return NextResponse.json({ ok: true, hints });
   } catch (err) {
-    console.error("[colorize-hint] Gemini API error:", String(err));
+    console.error("[colorize-hint] Groq API error:", String(err));
     return NextResponse.json({ ok: false, reason: "API_ERROR" }, { status: 500 });
   }
 }

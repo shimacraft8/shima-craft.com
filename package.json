@@ -15,12 +15,12 @@
     "test:firebase": "bash scripts/run-firebase-tests.sh"
   },
   "dependencies": {
-    "@google/generative-ai": "^0.24.1",
     "@supabase/ssr": "^0.12.0",
     "@supabase/supabase-js": "^2.110.0",
     "firebase": "^12.15.0",
     "firebase-admin": "13.10.0",
     "framer-motion": "^11.3.31",
+    "groq-sdk": "^1.3.0",
     "image-size": "^2.0.2",
     "lucide-react": "^0.468.0",
     "next": "^14.2.35",

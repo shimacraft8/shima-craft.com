@@ -45,6 +45,7 @@ import {
   type CollageAxis,
   type CollageTile,
 } from "./collage";
+import { applyColorHints, type ColorHintPayload } from "../colorHints";
 
 export type ColorizeInput = {
   fullRgba: Uint8ClampedArray;
@@ -314,6 +315,11 @@ export async function colorizeInBrowser(
     quality?: ColorizeQuality;
     /** 再生成の試行回数（0 = 初回）。増えるたびに別バリエーションで生成する。 */
     variant?: number;
+    /**
+     * Claude Vision から取得した色ヒント（会員向け）。
+     * 指定されると ONNX 推定後の ab チャンネルをヒント方向へ部分ブレンドする。
+     */
+    colorHints?: ColorHintPayload | null;
   }
 ): Promise<ColorizeOutput> {
   const sessionId = options.clientSessionId ?? newClientSessionId();
@@ -447,6 +453,11 @@ export async function colorizeInBrowser(
       removeCastAdaptive(aMerged, bMerged, lFull, pixelCount, 0.55, 0.95);
     } else {
       removeCastAdaptive(aMerged, bMerged, lFull, pixelCount);
+    }
+    // Claude Vision 色ヒント適用: 歴史的・文脈的に正確な色へ ONNX 出力を部分的に誘導する。
+    // キャスト補正後・彩度正規化前に適用することで、ヒントがグローバルな色空間で有効に機能する。
+    if (options.colorHints) {
+      applyColorHints(aMerged, bMerged, lFull, pixelCount, options.colorHints);
     }
     // 彩度正規化: センタリング後の色相差を増幅して肌・布・背景の色分離を回復する。
     // 彩度不足（mean chroma < 11）の出力のみ対象で、既に十分カラフルな出力には作用しない。

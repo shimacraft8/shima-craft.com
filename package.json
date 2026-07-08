@@ -15,6 +15,7 @@
     "test:firebase": "bash scripts/run-firebase-tests.sh"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.110.0",
     "@supabase/ssr": "^0.12.0",
     "@supabase/supabase-js": "^2.110.0",
     "firebase": "^12.15.0",

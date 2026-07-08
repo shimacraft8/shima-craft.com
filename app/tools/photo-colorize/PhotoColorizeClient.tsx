@@ -16,6 +16,7 @@ import {
   type ColorizeFinish,
   type ColorizeQuality,
 } from "@/lib/colorization/browser/browserColorize";
+import type { ColorHintPayload } from "@/lib/colorization/colorHints";
 import {
   COLORIZE_ERROR_HEADINGS,
   COLORIZE_ERROR_IS_ENVIRONMENT_ISSUE,
@@ -130,6 +131,14 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
    * 新しい画像を選ぶとリセット。
    */
   const attemptRef = useRef(0);
+  /**
+   * Claude Vision から取得した色ヒント（会員向け）。
+   * 画像選択時にバックグラウンドで取得し、カラー化実行時に利用する。
+   * null = 取得前 or 取得失敗（ヒントなしで動作）。
+   */
+  const colorHintsRef = useRef<ColorHintPayload | null>(null);
+  /** ヒント取得中かどうか（UI 表示用） */
+  const [hintLoading, setHintLoading] = useState(false);
 
   useEffect(() => {
     return () => {
@@ -159,9 +168,45 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
     setErrorDisplay(null);
     setDailyLimitHit(false);
     attemptRef.current = 0;
+    colorHintsRef.current = null;
+    setHintLoading(false);
     setPhase("select");
     if (fileInputRef.current) fileInputRef.current.value = "";
   }, [prepared, resultUrl, vividResultUrl]);
+
+  /**
+   * 会員向け: Claude Vision で色ヒントをバックグラウンド取得する。
+   * 失敗しても colorize は続行する（ヒントなし ONNX のみで動作）。
+   * smallRgba（256×256）を JPEG に変換してサーバーへ送信する。
+   */
+  const fetchColorHints = useCallback(
+    async (smallRgba: Uint8ClampedArray): Promise<ColorHintPayload | null> => {
+      if (isAnonymous) return null;
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = 256;
+        canvas.height = 256;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return null;
+        const imageData = new ImageData(new Uint8ClampedArray(smallRgba), 256, 256);
+        ctx.putImageData(imageData, 0, 0);
+        const base64 = canvas.toDataURL("image/jpeg", 0.85).split(",")[1];
+        if (!base64) return null;
+
+        const res = await fetch("/api/colorize/hint", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ image: base64, mimeType: "image/jpeg" }),
+        });
+        if (!res.ok) return null;
+        const data = (await res.json()) as { ok?: boolean; hints?: ColorHintPayload };
+        return data.ok && data.hints ? data.hints : null;
+      } catch {
+        return null;
+      }
+    },
+    [isAnonymous]
+  );
 
   const handleFile = useCallback(
     async (file: File | null | undefined) => {
@@ -174,12 +219,23 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
       revokePreviewUrl(prepared?.previewUrl);
       setPrepared(null);
       setPreparing(true);
+      colorHintsRef.current = null;
       try {
         const result = await prepareImageForColorize(file);
         setPrepared(result);
         attemptRef.current = 0;
         setPhase("ready");
         trackEvent("colorize_file_select");
+
+        // 会員: 画像選択後すぐにバックグラウンドでヒント取得を開始する。
+        // ユーザーが設定を確認している間（約10〜30秒）に完了するため体感遅延なし。
+        if (!isAnonymous && result.smallRgba) {
+          setHintLoading(true);
+          void fetchColorHints(result.smallRgba).then((hints) => {
+            colorHintsRef.current = hints;
+            setHintLoading(false);
+          });
+        }
       } catch (err) {
         setSelectError(
           err instanceof ImageProcessingError
@@ -190,7 +246,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
         setPreparing(false);
       }
     },
-    [prepared]
+    [prepared, isAnonymous, fetchColorHints]
   );
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -303,6 +359,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
           finish: selectedFinish,
           quality: selectedQuality,
           variant: attemptRef.current,
+          colorHints: colorHintsRef.current,
           onProgress: (p) => {
             if (runIdRef.current !== runId) return;
             setProgress(p);
@@ -521,8 +578,9 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
             className="colorize-file-input"
           />
           <p className="colorize-dropzone-privacy">
-            この写真は端末内（お使いのブラウザの中）で処理されます。写真はSHIMA
-            CRAFTや外部AIサービスへ送信されません。
+            {isAnonymous
+              ? "この写真は端末内（お使いのブラウザの中）で処理されます。写真はSHIMA CRAFTや外部AIサービスへ送信されません。"
+              : "会員機能として、色解析の精度向上のため写真の縮小版（256×256px）をSHIMA CRAFTサーバー経由でClaude（Anthropic社）に送信します。写真はサーバーに保存されません。"}
           </p>
           {preparing && (
             <p className="colorize-preparing" role="status">画像を準備しています…</p>
@@ -587,6 +645,12 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
             </fieldset>
           )}
 
+          {!isAnonymous && hintLoading && (
+            <p className="colorize-hint-loading">
+              Claudeが写真の内容を解析中…（色精度が向上します）
+            </p>
+          )}
+
           <div className="colorize-consent">
             <label className="colorize-consent-label">
               <input
@@ -598,7 +662,10 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
               <span>
                 自分が権利を持つ画像であること、色はAIによる推定であり元の色を正確に復元するものではないことを理解の上、
                 <a href="/privacy" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>
-                に同意します。写真は端末内で処理され、SHIMA CRAFTへ送信されません。
+                に同意します。
+                {isAnonymous
+                  ? "写真は端末内で処理され、SHIMA CRAFTへ送信されません。"
+                  : "色解析のため写真の縮小版（256×256px）をSHIMA CRAFTサーバー経由でClaude（Anthropic社）に送信することに同意します。"}
               </span>
             </label>
           </div>

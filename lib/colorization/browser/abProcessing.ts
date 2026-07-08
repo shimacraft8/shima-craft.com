@@ -131,7 +131,7 @@ export function hueConcentration(a: Float32Array, b: Float32Array, pixelCount: n
 }
 
 /** hueConcentration がこの値を超えたら単色かぶりと判定し removeCastAdaptive を強モードにする */
-export const HUE_CONCENTRATION_CAST_THRESHOLD = 0.7;
+export const HUE_CONCENTRATION_CAST_THRESHOLD = 0.8;
 
 /**
  * 色かぶり補正: 全画素の ab 平均を計算し、その fraction だけ ab を中立方向へシフトする。
@@ -291,7 +291,7 @@ export function luminancePercentile(L: Float32Array, pixelCount: number, q: numb
 /** normalizeChroma の目標 mean chroma。自然なカラー写真の下限程度（実写平均は 12-18）。 */
 export const CHROMA_NORMALIZE_TARGET = 11;
 /** normalizeChroma の増幅上限。ノイズの過剰増幅と不自然な発色を防ぐ。 */
-export const CHROMA_NORMALIZE_MAX_GAIN = 1.8;
+export const CHROMA_NORMALIZE_MAX_GAIN = 1.5;
 
 /**
  * 彩度正規化: mean chroma が目標を下回る場合、差分を等比で増幅して色分離を回復する。

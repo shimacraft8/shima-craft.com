@@ -127,9 +127,11 @@ function eventBodies() {
 }
 
 describe("PhotoColorizeClient（Firebase会員フロー）", () => {
-  it("端末内処理の説明が表示される", () => {
+  it("会員向けのAI送信説明が表示される", () => {
     renderClient();
-    expect(screen.getByText(/端末内（お使いのブラウザの中）で処理されます/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/写真の縮小版（256×256px）をSHIMA CRAFTサーバー経由でGroq AI/)
+    ).toBeInTheDocument();
   });
 
   it("同意するまで開始ボタンが無効", async () => {

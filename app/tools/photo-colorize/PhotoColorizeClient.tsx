@@ -137,7 +137,14 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
    * null = 取得前 or 取得失敗（ヒントなしで動作）。
    */
   const colorHintsRef = useRef<ColorHintPayload | null>(null);
-  /** Claude Vision ヒント取得状態（UI 表示・イベントログ用） */
+  /**
+   * ヒント取得の世代トークン。画像を選び直す・リセットするたびに進め、
+   * 古い画像のヒント取得が遅れて解決しても新しい画像へ適用されないようにする。
+   */
+  const hintTokenRef = useRef(0);
+  /** 進行中のヒント取得。カラー化開始時に完了を待つ（fetch 側で20秒タイムアウト） */
+  const hintPromiseRef = useRef<Promise<void> | null>(null);
+  /** Vision AI ヒント取得状態（UI 表示・イベントログ用） */
   const [hintStatus, setHintStatus] = useState<"idle" | "loading" | "success" | "failed">("idle");
 
   useEffect(() => {
@@ -169,6 +176,8 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
     setDailyLimitHit(false);
     attemptRef.current = 0;
     colorHintsRef.current = null;
+    hintTokenRef.current += 1;
+    hintPromiseRef.current = null;
     setHintStatus("idle");
     setPhase("select");
     if (fileInputRef.current) fileInputRef.current.value = "";
@@ -200,6 +209,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ image: base64, mimeType: detectedMime }),
+          signal: AbortSignal.timeout(20_000),
         });
         if (!res.ok) return null;
         const data = (await res.json()) as { ok?: boolean; hints?: ColorHintPayload };
@@ -220,9 +230,16 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
         return;
       }
       revokePreviewUrl(prepared?.previewUrl);
+      revokePreviewUrl(resultUrl);
+      revokePreviewUrl(vividResultUrl);
+      setResultUrl(null);
+      setVividResultUrl(null);
       setPrepared(null);
       setPreparing(true);
       colorHintsRef.current = null;
+      hintTokenRef.current += 1;
+      hintPromiseRef.current = null;
+      setHintStatus("idle");
       try {
         const result = await prepareImageForColorize(file);
         setPrepared(result);
@@ -232,9 +249,12 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
 
         // 会員: 画像選択後すぐにバックグラウンドでヒント取得を開始する。
         // ユーザーが設定を確認している間（約10〜30秒）に完了するため体感遅延なし。
+        // トークンで世代管理し、古い画像のヒントが新しい画像へ適用されるのを防ぐ。
         if (!isAnonymous && result.smallRgba) {
+          const token = hintTokenRef.current;
           setHintStatus("loading");
-          void fetchColorHints(result.smallRgba).then((hints) => {
+          hintPromiseRef.current = fetchColorHints(result.smallRgba).then((hints) => {
+            if (hintTokenRef.current !== token) return;
             colorHintsRef.current = hints;
             setHintStatus(hints ? "success" : "failed");
           });
@@ -249,7 +269,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
         setPreparing(false);
       }
     },
-    [prepared, isAnonymous, fetchColorHints]
+    [prepared, resultUrl, vividResultUrl, isAnonymous, fetchColorHints]
   );
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -345,6 +365,16 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
     const { executionId, remaining } = execResult;
     if (remaining !== null) setDailyRemaining(remaining);
     lastExecutionIdRef.current = executionId;
+
+    // ヒント取得が進行中なら完了を待つ（fetch 側の20秒タイムアウトで有界）。
+    // 待たないとヒントなしで実行され、品質向上が反映されないことがある。
+    if (hintPromiseRef.current) {
+      await hintPromiseRef.current.catch(() => undefined);
+      if (runIdRef.current !== runId) {
+        inFlightRef.current = false;
+        return;
+      }
+    }
 
     const startedAt = performance.now();
     try {

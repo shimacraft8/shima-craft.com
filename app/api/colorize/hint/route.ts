@@ -200,7 +200,15 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     return NextResponse.json({ ok: true, hints });
   } catch (err) {
-    console.error("[colorize-hint] Anthropic API error:", err);
+    // err は Anthropic SDK の APIError サブクラス。err.status / err.type / err.error に詳細が入る
+    const apiErr = err as Record<string, unknown>;
+    console.error("[colorize-hint] Anthropic API error", {
+      status: apiErr.status,
+      errType: apiErr.type,
+      message: (apiErr.error as Record<string, unknown> | null)?.error
+        ? JSON.stringify((apiErr.error as Record<string, unknown>).error)
+        : String(err),
+    });
     return NextResponse.json({ ok: false, reason: "API_ERROR" }, { status: 500 });
   }
 }

@@ -190,13 +190,16 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
         if (!ctx) return null;
         const imageData = new ImageData(new Uint8ClampedArray(smallRgba), 256, 256);
         ctx.putImageData(imageData, 0, 0);
-        const base64 = canvas.toDataURL("image/jpeg", 0.85).split(",")[1];
+        const dataUrl = canvas.toDataURL("image/jpeg", 0.85);
+        const mimeMatch = dataUrl.match(/^data:([^;]+);base64,/);
+        const detectedMime = mimeMatch?.[1] ?? "image/jpeg";
+        const base64 = dataUrl.split(",")[1];
         if (!base64) return null;
 
         const res = await fetch("/api/colorize/hint", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ image: base64, mimeType: "image/jpeg" }),
+          body: JSON.stringify({ image: base64, mimeType: detectedMime }),
         });
         if (!res.ok) return null;
         const data = (await res.json()) as { ok?: boolean; hints?: ColorHintPayload };

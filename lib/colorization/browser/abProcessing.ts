@@ -200,6 +200,94 @@ export function removeCastAdaptive(
   }
 }
 
+/**
+ * ab 分布の軸均衡化（部分ホワイトニング）: セピア崩壊した出力の色分離を回復する。
+ *
+ * モデルが旧写真で失敗すると ab 分布が暖色軸に沿った細長い「葉巻型」になる
+ * （長軸=暖色方向の分散のみ大きく、直交方向=緑↔紫・青↔黄の分散が抑圧される）。
+ * 共分散の固有軸を求め、短軸成分のみを長軸比 targetRatio まで増幅することで、
+ * モデルが弱く出力していた寒色系の色差を復元する。
+ *
+ * 分布が既に丸い（色相が多様な正常出力）場合や、短軸分散がノイズレベルの場合は
+ * 何もしない。呼び出し側で「単色かぶり検出時のみ」にゲートすることを想定。
+ *
+ * @param targetRatio 短軸σ/長軸σ の目標比。デフォルト 0.5
+ * @param maxGain     短軸成分の増幅上限。デフォルト 2.0
+ * @returns 適用した gain（1.0 = 変更なし）
+ */
+export function equalizeAbAxes(
+  a: Float32Array,
+  b: Float32Array,
+  pixelCount: number,
+  targetRatio = 0.5,
+  maxGain = 2.0
+): number {
+  let ma = 0;
+  let mb = 0;
+  for (let i = 0; i < pixelCount; i++) {
+    ma += a[i];
+    mb += b[i];
+  }
+  ma /= pixelCount;
+  mb /= pixelCount;
+
+  let sxx = 0;
+  let syy = 0;
+  let sxy = 0;
+  for (let i = 0; i < pixelCount; i++) {
+    const da = a[i] - ma;
+    const db = b[i] - mb;
+    sxx += da * da;
+    syy += db * db;
+    sxy += da * db;
+  }
+  sxx /= pixelCount;
+  syy /= pixelCount;
+  sxy /= pixelCount;
+
+  const half = (sxx + syy) / 2;
+  const diff = Math.sqrt(((sxx - syy) / 2) ** 2 + sxy * sxy);
+  const sigma1 = Math.sqrt(Math.max(0, half + diff));
+  const sigma2 = Math.sqrt(Math.max(0, half - diff));
+
+  // 長軸に実質的な分散がない / 短軸がノイズレベル / 既に十分丸い → 何もしない
+  if (sigma1 < 2 || sigma2 < 0.5 || sigma2 / sigma1 >= targetRatio) return 1;
+
+  const gain = Math.min(maxGain, (targetRatio * sigma1) / sigma2);
+  const theta = 0.5 * Math.atan2(2 * sxy, sxx - syy);
+  const cos = Math.cos(theta);
+  const sin = Math.sin(theta);
+  for (let i = 0; i < pixelCount; i++) {
+    const da = a[i] - ma;
+    const db = b[i] - mb;
+    const c1 = da * cos + db * sin; // 長軸成分
+    const c2 = (-da * sin + db * cos) * gain; // 短軸成分を増幅
+    a[i] = ma + c1 * cos - c2 * sin;
+    b[i] = mb + c1 * sin + c2 * cos;
+  }
+  return gain;
+}
+
+/**
+ * L チャンネルの分位点（0-100 スケール）を返す。
+ * ハイライト保護の閾値を画像自身の輝度分布に適応させるために使う。
+ */
+export function luminancePercentile(L: Float32Array, pixelCount: number, q: number): number {
+  const BINS = 101;
+  const hist = new Uint32Array(BINS);
+  for (let i = 0; i < pixelCount; i++) {
+    const v = Math.max(0, Math.min(100, Math.round(L[i])));
+    hist[v]++;
+  }
+  const target = pixelCount * q;
+  let cum = 0;
+  for (let i = 0; i < BINS; i++) {
+    cum += hist[i];
+    if (cum >= target) return i;
+  }
+  return 100;
+}
+
 /** normalizeChroma の目標 mean chroma。自然なカラー写真の下限程度（実写平均は 12-18）。 */
 export const CHROMA_NORMALIZE_TARGET = 11;
 /** normalizeChroma の増幅上限。ノイズの過剰増幅と不自然な発色を防ぐ。 */

@@ -9,6 +9,93 @@
  * 結果の合成に使う lFull（元解像度 L チャンネル）は変更しない。
  */
 
+/** この粒状度スコアを超えたらデノイズを適用する（クリーンな写真は 2-4、粗い印刷スキャンは 6+） */
+export const GRAIN_SCORE_THRESHOLD = 6;
+/** このスコアを超える強粒状はブラーを2回適用する */
+export const GRAIN_SCORE_HEAVY = 12;
+
+/**
+ * 粒状度の推定: 各画素の輝度と上下左右4近傍平均との絶対差の平均。
+ * 古い印刷物のハーフトーン・銀塩粒子はダウンサンプル後も高周波ノイズとして残り、
+ * カラー化モデルの領域認識を妨げる（まだらな色ムラの原因）。
+ */
+export function estimateGrain(rgba: Uint8ClampedArray, width: number, height: number): number {
+  if (width < 3 || height < 3) return 0;
+  let sum = 0;
+  let n = 0;
+  // 3px おきにサンプリング（十分な精度で高速）
+  for (let y = 1; y < height - 1; y += 3) {
+    for (let x = 1; x < width - 1; x += 3) {
+      const i = (y * width + x) * 4;
+      const c = rgba[i];
+      const up = rgba[i - width * 4];
+      const down = rgba[i + width * 4];
+      const left = rgba[i - 4];
+      const right = rgba[i + 4];
+      sum += Math.abs(c - (up + down + left + right) / 4);
+      n++;
+    }
+  }
+  return n > 0 ? sum / n : 0;
+}
+
+/**
+ * 粒状ノイズが検出された場合のみ、モデル入力へ二項ブラー [1,2,1]/4（分離適用）をかける。
+ * クリーンな画像には触れない（同一バッファを返す）。強粒状は2回適用。
+ * 適用対象はモデル入力用 RGBA のみ。結果合成に使う元解像度 L は変更しない。
+ *
+ * @returns デノイズ後のバッファ（no-op 時は入力そのもの）
+ */
+export function denoiseIfGrainy(
+  rgba: Uint8ClampedArray,
+  width: number,
+  height: number
+): Uint8ClampedArray {
+  const score = estimateGrain(rgba, width, height);
+  if (score < GRAIN_SCORE_THRESHOLD) return rgba;
+  const passes = score >= GRAIN_SCORE_HEAVY ? 2 : 1;
+
+  const n = width * height;
+  // 輝度平面で処理し R=G=B へ書き戻す（入力は近似グレースケール前提）
+  const luma = new Float32Array(n);
+  for (let i = 0; i < n; i++) {
+    const p = i * 4;
+    luma[i] = 0.299 * rgba[p] + 0.587 * rgba[p + 1] + 0.114 * rgba[p + 2];
+  }
+  const tmp = new Float32Array(n);
+  for (let pass = 0; pass < passes; pass++) {
+    // 水平 [1,2,1]/4
+    for (let y = 0; y < height; y++) {
+      const row = y * width;
+      for (let x = 0; x < width; x++) {
+        const l = luma[row + Math.max(0, x - 1)];
+        const r = luma[row + Math.min(width - 1, x + 1)];
+        tmp[row + x] = (l + 2 * luma[row + x] + r) / 4;
+      }
+    }
+    // 垂直 [1,2,1]/4
+    for (let y = 0; y < height; y++) {
+      const up = Math.max(0, y - 1) * width;
+      const down = Math.min(height - 1, y + 1) * width;
+      const row = y * width;
+      for (let x = 0; x < width; x++) {
+        luma[row + x] = (tmp[up + x] + 2 * tmp[row + x] + tmp[down + x]) / 4;
+      }
+    }
+  }
+
+  const out = new Uint8ClampedArray(rgba.length);
+  for (let i = 0; i < n; i++) {
+    const p = i * 4;
+    const v = Math.round(luma[i]);
+    out[p] = v;
+    out[p + 1] = v;
+    out[p + 2] = v;
+    out[p + 3] = rgba[p + 3];
+  }
+  return out;
+}
+
 /**
  * レベル補正: 輝度ヒストグラムの 1%/99% パーセンタイルを [0, 255] へ線形伸長する。
  *

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { boostChroma, clampChroma, grayStructureMAD, hueConcentration, meanChroma, normalizeChroma, protectHighlights, protectShadows, removeCast, removeCastAdaptive, upsampleAb } from "../abProcessing";
+import { boostChroma, clampChroma, equalizeAbAxes, grayStructureMAD, hueConcentration, luminancePercentile, meanChroma, normalizeChroma, protectHighlights, protectShadows, removeCast, removeCastAdaptive, upsampleAb } from "../abProcessing";
 
 describe("upsampleAb", () => {
   it("同一サイズなら値を保持する", () => {
@@ -172,6 +172,119 @@ describe("removeCastAdaptive", () => {
     removeCastAdaptive(a, b, L, 2);
     expect(a[0]).toBeCloseTo(0, 5);
     expect(b[1]).toBeCloseTo(0, 5);
+  });
+});
+
+describe("equalizeAbAxes", () => {
+  /** 45°の暖色軸に沿った葉巻型分布を作る（長軸σ大・短軸σ小） */
+  function makeCigar(n: number, majorSigma: number, minorSigma: number): { a: Float32Array; b: Float32Array } {
+    const a = new Float32Array(n);
+    const b = new Float32Array(n);
+    const cos = Math.SQRT1_2;
+    const sin = Math.SQRT1_2;
+    for (let i = 0; i < n; i++) {
+      // 決定論的な擬似分布: 長軸・短軸方向に交互配置
+      const c1 = ((i % 7) - 3) / 3 * majorSigma * 1.5;
+      const c2 = ((i % 5) - 2) / 2 * minorSigma * 1.5;
+      a[i] = 10 + c1 * cos - c2 * sin;
+      b[i] = 15 + c1 * sin + c2 * cos;
+    }
+    return { a, b };
+  }
+
+  function axisRatio(a: Float32Array, b: Float32Array, n: number): number {
+    let ma = 0, mb = 0;
+    for (let i = 0; i < n; i++) { ma += a[i]; mb += b[i]; }
+    ma /= n; mb /= n;
+    let sxx = 0, syy = 0, sxy = 0;
+    for (let i = 0; i < n; i++) {
+      const da = a[i] - ma, db = b[i] - mb;
+      sxx += da * da; syy += db * db; sxy += da * db;
+    }
+    sxx /= n; syy /= n; sxy /= n;
+    const half = (sxx + syy) / 2;
+    const diff = Math.sqrt(((sxx - syy) / 2) ** 2 + sxy * sxy);
+    return Math.sqrt(Math.max(0, half - diff)) / Math.sqrt(half + diff);
+  }
+
+  it("葉巻型分布の短軸を目標比まで増幅する（gain > 1）", () => {
+    const { a, b } = makeCigar(1000, 10, 2); // ratio = 0.2
+    const before = axisRatio(a, b, 1000);
+    const gain = equalizeAbAxes(a, b, 1000, 0.5, 2.0);
+    const after = axisRatio(a, b, 1000);
+    expect(before).toBeLessThan(0.3);
+    expect(gain).toBeGreaterThan(1);
+    expect(after).toBeGreaterThan(before);
+  });
+
+  it("平均（分布の中心）は保存される", () => {
+    const { a, b } = makeCigar(1000, 10, 2);
+    equalizeAbAxes(a, b, 1000);
+    let ma = 0, mb = 0;
+    for (let i = 0; i < 1000; i++) { ma += a[i]; mb += b[i]; }
+    expect(ma / 1000).toBeCloseTo(10, 0);
+    expect(mb / 1000).toBeCloseTo(15, 0);
+  });
+
+  it("既に丸い分布には何もしない（gain=1）", () => {
+    const { a, b } = makeCigar(1000, 8, 6); // ratio = 0.75 > 0.5
+    const aCopy = a.slice(0);
+    const gain = equalizeAbAxes(a, b, 1000, 0.5, 2.0);
+    expect(gain).toBe(1);
+    expect(a[0]).toBe(aCopy[0]);
+  });
+
+  it("短軸がノイズレベル（σ2 < 0.5）なら増幅しない", () => {
+    const { a, b } = makeCigar(1000, 10, 0.1);
+    const gain = equalizeAbAxes(a, b, 1000);
+    expect(gain).toBe(1);
+  });
+
+  it("全体に分散がない（ほぼ一点）なら何もしない", () => {
+    const a = new Float32Array(100).fill(12);
+    const b = new Float32Array(100).fill(18);
+    const gain = equalizeAbAxes(a, b, 100);
+    expect(gain).toBe(1);
+    expect(a[0]).toBe(12);
+  });
+
+  it("maxGain でキャップされる", () => {
+    const { a, b } = makeCigar(1000, 20, 1); // 必要gain = 0.5*20/1 = 10 → cap 2.0
+    const gain = equalizeAbAxes(a, b, 1000, 0.5, 2.0);
+    expect(gain).toBeCloseTo(2.0, 5);
+  });
+});
+
+describe("luminancePercentile", () => {
+  it("一様分布の中央値は約50", () => {
+    const n = 1000;
+    const L = new Float32Array(n);
+    for (let i = 0; i < n; i++) L[i] = (i / n) * 100;
+    const p50 = luminancePercentile(L, n, 0.5);
+    expect(p50).toBeGreaterThan(45);
+    expect(p50).toBeLessThan(55);
+  });
+
+  it("92パーセンタイルは上位側に位置する", () => {
+    const n = 1000;
+    const L = new Float32Array(n);
+    for (let i = 0; i < n; i++) L[i] = (i / n) * 100;
+    const p92 = luminancePercentile(L, n, 0.92);
+    expect(p92).toBeGreaterThan(88);
+    expect(p92).toBeLessThan(96);
+  });
+
+  it("全画素が同じ値ならその値を返す", () => {
+    const L = new Float32Array(100).fill(83);
+    expect(luminancePercentile(L, 100, 0.92)).toBe(83);
+  });
+
+  it("明るい退色プリント（L が 60-95 に集中）では高い閾値になる", () => {
+    const n = 1000;
+    const L = new Float32Array(n);
+    for (let i = 0; i < n; i++) L[i] = 60 + (i / n) * 35;
+    const p92 = luminancePercentile(L, n, 0.92);
+    expect(p92).toBeGreaterThan(85);
   });
 });
 

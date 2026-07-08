@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { claheRgba, stretchLevels } from "../clahe";
+import { claheRgba, denoiseIfGrainy, estimateGrain, stretchLevels, GRAIN_SCORE_THRESHOLD } from "../clahe";
 
 function makeGrayRgba(width: number, height: number, fillFn: (i: number) => number): Uint8ClampedArray {
   const buf = new Uint8ClampedArray(width * height * 4);
@@ -146,5 +146,64 @@ describe("stretchLevels", () => {
   it("0 画素でもクラッシュしない", () => {
     const rgba = new Uint8ClampedArray(0);
     expect(() => stretchLevels(rgba, 0, 0)).not.toThrow();
+  });
+});
+
+describe("estimateGrain / denoiseIfGrainy", () => {
+  /** 粒状ノイズ入りのグレー画像（決定論的擬似乱数） */
+  function makeGrainy(N: number, base: number, amp: number): Uint8ClampedArray {
+    let seed = 12345;
+    const rand = () => {
+      seed = (seed * 1103515245 + 12345) & 0x7fffffff;
+      return seed / 0x7fffffff;
+    };
+    return makeGrayRgba(N, N, () => {
+      const v = base + (rand() - 0.5) * amp;
+      return Math.max(0, Math.min(255, Math.round(v)));
+    });
+  }
+
+  it("滑らかなグラデーションの粒状度は低い", () => {
+    const N = 64;
+    const rgba = makeGrayRgba(N, N, (i) => Math.floor(i / N) * 3);
+    expect(estimateGrain(rgba, N, N)).toBeLessThan(GRAIN_SCORE_THRESHOLD);
+  });
+
+  it("強い粒状ノイズはスコアが高い", () => {
+    const rgba = makeGrainy(64, 128, 60);
+    expect(estimateGrain(rgba, 64, 64)).toBeGreaterThan(GRAIN_SCORE_THRESHOLD);
+  });
+
+  it("クリーンな画像には触れない（同一バッファを返す）", () => {
+    const N = 64;
+    const rgba = makeGrayRgba(N, N, (i) => Math.floor(i / N) * 2 + 60);
+    expect(denoiseIfGrainy(rgba, N, N)).toBe(rgba);
+  });
+
+  it("粒状画像はブラー後に粒状度が下がる", () => {
+    const N = 64;
+    const rgba = makeGrainy(N, 128, 60);
+    const before = estimateGrain(rgba, N, N);
+    const out = denoiseIfGrainy(rgba, N, N);
+    expect(out).not.toBe(rgba);
+    const after = estimateGrain(out, N, N);
+    expect(after).toBeLessThan(before * 0.7);
+  });
+
+  it("alpha を保持し R=G=B を維持する", () => {
+    const N = 32;
+    const rgba = makeGrainy(N, 100, 80);
+    for (let i = 0; i < N * N; i++) rgba[i * 4 + 3] = 180;
+    const out = denoiseIfGrainy(rgba, N, N);
+    for (let i = 0; i < N * N; i++) {
+      expect(out[i * 4 + 3]).toBe(180);
+      expect(out[i * 4]).toBe(out[i * 4 + 1]);
+      expect(out[i * 4 + 1]).toBe(out[i * 4 + 2]);
+    }
+  });
+
+  it("1×1 でもクラッシュしない", () => {
+    const rgba = makeGrayRgba(1, 1, () => 128);
+    expect(() => denoiseIfGrainy(rgba, 1, 1)).not.toThrow();
   });
 });

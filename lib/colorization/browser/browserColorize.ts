@@ -20,6 +20,8 @@ import {
   grayStructureMAD,
   meanChroma,
   hueConcentration,
+  equalizeAbAxes,
+  luminancePercentile,
   normalizeChroma,
   removeCastAdaptive,
   protectShadows,
@@ -27,7 +29,7 @@ import {
   CHROMA_QUALITY_THRESHOLD,
   HUE_CONCENTRATION_CAST_THRESHOLD,
 } from "./abProcessing";
-import { claheRgba, stretchLevels } from "./clahe";
+import { claheRgba, denoiseIfGrainy, stretchLevels } from "./clahe";
 import {
   MODELS,
   createSessionForModel,
@@ -211,8 +213,10 @@ async function inferTileAb(
     throw new ColorizeError("INTERNAL_ERROR", sessionId, new Error("tile rgba size mismatch"));
   }
 
+  // デノイズ: 印刷スキャンの粒状ノイズが検出された場合のみブラー（クリーン画像には no-op）。
+  const denoisedRgba = denoiseIfGrainy(modelRgba, size, size);
   // レベル補正: 退色写真の圧縮された輝度レンジを回復（フルレンジ画像には no-op）。
-  const leveledRgba = stretchLevels(modelRgba, size, size);
+  const leveledRgba = stretchLevels(denoisedRgba, size, size);
   // CLAHE: 古い退色写真の局所コントラストを強化してモデルの色推定精度を向上させる。
   // タイルサイズ = size/8 で常に 8×8 タイルになるよう自動調整。claheClip=null なら無効（バリエーション用）。
   const enhancedRgba =
@@ -266,7 +270,8 @@ async function inferTileAb(
   if (!retryRgba || retryRgba.length !== retrySize * retrySize * 4) {
     return { a, b, retriedWith: `${retryModelId}:no_rgba` };
   }
-  const retryLeveled = stretchLevels(retryRgba, retrySize, retrySize);
+  const retryDenoised = denoiseIfGrainy(retryRgba, retrySize, retrySize);
+  const retryLeveled = stretchLevels(retryDenoised, retrySize, retrySize);
   const retryEnhanced =
     claheClip === null
       ? retryLeveled
@@ -441,6 +446,9 @@ export async function colorizeInBrowser(
     // 均一 strength より白い布・空など明るい領域をより強く中立化できる。
     if (strongCast) {
       removeCastAdaptive(aMerged, bMerged, lFull, pixelCount, 0.55, 0.95);
+      // 軸均衡化: セピア崩壊時は ab 分布が暖色軸の葉巻型に潰れているため、
+      // 短軸（緑↔紫・青↔黄方向）の抑圧された分散を部分ホワイトニングで復元する。
+      equalizeAbAxes(aMerged, bMerged, pixelCount);
     } else {
       removeCastAdaptive(aMerged, bMerged, lFull, pixelCount);
     }
@@ -449,9 +457,11 @@ export async function colorizeInBrowser(
     normalizeChroma(aMerged, bMerged, pixelCount);
     // シャドウ保護: 深い影（L<15）の赤茶の濁りを輝度に応じてフェード。
     protectShadows(aMerged, bMerged, lFull, pixelCount);
-    // ハイライト保護: L>75 の画素の彩度を輝度に応じてフェード。
-    // 白い布・明るい背景が黄ばんだり茶色になるのを防ぐ。
-    protectHighlights(aMerged, bMerged, lFull, pixelCount);
+    // ハイライト保護: 明るい画素の彩度を輝度に応じてフェードし、白い布の黄ばみを防ぐ。
+    // 閾値は固定 75 ではなく画像自身の輝度92パーセンタイル（75-90 にクランプ）へ適応させる。
+    // 退色プリントは全体が明るく、固定閾値では背景の樹木など実コンテンツまで脱色されるため。
+    const highlightThreshold = Math.max(75, Math.min(90, luminancePercentile(lFull, pixelCount, 0.92)));
+    protectHighlights(aMerged, bMerged, lFull, pixelCount, highlightThreshold);
 
     // 候補1: 自然 / standard+soft の場合はそのまま
     const aN = aMerged.slice(0);

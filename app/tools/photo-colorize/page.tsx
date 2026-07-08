@@ -152,22 +152,31 @@ export default async function PhotoColorizePage() {
 
         <section className="svc-section">
           <div className="container colorize-tool-container">
-            {viewer.kind !== "anonymous" && (
-              <div className="colorize-account-bar">
-                <span>
-                  ログイン中：{viewer.member.displayName || viewer.member.email}
-                  {viewer.kind === "admin" && (
-                    <>
-                      {" "}
-                      / <Link href="/admin">管理画面</Link>
-                    </>
-                  )}
-                </span>
-                <form action={signOutAction}>
-                  <button type="submit" className="colorize-logout-btn">ログアウト</button>
-                </form>
-              </div>
-            )}
+            <div className="colorize-account-bar">
+              {viewer.kind !== "anonymous" ? (
+                <>
+                  <span>
+                    ログイン中：{viewer.member.displayName || viewer.member.email}
+                    {viewer.kind === "admin" && (
+                      <>
+                        {" "}
+                        / <Link href="/admin">管理画面</Link>
+                      </>
+                    )}
+                  </span>
+                  <form action={signOutAction}>
+                    <button type="submit" className="colorize-logout-btn">ログアウト</button>
+                  </form>
+                </>
+              ) : (
+                <>
+                  <span className="colorize-account-bar-note">会員の方は色解析精度が向上します</span>
+                  <Link href="/login?next=/tools/photo-colorize" className="colorize-login-link">
+                    会員ログイン
+                  </Link>
+                </>
+              )}
+            </div>
 
             {/* 未ログインかつ会員必須 → ログイン誘導 */}
             {viewer.kind === "anonymous" && requireLogin ? (

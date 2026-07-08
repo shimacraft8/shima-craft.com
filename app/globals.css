@@ -3477,6 +3477,24 @@ section {
   color: var(--secondary);
   text-decoration: underline;
 }
+.colorize-account-bar-note {
+  color: #888;
+  font-size: 0.82rem;
+}
+.colorize-login-link {
+  display: inline-block;
+  border: 1px solid var(--secondary);
+  border-radius: 999px;
+  padding: 4px 14px;
+  font-size: 0.82rem;
+  color: var(--secondary) !important;
+  text-decoration: none !important;
+  white-space: nowrap;
+}
+.colorize-login-link:hover {
+  background: var(--secondary);
+  color: #fff !important;
+}
 .colorize-logout-btn {
   background: none;
   border: 1px solid #ccc;

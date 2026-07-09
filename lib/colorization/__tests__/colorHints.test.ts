@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { applyColorHints, type ColorHintPayload } from "../colorHints";
+import {
+  applyColorHints,
+  bilinearResize,
+  boxFilter,
+  type ColorHintPayload,
+} from "../colorHints";
 
 /** width×height の L 一定・ab=0 のチャンネルセットを作る */
 function makeChannels(width: number, height: number, lValue: number) {
@@ -121,8 +126,8 @@ describe("applyColorHints (空間bbox対応)", () => {
     // 中心 (50,50) は strong が勝つ
     const center = 50 * width + 50;
     expect(a[center]).toBeCloseTo(10 * 0.45, 1);
-    // 隅 (5,5) は weak のみ
-    const corner = 5 * width + 5;
+    // strong の box 外（フェザー・フィルタ裾野からも十分離れた点）は weak のみ
+    const corner = 15 * width + 15;
     expect(a[corner]).toBeCloseTo(-20 * 0.2, 1);
   });
 
@@ -148,11 +153,58 @@ describe("applyColorHints (空間bbox対応)", () => {
     const row = 100; // 縦中央
     const deepInside = row * width + 100;
     const nearEdge = row * width + 150; // x=150 = box 右端(0.75*200)
-    const outside = row * width + 170;
-    // 内部 > 縁 > 外部 の単調減衰
+    const outside = row * width + 180;
+    // 内部 > 縁 > 外部 の単調減衰（外部はフィルタ裾野を含めてもほぼゼロ）
     expect(a[deepInside]).toBeGreaterThan(a[nearEdge]);
     expect(a[nearEdge]).toBeGreaterThan(0);
-    expect(a[outside]).toBe(0);
+    expect(Math.abs(a[outside])).toBeLessThan(0.5);
+  });
+
+  it("マスクが輝度エッジにスナップする（bbox はみ出し側が減衰する）", () => {
+    // 左半分 L=40（暗い被写体）、右半分 L=85（明るい背景）。
+    // box は境界を越えて右側までかかっているが、輝度帯 30-55 が被写体側のみを指すため
+    // ガイデッドフィルタ後も背景側には色がほぼ乗らない。
+    const width = 200;
+    const height = 200;
+    const n = width * height;
+    const a = new Float32Array(n);
+    const b = new Float32Array(n);
+    const L = new Float32Array(n);
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        L[y * width + x] = x < 100 ? 40 : 85;
+      }
+    }
+    const hints: ColorHintPayload = {
+      scene: "test",
+      regions: [
+        {
+          label: "uniform",
+          box: { x0: 0.1, y0: 0.1, x1: 0.7, y1: 0.9 }, // 境界(x=100)を越えて x=140 まで
+          luminanceMin: 30,
+          luminanceMax: 55,
+          aTarget: 2,
+          bTarget: 16,
+          weight: 0.5,
+        },
+      ],
+    };
+    applyColorHints(a, b, L, n, width, height, hints);
+    const subject = 100 * width + 60; // 被写体側 box 内
+    const background = 100 * width + 130; // 背景側 box 内（輝度帯の外）
+    expect(b[subject]).toBeGreaterThan(4); // 被写体には色が乗る
+    expect(Math.abs(b[background])).toBeLessThan(b[subject] * 0.25); // 背景はほぼ乗らない
+  });
+
+  it("boxFilter は一様入力を保存し、bilinearResize は定数マップを保存する", () => {
+    const uniform = new Float32Array(50 * 40).fill(0.3);
+    const blurred = boxFilter(uniform, 50, 40, 5);
+    expect(blurred[0]).toBeCloseTo(0.3, 5);
+    expect(blurred[20 * 50 + 25]).toBeCloseTo(0.3, 5);
+
+    const resized = bilinearResize(uniform, 50, 40, 123, 77);
+    expect(resized[0]).toBeCloseTo(0.3, 5);
+    expect(resized[40 * 123 + 60]).toBeCloseTo(0.3, 5);
   });
 
   it("L チャンネルは一切変更されない", () => {

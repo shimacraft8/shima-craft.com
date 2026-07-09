@@ -184,22 +184,40 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
   }, [prepared, resultUrl, vividResultUrl]);
 
   /**
-   * 会員向け: Claude Vision で色ヒントをバックグラウンド取得する。
+   * 会員向け: Vision AI で色ヒントをバックグラウンド取得する。
    * 失敗しても colorize は続行する（ヒントなし ONNX のみで動作）。
-   * smallRgba（256×256）を JPEG に変換してサーバーへ送信する。
+   * アスペクト比を保持したまま長辺512pxへ縮小した JPEG を送信する
+   * （モデル入力用の歪んだ正方形より被写体認識・bbox座標の精度が上がる）。
    */
   const fetchColorHints = useCallback(
-    async (smallRgba: Uint8ClampedArray): Promise<ColorHintPayload | null> => {
+    async (image: {
+      fullRgba: Uint8ClampedArray;
+      width: number;
+      height: number;
+    }): Promise<ColorHintPayload | null> => {
       if (isAnonymous) return null;
       try {
+        const srcCanvas = document.createElement("canvas");
+        srcCanvas.width = image.width;
+        srcCanvas.height = image.height;
+        const srcCtx = srcCanvas.getContext("2d");
+        if (!srcCtx) return null;
+        srcCtx.putImageData(
+          new ImageData(new Uint8ClampedArray(image.fullRgba), image.width, image.height),
+          0,
+          0
+        );
+        const scale = Math.min(1, 512 / Math.max(image.width, image.height));
         const canvas = document.createElement("canvas");
-        canvas.width = 256;
-        canvas.height = 256;
+        canvas.width = Math.max(1, Math.round(image.width * scale));
+        canvas.height = Math.max(1, Math.round(image.height * scale));
         const ctx = canvas.getContext("2d");
         if (!ctx) return null;
-        const imageData = new ImageData(new Uint8ClampedArray(smallRgba), 256, 256);
-        ctx.putImageData(imageData, 0, 0);
-        const dataUrl = canvas.toDataURL("image/jpeg", 0.85);
+        ctx.drawImage(srcCanvas, 0, 0, canvas.width, canvas.height);
+        // サーバーの 300KB 上限に収まるよう品質を段階的に下げる
+        let dataUrl = canvas.toDataURL("image/jpeg", 0.85);
+        if (dataUrl.length > 280_000) dataUrl = canvas.toDataURL("image/jpeg", 0.7);
+        if (dataUrl.length > 280_000) dataUrl = canvas.toDataURL("image/jpeg", 0.5);
         const mimeMatch = dataUrl.match(/^data:([^;]+);base64,/);
         const detectedMime = mimeMatch?.[1] ?? "image/jpeg";
         const base64 = dataUrl.split(",")[1];
@@ -250,10 +268,10 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
         // 会員: 画像選択後すぐにバックグラウンドでヒント取得を開始する。
         // ユーザーが設定を確認している間（約10〜30秒）に完了するため体感遅延なし。
         // トークンで世代管理し、古い画像のヒントが新しい画像へ適用されるのを防ぐ。
-        if (!isAnonymous && result.smallRgba) {
+        if (!isAnonymous) {
           const token = hintTokenRef.current;
           setHintStatus("loading");
-          hintPromiseRef.current = fetchColorHints(result.smallRgba).then((hints) => {
+          hintPromiseRef.current = fetchColorHints(result).then((hints) => {
             if (hintTokenRef.current !== token) return;
             colorHintsRef.current = hints;
             setHintStatus(hints ? "success" : "failed");
@@ -614,7 +632,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
           <p className="colorize-dropzone-privacy">
             {isAnonymous
               ? "この写真は端末内（お使いのブラウザの中）で処理されます。写真はSHIMA CRAFTや外部AIサービスへ送信されません。"
-              : "会員機能として、色解析の精度向上のため写真の縮小版（256×256px）をSHIMA CRAFTサーバー経由でGroq AI（Meta Llama 4）に送信します。写真はサーバーに保存されません。"}
+              : "会員機能として、色解析の精度向上のため写真の縮小版（最大512px）をSHIMA CRAFTサーバー経由でGroq AI（Meta Llama 4）に送信します。写真はサーバーに保存されません。"}
           </p>
           {preparing && (
             <p className="colorize-preparing" role="status">画像を準備しています…</p>
@@ -701,7 +719,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
                 に同意します。
                 {isAnonymous
                   ? "写真は端末内で処理され、SHIMA CRAFTへ送信されません。"
-                  : "色解析のため写真の縮小版（256×256px）をSHIMA CRAFTサーバー経由でGroq AI（Meta Llama 4）に送信することに同意します。"}
+                  : "色解析のため写真の縮小版（最大512px）をSHIMA CRAFTサーバー経由でGroq AI（Meta Llama 4）に送信することに同意します。"}
               </span>
             </label>
           </div>

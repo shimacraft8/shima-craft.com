@@ -454,14 +454,18 @@ export async function colorizeInBrowser(
     } else {
       removeCastAdaptive(aMerged, bMerged, lFull, pixelCount);
     }
-    // Vision AI 色ヒント適用: 歴史的・文脈的に正確な色へ ONNX 出力を部分的に誘導する。
-    // キャスト補正後・彩度正規化前に適用することで、ヒントがグローバルな色空間で有効に機能する。
-    if (options.colorHints) {
-      applyColorHints(aMerged, bMerged, lFull, pixelCount, width, height, options.colorHints);
-    }
     // 彩度正規化: センタリング後の色相差を増幅して肌・布・背景の色分離を回復する。
     // 彩度不足（mean chroma < 11）の出力のみ対象で、既に十分カラフルな出力には作用しない。
     normalizeChroma(aMerged, bMerged, pixelCount);
+    // Vision AI 色ヒント適用: 歴史的・文脈的に正確な色へ ONNX 出力を部分的に誘導する。
+    // 彩度正規化の後に適用することで、キャリブレーション済みの目標色（肌 a=10,b=22 等）が
+    // 後段の増幅で歪まず、指定した絶対値のまま画面に乗る。
+    // モデル出力がセピア崩壊している（色相集中度が高い）ほどヒントを強める:
+    // 集中度 0.5 以下 → 等倍、0.5〜1.0 → 最大 1.4 倍まで線形に引き上げ。
+    if (options.colorHints) {
+      const hintStrength = 1 + 0.8 * Math.max(0, concentration - 0.5);
+      applyColorHints(aMerged, bMerged, lFull, pixelCount, width, height, options.colorHints, hintStrength);
+    }
     // シャドウ保護: 深い影（L<15）の赤茶の濁りを輝度に応じてフェード。
     protectShadows(aMerged, bMerged, lFull, pixelCount);
     // ハイライト保護: 明るい画素の彩度を輝度に応じてフェードし、白い布の黄ばみを防ぐ。

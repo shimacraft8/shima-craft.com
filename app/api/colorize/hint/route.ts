@@ -191,7 +191,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     const response = await groq.chat.completions.create({
       model: "meta-llama/llama-4-scout-17b-16e-instruct",
-      max_tokens: 1024,
+      max_tokens: 2048,
+      // 色・座標の再現性を上げる（既定の 1.0 では同じ写真でも指定色が大きくブレる）
+      temperature: 0.2,
+      // JSON モード: マークダウンや説明文の混入によるパース失敗を防ぐ
+      response_format: { type: "json_object" },
       messages: [
         {
           role: "user",

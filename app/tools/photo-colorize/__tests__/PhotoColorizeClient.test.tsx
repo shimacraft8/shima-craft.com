@@ -23,6 +23,11 @@ vi.mock("@/lib/colorization/browser/browserColorize", async (importOriginal) => 
   return { ...actual, colorizeInBrowser: mocks.colorizeInBrowser };
 });
 
+// MediaPipe は jsdom で動かない（WASM 読み込みが解決しない）ためモックする
+vi.mock("@/lib/colorization/browser/personParts", () => ({
+  segmentPersonParts: vi.fn().mockResolvedValue(null),
+}));
+
 function makeFile() {
   return new File(["fake-bytes"], "photo.jpg", { type: "image/jpeg" });
 }

@@ -26,3 +26,16 @@
 - グラフ入出力: 入力 `input` = グレーRGB (0..1) [1,3,512,512] / 出力 `output` = ab [1,2,512,512]
 - 更新手順: DDColor/scripts の要領で .pth → ONNX 化 → `onnxslim` → fp16/fp32 →
   90MB以下に分割し、`ddcolor.manifest.json` と本NOTICEを更新する
+
+---
+
+# 人物パーツ分割モデル（MediaPipe Selfie Multiclass）
+
+- モデル: `selfie_multiclass_256x256.tflite`（Google MediaPipe Image Segmenter）
+- ライセンス: Apache-2.0（商用利用可）
+- 出典: https://developers.google.com/mediapipe/solutions/vision/image_segmenter
+- 取得元: https://storage.googleapis.com/mediapipe-models/image_segmenter/selfie_multiclass_256x256/float32/latest/selfie_multiclass_256x256.tflite
+- クラス: 0=背景, 1=髪, 2=体の肌, 3=顔の肌, 4=服, 5=その他（装身具等）
+- ランタイム: @mediapipe/tasks-vision（Apache-2.0）。WASM は /public/mediapipe/ に同梱
+- 用途: 会員向け色ヒントの適用範囲を人物パーツ単位で画素精度に限定する
+  （推論は端末内で完結し、画像は外部へ送信されない）

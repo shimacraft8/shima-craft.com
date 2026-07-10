@@ -18,7 +18,7 @@ import { NextRequest, NextResponse } from "next/server";
 import Groq from "groq-sdk";
 import { isSameOrigin } from "@/lib/http/origin";
 import { getViewer } from "@/lib/auth/access";
-import type { ColorHintPayload, ColorRegionHint } from "@/lib/colorization/colorHints";
+import type { ColorHintPayload, ColorRegionHint, HintCategory } from "@/lib/colorization/colorHints";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
@@ -36,6 +36,7 @@ Return ONLY a valid JSON object — no explanation, no markdown, no code fence. 
   "regions": [
     {
       "label": "region name",
+      "category": <"skin" | "hair" | "clothes" | "background" | "other">,
       "box": { "x0": <int 0-100>, "y0": <int 0-100>, "x1": <int 0-100>, "y1": <int 0-100> },
       "luminanceMin": <number 0-100>,
       "luminanceMax": <number 0-100>,
@@ -45,6 +46,13 @@ Return ONLY a valid JSON object — no explanation, no markdown, no code fence. 
     }
   ]
 }
+
+"category" classifies what the region is:
+- "skin": exposed human skin (faces, hands, arms)
+- "hair": human hair
+- "clothes": clothing, uniforms, hats, helmets, goggles, accessories worn on the body
+- "background": everything behind/around people (sky, trees, ground, walls, buildings, water)
+- "other": objects that are none of the above (vehicles, animals, hand-held items)
 
 "box" is the bounding rectangle of the region as PERCENT of image size: x0/y0 = left/top corner, x1/y1 = right/bottom corner (x0 < x1, y0 < y1). Example: a face in the upper-left quarter → {"x0":5,"y0":10,"x1":30,"y1":40}. The box may be approximate but MUST actually contain the object. Every region MUST have a box.
 
@@ -77,12 +85,21 @@ Luminance zones in CIE L* (0=black, 100=white):
 - 90–100: highlight / near-white (white fabric, specular highlights)
 
 Rules:
-- Provide 4–8 regions, one per distinct object/area (each face group, each clothing type, sky, foliage, ground...)
+- Provide 4–10 regions, one per distinct object/area (skin, hair, each clothing type, sky, foliage, ground...)
+- ALWAYS include separate regions for skin, hair, and clothes when people are visible
 - Each region = tight box around ONE object + the luminance range of that object INSIDE its box. The luminance range separates the object from whatever else falls inside the box, so keep it as narrow as the object allows
 - Do NOT try to cover the whole image or the whole 0–100 luminance range; leave unhinted areas to the base model
 - Use weight 0.35–0.5 for clearly identifiable subjects (faces, sky, foliage, known uniforms), 0.15–0.25 when uncertain
 - Vegetation/trees must be green (negative a*), sky must be blue-ish (negative b*) unless context says otherwise — do not leave them brown
 - Be historically accurate: research the specific period, military branch, nationality`;
+
+const HINT_CATEGORIES: readonly HintCategory[] = [
+  "skin",
+  "hair",
+  "clothes",
+  "background",
+  "other",
+];
 
 /** モデルが返した box（パーセント 0-100）として妥当か */
 function isValidBox(box: unknown): box is { x0: number; y0: number; x1: number; y1: number } {
@@ -118,6 +135,8 @@ function isValidPayload(data: unknown): data is ColorHintPayload {
       typeof region.bTarget === "number" &&
       typeof region.weight === "number" &&
       (region.box === undefined || isValidBox(region.box)) &&
+      (region.category === undefined ||
+        HINT_CATEGORIES.includes(region.category as HintCategory)) &&
       region.luminanceMin >= 0 &&
       region.luminanceMax <= 100 &&
       region.luminanceMax > region.luminanceMin &&

@@ -45,7 +45,7 @@ import {
   type CollageAxis,
   type CollageTile,
 } from "./collage";
-import { applyColorHints, type ColorHintPayload } from "../colorHints";
+import { applyColorHints, type ColorHintPayload, type PersonPartsMask } from "../colorHints";
 
 export type ColorizeInput = {
   fullRgba: Uint8ClampedArray;
@@ -320,6 +320,11 @@ export async function colorizeInBrowser(
      * 指定されると ONNX 推定後の ab チャンネルをヒント方向へ部分ブレンドする。
      */
     colorHints?: ColorHintPayload | null;
+    /**
+     * 人物パーツ分割マスク（会員向け・任意）。
+     * あれば skin/hair/clothes/background カテゴリのヒントが画素単位で限定される。
+     */
+    personParts?: PersonPartsMask | null;
   }
 ): Promise<ColorizeOutput> {
   const sessionId = options.clientSessionId ?? newClientSessionId();
@@ -457,15 +462,8 @@ export async function colorizeInBrowser(
     // 彩度正規化: センタリング後の色相差を増幅して肌・布・背景の色分離を回復する。
     // 彩度不足（mean chroma < 11）の出力のみ対象で、既に十分カラフルな出力には作用しない。
     normalizeChroma(aMerged, bMerged, pixelCount);
-    // Vision AI 色ヒント適用: 歴史的・文脈的に正確な色へ ONNX 出力を部分的に誘導する。
-    // 彩度正規化の後に適用することで、キャリブレーション済みの目標色（肌 a=10,b=22 等）が
-    // 後段の増幅で歪まず、指定した絶対値のまま画面に乗る。
-    // モデル出力がセピア崩壊している（色相集中度が高い）ほどヒントを強める:
-    // 集中度 0.5 以下 → 等倍、0.5〜1.0 → 最大 1.4 倍まで線形に引き上げ。
-    if (options.colorHints) {
-      const hintStrength = 1 + 0.8 * Math.max(0, concentration - 0.5);
-      applyColorHints(aMerged, bMerged, lFull, pixelCount, width, height, options.colorHints, hintStrength);
-    }
+    // シャドウ/ハイライト保護（モデル出力の後始末）: ヒント適用の前に行う。
+    // 後に行うと明るい顔へ乗せた肌色までフェードされてしまう。
     // シャドウ保護: 深い影（L<15）の赤茶の濁りを輝度に応じてフェード。
     protectShadows(aMerged, bMerged, lFull, pixelCount);
     // ハイライト保護: 明るい画素の彩度を輝度に応じてフェードし、白い布の黄ばみを防ぐ。
@@ -473,6 +471,34 @@ export async function colorizeInBrowser(
     // 退色プリントは全体が明るく、固定閾値では背景の樹木など実コンテンツまで脱色されるため。
     const highlightThreshold = Math.max(75, Math.min(90, luminancePercentile(lFull, pixelCount, 0.87)));
     protectHighlights(aMerged, bMerged, lFull, pixelCount, highlightThreshold);
+    // Vision AI 色ヒント適用: 歴史的・文脈的に正確な色へ ONNX 出力を誘導する。
+    // 彩度正規化・保護の後に適用することで、目標色（肌 a=10,b=22 等）が
+    // 後段処理で歪まず、指定した絶対値のまま画面に乗る。
+    // 手塗りモード: モデル出力がセピア崩壊（色相集中）または低彩度なほど
+    // ヒント主導度を上げる。1.0=通常の微調整 〜 1.9=手彩色写真のようにヒントが塗装。
+    if (options.colorHints) {
+      const mcNow = meanChroma(aMerged, bMerged, pixelCount);
+      const degenerate = Math.max(
+        Math.min(1, Math.max(0, (concentration - 0.55) / 0.3)),
+        Math.min(1, Math.max(0, (8 - mcNow) / 5))
+      );
+      const hintStrength = 1 + 0.9 * degenerate;
+      applyColorHints(
+        aMerged,
+        bMerged,
+        lFull,
+        pixelCount,
+        width,
+        height,
+        options.colorHints,
+        hintStrength,
+        options.personParts ?? null
+      );
+      // ヒント適用後の軽い保護: 深い黒（L<8）と紙白（L>94）のみ中立へ戻す。
+      // 顔・空などの明るい被写体に乗せたヒント色は保持される。
+      protectShadows(aMerged, bMerged, lFull, pixelCount, 8);
+      protectHighlights(aMerged, bMerged, lFull, pixelCount, 94);
+    }
 
     // 候補1: 自然 / standard+soft の場合はそのまま
     const aN = aMerged.slice(0);

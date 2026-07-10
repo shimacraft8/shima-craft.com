@@ -16,7 +16,8 @@ import {
   type ColorizeFinish,
   type ColorizeQuality,
 } from "@/lib/colorization/browser/browserColorize";
-import type { ColorHintPayload } from "@/lib/colorization/colorHints";
+import type { ColorHintPayload, PersonPartsMask } from "@/lib/colorization/colorHints";
+import { segmentPersonParts } from "@/lib/colorization/browser/personParts";
 import {
   COLORIZE_ERROR_HEADINGS,
   COLORIZE_ERROR_IS_ENVIRONMENT_ISSUE,
@@ -144,6 +145,13 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
   const hintTokenRef = useRef(0);
   /** 進行中のヒント取得。カラー化開始時に完了を待つ（fetch 側で20秒タイムアウト） */
   const hintPromiseRef = useRef<Promise<void> | null>(null);
+  /**
+   * 人物パーツ分割マスク（会員向け・端末内で実行）。
+   * skin/hair/clothes カテゴリのヒントを画素単位で限定するために使う。
+   */
+  const personPartsRef = useRef<PersonPartsMask | null>(null);
+  /** 進行中のパーツ分割。カラー化開始時に完了を待つ */
+  const partsPromiseRef = useRef<Promise<void> | null>(null);
   /** Vision AI ヒント取得状態（UI 表示・イベントログ用） */
   const [hintStatus, setHintStatus] = useState<"idle" | "loading" | "success" | "failed">("idle");
 
@@ -178,6 +186,8 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
     colorHintsRef.current = null;
     hintTokenRef.current += 1;
     hintPromiseRef.current = null;
+    personPartsRef.current = null;
+    partsPromiseRef.current = null;
     setHintStatus("idle");
     setPhase("select");
     if (fileInputRef.current) fileInputRef.current.value = "";
@@ -257,6 +267,8 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
       colorHintsRef.current = null;
       hintTokenRef.current += 1;
       hintPromiseRef.current = null;
+      personPartsRef.current = null;
+      partsPromiseRef.current = null;
       setHintStatus("idle");
       try {
         const result = await prepareImageForColorize(file);
@@ -275,6 +287,16 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
             if (hintTokenRef.current !== token) return;
             colorHintsRef.current = hints;
             setHintStatus(hints ? "success" : "failed");
+          });
+          // 人物パーツ分割（端末内・MediaPipe）も並行で開始する。
+          // 失敗しても null のまま続行（bbox のみで動作）。
+          partsPromiseRef.current = segmentPersonParts(
+            result.fullRgba,
+            result.width,
+            result.height
+          ).then((parts) => {
+            if (hintTokenRef.current !== token) return;
+            personPartsRef.current = parts;
           });
         }
       } catch (err) {
@@ -384,10 +406,13 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
     if (remaining !== null) setDailyRemaining(remaining);
     lastExecutionIdRef.current = executionId;
 
-    // ヒント取得が進行中なら完了を待つ（fetch 側の20秒タイムアウトで有界）。
+    // ヒント取得・パーツ分割が進行中なら完了を待つ（fetch 側の20秒タイムアウトで有界）。
     // 待たないとヒントなしで実行され、品質向上が反映されないことがある。
-    if (hintPromiseRef.current) {
-      await hintPromiseRef.current.catch(() => undefined);
+    if (hintPromiseRef.current || partsPromiseRef.current) {
+      await Promise.all([
+        hintPromiseRef.current?.catch(() => undefined),
+        partsPromiseRef.current?.catch(() => undefined),
+      ]);
       if (runIdRef.current !== runId) {
         inFlightRef.current = false;
         return;
@@ -411,6 +436,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
           quality: selectedQuality,
           variant: attemptRef.current,
           colorHints: colorHintsRef.current,
+          personParts: personPartsRef.current,
           onProgress: (p) => {
             if (runIdRef.current !== runId) return;
             setProgress(p);

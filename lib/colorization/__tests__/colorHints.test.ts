@@ -4,6 +4,7 @@ import {
   bilinearResize,
   boxFilter,
   type ColorHintPayload,
+  type PersonPartsMask,
 } from "../colorHints";
 
 /** width×height の L 一定・ab=0 のチャンネルセットを作る */
@@ -205,6 +206,124 @@ describe("applyColorHints (空間bbox対応)", () => {
     const resized = bilinearResize(uniform, 50, 40, 123, 77);
     expect(resized[0]).toBeCloseTo(0.3, 5);
     expect(resized[40 * 123 + 60]).toBeCloseTo(0.3, 5);
+  });
+
+  it("skin カテゴリはパーツマスクの肌画素だけに適用される（box が広くても）", () => {
+    // 左半分=顔の肌(クラス3)、右半分=背景(クラス0)のパーツマスク。
+    // box は画像全体だが、肌画素にしか色が乗らないこと。
+    const width = 100;
+    const height = 100;
+    const { a, b, L, n } = makeChannels(width, height, 60);
+    const partData = new Uint8Array(n);
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        partData[y * width + x] = x < 50 ? 3 : 0;
+      }
+    }
+    const parts: PersonPartsMask = { data: partData, width, height };
+    const hints: ColorHintPayload = {
+      scene: "test",
+      regions: [
+        {
+          label: "faces",
+          category: "skin",
+          box: { x0: 0, y0: 0, x1: 1, y1: 1 },
+          luminanceMin: 40,
+          luminanceMax: 80,
+          aTarget: 10,
+          bTarget: 22,
+          weight: 0.5,
+        },
+      ],
+    };
+    applyColorHints(a, b, L, n, width, height, hints, 1, parts);
+    const skinPixel = 50 * width + 20; // 肌側の内部
+    const bgPixel = 50 * width + 80; // 背景側の内部
+    expect(a[skinPixel]).toBeCloseTo(10 * 0.5, 1);
+    expect(Math.abs(a[bgPixel])).toBeLessThan(0.5);
+  });
+
+  it("background カテゴリは人物画素に色を乗せない", () => {
+    const width = 100;
+    const height = 100;
+    const { a, b, L, n } = makeChannels(width, height, 60);
+    const partData = new Uint8Array(n);
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        partData[y * width + x] = x < 50 ? 4 : 0; // 左=服, 右=背景
+      }
+    }
+    const parts: PersonPartsMask = { data: partData, width, height };
+    const hints: ColorHintPayload = {
+      scene: "test",
+      regions: [
+        {
+          label: "trees",
+          category: "background",
+          box: { x0: 0, y0: 0, x1: 1, y1: 1 },
+          luminanceMin: 40,
+          luminanceMax: 80,
+          aTarget: -18,
+          bTarget: 16,
+          weight: 0.5,
+        },
+      ],
+    };
+    applyColorHints(a, b, L, n, width, height, hints, 1, parts);
+    const clothesPixel = 50 * width + 20;
+    const bgPixel = 50 * width + 80;
+    expect(Math.abs(a[clothesPixel])).toBeLessThan(0.5); // 服（人物）には乗らない
+    expect(a[bgPixel]).toBeCloseTo(-18 * 0.5, 1); // 背景には乗る
+  });
+
+  it("パーツマスク照合できるカテゴリ領域は box なしでも weight 制限されない", () => {
+    const width = 50;
+    const height = 50;
+    const { a, b, L, n } = makeChannels(width, height, 60);
+    const partData = new Uint8Array(n).fill(3); // 全画素=顔の肌
+    const parts: PersonPartsMask = { data: partData, width, height };
+    const hints: ColorHintPayload = {
+      scene: "test",
+      regions: [
+        {
+          label: "skin without box",
+          category: "skin",
+          luminanceMin: 40,
+          luminanceMax: 80,
+          aTarget: 10,
+          bTarget: 22,
+          weight: 0.5,
+        },
+      ],
+    };
+    applyColorHints(a, b, L, n, width, height, hints, 1, parts);
+    const center = 25 * width + 25;
+    // boxless の 0.2 制限ではなく weight 0.5 がそのまま効く
+    expect(a[center]).toBeCloseTo(10 * 0.5, 1);
+  });
+
+  it("strength 引き上げ（手塗りモード）で weight が上限 0.9 まで増幅される", () => {
+    const width = 100;
+    const height = 100;
+    const { a, b, L, n } = makeChannels(width, height, 60);
+    const hints: ColorHintPayload = {
+      scene: "test",
+      regions: [
+        {
+          label: "uniform",
+          box: { x0: 0, y0: 0, x1: 1, y1: 1 },
+          luminanceMin: 40,
+          luminanceMax: 80,
+          aTarget: 2,
+          bTarget: 16,
+          weight: 0.5,
+        },
+      ],
+    };
+    applyColorHints(a, b, L, n, width, height, hints, 1.9); // セピア崩壊時の strength
+    const center = 50 * width + 50;
+    // 0.5 × 1.9 = 0.95 → 上限 0.9 でクランプ
+    expect(b[center]).toBeCloseTo(16 * 0.9, 1);
   });
 
   it("L チャンネルは一切変更されない", () => {

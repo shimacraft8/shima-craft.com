@@ -23,6 +23,32 @@ export type HintBox = {
   y1: number;
 };
 
+/**
+ * 領域の意味カテゴリ。人物パーツ（skin/hair/clothes）は MediaPipe の
+ * 画素単位マスクと照合され、bbox より正確に適用範囲が決まる。
+ * background はパーツ分割の「背景」クラスと照合され、人物への色はみ出しを防ぐ。
+ */
+export type HintCategory = "skin" | "hair" | "clothes" | "background" | "other";
+
+/**
+ * 人物パーツ分割の結果（MediaPipe selfie multiclass）。
+ * data はクラスID: 0=背景, 1=髪, 2=体の肌, 3=顔の肌, 4=服, 5=その他（帽子・眼鏡等）
+ */
+export type PersonPartsMask = {
+  data: Uint8Array;
+  width: number;
+  height: number;
+};
+
+/** カテゴリ → パーツ分割クラスIDの対応。undefined のカテゴリはマスク照合しない */
+const CATEGORY_PART_CLASSES: Partial<Record<HintCategory, readonly number[]>> = {
+  skin: [2, 3],
+  hair: [1],
+  // 軍帽・飛行帽・ゴーグル等は「その他(5)」に分類されるため服として扱う
+  clothes: [4, 5],
+  background: [0],
+};
+
 /** 1つのセマンティック領域に対する色ヒント */
 export type ColorRegionHint = {
   /** 領域の名前（ログ・デバッグ用） */
@@ -42,9 +68,12 @@ export type ColorRegionHint = {
   weight: number;
   /**
    * 領域の空間範囲（正規化 0〜1）。輝度帯とのANDで適用画素を決める。
-   * 未指定の場合は画像全体が対象になるため weight が自動的に弱められる。
+   * 未指定の場合は画像全体が対象になるため weight が自動的に弱められる
+   * （ただしパーツマスクと照合できるカテゴリを持つ場合を除く）。
    */
   box?: HintBox;
+  /** 領域の意味カテゴリ。人物パーツマスクとの照合に使う（省略可） */
+  category?: HintCategory;
 };
 
 /** Vision AI が返す色ヒント全体 */
@@ -64,8 +93,12 @@ const BOX_FEATHER = 0.04;
 /** 輝度帯境界のフェザー幅（L* 単位。輝度バンディングを防ぐ） */
 const LUM_FEATHER = 4;
 
-/** 最終ブレンド強度の上限。これ以上はヒント色がベタ塗りに見える */
-const MAX_BLEND_WEIGHT = 0.6;
+/**
+ * 最終ブレンド強度の上限。
+ * ベースモデルがセピア崩壊している場合は strength 引き上げにより
+ * この上限近くまで達し、「手彩色写真」のようにヒントが主導する。
+ */
+const MAX_BLEND_WEIGHT = 0.9;
 
 /** マスク処理の低解像度上限（長辺）。重みマップは滑らかなので低解像度で十分 */
 const MASK_MAX_DIM = 384;
@@ -154,6 +187,26 @@ export function guidedFilter(
   return out;
 }
 
+/** クラスIDマップの最近傍リサイズ（クラスIDは補間できないため nearest 固定） */
+function nearestResizeU8(
+  src: Uint8Array,
+  sw: number,
+  sh: number,
+  dw: number,
+  dh: number
+): Uint8Array {
+  if (sw === dw && sh === dh) return src;
+  const out = new Uint8Array(dw * dh);
+  for (let y = 0; y < dh; y++) {
+    const sy = Math.min(sh - 1, Math.floor(((y + 0.5) * sh) / dh));
+    for (let x = 0; x < dw; x++) {
+      const sx = Math.min(sw - 1, Math.floor(((x + 0.5) * sw) / dw));
+      out[y * dw + x] = src[sy * sw + sx];
+    }
+  }
+  return out;
+}
+
 /** Float32 マップのバイリニア拡大（マスク・輝度など単チャンネル用） */
 export function bilinearResize(
   src: Float32Array,
@@ -202,6 +255,8 @@ export function bilinearResize(
  * @param hints      Vision AI が返したヒント
  * @param strength   全体強度係数。ONNX 出力がセピア崩壊している時に 1 超を渡して
  *                   ヒント主導にする（browserColorize が hueConcentration から算出）
+ * @param parts      人物パーツ分割マスク（あれば skin/hair/clothes/background の
+ *                   カテゴリ領域を画素単位で限定する）
  */
 export function applyColorHints(
   a: Float32Array,
@@ -211,7 +266,8 @@ export function applyColorHints(
   width: number,
   height: number,
   hints: ColorHintPayload,
-  strength = 1
+  strength = 1,
+  parts: PersonPartsMask | null = null
 ): void {
   const regions = hints.regions.filter((r) => r.weight > 0 && r.luminanceMax > r.luminanceMin);
   if (regions.length === 0 || width <= 0 || height <= 0 || strength <= 0) return;
@@ -222,8 +278,14 @@ export function applyColorHints(
   const mh = Math.max(1, Math.round(height * scale));
   const guide = bilinearResize(L, width, height, mw, mh);
 
+  // パーツ分割マスクをマスク解像度へ（クラスIDなので nearest）
+  const partMap = parts ? nearestResizeU8(parts.data, parts.width, parts.height, mw, mh) : null;
+
   const prepared = regions.map((r) => {
-    const cap = r.box ? MAX_BLEND_WEIGHT : BOXLESS_WEIGHT_CAP;
+    const partClasses =
+      partMap && r.category ? (CATEGORY_PART_CLASSES[r.category] ?? null) : null;
+    // 空間限定（box またはパーツマスク照合）がある領域のみ強いブレンドを許す
+    const cap = r.box || partClasses ? MAX_BLEND_WEIGHT : BOXLESS_WEIGHT_CAP;
     return {
       lumMin: r.luminanceMin,
       lumMax: r.luminanceMax,
@@ -236,6 +298,7 @@ export function applyColorHints(
       py1: r.box ? r.box.y1 * mh : mh,
       featherX: BOX_FEATHER * mw,
       featherY: BOX_FEATHER * mh,
+      partClasses,
     };
   });
 
@@ -259,6 +322,10 @@ export function applyColorHints(
       if (lumIn <= -LUM_FEATHER) continue;
       const lumFactor = clamp01((lumIn + LUM_FEATHER) / (LUM_FEATHER * 2));
       if (lumFactor <= 0) continue;
+
+      // パーツマスク照合: カテゴリが人物パーツ/背景に対応する領域は
+      // 分割クラスが一致する画素のみ対象（bbox より正確な画素単位の限定）
+      if (region.partClasses && !region.partClasses.includes(partMap![i])) continue;
 
       // 空間フェザー: box の内側で1、縁から外へ featherX/Y かけて0へ減衰
       const inX = Math.min(x - region.px0, region.px1 - x);

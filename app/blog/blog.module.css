@@ -493,6 +493,27 @@
   font-size: 0.86rem;
 }
 
+.authorInfo {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.authorAvatarWrap {
+  flex: 0 0 80px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.authorAvatar {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .authorLabel {
   font-size: 0.72rem !important;
   font-weight: 700;
@@ -505,6 +526,212 @@
   font-family: var(--serif, serif);
   font-size: 1.15rem !important;
   font-weight: 700;
+}
+
+/* ===== About page hero with avatar ===== */
+
+.aboutHeroInner {
+  display: flex;
+  align-items: flex-start;
+  gap: 28px;
+  margin-top: 32px;
+}
+
+.aboutAvatarCol {
+  flex: 0 0 auto;
+}
+
+.aboutAvatarCircleWrap {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.aboutAvatarImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.aboutTextCol {
+  flex: 1;
+  min-width: 0;
+}
+
+.aboutHeroHeading {
+  margin: 0;
+  font-family: var(--serif, serif);
+  font-size: clamp(1.55rem, 3.5vw, 2.2rem);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.015em;
+}
+
+.aboutHeroSub {
+  margin: 10px 0 18px;
+  color: #7b746d;
+  font-size: 0.84rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+/* ===== About page body sections ===== */
+
+.aboutSingleCol {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  width: min(760px, calc(100% - 40px));
+  margin-inline: auto;
+}
+
+.aboutBlock {
+  /* intentionally empty: children control spacing */
+}
+
+.aboutBlockTitle {
+  margin: 8px 0 20px;
+  font-family: var(--serif, serif);
+  font-size: clamp(1.45rem, 3vw, 1.95rem);
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+.aboutBlockText {
+  margin: 0 0 1.4em;
+  color: #5c5651;
+  line-height: 2;
+}
+
+.aboutServiceList {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.aboutServiceList li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border-radius: 14px;
+  background: #fff;
+  color: #3e3935;
+  font-size: 0.95rem;
+  font-weight: 600;
+  box-shadow: 0 2px 10px rgba(66, 52, 43, 0.06);
+}
+
+.aboutServiceList li::before {
+  content: "";
+  flex: 0 0 7px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--primary, #e8735a);
+}
+
+.valuesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.valueCard {
+  padding: 24px 22px;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(66, 52, 43, 0.06);
+}
+
+.valueCard h3 {
+  margin: 0 0 10px;
+  font-family: var(--serif, serif);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #292522;
+}
+
+.valueCard p {
+  margin: 0;
+  color: #5c5651;
+  font-size: 0.88rem;
+  line-height: 1.85;
+}
+
+/* ===== About contact block ===== */
+
+.aboutContactBlock {
+  padding: 36px 42px;
+  border-radius: 24px;
+  background:
+    linear-gradient(135deg, rgba(232, 115, 90, 0.09), rgba(42, 157, 143, 0.08)),
+    #fff;
+  box-shadow: 0 8px 32px rgba(66, 52, 43, 0.07);
+}
+
+.aboutContactText {
+  margin: 0 0 24px;
+  font-family: var(--serif, serif);
+  font-size: 1.08rem;
+  color: #3e3935;
+  line-height: 1.85;
+}
+
+.aboutContactActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+
+.aboutEmailWrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.aboutEmailText {
+  font-size: 0.88rem;
+  color: #5c5651;
+  user-select: text;
+}
+
+/* ===== Email copy button ===== */
+
+.copyBtn,
+.copyBtnDone {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 13px;
+  border: 1px solid rgba(39, 39, 39, 0.2);
+  border-radius: 999px;
+  background: transparent;
+  color: #5c5651;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.copyBtn:hover {
+  background: rgba(42, 157, 143, 0.1);
+  color: #1c746a;
+  border-color: #2a9d8f;
+}
+
+.copyBtnDone {
+  background: rgba(42, 157, 143, 0.12);
+  color: #1c746a;
+  border-color: #2a9d8f;
+  cursor: default;
+  pointer-events: none;
 }
 
 .relatedSection {
@@ -587,6 +814,11 @@
   .aboutLogo {
     padding-block: 34px;
   }
+
+  .valuesGrid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
 }
 
 @media (max-width: 640px) {
@@ -620,6 +852,38 @@
   .authorBox {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .authorAvatarWrap {
+    width: 64px;
+    height: 64px;
+    flex-basis: 64px;
+  }
+
+  .aboutHeroInner {
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    text-align: center;
+  }
+
+  .aboutAvatarCircleWrap {
+    width: 72px;
+    height: 72px;
+  }
+
+  .aboutSingleCol {
+    gap: 48px;
+    width: min(100% - 28px, 760px);
+  }
+
+  .aboutContactBlock {
+    padding: 26px 22px;
+  }
+
+  .aboutContactActions {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .categoryTabs {

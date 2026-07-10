@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -191,13 +192,24 @@ export default async function BlogDetailPage({
             </aside>
 
             <div className={styles.authorBox}>
-              <div>
-                <p className={styles.authorLabel}>書いた人</p>
-                <p className={styles.authorName}>SHIMA CRAFT</p>
-                <p>奄美大島を拠点に、Web制作・業務整理・写真や空撮を行っています。</p>
+              <div className={styles.authorInfo}>
+                <div className={styles.authorAvatarWrap}>
+                  <Image
+                    src="/images/profile/shima-craft-avatar.png"
+                    alt="SHIMA CRAFTを運営する島の作り手のアバター"
+                    width={80}
+                    height={80}
+                    className={styles.authorAvatar}
+                  />
+                </div>
+                <div>
+                  <p className={styles.authorLabel}>書いた人</p>
+                  <p className={styles.authorName}>SHIMA CRAFT｜島の作り手</p>
+                  <p>奄美大島を拠点に、Webと写真をつくっています。地方・離島の小さな事業に役立つ情報を発信しています。</p>
+                </div>
               </div>
               <Link href="/about" className={styles.textLink}>
-                Aboutを見る <span aria-hidden="true">→</span>
+                運営者について <span aria-hidden="true">→</span>
               </Link>
             </div>
 

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { Reveal } from "@/app/components/Reveal";
 
 export function About() {
@@ -68,6 +70,14 @@ export function About() {
               </svg>
               <p>専門用語を抑えて必要な内容を整理</p>
             </div>
+          </div>
+        </Reveal>
+
+        <Reveal dir="up" delay={0.15}>
+          <div style={{ textAlign: "center", marginTop: "40px" }}>
+            <Link href="/about" className="text-link">
+              運営者について詳しく見る
+            </Link>
           </div>
         </Reveal>
       </div>

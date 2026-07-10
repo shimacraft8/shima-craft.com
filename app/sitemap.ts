@@ -1,4 +1,6 @@
 import type { MetadataRoute } from "next";
+
+import { getAllBlogPostsForSitemap } from "@/app/lib/blog";
 import { site } from "@/app/lib/site";
 import {
   amamiGreetings,
@@ -8,7 +10,9 @@ import {
   wordRegions,
 } from "@/app/lib/amamiDialect";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export const revalidate = 60;
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date("2026-07-01T00:00:00+09:00");
   const staticRoutes: MetadataRoute.Sitemap = [
     {
@@ -17,6 +21,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 1,
     },
+    { url: `${site.url}/blog`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${site.url}/about`, lastModified: now, changeFrequency: "yearly", priority: 0.5 },
     {
       url: `${site.url}/system-samples`,
       lastModified: now,
@@ -143,8 +149,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly",
     priority: 0.6,
   }));
+  const blogPosts = await getAllBlogPostsForSitemap();
+  const blogRoutes: MetadataRoute.Sitemap = blogPosts.map((post) => ({
+    url: `${site.url}/blog/${post.slug}`,
+    lastModified: new Date(post.updatedAt || post.publishedAt),
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
 
   return [
+    ...blogRoutes,
     ...staticRoutes,
     ...proverbRoutes,
     ...greetingRoutes,

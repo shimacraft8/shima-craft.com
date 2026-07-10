@@ -5,6 +5,7 @@ import { About } from "@/app/components/About";
 import { Service } from "@/app/components/Service";
 import { SampleHighlights } from "@/app/components/SampleHighlights";
 import { Works } from "@/app/components/Works";
+import { LatestArticles } from "@/app/components/LatestArticles";
 import { Flow } from "@/app/components/Flow";
 import { Price } from "@/app/components/Price";
 import { Faq } from "@/app/components/Faq";
@@ -25,6 +26,7 @@ export default function Home() {
         <About />
         <SampleHighlights />
         <Works />
+        <LatestArticles />
         <Flow />
         <Price />
         <Faq />

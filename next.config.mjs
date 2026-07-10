@@ -2,6 +2,14 @@
 const nextConfig = {
   reactStrictMode: true,
   skipTrailingSlashRedirect: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.microcms-assets.io",
+      },
+    ],
+  },
   async redirects() {
     return [
       // TEMP: Amami Road Quest is hidden until development is complete.

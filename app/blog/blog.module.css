@@ -62,6 +62,7 @@
   color: #5f5b57;
   font-size: 1rem;
   line-height: 1.95;
+  text-wrap: pretty;
 }
 
 .indexSection,
@@ -542,8 +543,8 @@
 }
 
 .aboutAvatarCircleWrap {
-  width: 120px;
-  height: 120px;
+  width: 160px;
+  height: 160px;
   border-radius: 50%;
   overflow: hidden;
 }
@@ -567,6 +568,7 @@
   font-weight: 500;
   line-height: 1.5;
   letter-spacing: 0.015em;
+  text-wrap: balance;
 }
 
 .aboutHeroSub {

@@ -40,8 +40,8 @@ export default function AboutPage() {
                   <Image
                     src="/images/profile/shima-craft-avatar.png"
                     alt="SHIMA CRAFTを運営する島の作り手のアバター"
-                    width={88}
-                    height={88}
+                    width={320}
+                    height={320}
                     className={styles.aboutAvatarImg}
                     priority
                   />
@@ -49,7 +49,8 @@ export default function AboutPage() {
               </div>
               <div className={styles.aboutTextCol}>
                 <h1 className={styles.aboutHeroHeading}>
-                  島で暮らしながら、Webと写真をつくっています。
+                  島で暮らしながら、<br />
+                  Webと写真をつくっています。
                 </h1>
                 <p className={styles.aboutHeroSub}>SHIMA CRAFT｜島の作り手</p>
                 <p className={styles.pageDescription}>

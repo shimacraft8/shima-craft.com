@@ -26,6 +26,10 @@
 - グラフ入出力: 入力 `input` = グレーRGB (0..1) [1,3,512,512] / 出力 `output` = ab [1,2,512,512]
 - 更新手順: DDColor/scripts の要領で .pth → ONNX 化 → `onnxslim` → fp16/fp32 →
   90MB以下に分割し、`ddcolor.manifest.json` と本NOTICEを更新する
+- 2026-07-10: `ml/ddcolor-finetune/` のノートブックで古写真向けファインチューニング済み
+  （COCO val2017 約5,000枚＋古写真劣化合成、6,000 steps、Colab T4）。
+  Colab の新exporterが外部データ分離形式で出力したため、ローカルで内部化→
+  onnxslim 簡約→fp16 再生成して配置（fp32/fp16 平均差 0.0078）
 
 ---
 

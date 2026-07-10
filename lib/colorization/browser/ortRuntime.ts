@@ -66,7 +66,8 @@ export const MODEL_PATHS: Record<ColorizeBackend, string> = {
   webgpu: MODELS.siggraph17.files.webgpu[0],
   wasm: MODELS.siggraph17.files.wasm[0],
 };
-export const MODEL_CACHE_NAME = "colorize-model-v2";
+// v3: DDColor を古写真向けファインチューニング版へ差し替え（2026-07-10）
+export const MODEL_CACHE_NAME = "colorize-model-v3";
 
 /** onnxruntime-web の利用箇所に必要な最小限の型。 */
 export type OrtTensor = { data: Float32Array };

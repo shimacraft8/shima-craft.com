@@ -16,7 +16,7 @@
         "bytes": 53259680
       }
     ],
-    "sha256": "0f6cc100df0cdf67"
+    "sha256": "92d36815f18c6879"
   },
   "wasm": {
     "model": "ddcolor_wasm",
@@ -31,7 +31,7 @@
         "bytes": 26707532
       }
     ],
-    "sha256": "f645fe38904a2292"
+    "sha256": "d2b18d72d309ce2f"
   },
   "inputSize": 512
 }

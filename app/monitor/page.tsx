@@ -45,8 +45,7 @@ export default function MonitorPage() {
                 <span>整えます。</span>
               </h1>
               <p className={styles.heroCopy}>
-                Googleマップの営業時間や写真、スマホで見やすい紹介ページ、電話・LINE・予約先への導線を、
-                <strong>お店に必要な分だけ</strong>まとめて整えます。
+                Googleマップの営業時間や写真、スマホで見やすい紹介ページ、<span style={{whiteSpace:"nowrap"}}>電話・LINE・予約先</span>への導線を、<strong>お店に必要な分だけ</strong>まとめて整えます。
               </p>
               <div className={styles.heroActions}>
                 <a className={`${styles.btn} ${styles.btnPrimary}`} href="#apply">今すぐ申し込む</a>

@@ -55,6 +55,12 @@
   text-wrap: balance;
 }
 
+.root h3 { text-wrap: balance; }
+
+.root p { text-wrap: pretty; }
+
+.root summary { text-wrap: pretty; }
+
 /* FAQ details/summary */
 .root details {
   background: var(--paper);

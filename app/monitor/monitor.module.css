@@ -615,6 +615,97 @@
 .contactAlt { margin-top: 16px; text-align: center; font-size: 13px; color: var(--sub); }
 .contactAlt a { color: var(--green-dark); font-weight: 700; }
 
+/* ===== Confirm step ===== */
+.confirm { display: grid; gap: 16px; }
+
+.confirmNote { font-size: 14px; color: var(--sub); }
+
+.confirmTable {
+  display: grid;
+  gap: 0;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.confirmRow {
+  display: grid;
+  grid-template-columns: 9em 1fr;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+}
+.confirmRow:last-child { border-bottom: none; }
+
+.confirmRow dt {
+  padding: 12px 14px;
+  background: var(--paper);
+  color: var(--sub);
+  font-weight: 500;
+  word-break: keep-all;
+}
+
+.confirmRow dd {
+  padding: 12px 14px;
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.confirmAgree { font-size: 12px; color: var(--sub); }
+
+.formError {
+  color: #c0392b;
+  font-size: 13px;
+  padding: 10px 14px;
+  background: #fdf0ee;
+  border-radius: 8px;
+}
+
+.confirmActions {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.btnOutline {
+  background: transparent;
+  border: 1.5px solid var(--line);
+  color: var(--body);
+}
+.btnOutline:hover { background: var(--paper); }
+
+/* ===== Complete step ===== */
+.complete {
+  padding: 40px 20px;
+  text-align: center;
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+}
+
+.completeIcon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--green-soft);
+  color: var(--green-dark);
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.completeTitle {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.completeSub { font-size: 15px; color: var(--sub); margin: 0; }
+
 /* ===== Footer ===== */
 .footer {
   border-top: 1px solid var(--line);
@@ -646,6 +737,7 @@
   .root .heroTitle { font-size: max(22px, 6.5vw); }
   .nowrapPhrase { white-space: normal; }
   .heroCopy { font-size: 15px; }
+  .confirmActions { grid-template-columns: 1fr; }
   .heroActions { display: grid; }
   .btn { width: 100%; }
   .section { padding: 58px 0; }

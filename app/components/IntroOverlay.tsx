@@ -102,6 +102,7 @@ export function IntroOverlay() {
           initial={false}
           exit={{
             opacity: 0,
+            pointerEvents: "none",
             // 再生した場合のみフェード。省略時（reduced-motion等）は即時に消す
             transition: { duration: playedRef.current ? OUT_DURATION : 0, ease: EASE },
           }}

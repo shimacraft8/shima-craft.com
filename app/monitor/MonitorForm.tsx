@@ -36,7 +36,13 @@ export function MonitorForm() {
       );
     }
 
-    window.location.href = "mailto:shimacraft8@gmail.com?subject=" + subject + "&body=" + body;
+    const mailto = "mailto:shimacraft8@gmail.com?subject=" + subject + "&body=" + body;
+    const a = document.createElement("a");
+    a.href = mailto;
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   }
 
   return (

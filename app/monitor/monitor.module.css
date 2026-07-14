@@ -111,39 +111,17 @@
 .siteHeadInner {
   max-width: 1080px;
   margin: auto;
-  padding: 16px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  padding: 14px 24px;
 }
 
 .logo {
-  font-family: var(--serif);
-  font-size: 19px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  display: inline-block;
+  line-height: 0;
 }
 
-.logoAccent { color: var(--green); }
-
-.headNote {
-  font-size: 12px;
-  color: var(--sub);
-  letter-spacing: 0.08em;
-}
-
-.headCta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 18px;
-  border-radius: 999px;
-  background: var(--green);
-  color: #fff;
-  font-size: 13px;
-  font-weight: 700;
-  box-shadow: var(--shadow-sm);
+.logo img {
+  height: 36px;
+  width: auto;
 }
 
 /* ===== Layout ===== */

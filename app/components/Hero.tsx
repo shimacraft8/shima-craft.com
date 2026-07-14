@@ -49,7 +49,7 @@ export function Hero() {
         </motion.p>
         <motion.div className="hero-actions" custom={0.6} variants={fadeUp} initial={reduce ? "show" : "hidden"} animate="show">
           <TrackedLink href="/monitor" className="btn" eventName="monitor_click" eventParams={{ location: "hero_primary" }}>
-            今だけ特典を受け取る
+            特典を受け取る
           </TrackedLink>
           <TrackedLink href="#works" className="btn btn-ghost" eventName="works_click" eventParams={{ location: "hero_secondary" }}>
             制作サンプルを見る

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 
 import { MonitorForm } from "./MonitorForm";
 import styles from "./monitor.module.css";
@@ -24,10 +25,8 @@ export default function MonitorPage() {
       <header className={styles.siteHead}>
         <div className={styles.siteHeadInner}>
           <a className={styles.logo} href="/">
-            SHIMA <span className={styles.logoAccent}>CRAFT</span>
+            <Image src="/logo.png" alt="SHIMA CRAFT" width={96} height={41} priority />
           </a>
-          <div className={styles.headNote}>奄美発・全国オンライン対応</div>
-          <a className={styles.headCta} href="#apply">今すぐ申し込む</a>
         </div>
       </header>
 
@@ -79,7 +78,7 @@ export default function MonitorPage() {
           <div className={styles.container}>
             <div className={styles.sectionHead}>
               <div className={styles.eyebrow}>Is this you?</div>
-              <h2>こんな状態を、そのままにしていませんか。</h2>
+              <h2>こんな状態を、<br />そのままにしていませんか。</h2>
               <p className={styles.sectionLead}>
                 ホームページを無理に作るサービスではありません。いま使っているGoogleマップ、電話、LINE、予約サイトなどを活かしながら、分かりにくい部分だけを整えます。
               </p>
@@ -293,7 +292,7 @@ export default function MonitorPage() {
             <div className={styles.applyCard}>
               <div className={styles.applyCopy}>
                 <div className={styles.eyebrow}>Contact</div>
-                <h2>モニターへ今すぐ申し込む。</h2>
+                <h2>モニターへ<br />今すぐ申し込む。</h2>
                 <p>下記の必要事項を入力してお申し込みください。内容を確認後、受付可否・対応範囲・着手予定日をメールでご案内します。</p>
                 <p className={styles.small}>お申し込みだけで料金は発生しません。正式な受付内容をご確認いただいた後に契約・お支払いとなります。営業電話は行いません。</p>
               </div>

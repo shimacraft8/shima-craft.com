@@ -181,6 +181,8 @@
   background: linear-gradient(transparent 70%, rgba(85, 125, 104, 0.18) 70%);
 }
 
+.nowrapPhrase { white-space: nowrap; }
+
 .heroCopy {
   margin-top: 22px;
   font-size: 17px;
@@ -639,6 +641,10 @@
   .container { padding: 0 18px; }
   .hero { padding: 54px 0 34px; }
   .heroGrid { gap: 28px; }
+  /* .root h1 (0,1,1) より .root .heroTitle (0,2,0) の方が高specificity */
+  /* 375px → 24.4px: "Googleで見つけてもらい、"が339px幅に収まる */
+  .root .heroTitle { font-size: max(22px, 6.5vw); }
+  .nowrapPhrase { white-space: normal; }
   .heroCopy { font-size: 15px; }
   .heroActions { display: grid; }
   .btn { width: 100%; }

@@ -7,7 +7,6 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import { mailtoHref } from "@/app/lib/site";
 import { TrackedLink } from "@/app/components/TrackedLink";
 
 const fadeUp = {
@@ -49,8 +48,8 @@ export function Hero() {
           ホームページ制作・リニューアルから、写真・動画、予約・顧客管理まで。事業に必要な内容を整理し、分かりやすい形に整えます。
         </motion.p>
         <motion.div className="hero-actions" custom={0.6} variants={fadeUp} initial={reduce ? "show" : "hidden"} animate="show">
-          <TrackedLink href={mailtoHref} className="btn" eventName="contact_click" eventParams={{ location: "hero_primary", method: "email" }}>
-            相談する
+          <TrackedLink href="/monitor" className="btn" eventName="monitor_click" eventParams={{ location: "hero_primary" }}>
+            今だけ特典を受け取る
           </TrackedLink>
           <TrackedLink href="#works" className="btn btn-ghost" eventName="works_click" eventParams={{ location: "hero_secondary" }}>
             制作サンプルを見る

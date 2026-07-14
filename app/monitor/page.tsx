@@ -67,7 +67,6 @@ export default function MonitorPage() {
                   <li>1・3・6・12か月後の簡易レポート</li>
                   <li>年間6回までの軽微な情報変更</li>
                 </ul>
-                <div className={styles.slotBox}>残り3枠</div>
               </div>
             </aside>
           </div>
@@ -135,7 +134,7 @@ export default function MonitorPage() {
           <div className={styles.container}>
             <div className={styles.sectionHead}>
               <div className={styles.eyebrow}>Scope</div>
-              <h2>55,000円に含まれること・含まれないこと。</h2>
+              <h2>55,000円に<br />含まれること・含まれないこと。</h2>
               <p className={styles.sectionLead}>あとから認識違いが起きないよう、最初から範囲を明確にします。</p>
             </div>
             <div className={styles.compare}>
@@ -281,6 +280,10 @@ export default function MonitorPage() {
               <details>
                 <summary>2年目以降はどうなりますか？</summary>
                 <p>自動更新はしません。継続をご希望の場合のみ、内容を確認して改めてご案内します。制作したページやデータは、終了時にお渡しできます。</p>
+              </details>
+              <details>
+                <summary>ホームページは既にあるので、公式LINEの構築でモニター応募できますか？</summary>
+                <p>はい、可能です。お客様とのやりとりをスムーズにしたい・定期的にお知らせを届けたいなど、どんなご相談でもお気軽にどうぞ。お客様の状況に合ったサポートをご提案します。</p>
               </details>
             </div>
           </div>

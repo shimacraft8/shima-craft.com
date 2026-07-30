@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Noto_Serif_JP, Noto_Sans_JP, Outfit } from "next/font/google";
 import { site } from "@/app/lib/site";
 import { GoogleAnalytics } from "@/app/components/GoogleAnalytics";
@@ -157,6 +158,13 @@ export default function RootLayout({
       className={`${notoSerifJP.variable} ${notoSansJP.variable} ${outfit.variable}`}
     >
       <body>
+        {/* Google AdSense サイト確認用（審査・接続用の共通スクリプトのみ。広告ユニットは未追加） */}
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1759902379509058"
+          crossOrigin="anonymous"
+          strategy="beforeInteractive"
+        />
         {/* イントロのFOUC（ちらつき）防止のため、ロゴを先読み */}
         <link rel="preload" as="image" href="/logo.png" />
         <script

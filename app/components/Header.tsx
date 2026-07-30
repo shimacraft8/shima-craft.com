@@ -9,6 +9,7 @@ const NAV = [
   { href: "#works", label: "WORKS" },
   { href: "#flow", label: "FLOW" },
   { href: "#price", label: "PRICE" },
+  { href: "/amami-tide", label: "TIDE" },
   { href: "#faq", label: "FAQ" },
   { href: "#contact", label: "CONTACT" },
 ] as const;

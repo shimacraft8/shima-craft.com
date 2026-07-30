@@ -113,7 +113,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "yearly",
       priority: 0.3,
     },
+    {
+      url: `${site.url}/amami-tide`,
+      lastModified: now,
+      changeFrequency: "daily",
+      priority: 0.8,
+    },
+    {
+      url: `${site.url}/amami-tide/2026`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
   ];
+
+  const amamiTideMonthRoutes: MetadataRoute.Sitemap = Array.from({ length: 12 }, (_, index) => ({
+    url: `${site.url}/amami-tide/2026/${String(index + 1).padStart(2, "0")}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.5,
+  }));
 
   const proverbRoutes: MetadataRoute.Sitemap = amamiProverbs.map((record) => ({
     url: `${site.url}/amami-dialect/proverbs/${record.id}`,
@@ -161,6 +180,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     ...blogRoutes,
     ...staticRoutes,
+    ...amamiTideMonthRoutes,
     ...proverbRoutes,
     ...greetingRoutes,
     ...wordCategoryRoutes,

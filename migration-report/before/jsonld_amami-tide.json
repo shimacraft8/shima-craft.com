@@ -1,0 +1,147 @@
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "SHIMA CRAFT",
+    "description": "奄美発・全国オンライン対応。ホームページ制作・リニューアルから、写真・動画、予約・顧客管理まで、事業に必要な内容を整理し、分かりやすい形に整えます。",
+    "url": "https://shima-craft.com",
+    "image": "https://shima-craft.com/hero.jpg",
+    "email": "shimacraft8@gmail.com",
+    "areaServed": {
+      "@type": "Place",
+      "name": "奄美大島（鹿児島県）"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressRegion": "鹿児島県",
+      "addressCountry": "JP"
+    },
+    "priceRange": "¥¥",
+    "knowsLanguage": "ja",
+    "makesOffer": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "HP制作"
+        },
+        "priceCurrency": "JPY",
+        "price": "150000"
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "HP保守・運用（年間契約）"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "空撮・映像制作"
+        },
+        "priceCurrency": "JPY",
+        "price": "30000"
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "動画編集"
+        },
+        "priceCurrency": "JPY",
+        "price": "3000"
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "ネット集客サポート"
+        },
+        "priceCurrency": "JPY",
+        "price": "30000"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://shima-craft.com/amami-tide#webpage",
+        "url": "https://shima-craft.com/amami-tide",
+        "name": "奄美大島の潮見表｜2026年7月30日(木)",
+        "description": "2026年7月30日(木)の奄美・名瀬小湊周辺は、満潮が06:30（207cm）、19:50（207cm）、干潮が00:54（106cm）、13:11（30cm）の予測です。日の出は05:43、日の入りは19:15です。潮位は天文潮位の予測値で、風や気圧などにより実際の海面と異なる場合があります。",
+        "inLanguage": "ja-JP",
+        "dateModified": "2026-07-30T11:37:00+09:00",
+        "isPartOf": {
+          "@id": "https://shima-craft.com/#website"
+        },
+        "about": {
+          "@id": "https://shima-craft.com/amami-tide#dataset"
+        }
+      },
+      {
+        "@type": "Dataset",
+        "@id": "https://shima-craft.com/amami-tide#dataset",
+        "name": "奄美・名瀬小湊 2026年潮位予測データ",
+        "description": "気象庁が公開する奄美（名瀬小湊）の2026年潮位表をもとに、毎時潮位、満潮・干潮の時刻と潮位をSHIMA CRAFTが観光客向けに整理・加工したデータセットです。",
+        "url": "https://shima-craft.com/amami-tide",
+        "temporalCoverage": "2026-01-01/2026-12-31",
+        "spatialCoverage": {
+          "@type": "Place",
+          "name": "鹿児島県奄美市 名瀬小湊",
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 28.3166667,
+            "longitude": 129.5333333
+          }
+        },
+        "creator": {
+          "@type": "Organization",
+          "name": "SHIMA CRAFT",
+          "url": "https://shima-craft.com"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "SHIMA CRAFT",
+          "url": "https://shima-craft.com"
+        },
+        "includedInDataCatalog": {
+          "@type": "DataCatalog",
+          "name": "気象庁 潮位表"
+        },
+        "license": "https://www.jma.go.jp/jma/kishou/info/coment.html",
+        "isBasedOn": "https://www.data.jma.go.jp/kaiyou/data/db/tide/suisan/txt/2026/O9.txt",
+        "isAccessibleForFree": true,
+        "keywords": [
+          "奄美大島",
+          "名瀬小湊",
+          "潮位",
+          "潮見表",
+          "満潮",
+          "干潮",
+          "2026年"
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "SHIMA CRAFT",
+            "item": "https://shima-craft.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "奄美の潮と空",
+            "item": "https://shima-craft.com/amami-tide"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,71 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"main": ".open-next/worker.js",
+	"name": "shima-craft-com",
+	"compatibility_date": "2026-07-29",
+	"compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+	"assets": {
+		"directory": ".open-next/assets",
+		"binding": "ASSETS"
+	},
+	"services": [
+		{
+			// Self-reference service binding, the service name must match the worker name
+			// see https://opennext.js.org/cloudflare/caching
+			"binding": "WORKER_SELF_REFERENCE",
+			"service": "shima-craft-com"
+		}
+	],
+	"r2_buckets": [
+		// Use R2 incremental cache for ISR/revalidate (used by /amami-tide). R2 free tier covers this site's scale.
+		{
+			"binding": "NEXT_INC_CACHE_R2_BUCKET",
+			"bucket_name": "shima-craft-com-cache"
+		}
+	],
+	"kv_namespaces": [
+		// Login rate limiting (lib/rateLimit/loginRateLimit.ts). Free tier, no payment required.
+		// This top-level config is the "preview" context (CF_ENV=preview below): both "id" and
+		// "preview_id" point at the dedicated RATE_LIMIT_KV_preview namespace, so local `wrangler dev`
+		// and any non-production remote preview never touch production rate-limit data.
+		// Production uses a separate namespace, set only under env.production below.
+		{
+			"binding": "RATE_LIMIT_KV",
+			"id": "4dfc156527fa46c18771f006e55516de",
+			"preview_id": "4dfc156527fa46c18771f006e55516de"
+		}
+	],
+	"vars": {
+		"CF_ENV": "preview"
+	},
+	"env": {
+		"production": {
+			"routes": [
+				{ "pattern": "shima-craft.com", "custom_domain": true },
+				{ "pattern": "www.shima-craft.com", "custom_domain": true }
+			],
+			"vars": {
+				"CF_ENV": "production"
+			},
+			"services": [
+				{
+					"binding": "WORKER_SELF_REFERENCE",
+					"service": "shima-craft-com"
+				}
+			],
+			"r2_buckets": [
+				{
+					"binding": "NEXT_INC_CACHE_R2_BUCKET",
+					"bucket_name": "shima-craft-com-cache"
+				}
+			],
+			"kv_namespaces": [
+				// Production namespace, distinct from the top-level preview one above.
+				{
+					"binding": "RATE_LIMIT_KV",
+					"id": "5ade18fa11734e8f9086bd2d64f4aa52"
+				}
+			]
+		}
+	}
+}

@@ -1,0 +1,14 @@
+HTTP/2 200 
+age: 0
+cache-control: private, no-cache, no-store, max-age=0, must-revalidate
+content-type: text/html; charset=utf-8
+date: Thu, 30 Jul 2026 05:08:14 GMT
+link: </_next/static/media/7b0b24f36b1a6d0b-s.p.woff2>; rel=preload; as="font"; crossorigin=""; type="font/woff2"
+server: Vercel
+strict-transport-security: max-age=63072000
+vary: RSC, Next-Router-State-Tree, Next-Router-Prefetch
+x-matched-path: /amami-tide
+x-powered-by: Next.js
+x-vercel-cache: MISS
+x-vercel-id: kix1::iad1::clztn-1785388094468-931ff1c93129
+

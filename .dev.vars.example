@@ -1,0 +1,43 @@
+# Cloudflare Workers ローカル開発用の環境変数テンプレート（wrangler dev / preview が読み込む）。
+# .env.example のNode.js版アプリ変数と同じ名前・同じ意味。実際の値はここに書かず、
+# コピーした .dev.vars（gitignore対象）にのみ記入すること。
+#
+# 本番運用時は wrangler secret put <NAME> で秘密値をCloudflareへ登録する（このファイルには入れない）。
+
+NEXT_PUBLIC_SITE_URL=https://shima-craft.com
+NEXT_PUBLIC_GA_ID=
+
+RESEND_API_KEY=
+RESEND_FROM=onboarding@resend.dev
+
+NEXT_PUBLIC_FIREBASE_API_KEY=
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=
+NEXT_PUBLIC_FIREBASE_APP_ID=
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
+
+FIREBASE_PROJECT_ID=
+FIREBASE_CLIENT_EMAIL=
+FIREBASE_PRIVATE_KEY=
+
+FIREBASE_SESSION_COOKIE_NAME=sc_session
+INITIAL_ADMIN_EMAIL=
+ADMIN_EMAIL_ALLOWLIST=
+INVITATION_TOKEN_SECRET=
+LOG_IP_HASH_SALT=
+
+COLORIZE_ENABLED=true
+COLORIZE_REQUIRE_LOGIN=
+
+GROQ_API_KEY=
+
+MICROCMS_SERVICE_DOMAIN=
+MICROCMS_API_KEY=
+
+# ビルド時のみ使用（scripts/generate-amami-config.mjs 経由、prebuildで実行）。
+# Workersランタイムのsecretには不要。CIのビルド環境変数として設定する。
+AMAMI_EMBED_API_KEY=
+
+# Cloudflare Workers環境識別用（Vercelの VERCEL_ENV に相当）。
+# wrangler.jsonc の vars / env.production.vars で設定するため、ここでの記入は不要。
+# CF_ENV=preview

@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+
+Host: https://shima-craft.com
+Sitemap: https://shima-craft.com/sitemap.xml

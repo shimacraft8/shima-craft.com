@@ -1,0 +1,46 @@
+=== DNS records for shima-craft.com (captured Thu Jul 30 14:11:45 JST 2026) ===
+
+--- NS ---
+shima-craft.com.	86400	IN	NS	ns2.vercel-dns.com.
+shima-craft.com.	86400	IN	NS	ns1.vercel-dns.com.
+
+--- A ---
+shima-craft.com.	378	IN	A	64.29.17.1
+shima-craft.com.	378	IN	A	216.198.79.1
+
+--- AAAA ---
+
+--- CNAME ---
+
+--- MX ---
+
+--- TXT ---
+
+--- CAA ---
+shima-craft.com.	60	IN	CAA	0 issue "letsencrypt.org"
+shima-craft.com.	60	IN	CAA	0 issue "pki.goog"
+shima-craft.com.	60	IN	CAA	0 issue "sectigo.com"
+
+--- SRV ---
+
+--- www.shima-craft.com CNAME/A ---
+www.shima-craft.com.	1585	IN	A	64.29.17.65
+www.shima-craft.com.	1585	IN	A	216.198.79.65
+
+--- DNSSEC (DS/DNSKEY) ---
+
+--- SOA (authoritative nameserver check) ---
+shima-craft.com.	3600	IN	SOA	ns1.vercel-dns.com. hostmaster.nsone.net. 1781000878 43200 7200 1209600 600
+=== Retry TXT with different query methods ===
+--- dig +short TXT ---
+--- dig TXT via 1.1.1.1 ---
+--- dig TXT via 8.8.8.8 ---
+
+=== Common verification/email subdomains ===
+--- _dmarc.shima-craft.com TXT/CNAME ---
+--- default._domainkey.shima-craft.com TXT/CNAME ---
+--- google._domainkey.shima-craft.com TXT/CNAME ---
+--- selector1._domainkey.shima-craft.com TXT/CNAME ---
+--- selector2._domainkey.shima-craft.com TXT/CNAME ---
+--- _github-challenge.shima-craft.com TXT/CNAME ---
+--- asuid.shima-craft.com TXT/CNAME ---

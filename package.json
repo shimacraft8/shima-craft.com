@@ -12,7 +12,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:firebase": "bash scripts/run-firebase-tests.sh"
+    "test:firebase": "bash scripts/run-firebase-tests.sh",
+    "cf:build": "NEXT_BUILD_TARGET=cloudflare opennextjs-cloudflare build",
+    "cf:preview": "npm run cf:build && opennextjs-cloudflare preview",
+    "cf:deploy": "npm run cf:build && opennextjs-cloudflare deploy",
+    "cf:deploy:production": "npm run cf:build && opennextjs-cloudflare deploy --env production"
   },
   "dependencies": {
     "@mediapipe/tasks-vision": "^0.10.35",
@@ -32,6 +36,7 @@
   },
   "devDependencies": {
     "@firebase/rules-unit-testing": "^5.0.1",
+    "@opennextjs/cloudflare": "1.15.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@types/node": "^20.16.5",
@@ -45,6 +50,7 @@
     "postcss": "^8.4.45",
     "tailwindcss": "^3.4.10",
     "typescript": "^5.5.4",
-    "vitest": "^4.1.9"
+    "vitest": "^4.1.9",
+    "wrangler": "4.115.0"
   }
 }

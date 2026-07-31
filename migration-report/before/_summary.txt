@@ -1,0 +1,60 @@
+=== Capturing production state to /Users/hiroshikento/Documents/shima-craft-cloudflare-migration/migration-report/before ===
+Thu Jul 30 14:08:11 JST 2026
+--- www redirect behavior ---
+[https://www.shima-craft.com]
+status=000 redirect_url=
+[http://shima-craft.com]
+status=308 redirect_url=https://shima-craft.com/
+[http://www.shima-craft.com]
+status=308 redirect_url=https://www.shima-craft.com/
+--- https://shima-craft.com/ ---
+status=200 time=0.797755s
+title: <title>SHIMA CRAFT｜奄美発・全国対応のホームページ制作</title>
+canonical: <link rel="canonical" href="https://shima-craft.com"/>
+description: <meta name="description" content="奄美発・全国オンライン対応。ホームページ制作・リニューアルから、写真・動画、予約・顧客管理まで、事業に必要な内容を整理し、分かりやすい形に整えます。"/>
+ga4_id: G-Z10VXQG5XY
+adsense_pub_id: ca-pub-1759902379509058
+jsonld_blocks: 2
+
+--- https://shima-craft.com/blog ---
+status=200 time=0.950910s
+title: <title>ブログ｜SHIMA CRAFT</title>
+canonical: <link rel="canonical" href="https://shima-craft.com/blog"/>
+description: <meta name="description" content="地方・離島の小さな事業者向けに、予約・お客さま管理、集客・口コミ、写真・空撮の実務情報をまとめています。"/>
+ga4_id: G-Z10VXQG5XY
+adsense_pub_id: ca-pub-1759902379509058
+jsonld_blocks: 2
+
+--- https://shima-craft.com/amami-tide ---
+status=200 time=0.706842s
+title: <title>奄美大島の潮見表｜2026年7月30日(木)の満潮・干潮・日の出・天気｜SHIMA CRAFT</title>
+canonical: <link rel="canonical" href="https://shima-craft.com/amami-tide"/>
+description: <meta name="description" content="2026年7月30日(木)の奄美大島・名瀬小湊基準の潮位予測、満潮・干潮、日の出・日の入り、直近の天気と観光の参考時間をスマホで分かりやすく確認できます。"/>
+ga4_id: G-Z10VXQG5XY
+adsense_pub_id: ca-pub-1759902379509058
+jsonld_blocks: 4
+
+--- https://shima-craft.com/privacy ---
+status=200 time=0.903324s
+title: <title>プライバシーポリシー｜SHIMA CRAFT</title>
+canonical: <link rel="canonical" href="https://shima-craft.com/privacy"/>
+description: <meta name="description" content="SHIMA CRAFTにおける個人情報、Web導線チェックの回答内容、アクセス解析情報などの取扱いについてご案内します。"/>
+ga4_id: G-Z10VXQG5XY
+adsense_pub_id: ca-pub-1759902379509058
+jsonld_blocks: 2
+
+--- https://shima-craft.com/ads.txt ---
+status=200
+
+--- https://shima-craft.com/robots.txt ---
+status=200
+
+--- https://shima-craft.com/sitemap.xml ---
+status=200
+
+=== Done ===
+=== www subdomain SSL note ===
+https://www.shima-craft.com: TLS certificate does NOT include www (SAN mismatch).
+Cert subject: CN=shima-craft.com only. curl error 60: no alternative certificate subject name matches 'www.shima-craft.com'
+http://www.shima-craft.com redirects (308) to https://www.shima-craft.com, which then fails SSL handshake.
+This is PRE-EXISTING behavior on Vercel, not introduced by migration work. Documented for parity comparison.

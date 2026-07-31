@@ -54,13 +54,28 @@ describe("listMembers", () => {
     ]);
   });
 
-  it("switches to emailLower ascending with startAt=endAt=search when searching", async () => {
+  it("switches to emailLower ascending with a prefix range (startAt=search, endAt=search+\\uf8ff) when searching", async () => {
     const { listMembers } = await import("../admin-queries");
     await listMembers({ search: "  Taro@Example.com  " });
     const call = runQueryMock.mock.calls[0][0];
     expect(call.orderBy).toEqual({ field: "emailLower", direction: "ASCENDING" });
     expect(call.startAtValue).toBe("taro@example.com");
-    expect(call.endAtValue).toBe("taro@example.com");
+    // endAtValueは検索語と同じ値ではなく、末尾にを付けた前方一致範囲でなければならない
+    // （同じ値だと完全一致にしかならない、過去の不具合の再発防止）。
+    expect(call.endAtValue).not.toBe(call.startAtValue);
+    expect(call.endAtValue).toBe(`taro@example.com${String.fromCharCode(0xf8ff)}`);
+  });
+
+  it("prefix search matches values beyond an exact match (e.g. 'tar' also matches 'taro@example.com')", async () => {
+    runQueryMock.mockResolvedValue(docs(1, "taro"));
+    const { listMembers } = await import("../admin-queries");
+    await listMembers({ search: "tar" });
+    const call = runQueryMock.mock.calls[0][0];
+    // "taro@example.com" は "tar" 以上 "tar" 以下の範囲に文字列順で収まる
+    expect("tar" <= "taro0@example.com").toBe(true);
+    expect("taro0@example.com" <= `tar${String.fromCharCode(0xf8ff)}`).toBe(true);
+    expect(call.endAtValue.startsWith("tar")).toBe(true);
+    expect(call.endAtValue.length).toBe("tar".length + 1);
   });
 
   it("resolves the cursor document's value for the current orderBy field and passes it as startAfterValue", async () => {
@@ -214,7 +229,7 @@ describe("findMemberIdsBySearch", () => {
     expect(runQueryMock).not.toHaveBeenCalled();
   });
 
-  it("queries emailLower with startAt=endAt=the normalized search term, limit 50", async () => {
+  it("queries emailLower with a prefix range (startAt=term, endAt=term+\\uf8ff), limit 50", async () => {
     runQueryMock.mockResolvedValue(docs(2));
     const { findMemberIdsBySearch } = await import("../admin-queries");
     const ids = await findMemberIdsBySearch("  Taro@Example.com ");
@@ -222,7 +237,7 @@ describe("findMemberIdsBySearch", () => {
       collectionId: "members",
       orderBy: { field: "emailLower", direction: "ASCENDING" },
       startAtValue: "taro@example.com",
-      endAtValue: "taro@example.com",
+      endAtValue: `taro@example.com${String.fromCharCode(0xf8ff)}`,
       limit: 50,
     });
     expect(ids).toEqual(["m-0", "m-1"]);

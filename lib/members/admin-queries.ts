@@ -22,6 +22,18 @@ import type {
 export type Page<T> = { items: T[]; nextCursor: string | null };
 
 /**
+ * Firestoreで文字列の前方一致範囲を作る際の終端サフィックス（Firestore公式の慣用句）。
+ * `startAt(prefix)` と組み合わせ、`endAt(prefix + PREFIX_RANGE_SUFFIX)` とすることで
+ * 「prefixで始まる全ての文字列」を範囲として表現する。単に `endAt(prefix)` にすると
+ * 開始値と終了値が同じになり、実質的に完全一致でしか検索できなくなる（過去の不具合）。
+ */
+const PREFIX_RANGE_SUFFIX = String.fromCharCode(0xf8ff);
+
+function prefixRangeEnd(prefix: string): string {
+  return `${prefix}${PREFIX_RANGE_SUFFIX}`;
+}
+
+/**
  * カーソルdocIdから、指定orderByフィールドの値を取得する
  * （Admin SDKの `.startAfter(docSnapshot)` が内部でクエリの並び替えフィールドの値を
  *  抽出するのと同じ役割）。カーソルdocが存在しない場合はundefined（カーソル無効時と同義）。
@@ -61,7 +73,7 @@ export async function listMembers(params: {
     where: where.length > 0 ? where : undefined,
     orderBy: { field: orderByField, direction: search ? "ASCENDING" : "DESCENDING" },
     startAtValue: search ? search : undefined,
-    endAtValue: search ? search : undefined,
+    endAtValue: search ? prefixRangeEnd(search) : undefined,
     startAfterValue,
     limit: pageSize + 1,
   });
@@ -245,7 +257,7 @@ export async function findMemberIdsBySearch(search: string): Promise<string[]> {
     collectionId: COLLECTIONS.members,
     orderBy: { field: "emailLower", direction: "ASCENDING" },
     startAtValue: s,
-    endAtValue: s,
+    endAtValue: prefixRangeEnd(s),
     limit: 50,
   });
   return docs.map((d) => d.id);

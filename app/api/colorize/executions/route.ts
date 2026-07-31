@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isSameOrigin } from "@/lib/http/origin";
+import { isSecureCookieContext } from "@/lib/http/secureCookie";
 import { getViewer } from "@/lib/auth/access";
 import { createExecution } from "@/lib/members/executions";
 import {
@@ -92,7 +93,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   res.cookies.set(FREE_GATE_COOKIE, gate.newCookieValue, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: isSecureCookieContext(),
     sameSite: "lax",
     path: "/",
     maxAge: 60 * 60 * 48, // 2日（JST でのリセットをカバー）

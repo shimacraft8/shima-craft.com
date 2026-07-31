@@ -4,6 +4,7 @@ import { isAdminConfigured } from "@/lib/firebase/isConfigured";
 import { createSessionCookie as createSessionCookieRest, lookupUser } from "@/lib/firebase/rest/authAdmin";
 import { verifyIdToken as verifyIdTokenRest, type DecodedIdToken as RestDecodedIdToken } from "@/lib/firebase/rest/idToken";
 import { verifySessionCookie as verifySessionCookieRest } from "@/lib/firebase/rest/sessionCookie";
+import { isSecureCookieContext } from "@/lib/http/secureCookie";
 
 /**
  * Firebase Session Cookie の作成・検証・削除。
@@ -73,20 +74,6 @@ export async function getVerifiedSession(): Promise<DecodedIdToken | null> {
   const cookie = cookies().get(SESSION_COOKIE_NAME)?.value;
   if (!cookie) return null;
   return verifySessionCookie(cookie);
-}
-
-/**
- * Secure属性の判定。`next build`（Vercelデプロイ・Cloudflareデプロイ・wrangler devの
- * いずれも含む）はビルド時に常に NODE_ENV=production を焼き込むため、
- * NODE_ENV単独ではローカルwrangler dev（http、Secureだと届かない）と実際の
- * Cloudflare本番配信を区別できない。CF_ENV（wrangler.jsonc、GA4対応時に導入済み）を
- * 併用し、ローカルwrangler dev（CF_ENV="preview"）の時だけ安全にfalseへ倒す。
- * Vercel上ではCF_ENVは未設定のため、既存の挙動（NODE_ENV===productionでtrue）は変わらない。
- */
-function isSecureCookieContext(): boolean {
-  if (process.env.NODE_ENV !== "production") return false;
-  if (process.env.CF_ENV === "preview") return false;
-  return true;
 }
 
 export function setSessionCookieOnStore(value: string): void {

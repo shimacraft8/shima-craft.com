@@ -1,0 +1,151 @@
+{
+  "version": 1,
+  "maxChunkBytes": 25165824,
+  "files": {
+    "/models/siggraph17_fp16.onnx": {
+      "path": "/models/siggraph17_fp16.onnx",
+      "totalBytes": 68528865,
+      "sha256": "8db12290e7d3dcb9453d6b19e0c2851586f301924d6a21e8a88576d48a339581",
+      "parts": [
+        {
+          "name": "siggraph17_fp16.onnx.part0",
+          "bytes": 25165824,
+          "sha256": "a3fae8ed213ed77cb4fe5d64e66fd49268b7e2c767468cd1f951e0d8e09bbd00"
+        },
+        {
+          "name": "siggraph17_fp16.onnx.part1",
+          "bytes": 25165824,
+          "sha256": "0a9e03b563952ba5c2fa9a5ab096bb0fdf13be9147f0244ada9dff5fa2006c38"
+        },
+        {
+          "name": "siggraph17_fp16.onnx.part2",
+          "bytes": 18197217,
+          "sha256": "4eed407ff40c738b40aaf2ebe543b877a15a2f0dcd0cd2151b0c52b008477ffe"
+        }
+      ]
+    },
+    "/models/siggraph17_int8.onnx": {
+      "path": "/models/siggraph17_int8.onnx",
+      "totalBytes": 43611643,
+      "sha256": "721bb18796ada87dfc59ef84671684361d98485d48912e0dc63a424de919462c",
+      "parts": [
+        {
+          "name": "siggraph17_int8.onnx.part0",
+          "bytes": 25165824,
+          "sha256": "b426ed650a0ab883fe0c02c6b31fca75cfaaf73a1cd2b678f7d029a8c931566d"
+        },
+        {
+          "name": "siggraph17_int8.onnx.part1",
+          "bytes": 18445819,
+          "sha256": "e8e55bb1b9b5dcc94f1eabaf1766774427b60746cf4a1c56b3d3be4c0563b286"
+        }
+      ]
+    },
+    "/ort/ort-wasm-simd-threaded.jsep.wasm": {
+      "path": "/ort/ort-wasm-simd-threaded.jsep.wasm",
+      "totalBytes": 26827543,
+      "sha256": "78feeeb3d08f6bcee94d938ed322f69073bb8076b5f9d34697a574ffba8deb48",
+      "parts": [
+        {
+          "name": "ort-wasm-simd-threaded.jsep.wasm.part0",
+          "bytes": 25165824,
+          "sha256": "81fba94bf159324cf9219bd946e6ffeff2fc5c43343abd46209f0288ce1d732f"
+        },
+        {
+          "name": "ort-wasm-simd-threaded.jsep.wasm.part1",
+          "bytes": 1661719,
+          "sha256": "a3e03f58d5f765fa7b1fe1f2a8cbd29b7cbe001bbdbd48f42000004d034a45f6"
+        }
+      ]
+    },
+    "/models/ddcolor_webgpu.onnx": {
+      "path": "/models/ddcolor_webgpu.onnx",
+      "totalBytes": 242003360,
+      "sha256": "92d36815f18c68791905d21505db4b7aef03685ee07bf2b100364d7488115d76",
+      "parts": [
+        {
+          "name": "ddcolor_webgpu.onnx.part0",
+          "bytes": 25165824,
+          "sha256": "53cc7c968674e6578db355a7b00cf349012f10bd6d9bb451be999cff78cbbd85"
+        },
+        {
+          "name": "ddcolor_webgpu.onnx.part1",
+          "bytes": 25165824,
+          "sha256": "9385319897976e78e546263af3e0db51752ce4c7422581d971c4aaddcf367c1f"
+        },
+        {
+          "name": "ddcolor_webgpu.onnx.part2",
+          "bytes": 25165824,
+          "sha256": "b9e7660613f3a668cc4c30e61089ebe91cf45a5990db2bf7b72bdcb29516ae9e"
+        },
+        {
+          "name": "ddcolor_webgpu.onnx.part3",
+          "bytes": 25165824,
+          "sha256": "7c62aaf340efdba2806bb46cd596765d8daf5117246cc620d6ee21cdac333cfb"
+        },
+        {
+          "name": "ddcolor_webgpu.onnx.part4",
+          "bytes": 25165824,
+          "sha256": "657b953c9069bc83c817e0d4848c71bcb1e392bc55ba34097a393032d8a11a02"
+        },
+        {
+          "name": "ddcolor_webgpu.onnx.part5",
+          "bytes": 25165824,
+          "sha256": "0c7ceb513f1c15158c9fac870d1a908bde2f74f0df18b34931e0910e6cbbb5ae"
+        },
+        {
+          "name": "ddcolor_webgpu.onnx.part6",
+          "bytes": 25165824,
+          "sha256": "2fda2d65afec815092fd382cc925d697f9029f4121ed78376eb90e8a59859d59"
+        },
+        {
+          "name": "ddcolor_webgpu.onnx.part7",
+          "bytes": 25165824,
+          "sha256": "7c6a23f9f5ed6ec910e73a2e0a87f1a602c108353ef873b785df3a580e2277df"
+        },
+        {
+          "name": "ddcolor_webgpu.onnx.part8",
+          "bytes": 25165824,
+          "sha256": "8023fa1c8c7d72183e1b63df75b3a4bc163adada6c550980aa8a19aa633dd14c"
+        },
+        {
+          "name": "ddcolor_webgpu.onnx.part9",
+          "bytes": 15510944,
+          "sha256": "ced58263904a26de04b61ab096a6d6d28b28a991773adc9cc2f13d560d4c61dd"
+        }
+      ]
+    },
+    "/models/ddcolor_wasm.onnx": {
+      "path": "/models/ddcolor_wasm.onnx",
+      "totalBytes": 121079372,
+      "sha256": "d2b18d72d309ce2f62171e4e7a3ba6a9749c7d39a80176ea75a4c309de5e194b",
+      "parts": [
+        {
+          "name": "ddcolor_wasm.onnx.part0",
+          "bytes": 25165824,
+          "sha256": "cb3ed8e6981071bb126427f16f30d966796b09ca61426cef44e1566b7a157f5b"
+        },
+        {
+          "name": "ddcolor_wasm.onnx.part1",
+          "bytes": 25165824,
+          "sha256": "58eaec43951457130c0ba09e16a5a0172c8a9a71bbcc61fa61c8417c3aa970a0"
+        },
+        {
+          "name": "ddcolor_wasm.onnx.part2",
+          "bytes": 25165824,
+          "sha256": "25f1f16bf63874c8289cc4bb4ff4c935ad0607194ce9811a0b94ff0cbf11ce3a"
+        },
+        {
+          "name": "ddcolor_wasm.onnx.part3",
+          "bytes": 25165824,
+          "sha256": "29250922948d5c7fc1348ac9b7856c6d50d356cf7349565ef794d95b36a4728c"
+        },
+        {
+          "name": "ddcolor_wasm.onnx.part4",
+          "bytes": 20416076,
+          "sha256": "3625ee9633e9565ca1ae37652666da878a6b736fff45e21453d3fd6448f63ab2"
+        }
+      ]
+    }
+  }
+}

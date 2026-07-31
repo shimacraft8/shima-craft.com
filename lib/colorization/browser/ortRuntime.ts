@@ -10,12 +10,25 @@
  * - モデルは Cache Storage API でキャッシュし、2回目以降の再ダウンロードを避ける
  * - 入力画像はネットワークへ一切送らない（このモジュールが fetch するのは
  *   同一オリジンのランタイム・モデルファイルのみ）
+ *
+ * Cloudflare Workers Static Assets は1ファイル25MiBまでのため、それを超える
+ * siggraph17モデル2種・onnxruntime-webのwasm本体は scripts/chunk-large-assets.mjs で
+ * 24MiB以下のパートへ分割済み（public/large-assets.manifest.json にパートごとの
+ * サイズ・SHA-256を記録）。R2等の追加サービスは使わず、全て同一オリジンの
+ * Static Assetsから配信する。ダウンロード時に各パート・結合後の全体をSHA-256で
+ * 検証し、パートは順に（並列にはせず）取得する。
  */
 
 import type { ColorizeBackend, ColorizeProgress } from "@/lib/colorization/types";
 
 export const ORT_BUNDLE_PATH = "/ort/ort.min.mjs";
 export const ORT_WASM_DIR = "/ort/";
+export const ORT_WASM_BINARY_PATH = "/ort/ort-wasm-simd-threaded.jsep.wasm";
+const LARGE_ASSET_MANIFEST_PATH = "/large-assets.manifest.json";
+
+function resolveAssetUrl(path: string): string {
+  return `${window.location.origin}${path}`;
+}
 
 /** カラー化モデルの種類。standard=siggraph17 / high=DDColor。 */
 export type ColorizeModelId = "siggraph17" | "ddcolor";
@@ -39,8 +52,12 @@ export const MODELS: Record<ColorizeModelId, ModelSpec> = {
     inputKind: "L",
     inputName: "input_l",
     files: {
-      webgpu: ["/models/siggraph17_fp16.onnx"],
-      wasm: ["/models/siggraph17_int8.onnx"],
+      webgpu: [
+        "/models/siggraph17_fp16.onnx.part0",
+        "/models/siggraph17_fp16.onnx.part1",
+        "/models/siggraph17_fp16.onnx.part2",
+      ],
+      wasm: ["/models/siggraph17_int8.onnx.part0", "/models/siggraph17_int8.onnx.part1"],
     },
   },
   ddcolor: {
@@ -49,19 +66,15 @@ export const MODELS: Record<ColorizeModelId, ModelSpec> = {
     inputKind: "grayRGB",
     inputName: "input",
     files: {
-      webgpu: [
-        "/models/ddcolor_webgpu.onnx.part0",
-        "/models/ddcolor_webgpu.onnx.part1",
-        "/models/ddcolor_webgpu.onnx.part2",
-      ],
-      wasm: ["/models/ddcolor_wasm.onnx.part0", "/models/ddcolor_wasm.onnx.part1"],
+      webgpu: Array.from({ length: 10 }, (_, i) => `/models/ddcolor_webgpu.onnx.part${i}`),
+      wasm: Array.from({ length: 5 }, (_, i) => `/models/ddcolor_wasm.onnx.part${i}`),
     },
   },
 };
 
 /** siggraph17 の入力サイズ（後方互換のため既存名を維持）。 */
 export const MODEL_INPUT_SIZE = MODELS.siggraph17.inputSize;
-/** 後方互換: siggraph17 のモデルパス。 */
+/** 後方互換: siggraph17 のモデルパス（分割時は先頭パート）。 */
 export const MODEL_PATHS: Record<ColorizeBackend, string> = {
   webgpu: MODELS.siggraph17.files.webgpu[0],
   wasm: MODELS.siggraph17.files.wasm[0],
@@ -76,7 +89,7 @@ export type OrtSession = {
   release(): Promise<void>;
 };
 export type OrtModule = {
-  env: { wasm: { wasmPaths: string; numThreads: number } };
+  env: { wasm: { wasmPaths: string; wasmBinary?: ArrayBufferLike; numThreads: number } };
   InferenceSession: {
     create(
       buffer: ArrayBuffer,
@@ -91,30 +104,54 @@ export function selectBackend(nav: { gpu?: unknown } = navigator as { gpu?: unkn
   return nav.gpu ? "webgpu" : "wasm";
 }
 
-let ortModulePromise: Promise<OrtModule> | null = null;
+// ─── 大容量ファイルのパート検証（SHA-256） ───
 
-export function loadOrtModule(): Promise<OrtModule> {
-  if (!ortModulePromise) {
-    ortModulePromise = import(
-      /* webpackIgnore: true */ `${window.location.origin}${ORT_BUNDLE_PATH}`
-    ).then((mod: OrtModule) => {
-      mod.env.wasm.wasmPaths = `${window.location.origin}${ORT_WASM_DIR}`;
-      // COOP/COEP ヘッダーを付けない構成のため、マルチスレッドは使わない
-      mod.env.wasm.numThreads = 1;
-      return mod;
-    });
-    // 失敗した import をキャッシュしない（再試行できるようにする）
-    ortModulePromise.catch(() => {
-      ortModulePromise = null;
-    });
+type LargeAssetManifest = {
+  version: number;
+  maxChunkBytes: number;
+  files: Record<
+    string,
+    { path: string; totalBytes: number; sha256: string; parts: Array<{ name: string; bytes: number; sha256: string }> }
+  >;
+};
+
+let manifestPromise: Promise<LargeAssetManifest | null> | null = null;
+
+/**
+ * public/large-assets.manifest.json を取得する。
+ * 取得・parse に失敗した場合は null を返す（例外にしない）。マニフェストが無ければ
+ * パート検証は単に行われない（HTTPS自体が転送時の完全性・出所は担保するため、
+ * このSHA-256検証は「分割・結合・キャッシュ経路での破損/不整合の検出」が主目的であり、
+ * マニフェスト自体の取得失敗でカラー化機能全体を止めるほどの重さは持たせない）。
+ */
+async function loadLargeAssetManifest(): Promise<LargeAssetManifest | null> {
+  if (!manifestPromise) {
+    manifestPromise = fetch(resolveAssetUrl(LARGE_ASSET_MANIFEST_PATH))
+      .then((res) => (res.ok ? (res.json() as Promise<LargeAssetManifest>) : null))
+      .catch(() => null);
   }
-  return ortModulePromise;
+  return manifestPromise;
+}
+
+/** テスト専用: モジュールキャッシュをリセットする。 */
+export function __resetLargeAssetManifestCacheForTests(): void {
+  manifestPromise = null;
+}
+
+async function sha256Hex(data: Uint8Array): Promise<string> {
+  // 呼び出し元は常にdataの専用ArrayBuffer(offset0・truncationなし)を渡すため、
+  // .bufferをそのまま渡してよい（Uint8Array<ArrayBufferLike>とBufferSourceの型不一致を回避）。
+  const digest = await crypto.subtle.digest("SHA-256", data.buffer as ArrayBuffer);
+  return Array.from(new Uint8Array(digest))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
 }
 
 async function fetchOnePart(
   url: string,
   onChunk: (bytes: number, contentLength: number | null) => void,
-  signal: AbortSignal
+  signal: AbortSignal,
+  expectedSha256?: string
 ): Promise<{ data: Uint8Array; contentLength: number | null }> {
   let cache: Cache | null = null;
   try {
@@ -160,6 +197,13 @@ async function fetchOnePart(
     onChunk(out.byteLength, contentLength ?? out.byteLength);
   }
 
+  if (expectedSha256) {
+    const actual = await sha256Hex(out);
+    if (actual !== expectedSha256) {
+      throw new Error(`model part failed integrity check: ${url}`);
+    }
+  }
+
   if (cache) {
     try {
       await cache.put(url, new Response(out.slice(0), { headers: { "Content-Type": "application/octet-stream" } }));
@@ -174,17 +218,27 @@ async function fetchOnePart(
  * 1つ以上のファイル（分割モデル）を取得し、順に結合して1つのArrayBufferにする。
  * 各パートの content-length が取れれば合算を進捗の総量に使い、
  * 取れない場合は totalBytesHint（概算）を使う。
+ *
+ * manifestKey を渡すと、マニフェストに記載があるパート（urls と同じ順）を
+ * 取得のたびにSHA-256で検証し、結合後の全体もマニフェスト記載のSHA-256と照合する。
+ * urls は必ず順番に（並列にはせず）取得する。
  */
 export async function fetchModelFiles(
   urls: string[],
   onProgress: (p: ColorizeProgress) => void,
   signal: AbortSignal,
-  totalBytesHint: number | null = null
+  totalBytesHint: number | null = null,
+  manifestKey: string | null = null
 ): Promise<ArrayBuffer> {
+  const manifest = manifestKey ? await loadLargeAssetManifest() : null;
+  const manifestEntry = manifest?.files[manifestKey ?? ""] ?? null;
+
   const parts: Uint8Array[] = [];
   const single = urls.length === 1;
   let loaded = 0;
-  for (const url of urls) {
+  for (let i = 0; i < urls.length; i++) {
+    const url = urls[i];
+    const expectedSha256 = manifestEntry?.parts[i]?.sha256;
     const { data } = await fetchOnePart(
       url,
       (bytes, contentLength) => {
@@ -196,7 +250,8 @@ export async function fetchModelFiles(
           totalBytes: single ? contentLength : totalBytesHint,
         });
       },
-      signal
+      signal,
+      expectedSha256
     );
     parts.push(data);
   }
@@ -207,6 +262,14 @@ export async function fetchModelFiles(
     merged.set(p, off);
     off += p.byteLength;
   }
+
+  if (manifestEntry) {
+    const actual = await sha256Hex(merged);
+    if (actual !== manifestEntry.sha256 || merged.byteLength !== manifestEntry.totalBytes) {
+      throw new Error(`combined file failed integrity check: ${manifestKey}`);
+    }
+  }
+
   return merged.buffer as ArrayBuffer;
 }
 
@@ -251,6 +314,45 @@ const APPROX_TOTAL_BYTES: Record<string, number> = {
   "ddcolor:wasm": 121_000_000,
 };
 
+let ortModulePromise: Promise<OrtModule> | null = null;
+
+/**
+ * onnxruntime-web本体（.mjs、小容量）を動的importし、wasm本体（25.6MB、分割配信・
+ * SHA-256検証済み）を取得して env.wasm.wasmBinary に設定する。
+ * wasmBinaryを設定するとonnxruntime-web側はwasmPathsを無視して自前fetchを行わない
+ * （公式ドキュメント: 設定時はwasmPathsは無視される）ため、Cloudflare Workers
+ * Static Assetsの25MiB上限に抵触しない。
+ */
+export function loadOrtModule(
+  onProgress: (p: ColorizeProgress) => void = () => {},
+  signal: AbortSignal = new AbortController().signal
+): Promise<OrtModule> {
+  if (!ortModulePromise) {
+    ortModulePromise = (async () => {
+      const mod: OrtModule = await import(
+        /* webpackIgnore: true */ `${window.location.origin}${ORT_BUNDLE_PATH}`
+      );
+      const wasmBuf = await fetchModelFiles(
+        [`${ORT_WASM_BINARY_PATH}.part0`, `${ORT_WASM_BINARY_PATH}.part1`].map(resolveAssetUrl),
+        onProgress,
+        signal,
+        27_000_000,
+        ORT_WASM_BINARY_PATH
+      );
+      mod.env.wasm.wasmPaths = resolveAssetUrl(ORT_WASM_DIR);
+      mod.env.wasm.wasmBinary = wasmBuf;
+      // COOP/COEP ヘッダーを付けない構成のため、マルチスレッドは使わない
+      mod.env.wasm.numThreads = 1;
+      return mod;
+    })();
+    // 失敗した import をキャッシュしない（再試行できるようにする）
+    ortModulePromise.catch(() => {
+      ortModulePromise = null;
+    });
+  }
+  return ortModulePromise;
+}
+
 /**
  * 指定モデル・バックエンドのセッションを用意する。WebGPUでの初期化に失敗した場合、
  * 呼び出し側が wasm で再試行できるよう例外を投げ分ける。
@@ -265,14 +367,15 @@ export async function createSessionForModel(
   if (cached) return cached;
 
   const model = MODELS[modelId];
-  const ort = await loadOrtModule();
+  const ort = await loadOrtModule(onProgress, signal);
 
   const t0 = performance.now();
   const modelBuf = await fetchModelFiles(
-    model.files[backend],
+    model.files[backend].map(resolveAssetUrl),
     onProgress,
     signal,
-    APPROX_TOTAL_BYTES[cacheKey(modelId, backend)] ?? null
+    APPROX_TOTAL_BYTES[cacheKey(modelId, backend)] ?? null,
+    model.files[backend][0].replace(/\.part\d+$/, "")
   );
   const t1 = performance.now();
 

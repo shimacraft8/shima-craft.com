@@ -168,3 +168,54 @@ describe("lookupUser", () => {
     await expect(lookupUser("user-1")).rejects.toThrow(/HTTP 503/);
   });
 });
+
+describe("revokeAllRefreshTokens", () => {
+  beforeEach(() => {
+    vi.resetModules();
+    process.env = { ...ORIGINAL_ENV, FIREBASE_PROJECT_ID: "test-project" };
+  });
+  afterEach(() => {
+    process.env = { ...ORIGINAL_ENV };
+    vi.unstubAllGlobals();
+  });
+
+  it("calls accounts:update with validSince set to the current time", async () => {
+    let capturedUrl = "";
+    let capturedBody: unknown = null;
+    const before = Math.floor(Date.now() / 1000);
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (url: string, init: RequestInit) => {
+        capturedUrl = url;
+        capturedBody = JSON.parse(init.body as string);
+        return new Response(JSON.stringify({ localId: "user-1" }), { status: 200 });
+      })
+    );
+    const { revokeAllRefreshTokens } = await import("../authAdmin");
+    await revokeAllRefreshTokens("user-1");
+    const after = Math.floor(Date.now() / 1000);
+
+    expect(capturedUrl).toBe("https://identitytoolkit.googleapis.com/v1/projects/test-project/accounts:update");
+    const body = capturedBody as { localId: string; validSince: string };
+    expect(body.localId).toBe("user-1");
+    expect(Number(body.validSince)).toBeGreaterThanOrEqual(before);
+    expect(Number(body.validSince)).toBeLessThanOrEqual(after);
+  });
+
+  it("throws on a non-ok response", async () => {
+    vi.stubGlobal("fetch", vi.fn(async () => new Response("nope", { status: 403 })));
+    const { revokeAllRefreshTokens } = await import("../authAdmin");
+    await expect(revokeAllRefreshTokens("user-1")).rejects.toThrow(/HTTP 403/);
+  });
+
+  it("fails closed on a timeout", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => {
+        throw new DOMException("aborted", "TimeoutError");
+      })
+    );
+    const { revokeAllRefreshTokens } = await import("../authAdmin");
+    await expect(revokeAllRefreshTokens("user-1")).rejects.toThrow(/timed out/i);
+  });
+});

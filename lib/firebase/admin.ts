@@ -8,23 +8,17 @@ import { getFirestore, type Firestore } from "firebase-admin/firestore";
  * - `server-only` によりクライアントバンドルへ混入するとビルドが失敗する。
  * - 認証情報は環境変数から読む。FIREBASE_PRIVATE_KEY の改行(\n)を復元する。
  * - Firestore Emulator を使う場合は FIRESTORE_EMULATOR_HOST が自動で参照される。
+ *
+ * 注意: このファイルの firebase-admin/* import は、Cloudflare Workers上では
+ * （呼び出すかどうかに関係なく）import した時点でエラーになる（protobufjsのeval制限）。
+ * そのためCloudflare対応済みのセッション層（lib/auth/session.ts）は、このファイルを
+ * importしない（isAdminConfiguredはlib/firebase/isConfigured.tsへ分離済み）。
  */
 
 let cached: { app: App; auth: Auth; db: Firestore } | null = null;
 
-/**
- * Firebase Admin が利用可能な環境変数を持つか。
- * 未設定の環境（Firebaseプロジェクト構築前のデプロイ等）では、
- * 呼び出し側が「未ログイン扱い」へ安全に縮退できるようにするための判定。
- */
-export function isAdminConfigured(): boolean {
-  if (process.env.FIRESTORE_EMULATOR_HOST) return Boolean(process.env.FIREBASE_PROJECT_ID);
-  return Boolean(
-    process.env.FIREBASE_PROJECT_ID &&
-      process.env.FIREBASE_CLIENT_EMAIL &&
-      process.env.FIREBASE_PRIVATE_KEY
-  );
-}
+/** @deprecated lib/firebase/isConfigured.ts から import すること（後方互換のための再エクスポート）。 */
+export { isAdminConfigured } from "./isConfigured";
 
 function normalizePrivateKey(raw: string): string {
   // Vercel等に貼り付けると改行が \n エスケープされることがあるため復元する。

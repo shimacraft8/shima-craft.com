@@ -1,10 +1,9 @@
 import "server-only";
 import { FieldValue } from "firebase-admin/firestore";
 import { adminAuth, adminDb } from "@/lib/firebase/admin";
-import type { DecodedIdToken } from "firebase-admin/auth";
 import { COLLECTIONS, MEMBERSHIP_CONFIG_DOC, getMember, touchLastLogin } from "./repo";
 import { claimInvitation, findInvitationByToken } from "./invitations";
-import { MAX_AUTH_AGE_SECONDS } from "@/lib/auth/session";
+import { MAX_AUTH_AGE_SECONDS, type DecodedIdToken } from "@/lib/auth/session";
 
 export type LoginResult =
   | { ok: true; uid: string }

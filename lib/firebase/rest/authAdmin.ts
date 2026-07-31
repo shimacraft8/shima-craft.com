@@ -103,3 +103,16 @@ export async function lookupUser(uid: string): Promise<LookupUserResult | null> 
     customAttributes: user.customAttributes ? (JSON.parse(user.customAttributes) as Record<string, unknown>) : null,
   };
 }
+
+/**
+ * uidの全リフレッシュトークン・Session Cookie・ID Tokenを失効させる（全端末ログアウト）。
+ * firebase-admin の adminAuth().revokeRefreshTokens(uid) の代替（projects.accounts:update
+ * の validSince を現在時刻に更新することで、それより前に発行された全トークンを無効化する）。
+ */
+export async function revokeAllRefreshTokens(uid: string): Promise<void> {
+  const res = await authorizedFetch(`${projectBaseUrl()}/accounts:update`, {
+    localId: uid,
+    validSince: String(Math.floor(Date.now() / 1000)),
+  });
+  assertOk(res, "accounts:update (revokeAllRefreshTokens)");
+}

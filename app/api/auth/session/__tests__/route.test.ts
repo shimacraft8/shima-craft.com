@@ -11,6 +11,7 @@ const resolveLoginMock = vi.fn();
 const revokeAllRefreshTokensMock = vi.fn();
 const setSessionCookieOnStoreMock = vi.fn();
 const clearSessionCookieOnStoreMock = vi.fn();
+const checkLoginRateLimitMock = vi.fn();
 
 class FakeStaleAuthTimeError extends Error {
   constructor() {
@@ -36,6 +37,9 @@ vi.mock("@/lib/members/login", () => ({
 }));
 vi.mock("@/lib/firebase/rest/authAdmin", () => ({
   revokeAllRefreshTokens: (...args: unknown[]) => revokeAllRefreshTokensMock(...args),
+}));
+vi.mock("@/lib/rateLimit/loginRateLimit", () => ({
+  checkLoginRateLimit: (...args: unknown[]) => checkLoginRateLimitMock(...args),
 }));
 
 function postRequest(options: {
@@ -69,6 +73,7 @@ describe("POST /api/auth/session", () => {
     createSessionCookieFromIdTokenMock.mockReset();
     resolveLoginMock.mockReset();
     setSessionCookieOnStoreMock.mockReset();
+    checkLoginRateLimitMock.mockReset().mockResolvedValue({ limited: false });
   });
 
   it("rejects a missing Origin header (CSRF)", async () => {
@@ -179,6 +184,16 @@ describe("POST /api/auth/session", () => {
     expect(res.status).toBe(200);
     expect((await res.json()).ok).toBe(true);
     expect(setSessionCookieOnStoreMock).toHaveBeenCalledWith("the-session-cookie");
+  });
+
+  it("returns 429 with Retry-After when the login rate limit is exceeded, before touching idToken verification", async () => {
+    checkLoginRateLimitMock.mockResolvedValue({ limited: true, retryAfterSeconds: 42 });
+    const { POST } = await import("../route");
+    const res = await POST(postRequest({ body: JSON.stringify({ idToken: "good" }) }));
+    expect(res.status).toBe(429);
+    expect(res.headers.get("Retry-After")).toBe("42");
+    expect((await res.json()).reason).toBe("RATE_LIMITED");
+    expect(verifyIdTokenStrictMock).not.toHaveBeenCalled();
   });
 
   it("does not expose a GET handler for session issuance", async () => {

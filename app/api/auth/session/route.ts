@@ -9,13 +9,13 @@ import {
   StaleAuthTimeError,
 } from "@/lib/auth/session";
 import { revokeAllRefreshTokens } from "@/lib/firebase/rest/authAdmin";
+import { resolveLogin } from "@/lib/members/login";
+import { checkLoginRateLimit } from "@/lib/rateLimit/loginRateLimit";
 
 /**
- * lib/members/login.ts は firebase-admin/firestore を静的importしており、
- * それだけでCloudflare Workers上ではモジュール評価時にprotobufjsのeval制限エラーが発生する
- * （resolveLoginを実際に呼ぶかどうかに関係なく、importした時点で全リクエストが壊れる）。
- * Stage 6でFirestore REST化するまでの間、動的importでこのファイルへの依存をこのルートの
- * 他の処理（Origin検証・ID Token検証・Session Cookie発行等）から切り離す。
+ * resolveLogin（Firestore REST経由、Stage 7以降で全面移行済み）は想定内の理由で
+ * 失敗し得る（Firestore REST APIの一時的な5xx/timeout等）。ここで捕捉し、
+ * 呼び出し元へは一般化された503として返す（生の例外・スタックはクライアントへ出さない）。
  */
 async function resolveLoginSafely(
   decoded: Awaited<ReturnType<typeof verifyIdTokenStrict>>,
@@ -26,10 +26,8 @@ async function resolveLoginSafely(
   | { ok: false; reason: "MEMBERSHIP_CHECK_UNAVAILABLE" }
 > {
   try {
-    const { resolveLogin } = await import("@/lib/members/login");
     return await resolveLogin(decoded, invitationToken);
   } catch {
-    // Stage 6（Firestore REST化）未実施のため、会員判定はまだこの環境で動作しない。
     return { ok: false, reason: "MEMBERSHIP_CHECK_UNAVAILABLE" };
   }
 }
@@ -49,6 +47,7 @@ const REASON_MESSAGE: Record<string, string> = {
     "招待リンクが無効か、招待されたメールアドレスと一致しません。招待メールをご確認ください。",
   INVALID_TOKEN: "認証に失敗しました。もう一度ログインしてください。",
   MEMBERSHIP_CHECK_UNAVAILABLE: "現在この機能はご利用いただけません。しばらくしてから再度お試しください。",
+  RATE_LIMITED: "ログイン試行が多すぎます。しばらくしてから再度お試しください。",
 };
 
 /**
@@ -58,6 +57,14 @@ const REASON_MESSAGE: Record<string, string> = {
 export async function POST(request: NextRequest): Promise<NextResponse> {
   if (!isSameOrigin(request)) {
     return NextResponse.json({ ok: false, reason: "BAD_ORIGIN" }, { status: 403 });
+  }
+
+  const rateLimit = await checkLoginRateLimit(request.headers);
+  if (rateLimit.limited) {
+    return NextResponse.json(
+      { ok: false, reason: "RATE_LIMITED", message: REASON_MESSAGE.RATE_LIMITED },
+      { status: 429, headers: { "Retry-After": String(rateLimit.retryAfterSeconds) } }
+    );
   }
 
   const contentType = request.headers.get("content-type") ?? "";

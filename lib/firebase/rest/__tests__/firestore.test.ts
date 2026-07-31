@@ -231,6 +231,51 @@ describe("runQuery", () => {
       runQuery({ collectionId: "secrets", orderBy: { field: "x", direction: "ASCENDING" }, limit: 1 })
     ).rejects.toThrow(/not allowed/);
   });
+
+  it("omits orderBy from the request when not given (equality-lookup queries without an explicit sort)", async () => {
+    let capturedBody: { structuredQuery?: Record<string, unknown> } = {};
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (_url: string, init: RequestInit) => {
+        capturedBody = JSON.parse(init.body as string);
+        return jsonResponse([]);
+      })
+    );
+    const { runQuery } = await import("../firestore");
+    await runQuery({
+      collectionId: "members",
+      where: [{ field: "emailLower", op: "EQUAL", value: "a@example.com" }],
+      limit: 1,
+    });
+    expect(capturedBody.structuredQuery).not.toHaveProperty("orderBy");
+  });
+
+  it("omits limit from the request when not given (unbounded query)", async () => {
+    let capturedBody: { structuredQuery?: Record<string, unknown> } = {};
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (_url: string, init: RequestInit) => {
+        capturedBody = JSON.parse(init.body as string);
+        return jsonResponse([]);
+      })
+    );
+    const { runQuery } = await import("../firestore");
+    await runQuery({
+      collectionId: "invitations",
+      where: [
+        { field: "emailLower", op: "EQUAL", value: "a@example.com" },
+        { field: "status", op: "EQUAL", value: "pending" },
+      ],
+    });
+    expect(capturedBody.structuredQuery).not.toHaveProperty("limit");
+  });
+
+  it("throws when a cursor is given without an explicit orderBy (a cursor is meaningless without a sort order)", async () => {
+    const { runQuery } = await import("../firestore");
+    await expect(
+      runQuery({ collectionId: "members", startAtValue: "x", limit: 1 })
+    ).rejects.toThrow(/requires an explicit orderBy/);
+  });
 });
 
 describe("countDocs", () => {

@@ -1,6 +1,6 @@
 import "server-only";
-import { Timestamp, FieldValue, type DocumentData } from "firebase-admin/firestore";
-import { adminDb } from "@/lib/firebase/admin";
+import { commitWrites, getDoc, runQuery } from "@/lib/firebase/rest/firestore";
+import { serverTimestamp } from "@/lib/firebase/rest/firestoreValues";
 import type {
   AdminAuditLog,
   ColorizationExecution,
@@ -10,8 +10,8 @@ import type {
 } from "./types";
 
 /**
- * Firestore データアクセス層（Admin SDK・サーバー専用）。
- * Firestore Timestamp ↔ ISO文字列 の変換をここへ集約する。
+ * Firestore データアクセス層（Firestore REST・Cloudflare Workers対応）。
+ * Firestoreの値 ↔ アプリの型 の変換をここへ集約する。
  */
 
 export const COLLECTIONS = {
@@ -26,7 +26,9 @@ export const COLLECTIONS = {
 export const MEMBERSHIP_CONFIG_DOC = "membership";
 
 function ts(value: unknown): string | null {
-  if (value instanceof Timestamp) return value.toDate().toISOString();
+  // Firestore REST層(lib/firebase/rest/firestoreValues.ts)がtimestampValueを
+  // 既にISO文字列へデコード済みのため、ここでは文字列をそのまま通す。
+  if (typeof value === "string") return value;
   if (value instanceof Date) return value.toISOString();
   return null;
 }
@@ -39,18 +41,18 @@ function numOrNull(value: unknown): number | null {
   return typeof value === "number" && Number.isFinite(value) ? value : null;
 }
 
-export function mapMember(id: string, d: DocumentData): Member {
+export function mapMember(id: string, d: Record<string, unknown>): Member {
   return {
     uid: id,
     email: str(d.email),
     emailLower: str(d.emailLower),
     displayName: str(d.displayName),
     role: d.role === "admin" ? "admin" : "user",
-    accountStatus: ["active", "suspended", "deleted"].includes(d.accountStatus)
-      ? d.accountStatus
+    accountStatus: ["active", "suspended", "deleted"].includes(d.accountStatus as string)
+      ? (d.accountStatus as Member["accountStatus"])
       : "suspended",
-    contractStatus: ["active", "payment_pending", "unpaid", "cancelled"].includes(d.contractStatus)
-      ? d.contractStatus
+    contractStatus: ["active", "payment_pending", "unpaid", "cancelled"].includes(d.contractStatus as string)
+      ? (d.contractStatus as Member["contractStatus"])
       : "payment_pending",
     notes: str(d.notes),
     lastLoginAt: ts(d.lastLoginAt),
@@ -62,7 +64,7 @@ export function mapMember(id: string, d: DocumentData): Member {
   };
 }
 
-export function mapInvitation(id: string, d: DocumentData): Invitation {
+export function mapInvitation(id: string, d: Record<string, unknown>): Invitation {
   return {
     id,
     emailLower: str(d.emailLower),
@@ -82,7 +84,7 @@ export function mapInvitation(id: string, d: DocumentData): Invitation {
   };
 }
 
-export function mapExecution(id: string, d: DocumentData): ColorizationExecution {
+export function mapExecution(id: string, d: Record<string, unknown>): ColorizationExecution {
   return {
     id,
     userId: str(d.userId),
@@ -104,7 +106,7 @@ export function mapExecution(id: string, d: DocumentData): ColorizationExecution
   };
 }
 
-export function mapLog(id: string, d: DocumentData): ColorizationLog {
+export function mapLog(id: string, d: Record<string, unknown>): ColorizationLog {
   return {
     id,
     userId: str(d.userId),
@@ -117,12 +119,14 @@ export function mapLog(id: string, d: DocumentData): ColorizationLog {
     durationMs: numOrNull(d.durationMs),
     errorCode: str(d.errorCode) || null,
     browserName: str(d.browserName) || null,
-    deviceType: (["mobile", "tablet", "desktop", "unknown"].includes(d.deviceType) ? d.deviceType : null),
+    deviceType: (["mobile", "tablet", "desktop", "unknown"].includes(d.deviceType as string)
+      ? (d.deviceType as ColorizationLog["deviceType"])
+      : null),
     createdAt: ts(d.createdAt) ?? new Date(0).toISOString(),
   };
 }
 
-export function mapAudit(id: string, d: DocumentData): AdminAuditLog {
+export function mapAudit(id: string, d: Record<string, unknown>): AdminAuditLog {
   return {
     id,
     adminUserId: str(d.adminUserId),
@@ -140,27 +144,29 @@ export function mapAudit(id: string, d: DocumentData): AdminAuditLog {
 // ─── members ───
 
 export async function getMember(uid: string): Promise<Member | null> {
-  const snap = await adminDb().collection(COLLECTIONS.members).doc(uid).get();
-  if (!snap.exists) return null;
-  return mapMember(snap.id, snap.data() as DocumentData);
+  const doc = await getDoc(COLLECTIONS.members, uid);
+  if (!doc) return null;
+  return mapMember(doc.id, doc.data);
 }
 
 export async function findMemberByEmail(emailLower: string): Promise<Member | null> {
-  const q = await adminDb()
-    .collection(COLLECTIONS.members)
-    .where("emailLower", "==", emailLower)
-    .limit(1)
-    .get();
-  if (q.empty) return null;
-  const doc = q.docs[0];
-  return mapMember(doc.id, doc.data() as DocumentData);
+  const docs = await runQuery({
+    collectionId: COLLECTIONS.members,
+    where: [{ field: "emailLower", op: "EQUAL", value: emailLower }],
+    limit: 1,
+  });
+  if (docs.length === 0) return null;
+  return mapMember(docs[0].id, docs[0].data);
 }
 
 export async function touchLastLogin(uid: string): Promise<void> {
-  await adminDb()
-    .collection(COLLECTIONS.members)
-    .doc(uid)
-    .set({ lastLoginAt: FieldValue.serverTimestamp() }, { merge: true });
+  await commitWrites([
+    {
+      kind: "set",
+      collectionId: COLLECTIONS.members,
+      docId: uid,
+      data: { lastLoginAt: serverTimestamp() },
+      merge: true,
+    },
+  ]);
 }
-
-export { Timestamp, FieldValue };

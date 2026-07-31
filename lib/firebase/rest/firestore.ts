@@ -112,14 +112,16 @@ export type OrderBy = { field: string; direction: "ASCENDING" | "DESCENDING" };
 export type QueryOptions = {
   collectionId: string;
   where?: WhereFilter[];
-  orderBy: OrderBy;
+  /** 既存実装が明示的なorderByを持たないクエリ(等号1件+limit(1)等)を再現するため省略可能。 */
+  orderBy?: OrderBy;
   /** startAt(value) 相当（inclusive）。startAfterValueが同時指定された場合はそちらを優先する（Query builderの「後勝ち」を再現）。 */
   startAtValue?: unknown;
   /** startAfter(value) 相当（exclusive）。ページネーションのカーソル用。 */
   startAfterValue?: unknown;
   /** endAt(value) 相当（inclusive）。 */
   endAtValue?: unknown;
-  limit: number;
+  /** 既存実装が上限を付けていないクエリ(招待の失効一括更新等)を再現するため省略可能（省略時は無制限）。 */
+  limit?: number;
   transactionId?: string;
 };
 
@@ -150,11 +152,19 @@ type RunQueryResponseItem = { document?: RawDocument };
 export async function runQuery(options: QueryOptions): Promise<FirestoreDoc[]> {
   assertAllowedCollection(options.collectionId);
 
+  const hasCursor =
+    options.startAtValue !== undefined || options.startAfterValue !== undefined || options.endAtValue !== undefined;
+  if (hasCursor && !options.orderBy) {
+    throw new Error("Firestore REST client: a cursor (startAt/startAfter/endAt) requires an explicit orderBy");
+  }
+
   const structuredQuery: Record<string, unknown> = {
     from: [{ collectionId: options.collectionId }],
-    orderBy: [{ field: { fieldPath: options.orderBy.field }, direction: options.orderBy.direction }],
-    limit: options.limit,
   };
+  if (options.orderBy) {
+    structuredQuery.orderBy = [{ field: { fieldPath: options.orderBy.field }, direction: options.orderBy.direction }];
+  }
+  if (options.limit !== undefined) structuredQuery.limit = options.limit;
   const where = buildWhere(options.where);
   if (where) structuredQuery.where = where;
 

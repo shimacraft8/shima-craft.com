@@ -219,3 +219,79 @@ describe("revokeAllRefreshTokens", () => {
     await expect(revokeAllRefreshTokens("user-1")).rejects.toThrow(/timed out/i);
   });
 });
+
+describe("setCustomUserClaims", () => {
+  beforeEach(() => {
+    vi.resetModules();
+    process.env = { ...ORIGINAL_ENV, FIREBASE_PROJECT_ID: "test-project" };
+  });
+  afterEach(() => {
+    process.env = { ...ORIGINAL_ENV };
+    vi.unstubAllGlobals();
+  });
+
+  it("calls accounts:update with customAttributes as a JSON string", async () => {
+    let capturedBody: unknown = null;
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (_url: string, init: RequestInit) => {
+        capturedBody = JSON.parse(init.body as string);
+        return new Response(JSON.stringify({ localId: "user-1" }), { status: 200 });
+      })
+    );
+    const { setCustomUserClaims } = await import("../authAdmin");
+    await setCustomUserClaims("user-1", { role: "admin" });
+    expect(capturedBody).toEqual({ localId: "user-1", customAttributes: JSON.stringify({ role: "admin" }) });
+  });
+
+  it("throws on a non-ok response", async () => {
+    vi.stubGlobal("fetch", vi.fn(async () => new Response("nope", { status: 500 })));
+    const { setCustomUserClaims } = await import("../authAdmin");
+    await expect(setCustomUserClaims("user-1", { role: "admin" })).rejects.toThrow(/HTTP 500/);
+  });
+});
+
+describe("setUserDisabled", () => {
+  beforeEach(() => {
+    vi.resetModules();
+    process.env = { ...ORIGINAL_ENV, FIREBASE_PROJECT_ID: "test-project" };
+  });
+  afterEach(() => {
+    process.env = { ...ORIGINAL_ENV };
+    vi.unstubAllGlobals();
+  });
+
+  it("calls accounts:update with disableUser=true to disable a user", async () => {
+    let capturedBody: unknown = null;
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (_url: string, init: RequestInit) => {
+        capturedBody = JSON.parse(init.body as string);
+        return new Response(JSON.stringify({ localId: "user-1" }), { status: 200 });
+      })
+    );
+    const { setUserDisabled } = await import("../authAdmin");
+    await setUserDisabled("user-1", true);
+    expect(capturedBody).toEqual({ localId: "user-1", disableUser: true });
+  });
+
+  it("calls accounts:update with disableUser=false to re-enable a user", async () => {
+    let capturedBody: unknown = null;
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (_url: string, init: RequestInit) => {
+        capturedBody = JSON.parse(init.body as string);
+        return new Response(JSON.stringify({ localId: "user-1" }), { status: 200 });
+      })
+    );
+    const { setUserDisabled } = await import("../authAdmin");
+    await setUserDisabled("user-1", false);
+    expect(capturedBody).toEqual({ localId: "user-1", disableUser: false });
+  });
+
+  it("throws on a non-ok response", async () => {
+    vi.stubGlobal("fetch", vi.fn(async () => new Response("nope", { status: 429 })));
+    const { setUserDisabled } = await import("../authAdmin");
+    await expect(setUserDisabled("user-1", true)).rejects.toThrow(/HTTP 429/);
+  });
+});

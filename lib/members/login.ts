@@ -1,6 +1,7 @@
 import "server-only";
-import { FieldValue } from "firebase-admin/firestore";
-import { adminAuth, adminDb } from "@/lib/firebase/admin";
+import { runFirestoreTransaction } from "@/lib/firebase/rest/firestore";
+import { increment, serverTimestamp } from "@/lib/firebase/rest/firestoreValues";
+import { setCustomUserClaims } from "@/lib/firebase/rest/authAdmin";
 import { COLLECTIONS, MEMBERSHIP_CONFIG_DOC, getMember, touchLastLogin } from "./repo";
 import { claimInvitation, findInvitationByToken } from "./invitations";
 import { MAX_AUTH_AGE_SECONDS, type DecodedIdToken } from "@/lib/auth/session";
@@ -81,19 +82,15 @@ export async function tryBootstrapInitialAdmin(
   const initialAdmin = (process.env.INITIAL_ADMIN_EMAIL ?? "").trim().toLowerCase();
   if (!initialAdmin || email.toLowerCase() !== initialAdmin) return false;
 
-  const db = adminDb();
-  const configRef = db.collection(COLLECTIONS.systemConfig).doc(MEMBERSHIP_CONFIG_DOC);
-  const memberRef = db.collection(COLLECTIONS.members).doc(uid);
-
-  const created = await db.runTransaction(async (tx) => {
-    const configSnap = await tx.get(configRef);
-    if (configSnap.exists && configSnap.data()!.bootstrapCompleted === true) {
+  const created = await runFirestoreTransaction(async (tx) => {
+    const configDoc = await tx.get(COLLECTIONS.systemConfig, MEMBERSHIP_CONFIG_DOC);
+    if (configDoc && configDoc.data.bootstrapCompleted === true) {
       return false; // 既にブートストラップ済み
     }
-    const memberSnap = await tx.get(memberRef);
-    if (memberSnap.exists) return false;
+    const memberDoc = await tx.get(COLLECTIONS.members, uid);
+    if (memberDoc) return false;
 
-    tx.set(memberRef, {
+    tx.set(COLLECTIONS.members, uid, {
       email,
       emailLower: email.toLowerCase(),
       displayName: displayName || "SHIMA CRAFT 管理者",
@@ -101,20 +98,21 @@ export async function tryBootstrapInitialAdmin(
       accountStatus: "active",
       contractStatus: "active",
       notes: "初期管理者（bootstrap）",
-      lastLoginAt: FieldValue.serverTimestamp(),
+      lastLoginAt: serverTimestamp(),
       lastUsedAt: null,
-      createdAt: FieldValue.serverTimestamp(),
-      updatedAt: FieldValue.serverTimestamp(),
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
       deletedAt: null,
       authDisabledAt: null,
     });
     tx.set(
-      configRef,
+      COLLECTIONS.systemConfig,
+      MEMBERSHIP_CONFIG_DOC,
       {
         bootstrapCompleted: true,
-        adminCount: FieldValue.increment(1),
+        adminCount: increment(1),
         schemaVersion: 1,
-        updatedAt: FieldValue.serverTimestamp(),
+        updatedAt: serverTimestamp(),
       },
       { merge: true }
     );
@@ -123,7 +121,7 @@ export async function tryBootstrapInitialAdmin(
 
   if (created) {
     try {
-      await adminAuth().setCustomUserClaims(uid, { role: "admin" });
+      await setCustomUserClaims(uid, { role: "admin" });
     } catch {
       // claim付与失敗はFirestoreを正とする
     }

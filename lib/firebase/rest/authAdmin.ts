@@ -116,3 +116,29 @@ export async function revokeAllRefreshTokens(uid: string): Promise<void> {
   });
   assertOk(res, "accounts:update (revokeAllRefreshTokens)");
 }
+
+/**
+ * uidのcustom claimsを設定する。firebase-admin の
+ * adminAuth().setCustomUserClaims(uid, claims) の代替。
+ * role等の認可の正はFirestore側（member.role/accountStatus）であり、
+ * このclaimは補助的な同期用途（呼び出し元でのfail-closed設計は変えない）。
+ */
+export async function setCustomUserClaims(uid: string, claims: Record<string, unknown>): Promise<void> {
+  const res = await authorizedFetch(`${projectBaseUrl()}/accounts:update`, {
+    localId: uid,
+    customAttributes: JSON.stringify(claims),
+  });
+  assertOk(res, "accounts:update (setCustomUserClaims)");
+}
+
+/**
+ * uidを無効化/再有効化する。firebase-admin の
+ * adminAuth().updateUser(uid, {disabled}) の代替。
+ */
+export async function setUserDisabled(uid: string, disabled: boolean): Promise<void> {
+  const res = await authorizedFetch(`${projectBaseUrl()}/accounts:update`, {
+    localId: uid,
+    disableUser: disabled,
+  });
+  assertOk(res, "accounts:update (setUserDisabled)");
+}

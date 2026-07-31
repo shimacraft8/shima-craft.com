@@ -1,6 +1,6 @@
 import "server-only";
-import { FieldValue } from "firebase-admin/firestore";
-import { adminDb } from "@/lib/firebase/admin";
+import { commitWrites, getDoc, runFirestoreTransaction, runQuery } from "@/lib/firebase/rest/firestore";
+import { increment, serverTimestamp } from "@/lib/firebase/rest/firestoreValues";
 import { COLLECTIONS, MEMBERSHIP_CONFIG_DOC, mapInvitation } from "./repo";
 import {
   generateInvitationToken,
@@ -28,21 +28,29 @@ export type CreateInvitationInput = {
 export async function createInvitation(
   input: CreateInvitationInput
 ): Promise<{ invitation: Invitation; rawToken: string }> {
-  const db = adminDb();
   const rawToken = generateInvitationToken();
   const id = newInvitationId();
   const now = new Date();
   const expiresAt = new Date(now.getTime() + INVITATION_TTL_DAYS * 24 * 60 * 60 * 1000);
 
   // 既存pendingを失効
-  const existing = await db
-    .collection(COLLECTIONS.invitations)
-    .where("emailLower", "==", input.emailLower)
-    .where("status", "==", "pending")
-    .get();
-  const batch = db.batch();
-  existing.forEach((doc) => batch.update(doc.ref, { status: "revoked" }));
-  await batch.commit();
+  const existing = await runQuery({
+    collectionId: COLLECTIONS.invitations,
+    where: [
+      { field: "emailLower", op: "EQUAL", value: input.emailLower },
+      { field: "status", op: "EQUAL", value: "pending" },
+    ],
+  });
+  if (existing.length > 0) {
+    await commitWrites(
+      existing.map((doc) => ({
+        kind: "update" as const,
+        collectionId: COLLECTIONS.invitations,
+        docId: doc.id,
+        data: { status: "revoked" },
+      }))
+    );
+  }
 
   const data = {
     emailLower: input.emailLower,
@@ -55,28 +63,27 @@ export async function createInvitation(
     status: "pending" as const,
     expiresAt,
     createdBy: input.createdBy,
-    createdAt: FieldValue.serverTimestamp(),
+    createdAt: serverTimestamp(),
     claimedBy: null,
     claimedAt: null,
     resentAt: null,
   };
-  await db.collection(COLLECTIONS.invitations).doc(id).set(data);
-  const snap = await db.collection(COLLECTIONS.invitations).doc(id).get();
-  return { invitation: mapInvitation(id, snap.data()!), rawToken };
+  await commitWrites([{ kind: "set", collectionId: COLLECTIONS.invitations, docId: id, data }]);
+  const doc = await getDoc(COLLECTIONS.invitations, id);
+  return { invitation: mapInvitation(id, doc!.data), rawToken };
 }
 
 /** raw token から招待を引く（存在すればInvitationとdocId）。 */
 export async function findInvitationByToken(
   rawToken: string
 ): Promise<{ id: string; invitation: Invitation } | null> {
-  const q = await adminDb()
-    .collection(COLLECTIONS.invitations)
-    .where("tokenHash", "==", hashToken(rawToken))
-    .limit(1)
-    .get();
-  if (q.empty) return null;
-  const doc = q.docs[0];
-  return { id: doc.id, invitation: mapInvitation(doc.id, doc.data()) };
+  const docs = await runQuery({
+    collectionId: COLLECTIONS.invitations,
+    where: [{ field: "tokenHash", op: "EQUAL", value: hashToken(rawToken) }],
+    limit: 1,
+  });
+  if (docs.length === 0) return null;
+  return { id: docs[0].id, invitation: mapInvitation(docs[0].id, docs[0].data) };
 }
 
 export class InvitationError extends Error {
@@ -105,16 +112,12 @@ export async function claimInvitation(params: {
   googleEmail: string;
   displayName: string;
 }): Promise<{ role: UserRole }> {
-  const db = adminDb();
-  const invRef = db.collection(COLLECTIONS.invitations).doc(params.invitationId);
-  const memberRef = db.collection(COLLECTIONS.members).doc(params.uid);
-  const configRef = db.collection(COLLECTIONS.systemConfig).doc(MEMBERSHIP_CONFIG_DOC);
   const emailLower = params.googleEmail.toLowerCase();
 
-  return db.runTransaction(async (tx) => {
-    const invSnap = await tx.get(invRef);
-    if (!invSnap.exists) throw new InvitationError("NOT_FOUND", "invitation not found");
-    const inv = mapInvitation(invSnap.id, invSnap.data()!);
+  return runFirestoreTransaction(async (tx) => {
+    const invDoc = await tx.get(COLLECTIONS.invitations, params.invitationId);
+    if (!invDoc) throw new InvitationError("NOT_FOUND", "invitation not found");
+    const inv = mapInvitation(invDoc.id, invDoc.data);
 
     if (inv.status === "claimed") throw new InvitationError("ALREADY_CLAIMED", "already claimed");
     if (inv.status === "revoked") throw new InvitationError("REVOKED", "revoked");
@@ -125,20 +128,20 @@ export async function claimInvitation(params: {
       throw new InvitationError("EMAIL_MISMATCH", "email mismatch");
     }
 
-    const memberSnap = await tx.get(memberRef);
-    if (memberSnap.exists && (memberSnap.data()!.accountStatus ?? "") !== "deleted") {
+    const memberDoc = await tx.get(COLLECTIONS.members, params.uid);
+    if (memberDoc && (memberDoc.data.accountStatus ?? "") !== "deleted") {
       // 既に有効memberなら二重claimを防ぐ（招待だけclaimedにして終了）
-      tx.update(invRef, {
+      tx.update(COLLECTIONS.invitations, params.invitationId, {
         status: "claimed",
         claimedBy: params.uid,
-        claimedAt: FieldValue.serverTimestamp(),
+        claimedAt: serverTimestamp(),
       });
-      return { role: (memberSnap.data()!.role as UserRole) ?? "user" };
+      return { role: (memberDoc.data.role as UserRole) ?? "user" };
     }
 
     const willBeAdmin = inv.role === "admin" && inv.accountStatus === "active";
 
-    tx.set(memberRef, {
+    tx.set(COLLECTIONS.members, params.uid, {
       email: params.googleEmail,
       emailLower,
       displayName: params.displayName || inv.displayName || "",
@@ -146,24 +149,25 @@ export async function claimInvitation(params: {
       accountStatus: inv.accountStatus,
       contractStatus: inv.contractStatus,
       notes: "",
-      lastLoginAt: FieldValue.serverTimestamp(),
+      lastLoginAt: serverTimestamp(),
       lastUsedAt: null,
-      createdAt: FieldValue.serverTimestamp(),
-      updatedAt: FieldValue.serverTimestamp(),
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
       deletedAt: null,
       authDisabledAt: null,
     });
 
-    tx.update(invRef, {
+    tx.update(COLLECTIONS.invitations, params.invitationId, {
       status: "claimed",
       claimedBy: params.uid,
-      claimedAt: FieldValue.serverTimestamp(),
+      claimedAt: serverTimestamp(),
     });
 
     if (willBeAdmin) {
       tx.set(
-        configRef,
-        { adminCount: FieldValue.increment(1), updatedAt: FieldValue.serverTimestamp() },
+        COLLECTIONS.systemConfig,
+        MEMBERSHIP_CONFIG_DOC,
+        { adminCount: increment(1), updatedAt: serverTimestamp() },
         { merge: true }
       );
     }
@@ -173,39 +177,50 @@ export async function claimInvitation(params: {
 }
 
 export async function resendInvitation(invitationId: string): Promise<{ invitation: Invitation; rawToken: string } | null> {
-  const db = adminDb();
-  const ref = db.collection(COLLECTIONS.invitations).doc(invitationId);
-  const snap = await ref.get();
-  if (!snap.exists) return null;
-  const inv = mapInvitation(snap.id, snap.data()!);
+  const snap = await getDoc(COLLECTIONS.invitations, invitationId);
+  if (!snap) return null;
+  const inv = mapInvitation(snap.id, snap.data);
   if (inv.status === "claimed" || inv.status === "revoked") return null;
 
   // 新しいtokenを発行し直す（古いリンクは無効化）
   const rawToken = generateInvitationToken();
   const now = new Date();
   const expiresAt = new Date(now.getTime() + INVITATION_TTL_DAYS * 24 * 60 * 60 * 1000);
-  await ref.update({
-    tokenHash: hashToken(rawToken),
-    status: "pending",
-    expiresAt,
-    resentAt: FieldValue.serverTimestamp(),
-  });
-  const fresh = await ref.get();
-  return { invitation: mapInvitation(ref.id, fresh.data()!), rawToken };
+  await commitWrites([
+    {
+      kind: "update",
+      collectionId: COLLECTIONS.invitations,
+      docId: invitationId,
+      data: {
+        tokenHash: hashToken(rawToken),
+        status: "pending",
+        expiresAt,
+        resentAt: serverTimestamp(),
+      },
+    },
+  ]);
+  const fresh = await getDoc(COLLECTIONS.invitations, invitationId);
+  return { invitation: mapInvitation(invitationId, fresh!.data), rawToken };
 }
 
 export async function revokeInvitation(invitationId: string): Promise<boolean> {
-  const ref = adminDb().collection(COLLECTIONS.invitations).doc(invitationId);
-  const snap = await ref.get();
-  if (!snap.exists) return false;
-  const inv = mapInvitation(snap.id, snap.data()!);
+  const snap = await getDoc(COLLECTIONS.invitations, invitationId);
+  if (!snap) return false;
+  const inv = mapInvitation(snap.id, snap.data);
   if (inv.status === "claimed") return false;
-  await ref.update({ status: "revoked" });
+  await commitWrites([
+    { kind: "update", collectionId: COLLECTIONS.invitations, docId: invitationId, data: { status: "revoked" } },
+  ]);
   return true;
 }
 
 export async function markInvitationDeliveryFailed(invitationId: string): Promise<void> {
-  await adminDb().collection(COLLECTIONS.invitations).doc(invitationId).update({
-    status: "delivery_failed",
-  });
+  await commitWrites([
+    {
+      kind: "update",
+      collectionId: COLLECTIONS.invitations,
+      docId: invitationId,
+      data: { status: "delivery_failed" },
+    },
+  ]);
 }

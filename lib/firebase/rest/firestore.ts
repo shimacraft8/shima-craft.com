@@ -20,6 +20,11 @@ import {
  *   lib/members/repo.ts の COLLECTIONS と値は一致させるが、あえて独立した定数として持つ
  *   （どちらか一方の変更だけでは操作範囲が広がらないようにする多重防御）。
  * - 秘密情報・レスポンス本文はログにも例外メッセージにも出さない（httpClient.tsの方針を踏襲）。
+ * - FIRESTORE_EMULATOR_HOST が設定されている場合は、実Google Cloudの代わりに
+ *   ローカルのFirestore Emulatorへ接続し、サービスアカウントOAuth2の取得もスキップする
+ *   （emulatorは認証を検証しないため、Admin SDKと同様の慣習である `Bearer owner` を送る）。
+ *   これによりtests/firebase/integration.test.ts（実credentialなしで動くemulator統合テスト）が
+ *   本クライアント経由でも成立する。
  */
 
 const FIRESTORE_SCOPE = "https://www.googleapis.com/auth/datastore" as const;
@@ -51,7 +56,13 @@ function projectId(): string {
   return id;
 }
 
+function emulatorHost(): string | undefined {
+  return process.env.FIRESTORE_EMULATOR_HOST || undefined;
+}
+
 function documentsBaseUrl(): string {
+  const host = emulatorHost();
+  if (host) return `http://${host}/v1/projects/${projectId()}/databases/(default)/documents`;
   return `https://firestore.googleapis.com/v1/projects/${projectId()}/databases/(default)/documents`;
 }
 
@@ -60,7 +71,7 @@ function fullDocName(collectionId: string, docId: string): string {
 }
 
 async function authorizedFetch(url: string, init: RequestInit): Promise<Response> {
-  const accessToken = await getServiceAccountAccessToken([FIRESTORE_SCOPE]);
+  const accessToken = emulatorHost() ? "owner" : await getServiceAccountAccessToken([FIRESTORE_SCOPE]);
   return fetchWithTimeout(url, {
     ...init,
     headers: {

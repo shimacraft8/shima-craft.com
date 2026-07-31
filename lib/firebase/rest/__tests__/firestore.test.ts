@@ -104,6 +104,57 @@ describe("getDoc", () => {
   });
 });
 
+describe("Firestore Emulator対応", () => {
+  it("uses the emulator's http host and the 'owner' bearer token when FIRESTORE_EMULATOR_HOST is set", async () => {
+    process.env.FIRESTORE_EMULATOR_HOST = "127.0.0.1:8080";
+    let capturedUrl = "";
+    let capturedAuth = "";
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (url: string, init: RequestInit) => {
+        capturedUrl = url;
+        capturedAuth = (init.headers as Record<string, string>).Authorization;
+        return new Response("not found", { status: 404 });
+      })
+    );
+    const { getDoc } = await import("../firestore");
+    await getDoc("members", "uid-1");
+    expect(capturedUrl).toBe(
+      "http://127.0.0.1:8080/v1/projects/test-project/databases/(default)/documents/members/uid-1"
+    );
+    expect(capturedAuth).toBe("Bearer owner");
+  });
+
+  it("does not call getServiceAccountAccessToken (no real credentials needed) in emulator mode", async () => {
+    process.env.FIRESTORE_EMULATOR_HOST = "127.0.0.1:8080";
+    delete process.env.FIREBASE_CLIENT_EMAIL;
+    delete process.env.FIREBASE_PRIVATE_KEY;
+    vi.stubGlobal("fetch", vi.fn(async () => new Response("not found", { status: 404 })));
+    const { getServiceAccountAccessToken } = await import("../googleAuth");
+    vi.mocked(getServiceAccountAccessToken).mockClear();
+    const { getDoc } = await import("../firestore");
+    await getDoc("members", "uid-1");
+    expect(getServiceAccountAccessToken).not.toHaveBeenCalled();
+  });
+
+  it("falls back to the real Google endpoint and real credentials when FIRESTORE_EMULATOR_HOST is unset", async () => {
+    delete process.env.FIRESTORE_EMULATOR_HOST;
+    let capturedUrl = "";
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (url: string) => {
+        capturedUrl = url;
+        return new Response("not found", { status: 404 });
+      })
+    );
+    const { getDoc } = await import("../firestore");
+    await getDoc("members", "uid-1");
+    expect(capturedUrl).toBe(
+      "https://firestore.googleapis.com/v1/projects/test-project/databases/(default)/documents/members/uid-1"
+    );
+  });
+});
+
 describe("runQuery", () => {
   it("builds a structuredQuery with where/orderBy/limit and decodes returned documents", async () => {
     let capturedBody: unknown = null;

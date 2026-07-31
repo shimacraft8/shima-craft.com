@@ -11,8 +11,12 @@ import { getFirestore, type Firestore } from "firebase-admin/firestore";
  *
  * 注意: このファイルの firebase-admin/* import は、Cloudflare Workers上では
  * （呼び出すかどうかに関係なく）import した時点でエラーになる（protobufjsのeval制限）。
- * そのためCloudflare対応済みのセッション層（lib/auth/session.ts）は、このファイルを
- * importしない（isAdminConfiguredはlib/firebase/isConfigured.tsへ分離済み）。
+ * lib/members/* ・lib/auth/session.ts は全てlib/firebase/rest/*（Web標準API・
+ * Cloudflare対応）へ移行済みで、アプリケーションコードはこのファイルを一切importしない
+ * （2026-08-01時点でimport元は tests/firebase/integration.test.ts のみ:
+ *  Firestore Emulatorに対するテスト専用のsetup/teardown/生データ検証に使う）。
+ * テストファイルはNext.js/OpenNextのビルド対象に含まれないため、本ファイルを
+ * このまま残してもCloudflare本番バンドルにfirebase-adminが混入することはない。
  */
 
 let cached: { app: App; auth: Auth; db: Firestore } | null = null;

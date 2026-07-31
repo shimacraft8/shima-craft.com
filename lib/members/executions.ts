@@ -1,6 +1,6 @@
 import "server-only";
-import { FieldValue } from "firebase-admin/firestore";
-import { adminDb } from "@/lib/firebase/admin";
+import { commitWrites, getDoc, newDocId, type FirestoreWriteOp } from "@/lib/firebase/rest/firestore";
+import { serverTimestamp } from "@/lib/firebase/rest/firestoreValues";
 import { COLLECTIONS } from "./repo";
 import { logDocId } from "./tokens";
 import type { ColorizeLogEventType, ProcessingMode } from "./types";
@@ -22,47 +22,53 @@ export type ExecutionMeta = {
 };
 
 export async function createExecution(uid: string, meta: ExecutionMeta): Promise<string> {
-  const db = adminDb();
-  const execRef = db.collection(COLLECTIONS.executions).doc();
-  const executionId = execRef.id;
+  const executionId = newDocId();
 
-  const batch = db.batch();
-  batch.set(execRef, {
-    userId: uid,
-    status: "started",
-    processingMode: null,
-    inputWidth: meta.inputWidth ?? null,
-    inputHeight: meta.inputHeight ?? null,
-    inputFileSize: meta.inputFileSize ?? null,
-    outputWidth: null,
-    outputHeight: null,
-    durationMs: null,
-    errorCode: null,
-    clientRequestId: meta.clientRequestId ?? null,
-    retryOfExecutionId: meta.retryOfExecutionId ?? null,
-    startedAt: FieldValue.serverTimestamp(),
-    completedAt: null,
-    updatedAt: FieldValue.serverTimestamp(),
-    downloadClickedAt: null,
-  });
+  await commitWrites([
+    {
+      kind: "set",
+      collectionId: COLLECTIONS.executions,
+      docId: executionId,
+      data: {
+        userId: uid,
+        status: "started",
+        processingMode: null,
+        inputWidth: meta.inputWidth ?? null,
+        inputHeight: meta.inputHeight ?? null,
+        inputFileSize: meta.inputFileSize ?? null,
+        outputWidth: null,
+        outputHeight: null,
+        durationMs: null,
+        errorCode: null,
+        clientRequestId: meta.clientRequestId ?? null,
+        retryOfExecutionId: meta.retryOfExecutionId ?? null,
+        startedAt: serverTimestamp(),
+        completedAt: null,
+        updatedAt: serverTimestamp(),
+        downloadClickedAt: null,
+      },
+    },
+    {
+      kind: "set",
+      collectionId: COLLECTIONS.logs,
+      docId: logDocId(executionId, "colorize_started"),
+      data: {
+        userId: uid,
+        executionId,
+        eventType: "colorize_started",
+        status: "started",
+        processingMode: null,
+        imageWidth: meta.inputWidth ?? null,
+        imageHeight: meta.inputHeight ?? null,
+        durationMs: null,
+        errorCode: null,
+        browserName: null,
+        deviceType: null,
+        createdAt: serverTimestamp(),
+      },
+    },
+  ]);
 
-  const startedLogRef = db.collection(COLLECTIONS.logs).doc(logDocId(executionId, "colorize_started"));
-  batch.set(startedLogRef, {
-    userId: uid,
-    executionId,
-    eventType: "colorize_started",
-    status: "started",
-    processingMode: null,
-    imageWidth: meta.inputWidth ?? null,
-    imageHeight: meta.inputHeight ?? null,
-    durationMs: null,
-    errorCode: null,
-    browserName: null,
-    deviceType: null,
-    createdAt: FieldValue.serverTimestamp(),
-  });
-
-  await batch.commit();
   return executionId;
 }
 
@@ -101,37 +107,37 @@ const TERMINAL_STATUS: Record<string, "succeeded" | "failed" | "cancelled"> = {
  * - executionの終端状態・ダウンロード時刻も更新
  */
 export async function recordExecutionEvent(uid: string, input: RecordEventInput): Promise<void> {
-  const db = adminDb();
-  const execRef = db.collection(COLLECTIONS.executions).doc(input.executionId);
-  const execSnap = await execRef.get();
-  if (!execSnap.exists) throw new ExecutionAccessError("execution not found");
-  if (execSnap.data()!.userId !== uid) throw new ExecutionAccessError("forbidden");
+  const execDoc = await getDoc(COLLECTIONS.executions, input.executionId);
+  if (!execDoc) throw new ExecutionAccessError("execution not found");
+  if (execDoc.data.userId !== uid) throw new ExecutionAccessError("forbidden");
 
-  const logRef = db
-    .collection(COLLECTIONS.logs)
-    .doc(logDocId(input.executionId, input.eventType));
+  const ops: FirestoreWriteOp[] = [
+    {
+      kind: "set",
+      collectionId: COLLECTIONS.logs,
+      docId: logDocId(input.executionId, input.eventType),
+      data: {
+        userId: uid,
+        executionId: input.executionId,
+        eventType: input.eventType,
+        status: input.status ?? "",
+        processingMode: input.processingMode ?? null,
+        imageWidth: input.imageWidth ?? null,
+        imageHeight: input.imageHeight ?? null,
+        durationMs: input.durationMs ?? null,
+        errorCode: input.errorCode ?? null,
+        browserName: input.browserName ?? null,
+        deviceType: input.deviceType ?? null,
+        createdAt: serverTimestamp(),
+      },
+    },
+  ];
 
-  const batch = db.batch();
-  batch.set(logRef, {
-    userId: uid,
-    executionId: input.executionId,
-    eventType: input.eventType,
-    status: input.status ?? "",
-    processingMode: input.processingMode ?? null,
-    imageWidth: input.imageWidth ?? null,
-    imageHeight: input.imageHeight ?? null,
-    durationMs: input.durationMs ?? null,
-    errorCode: input.errorCode ?? null,
-    browserName: input.browserName ?? null,
-    deviceType: input.deviceType ?? null,
-    createdAt: FieldValue.serverTimestamp(),
-  });
-
-  const execUpdate: Record<string, unknown> = { updatedAt: FieldValue.serverTimestamp() };
+  const execUpdate: Record<string, unknown> = { updatedAt: serverTimestamp() };
   const terminal = TERMINAL_STATUS[input.eventType];
   if (terminal) {
     execUpdate.status = terminal;
-    execUpdate.completedAt = FieldValue.serverTimestamp();
+    execUpdate.completedAt = serverTimestamp();
     if (input.processingMode) execUpdate.processingMode = input.processingMode;
     if (input.outputWidth != null) execUpdate.outputWidth = input.outputWidth;
     if (input.outputHeight != null) execUpdate.outputHeight = input.outputHeight;
@@ -139,17 +145,25 @@ export async function recordExecutionEvent(uid: string, input: RecordEventInput)
     if (input.errorCode) execUpdate.errorCode = input.errorCode;
   }
   if (input.eventType === "download_clicked") {
-    execUpdate.downloadClickedAt = FieldValue.serverTimestamp();
+    execUpdate.downloadClickedAt = serverTimestamp();
   }
   if (input.eventType === "colorize_succeeded") {
     // memberの最終利用日時を更新
-    batch.set(
-      db.collection(COLLECTIONS.members).doc(uid),
-      { lastUsedAt: FieldValue.serverTimestamp() },
-      { merge: true }
-    );
+    ops.push({
+      kind: "set",
+      collectionId: COLLECTIONS.members,
+      docId: uid,
+      data: { lastUsedAt: serverTimestamp() },
+      merge: true,
+    });
   }
-  batch.set(execRef, execUpdate, { merge: true });
+  ops.push({
+    kind: "set",
+    collectionId: COLLECTIONS.executions,
+    docId: input.executionId,
+    data: execUpdate,
+    merge: true,
+  });
 
-  await batch.commit();
+  await commitWrites(ops);
 }

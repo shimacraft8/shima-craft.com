@@ -1,6 +1,5 @@
 import "server-only";
-import type { Query } from "firebase-admin/firestore";
-import { adminDb } from "@/lib/firebase/admin";
+import { countDocs, getDoc, runQuery, type WhereFilter } from "@/lib/firebase/rest/firestore";
 import {
   COLLECTIONS,
   MEMBERSHIP_CONFIG_DOC,
@@ -22,10 +21,19 @@ import type {
 /** cursorページネーションの結果。nextCursorは最終docのID。 */
 export type Page<T> = { items: T[]; nextCursor: string | null };
 
-async function startAfterDoc(coll: string, cursor: string | null) {
-  if (!cursor) return null;
-  const snap = await adminDb().collection(coll).doc(cursor).get();
-  return snap.exists ? snap : null;
+/**
+ * カーソルdocIdから、指定orderByフィールドの値を取得する
+ * （Admin SDKの `.startAfter(docSnapshot)` が内部でクエリの並び替えフィールドの値を
+ *  抽出するのと同じ役割）。カーソルdocが存在しない場合はundefined（カーソル無効時と同義）。
+ */
+async function cursorFieldValue(
+  collectionId: string,
+  cursorDocId: string | null | undefined,
+  orderByField: string
+): Promise<unknown> {
+  if (!cursorDocId) return undefined;
+  const doc = await getDoc(collectionId, cursorDocId);
+  return doc ? doc.data[orderByField] : undefined;
 }
 
 // ─── members ───
@@ -38,29 +46,30 @@ export async function listMembers(params: {
   pageSize?: number;
 }): Promise<Page<Member>> {
   const pageSize = Math.min(100, params.pageSize ?? 20);
-  let q: Query = adminDb().collection(COLLECTIONS.members);
-
-  if (params.role) q = q.where("role", "==", params.role);
-  if (params.accountStatus) q = q.where("accountStatus", "==", params.accountStatus);
-  if (params.contractStatus) q = q.where("contractStatus", "==", params.contractStatus);
+  const where: WhereFilter[] = [];
+  if (params.role) where.push({ field: "role", op: "EQUAL", value: params.role });
+  if (params.accountStatus) where.push({ field: "accountStatus", op: "EQUAL", value: params.accountStatus });
+  if (params.contractStatus) where.push({ field: "contractStatus", op: "EQUAL", value: params.contractStatus });
 
   // 検索はメール前方一致（emailLower）。指定時は createdAt 並びではなく emailLower 並び。
   const search = (params.search ?? "").trim().toLowerCase();
-  if (search) {
-    q = q.orderBy("emailLower").startAt(search).endAt(`${search}`);
-  } else {
-    q = q.orderBy("createdAt", "desc");
-  }
+  const orderByField = search ? "emailLower" : "createdAt";
+  const startAfterValue = await cursorFieldValue(COLLECTIONS.members, params.cursor, orderByField);
 
-  const after = await startAfterDoc(COLLECTIONS.members, params.cursor ?? null);
-  if (after) q = q.startAfter(after);
-  q = q.limit(pageSize + 1);
+  const docs = await runQuery({
+    collectionId: COLLECTIONS.members,
+    where: where.length > 0 ? where : undefined,
+    orderBy: { field: orderByField, direction: search ? "ASCENDING" : "DESCENDING" },
+    startAtValue: search ? search : undefined,
+    endAtValue: search ? search : undefined,
+    startAfterValue,
+    limit: pageSize + 1,
+  });
 
-  const snap = await q.get();
-  const docs = snap.docs.slice(0, pageSize);
+  const page = docs.slice(0, pageSize);
   return {
-    items: docs.map((d) => mapMember(d.id, d.data())),
-    nextCursor: snap.docs.length > pageSize ? docs[docs.length - 1].id : null,
+    items: page.map((d) => mapMember(d.id, d.data)),
+    nextCursor: docs.length > pageSize ? page[page.length - 1].id : null,
   };
 }
 
@@ -71,17 +80,22 @@ export async function listInvitations(params: {
   pageSize?: number;
 }): Promise<Page<Invitation>> {
   const pageSize = Math.min(100, params.pageSize ?? 30);
-  let q: Query = adminDb().collection(COLLECTIONS.invitations);
-  if (params.status) q = q.where("status", "==", params.status);
-  q = q.orderBy("createdAt", "desc");
-  const after = await startAfterDoc(COLLECTIONS.invitations, params.cursor ?? null);
-  if (after) q = q.startAfter(after);
-  q = q.limit(pageSize + 1);
-  const snap = await q.get();
-  const docs = snap.docs.slice(0, pageSize);
+  const where: WhereFilter[] = [];
+  if (params.status) where.push({ field: "status", op: "EQUAL", value: params.status });
+  const startAfterValue = await cursorFieldValue(COLLECTIONS.invitations, params.cursor, "createdAt");
+
+  const docs = await runQuery({
+    collectionId: COLLECTIONS.invitations,
+    where: where.length > 0 ? where : undefined,
+    orderBy: { field: "createdAt", direction: "DESCENDING" },
+    startAfterValue,
+    limit: pageSize + 1,
+  });
+
+  const page = docs.slice(0, pageSize);
   return {
-    items: docs.map((d) => mapInvitation(d.id, d.data())),
-    nextCursor: snap.docs.length > pageSize ? docs[docs.length - 1].id : null,
+    items: page.map((d) => mapInvitation(d.id, d.data)),
+    nextCursor: docs.length > pageSize ? page[page.length - 1].id : null,
   };
 }
 
@@ -98,26 +112,32 @@ export async function listLogs(params: {
   pageSize?: number;
 }): Promise<Page<ColorizationLog>> {
   const pageSize = Math.min(100, params.pageSize ?? 50);
-  let q: Query = adminDb().collection(COLLECTIONS.logs);
-  if (params.userId) q = q.where("userId", "==", params.userId);
-  if (params.result === "succeeded") q = q.where("eventType", "==", "colorize_succeeded");
-  else if (params.result === "failed") q = q.where("eventType", "==", "colorize_failed");
-  else if (params.eventType) q = q.where("eventType", "==", params.eventType);
-  if (params.processingMode) q = q.where("processingMode", "==", params.processingMode);
-  q = q.orderBy("createdAt", "desc");
-  const after = await startAfterDoc(COLLECTIONS.logs, params.cursor ?? null);
-  if (after) q = q.startAfter(after);
-  q = q.limit(pageSize + 1);
-  const snap = await q.get();
-  let docs = snap.docs.slice(0, pageSize).map((d) => ({ id: d.id, log: mapLog(d.id, d.data()) }));
+  const where: WhereFilter[] = [];
+  if (params.userId) where.push({ field: "userId", op: "EQUAL", value: params.userId });
+  if (params.result === "succeeded") where.push({ field: "eventType", op: "EQUAL", value: "colorize_succeeded" });
+  else if (params.result === "failed") where.push({ field: "eventType", op: "EQUAL", value: "colorize_failed" });
+  else if (params.eventType) where.push({ field: "eventType", op: "EQUAL", value: params.eventType });
+  if (params.processingMode) where.push({ field: "processingMode", op: "EQUAL", value: params.processingMode });
+
+  const startAfterValue = await cursorFieldValue(COLLECTIONS.logs, params.cursor, "createdAt");
+
+  const docs = await runQuery({
+    collectionId: COLLECTIONS.logs,
+    where: where.length > 0 ? where : undefined,
+    orderBy: { field: "createdAt", direction: "DESCENDING" },
+    startAfterValue,
+    limit: pageSize + 1,
+  });
+
+  let page = docs.slice(0, pageSize).map((d) => ({ id: d.id, log: mapLog(d.id, d.data) }));
   // errorCode 部分一致はアプリ側で追加フィルタ（indexを増やさない）
   if (params.errorCode) {
     const needle = params.errorCode.toLowerCase();
-    docs = docs.filter((x) => (x.log.errorCode ?? "").toLowerCase().includes(needle));
+    page = page.filter((x) => (x.log.errorCode ?? "").toLowerCase().includes(needle));
   }
   return {
-    items: docs.map((x) => x.log),
-    nextCursor: snap.docs.length > pageSize ? snap.docs[pageSize - 1].id : null,
+    items: page.map((x) => x.log),
+    nextCursor: docs.length > pageSize ? docs[pageSize - 1].id : null,
   };
 }
 
@@ -128,17 +148,22 @@ export async function listAuditLogs(params: {
   pageSize?: number;
 }): Promise<Page<AdminAuditLog>> {
   const pageSize = Math.min(100, params.pageSize ?? 50);
-  let q: Query = adminDb().collection(COLLECTIONS.audit);
-  if (params.action) q = q.where("action", "==", params.action);
-  q = q.orderBy("createdAt", "desc");
-  const after = await startAfterDoc(COLLECTIONS.audit, params.cursor ?? null);
-  if (after) q = q.startAfter(after);
-  q = q.limit(pageSize + 1);
-  const snap = await q.get();
-  const docs = snap.docs.slice(0, pageSize);
+  const where: WhereFilter[] = [];
+  if (params.action) where.push({ field: "action", op: "EQUAL", value: params.action });
+  const startAfterValue = await cursorFieldValue(COLLECTIONS.audit, params.cursor, "createdAt");
+
+  const docs = await runQuery({
+    collectionId: COLLECTIONS.audit,
+    where: where.length > 0 ? where : undefined,
+    orderBy: { field: "createdAt", direction: "DESCENDING" },
+    startAfterValue,
+    limit: pageSize + 1,
+  });
+
+  const page = docs.slice(0, pageSize);
   return {
-    items: docs.map((d) => mapAudit(d.id, d.data())),
-    nextCursor: snap.docs.length > pageSize ? docs[docs.length - 1].id : null,
+    items: page.map((d) => mapAudit(d.id, d.data)),
+    nextCursor: docs.length > pageSize ? page[page.length - 1].id : null,
   };
 }
 
@@ -151,47 +176,46 @@ export async function getDashboardStats(): Promise<{
   todaySucceeded: number;
   todayFailed: number;
 }> {
-  const db = adminDb();
   const todayStart = new Date();
   todayStart.setHours(0, 0, 0, 0);
 
-  const countQ = async (q: Query) => (await q.count().get()).data().count;
-
-  const [activeUsers, paymentPending, suspended, todayStarted, todaySucceeded, todayFailed] =
-    await Promise.all([
-      countQ(db.collection(COLLECTIONS.members).where("accountStatus", "==", "active")),
-      countQ(db.collection(COLLECTIONS.members).where("contractStatus", "==", "payment_pending")),
-      countQ(db.collection(COLLECTIONS.members).where("accountStatus", "==", "suspended")),
-      countQ(
-        db
-          .collection(COLLECTIONS.logs)
-          .where("eventType", "==", "colorize_started")
-          .where("createdAt", ">=", todayStart)
-      ),
-      countQ(
-        db
-          .collection(COLLECTIONS.logs)
-          .where("eventType", "==", "colorize_succeeded")
-          .where("createdAt", ">=", todayStart)
-      ),
-      countQ(
-        db
-          .collection(COLLECTIONS.logs)
-          .where("eventType", "==", "colorize_failed")
-          .where("createdAt", ">=", todayStart)
-      ),
-    ]);
+  const [activeUsers, paymentPending, suspended, todayStarted, todaySucceeded, todayFailed] = await Promise.all([
+    countDocs({ collectionId: COLLECTIONS.members, where: [{ field: "accountStatus", op: "EQUAL", value: "active" }] }),
+    countDocs({ collectionId: COLLECTIONS.members, where: [{ field: "contractStatus", op: "EQUAL", value: "payment_pending" }] }),
+    countDocs({ collectionId: COLLECTIONS.members, where: [{ field: "accountStatus", op: "EQUAL", value: "suspended" }] }),
+    countDocs({
+      collectionId: COLLECTIONS.logs,
+      where: [
+        { field: "eventType", op: "EQUAL", value: "colorize_started" },
+        { field: "createdAt", op: "GREATER_THAN_OR_EQUAL", value: todayStart },
+      ],
+    }),
+    countDocs({
+      collectionId: COLLECTIONS.logs,
+      where: [
+        { field: "eventType", op: "EQUAL", value: "colorize_succeeded" },
+        { field: "createdAt", op: "GREATER_THAN_OR_EQUAL", value: todayStart },
+      ],
+    }),
+    countDocs({
+      collectionId: COLLECTIONS.logs,
+      where: [
+        { field: "eventType", op: "EQUAL", value: "colorize_failed" },
+        { field: "createdAt", op: "GREATER_THAN_OR_EQUAL", value: todayStart },
+      ],
+    }),
+  ]);
 
   return { activeUsers, paymentPending, suspended, todayStarted, todaySucceeded, todayFailed };
 }
 
 export async function getRecentLogs(limit = 10): Promise<ColorizationLog[]> {
-  const snap = await adminDb()
-    .collection(COLLECTIONS.logs)
-    .orderBy("createdAt", "desc")
-    .limit(limit)
-    .get();
-  return snap.docs.map((d) => mapLog(d.id, d.data()));
+  const docs = await runQuery({
+    collectionId: COLLECTIONS.logs,
+    orderBy: { field: "createdAt", direction: "DESCENDING" },
+    limit,
+  });
+  return docs.map((d) => mapLog(d.id, d.data));
 }
 
 /** userIdの集合から表示名・メールを引く（ログ画面のユーザー表示用）。 */
@@ -202,10 +226,12 @@ export async function resolveMemberLabels(
   const unique = Array.from(new Set(userIds)).filter(Boolean);
   await Promise.all(
     unique.map(async (uid) => {
-      const snap = await adminDb().collection(COLLECTIONS.members).doc(uid).get();
-      if (snap.exists) {
-        const d = snap.data()!;
-        map.set(uid, { displayName: (d.displayName as string) ?? "", email: (d.email as string) ?? "" });
+      const doc = await getDoc(COLLECTIONS.members, uid);
+      if (doc) {
+        map.set(uid, {
+          displayName: (doc.data.displayName as string) ?? "",
+          email: (doc.data.email as string) ?? "",
+        });
       }
     })
   );
@@ -215,14 +241,14 @@ export async function resolveMemberLabels(
 export async function findMemberIdsBySearch(search: string): Promise<string[]> {
   const s = search.trim().toLowerCase();
   if (!s) return [];
-  const snap = await adminDb()
-    .collection(COLLECTIONS.members)
-    .orderBy("emailLower")
-    .startAt(s)
-    .endAt(`${s}`)
-    .limit(50)
-    .get();
-  return snap.docs.map((d) => d.id);
+  const docs = await runQuery({
+    collectionId: COLLECTIONS.members,
+    orderBy: { field: "emailLower", direction: "ASCENDING" },
+    startAtValue: s,
+    endAtValue: s,
+    limit: 50,
+  });
+  return docs.map((d) => d.id);
 }
 
 export { MEMBERSHIP_CONFIG_DOC };

@@ -1,7 +1,7 @@
 import "server-only";
-import { FieldValue, Timestamp } from "firebase-admin/firestore";
-import { adminAuth } from "@/lib/firebase/admin";
-import { adminDb } from "@/lib/firebase/admin";
+import { commitWrites, newDocId, runFirestoreTransaction } from "@/lib/firebase/rest/firestore";
+import { increment, serverTimestamp } from "@/lib/firebase/rest/firestoreValues";
+import { revokeAllRefreshTokens, setCustomUserClaims, setUserDisabled } from "@/lib/firebase/rest/authAdmin";
 import { COLLECTIONS, MEMBERSHIP_CONFIG_DOC, mapMember } from "./repo";
 import type {
   AccountStatus,
@@ -62,15 +62,14 @@ export async function applyMemberMutation(params: {
   ipHash: string | null;
   userAgent: string | null;
 }): Promise<Member> {
-  const db = adminDb();
-  const memberRef = db.collection(COLLECTIONS.members).doc(params.targetUid);
-  const configRef = db.collection(COLLECTIONS.systemConfig).doc(MEMBERSHIP_CONFIG_DOC);
-  const auditRef = db.collection(COLLECTIONS.audit).doc();
+  // transactionが競合で再試行されても同一の監査ログドキュメントを指すよう、
+  // transaction呼び出しの外でIDを1回だけ生成する（元のAdmin SDK実装と同じ挙動）。
+  const auditId = newDocId();
 
-  const updated = await db.runTransaction(async (tx) => {
-    const memberSnap = await tx.get(memberRef);
-    if (!memberSnap.exists) throw new MemberOpError("NOT_FOUND", "member not found");
-    const before = mapMember(memberSnap.id, memberSnap.data()!);
+  const updated = await runFirestoreTransaction(async (tx) => {
+    const memberDoc = await tx.get(COLLECTIONS.members, params.targetUid);
+    if (!memberDoc) throw new MemberOpError("NOT_FOUND", "member not found");
+    const before = mapMember(memberDoc.id, memberDoc.data);
 
     const after: Member = {
       ...before,
@@ -90,8 +89,8 @@ export async function applyMemberMutation(params: {
     if (!wasAdmin && willBeAdmin) adminDelta = +1;
 
     if (adminDelta < 0) {
-      const configSnap = await tx.get(configRef);
-      const currentCount = (configSnap.exists ? (configSnap.data()!.adminCount as number) : 0) || 0;
+      const configDoc = await tx.get(COLLECTIONS.systemConfig, MEMBERSHIP_CONFIG_DOC);
+      const currentCount = (configDoc ? (configDoc.data.adminCount as number) : 0) || 0;
       if (currentCount + adminDelta < 1) {
         throw new MemberOpError("LAST_ADMIN", "cannot remove the last active admin");
       }
@@ -105,28 +104,29 @@ export async function applyMemberMutation(params: {
       notes: after.notes,
       email: after.email,
       emailLower: after.email.toLowerCase(),
-      updatedAt: FieldValue.serverTimestamp(),
+      updatedAt: serverTimestamp(),
     };
     if (params.mutation.accountStatus === "deleted" && before.accountStatus !== "deleted") {
-      updateData.deletedAt = FieldValue.serverTimestamp();
+      updateData.deletedAt = serverTimestamp();
     }
     if (params.mutation.accountStatus && params.mutation.accountStatus !== "active") {
-      updateData.authDisabledAt = FieldValue.serverTimestamp();
+      updateData.authDisabledAt = serverTimestamp();
     }
     if (params.mutation.accountStatus === "active") {
       updateData.authDisabledAt = null;
     }
-    tx.set(memberRef, updateData, { merge: true });
+    tx.set(COLLECTIONS.members, params.targetUid, updateData, { merge: true });
 
     if (adminDelta !== 0) {
       tx.set(
-        configRef,
-        { adminCount: FieldValue.increment(adminDelta), updatedAt: FieldValue.serverTimestamp() },
+        COLLECTIONS.systemConfig,
+        MEMBERSHIP_CONFIG_DOC,
+        { adminCount: increment(adminDelta), updatedAt: serverTimestamp() },
         { merge: true }
       );
     }
 
-    tx.set(auditRef, {
+    tx.set(COLLECTIONS.audit, auditId, {
       adminUserId: params.adminUserId,
       action: params.action,
       targetUserId: params.targetUid,
@@ -135,7 +135,7 @@ export async function applyMemberMutation(params: {
       requestId: params.requestId,
       ipHash: params.ipHash,
       userAgent: params.userAgent,
-      createdAt: FieldValue.serverTimestamp(),
+      createdAt: serverTimestamp(),
     });
 
     return after;
@@ -145,18 +145,16 @@ export async function applyMemberMutation(params: {
   try {
     if (params.mutation.accountStatus) {
       const disabled = params.mutation.accountStatus !== "active";
-      await adminAuth().updateUser(params.targetUid, { disabled });
+      await setUserDisabled(params.targetUid, disabled);
       // 停止・削除・降格時は既存トークンを失効し、Session Cookieも無効化する
       if (disabled || params.mutation.role === "user") {
-        await adminAuth().revokeRefreshTokens(params.targetUid);
+        await revokeAllRefreshTokens(params.targetUid);
       }
     }
     // roleをcustom claimへ補助的に反映（source of truthはFirestore）
     if (params.mutation.role) {
-      await adminAuth().setCustomUserClaims(params.targetUid, {
-        role: updated.role,
-      });
-      await adminAuth().revokeRefreshTokens(params.targetUid);
+      await setCustomUserClaims(params.targetUid, { role: updated.role });
+      await revokeAllRefreshTokens(params.targetUid);
     }
   } catch {
     // Auth同期失敗はDB状態を正とする（次回検証時に反映される）
@@ -176,17 +174,22 @@ export async function writeAuditOnly(params: {
   ipHash: string | null;
   userAgent: string | null;
 }): Promise<void> {
-  await adminDb().collection(COLLECTIONS.audit).add({
-    adminUserId: params.adminUserId,
-    action: params.action,
-    targetUserId: params.targetUserId,
-    beforeData: params.beforeData ?? null,
-    afterData: params.afterData ?? null,
-    requestId: params.requestId,
-    ipHash: params.ipHash,
-    userAgent: params.userAgent,
-    createdAt: FieldValue.serverTimestamp(),
-  });
+  await commitWrites([
+    {
+      kind: "set",
+      collectionId: COLLECTIONS.audit,
+      docId: newDocId(),
+      data: {
+        adminUserId: params.adminUserId,
+        action: params.action,
+        targetUserId: params.targetUserId,
+        beforeData: params.beforeData ?? null,
+        afterData: params.afterData ?? null,
+        requestId: params.requestId,
+        ipHash: params.ipHash,
+        userAgent: params.userAgent,
+        createdAt: serverTimestamp(),
+      },
+    },
+  ]);
 }
-
-export { Timestamp };

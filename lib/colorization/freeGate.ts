@@ -1,9 +1,9 @@
 /**
- * 無料公開モードの日次利用制限。
- * Cookie ベースの軽量な制限（ソフトリミット）。
+ * 写真カラー化（ログイン不要・全員公開）の日次利用制限。
+ * Cookie ベースの軽量な制限（ソフトリミット）。IPハッシュ+KVによる補助制限は
+ * lib/rateLimit/colorizeIpLimit.ts が別途担当する（Cookie削除だけでは無制限にならないようにする）。
  *
  * - 1日3回まで（JST 0時リセット）
- * - COLORIZE_REQUIRE_LOGIN=true のとき機能しない（ログイン必須モード）
  * - Cookie は HttpOnly・Secure・SameSite=Lax で管理
  */
 
@@ -16,6 +16,14 @@ function jstDateString(): string {
 
 export const FREE_DAILY_LIMIT = 3;
 export const FREE_GATE_COOKIE = "colorize_daily";
+
+/** 現在時刻から次のJST 0時までの残り秒数（Retry-Afterヘッダー用）。 */
+export function secondsUntilNextJstMidnight(): number {
+  const jstNow = new Date(Date.now() + 9 * 60 * 60 * 1000);
+  const jstMidnight = new Date(jstNow);
+  jstMidnight.setUTCHours(24, 0, 0, 0);
+  return Math.max(1, Math.floor((jstMidnight.getTime() - jstNow.getTime()) / 1000));
+}
 
 type DailyState = { date: string; count: number };
 
@@ -59,9 +67,4 @@ export function checkAndIncrementFreeGate(cookieValue: string | undefined): {
     used: newCount,
     remaining: FREE_DAILY_LIMIT - newCount,
   };
-}
-
-/** COLORIZE_REQUIRE_LOGIN=true のとき無料公開を無効にする */
-export function isFreeGateEnabled(): boolean {
-  return process.env.COLORIZE_REQUIRE_LOGIN !== "true";
 }

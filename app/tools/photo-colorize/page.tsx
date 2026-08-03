@@ -6,14 +6,11 @@ import { StickyContact } from "@/app/components/StickyContact";
 import { Breadcrumb } from "@/app/components/Breadcrumb";
 import { TrackedLink } from "@/app/components/TrackedLink";
 import { mailtoHref, site } from "@/app/lib/site";
-import { getViewer } from "@/lib/auth/access";
-import { signOutAction } from "@/app/login/actions";
 import { PhotoColorizeClient } from "./PhotoColorizeClient";
-import { ColorizeLoginPrompt } from "./ColorizeLoginPrompt";
 
 const PAGE_TITLE = "白黒写真をカラー化｜古写真をAI着色サービス - SHIMA CRAFT";
 const PAGE_DESC =
-  "古い白黒写真を、AIが端末内（ブラウザの中）で自然な色を推定してカラー化するサービス。会員は色解析のためGroq AI（Llama 4）にも連携。ご利用にはSHIMA CRAFTが発行したアカウントが必要です。奄美発のSHIMA CRAFTが提供します。";
+  "古い白黒写真を、AIが端末内（ブラウザの中）で自然な色を推定してカラー化する無料サービス。ログイン不要、1日3回まで誰でもご利用いただけます。奄美発のSHIMA CRAFTが提供します。";
 
 export const metadata: Metadata = {
   title: { absolute: PAGE_TITLE },
@@ -51,22 +48,22 @@ const TIPS = [
 ];
 
 const NOTES = [
-  "写真の処理はお使いの端末内（ブラウザの中）で行われます。会員の方は色解析の精度向上のため写真の縮小版（最大512px）をSHIMA CRAFTサーバー経由でGroq AI（Llama 4）に送信します。写真はサーバーに保存されません。",
+  "写真の処理はお使いの端末内（ブラウザの中）で行われます。写真がSHIMA CRAFTのサーバーや外部サービスへ送信されることはありません。",
   "SHIMA CRAFTが利用者の画像をAI学習・広告・制作事例へ利用することはありません。",
   "結果の色はAIによる推定です。当時の実際の色を正確に復元・保証するものではありません。",
   "人物の輪郭や構図を新しく生成する機能ではないため、顔や傷、破損箇所の修復・復元は行いません。",
   "自分が権利を持つ画像のみご利用ください。",
-  "会員の方の利用状況（日時・成功/失敗・画像の縦横サイズ・処理方式など）は、サービス運営のため記録します。画像そのものは記録しません。",
+  "1日あたりの利用回数には上限があります（日本時間0時にリセット）。",
 ];
 
 const FAQS = [
   {
     q: "利用するにはどうすればよいですか？",
-    a: "ご利用にはSHIMA CRAFTが発行したアカウントが必要です。Googleアカウントでのログインに対応しています。ご利用料金・利用回数・契約条件は、ご利用内容に応じて個別にご案内しますので、まずはお問い合わせください。",
+    a: "ログイン・登録は不要です。このページで白黒写真を選ぶだけで、どなたでも1日3回まで無料でご利用いただけます。",
   },
   {
     q: "写真はどこかへ送信・保存されますか？",
-    a: "写真の処理は基本的にお使いの端末内（ブラウザの中）で行います。会員の方は色解析の精度向上のため、写真の縮小版（最大512px）をSHIMA CRAFTサーバー経由でGroq AI（Meta Llama 4）に送信します。写真はサーバーに保存されません。SHIMA CRAFTが写真をAI学習・広告へ利用することもありません。結果画像は画面上で保存でき、保存しない場合はページを離れると再表示できません。",
+    a: "写真の処理はすべてお使いの端末内（ブラウザの中）で行われ、SHIMA CRAFTのサーバーや外部AIサービスへ送信されることはありません。結果画像は画面上で保存でき、保存しない場合はページを離れると再表示できません。",
   },
   {
     q: "元の色を再現できますか？",
@@ -108,6 +105,7 @@ const jsonLd = {
       applicationCategory: "PhotographyApplication",
       operatingSystem: "Any (Webブラウザ)",
       description: PAGE_DESC,
+      offers: { "@type": "Offer", price: "0", priceCurrency: "JPY" },
       provider: { "@type": "Organization", name: site.name, url: site.url },
     },
     {
@@ -121,14 +119,8 @@ const jsonLd = {
   ],
 };
 
-const BLOCKED_MESSAGE =
-  "現在、このアカウントではカラー化サービスをご利用いただけません。契約状況についてSHIMA CRAFTへお問い合わせください。";
-
-export default async function PhotoColorizePage() {
+export default function PhotoColorizePage() {
   const toolEnabled = process.env.COLORIZE_ENABLED !== "false";
-  // COLORIZE_REQUIRE_LOGIN=true のときは会員専用（未ログインはログイン画面へ）
-  const requireLogin = process.env.COLORIZE_REQUIRE_LOGIN === "true";
-  const viewer = await getViewer();
 
   return (
     <>
@@ -142,83 +134,27 @@ export default async function PhotoColorizePage() {
         <Breadcrumb items={[{ label: "トップ", href: "/" }, { label: "白黒写真カラー化サービス" }]} />
 
         <div className="inner-hero">
-          <p className="inner-hero-area">会員サービス・AI画像処理</p>
+          <p className="inner-hero-area">無料・ログイン不要・AI画像処理</p>
           <h1>古い白黒写真をカラー化</h1>
           <p className="inner-hero-lead">
-            白黒写真を選ぶと、AIが自然な色を推定してカラー化するサービスです。処理は主にお使いの端末内（ブラウザの中）で行われます。会員の方は色解析の精度向上のため縮小版をGroq AIへ送信します。色は推定であり、当時の実際の色を正確に復元するものではありません。奄美発のSHIMA
-            CRAFTが提供しています。ご利用にはSHIMA CRAFTが発行したアカウントが必要です。
+            白黒写真を選ぶと、AIが自然な色を推定してカラー化するサービスです。処理はお使いの端末内（ブラウザの中）で行われ、写真がサーバーへ送信されることはありません。色は推定であり、当時の実際の色を正確に復元するものではありません。奄美発のSHIMA
+            CRAFTが提供しています。
           </p>
         </div>
 
         <section className="svc-section">
           <div className="container colorize-tool-container">
-            <div className="colorize-account-bar">
-              {viewer.kind !== "anonymous" ? (
-                <>
-                  <span>
-                    ログイン中：{viewer.member.displayName || viewer.member.email}
-                    {viewer.kind === "admin" && (
-                      <>
-                        {" "}
-                        / <Link href="/admin">管理画面</Link>
-                      </>
-                    )}
-                  </span>
-                  <form action={signOutAction}>
-                    <button type="submit" className="colorize-logout-btn">ログアウト</button>
-                  </form>
-                </>
-              ) : (
-                <>
-                  <span className="colorize-account-bar-note">会員の方は色解析精度が向上します</span>
-                  <Link href="/login?next=/tools/photo-colorize" className="colorize-login-link">
-                    会員ログイン
-                  </Link>
-                </>
-              )}
-            </div>
-
-            {/* 未ログインかつ会員必須 → ログイン誘導 */}
-            {viewer.kind === "anonymous" && requireLogin ? (
-              <ColorizeLoginPrompt contactHref={mailtoHref} />
-            ) : !toolEnabled ? (
+            {!toolEnabled ? (
               <div className="colorize-tool colorize-tool--disabled" role="status">
                 <p>現在、提供を一時停止しています。しばらくしてから再度お試しください。</p>
               </div>
-            ) : viewer.kind === "anonymous" ? (
-              /* 無料公開モード: 1日3回まで */
-              <PhotoColorizeClient contactHref={mailtoHref} isAnonymous={true} />
-            ) : viewer.canColorize ? (
-              <PhotoColorizeClient contactHref={mailtoHref} isAnonymous={false} />
             ) : (
-              <div className="colorize-tool colorize-tool--disabled" role="status">
-                <p>{BLOCKED_MESSAGE}</p>
-                <p>
-                  <a href={mailtoHref} className="btn">SHIMA CRAFTへ問い合わせる</a>
-                </p>
-              </div>
+              <PhotoColorizeClient contactHref={mailtoHref} />
             )}
           </div>
         </section>
 
         <section className="svc-section" style={{ background: "#fff" }}>
-          <div className="container">
-            <h2 className="svc-title">ご利用について</h2>
-            <p className="svc-lead">
-              ご利用料金・利用回数・契約条件は、ご利用内容に応じて個別にご案内します。まずはお気軽にお問い合わせください。
-            </p>
-            <TrackedLink
-              href={mailtoHref}
-              className="btn"
-              eventName="contact_click"
-              eventParams={{ location: "photo_colorize_pricing", method: "email" }}
-            >
-              利用について問い合わせる
-            </TrackedLink>
-          </div>
-        </section>
-
-        <section className="svc-section">
           <div className="container">
             <h2 className="svc-title">対応できる写真</h2>
             <ul className="svc-list">
@@ -229,7 +165,7 @@ export default async function PhotoColorizePage() {
           </div>
         </section>
 
-        <section className="svc-section" style={{ background: "#fff" }}>
+        <section className="svc-section">
           <div className="container">
             <h2 className="svc-title">きれいに仕上げるコツ</h2>
             <ul className="svc-list">
@@ -240,7 +176,7 @@ export default async function PhotoColorizePage() {
           </div>
         </section>
 
-        <section className="svc-section">
+        <section className="svc-section" style={{ background: "#fff" }}>
           <div className="container">
             <h2 className="svc-title">注意事項</h2>
             <ul className="svc-list">
@@ -251,7 +187,7 @@ export default async function PhotoColorizePage() {
           </div>
         </section>
 
-        <section className="svc-section" style={{ background: "#fff" }}>
+        <section className="svc-section">
           <div className="container">
             <h2 className="svc-title">よくある質問</h2>
             <div className="svc-faq-list">

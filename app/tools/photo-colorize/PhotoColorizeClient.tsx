@@ -16,7 +16,7 @@ import {
   type ColorizeFinish,
   type ColorizeQuality,
 } from "@/lib/colorization/browser/browserColorize";
-import type { ColorHintPayload, PersonPartsMask } from "@/lib/colorization/colorHints";
+import type { PersonPartsMask } from "@/lib/colorization/colorHints";
 import { segmentPersonParts } from "@/lib/colorization/browser/personParts";
 import {
   COLORIZE_ERROR_HEADINGS,
@@ -32,7 +32,6 @@ type Phase = "select" | "ready" | "processing" | "done" | "error";
 
 type Props = {
   contactHref: string;
-  isAnonymous: boolean;
 };
 
 type ErrorDisplay = {
@@ -80,21 +79,7 @@ function progressLabel(p: ColorizeProgress | null): string {
   }
 }
 
-/** イベントを利用ログAPIへ送る（fire-and-forget。画像データは含まない）。 */
-function sendEvent(payload: Record<string, unknown>): void {
-  try {
-    void fetch("/api/colorize/events", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-      keepalive: true,
-    });
-  } catch {
-    // ログ失敗は利用を妨げない
-  }
-}
-
-export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
+export function PhotoColorizeClient({ contactHref }: Props) {
   const [phase, setPhase] = useState<Phase>("select");
   const [prepared, setPrepared] = useState<PreparedImage | null>(null);
   const [preparing, setPreparing] = useState(false);
@@ -111,7 +96,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
   const [activeCandidate, setActiveCandidate] = useState<"natural" | "vivid">("natural");
   const [warnings, setWarnings] = useState<string[]>([]);
   const [errorDisplay, setErrorDisplay] = useState<ErrorDisplay | null>(null);
-  /** 無料枠の残り回数（匿名ユーザーのみ有効。null = 会員 or まだ確認していない）。 */
+  /** 無料枠の残り回数（null = まだ確認していない）。 */
   const [dailyRemaining, setDailyRemaining] = useState<number | null>(null);
   /** 1日の無料枠を使い切ったかどうか。 */
   const [dailyLimitHit, setDailyLimitHit] = useState(false);
@@ -123,8 +108,6 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
   /** 実行中の多重起動防止（stateのphaseはクロージャで古くなるためrefで判定する） */
   const inFlightRef = useRef(false);
   const modelDownloadLoggedRef = useRef(false);
-  const lastResultMetaRef = useRef<{ mode?: string; executionId?: string } | null>(null);
-  /** 直近のexecutionId（download_clickedログ用） */
   const lastExecutionIdRef = useRef<string | null>(null);
   /**
    * 同一画像での再生成回数。推論は決定論的なため、この回数をバリエーション番号として
@@ -133,27 +116,17 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
    */
   const attemptRef = useRef(0);
   /**
-   * Claude Vision から取得した色ヒント（会員向け）。
-   * 画像選択時にバックグラウンドで取得し、カラー化実行時に利用する。
-   * null = 取得前 or 取得失敗（ヒントなしで動作）。
-   */
-  const colorHintsRef = useRef<ColorHintPayload | null>(null);
-  /**
-   * ヒント取得の世代トークン。画像を選び直す・リセットするたびに進め、
-   * 古い画像のヒント取得が遅れて解決しても新しい画像へ適用されないようにする。
-   */
-  const hintTokenRef = useRef(0);
-  /** 進行中のヒント取得。カラー化開始時に完了を待つ（fetch 側で20秒タイムアウト） */
-  const hintPromiseRef = useRef<Promise<void> | null>(null);
-  /**
-   * 人物パーツ分割マスク（会員向け・端末内で実行）。
-   * skin/hair/clothes カテゴリのヒントを画素単位で限定するために使う。
+   * 人物パーツ分割マスク（端末内・MediaPipeで実行）。
+   * skin/hair/clothes カテゴリの補正を画素単位で限定するために使う。
    */
   const personPartsRef = useRef<PersonPartsMask | null>(null);
+  /**
+   * パーツ分割の世代トークン。画像を選び直す・リセットするたびに進め、
+   * 古い画像のパーツ分割が遅れて解決しても新しい画像へ適用されないようにする。
+   */
+  const partsTokenRef = useRef(0);
   /** 進行中のパーツ分割。カラー化開始時に完了を待つ */
   const partsPromiseRef = useRef<Promise<void> | null>(null);
-  /** Vision AI ヒント取得状態（UI 表示・イベントログ用） */
-  const [hintStatus, setHintStatus] = useState<"idle" | "loading" | "success" | "failed">("idle");
 
   useEffect(() => {
     return () => {
@@ -183,71 +156,12 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
     setErrorDisplay(null);
     setDailyLimitHit(false);
     attemptRef.current = 0;
-    colorHintsRef.current = null;
-    hintTokenRef.current += 1;
-    hintPromiseRef.current = null;
+    partsTokenRef.current += 1;
     personPartsRef.current = null;
     partsPromiseRef.current = null;
-    setHintStatus("idle");
     setPhase("select");
     if (fileInputRef.current) fileInputRef.current.value = "";
   }, [prepared, resultUrl, vividResultUrl]);
-
-  /**
-   * 会員向け: Vision AI で色ヒントをバックグラウンド取得する。
-   * 失敗しても colorize は続行する（ヒントなし ONNX のみで動作）。
-   * アスペクト比を保持したまま長辺512pxへ縮小した JPEG を送信する
-   * （モデル入力用の歪んだ正方形より被写体認識・bbox座標の精度が上がる）。
-   */
-  const fetchColorHints = useCallback(
-    async (image: {
-      fullRgba: Uint8ClampedArray;
-      width: number;
-      height: number;
-    }): Promise<ColorHintPayload | null> => {
-      if (isAnonymous) return null;
-      try {
-        const srcCanvas = document.createElement("canvas");
-        srcCanvas.width = image.width;
-        srcCanvas.height = image.height;
-        const srcCtx = srcCanvas.getContext("2d");
-        if (!srcCtx) return null;
-        srcCtx.putImageData(
-          new ImageData(new Uint8ClampedArray(image.fullRgba), image.width, image.height),
-          0,
-          0
-        );
-        const scale = Math.min(1, 512 / Math.max(image.width, image.height));
-        const canvas = document.createElement("canvas");
-        canvas.width = Math.max(1, Math.round(image.width * scale));
-        canvas.height = Math.max(1, Math.round(image.height * scale));
-        const ctx = canvas.getContext("2d");
-        if (!ctx) return null;
-        ctx.drawImage(srcCanvas, 0, 0, canvas.width, canvas.height);
-        // サーバーの 300KB 上限に収まるよう品質を段階的に下げる
-        let dataUrl = canvas.toDataURL("image/jpeg", 0.85);
-        if (dataUrl.length > 280_000) dataUrl = canvas.toDataURL("image/jpeg", 0.7);
-        if (dataUrl.length > 280_000) dataUrl = canvas.toDataURL("image/jpeg", 0.5);
-        const mimeMatch = dataUrl.match(/^data:([^;]+);base64,/);
-        const detectedMime = mimeMatch?.[1] ?? "image/jpeg";
-        const base64 = dataUrl.split(",")[1];
-        if (!base64) return null;
-
-        const res = await fetch("/api/colorize/hint", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ image: base64, mimeType: detectedMime }),
-          signal: AbortSignal.timeout(20_000),
-        });
-        if (!res.ok) return null;
-        const data = (await res.json()) as { ok?: boolean; hints?: ColorHintPayload };
-        return data.ok && data.hints ? data.hints : null;
-      } catch {
-        return null;
-      }
-    },
-    [isAnonymous]
-  );
 
   const handleFile = useCallback(
     async (file: File | null | undefined) => {
@@ -264,12 +178,9 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
       setVividResultUrl(null);
       setPrepared(null);
       setPreparing(true);
-      colorHintsRef.current = null;
-      hintTokenRef.current += 1;
-      hintPromiseRef.current = null;
+      partsTokenRef.current += 1;
       personPartsRef.current = null;
       partsPromiseRef.current = null;
-      setHintStatus("idle");
       try {
         const result = await prepareImageForColorize(file);
         setPrepared(result);
@@ -277,28 +188,19 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
         setPhase("ready");
         trackEvent("colorize_file_select");
 
-        // 会員: 画像選択後すぐにバックグラウンドでヒント取得を開始する。
+        // 人物パーツ分割（端末内・MediaPipe）をバックグラウンドで開始する。
         // ユーザーが設定を確認している間（約10〜30秒）に完了するため体感遅延なし。
-        // トークンで世代管理し、古い画像のヒントが新しい画像へ適用されるのを防ぐ。
-        if (!isAnonymous) {
-          const token = hintTokenRef.current;
-          setHintStatus("loading");
-          hintPromiseRef.current = fetchColorHints(result).then((hints) => {
-            if (hintTokenRef.current !== token) return;
-            colorHintsRef.current = hints;
-            setHintStatus(hints ? "success" : "failed");
-          });
-          // 人物パーツ分割（端末内・MediaPipe）も並行で開始する。
-          // 失敗しても null のまま続行（bbox のみで動作）。
-          partsPromiseRef.current = segmentPersonParts(
-            result.fullRgba,
-            result.width,
-            result.height
-          ).then((parts) => {
-            if (hintTokenRef.current !== token) return;
-            personPartsRef.current = parts;
-          });
-        }
+        // 失敗しても null のまま続行（bbox のみで動作）。
+        // トークンで世代管理し、古い画像の分割が新しい画像へ適用されるのを防ぐ。
+        const token = partsTokenRef.current;
+        partsPromiseRef.current = segmentPersonParts(
+          result.fullRgba,
+          result.width,
+          result.height
+        ).then((parts) => {
+          if (partsTokenRef.current !== token) return;
+          personPartsRef.current = parts;
+        });
       } catch (err) {
         setSelectError(
           err instanceof ImageProcessingError
@@ -309,7 +211,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
         setPreparing(false);
       }
     },
-    [prepared, resultUrl, vividResultUrl, isAnonymous, fetchColorHints]
+    [prepared, resultUrl, vividResultUrl]
   );
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -406,20 +308,15 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
     if (remaining !== null) setDailyRemaining(remaining);
     lastExecutionIdRef.current = executionId;
 
-    // ヒント取得・パーツ分割が進行中なら完了を待つ（fetch 側の20秒タイムアウトで有界）。
-    // 待たないとヒントなしで実行され、品質向上が反映されないことがある。
-    if (hintPromiseRef.current || partsPromiseRef.current) {
-      await Promise.all([
-        hintPromiseRef.current?.catch(() => undefined),
-        partsPromiseRef.current?.catch(() => undefined),
-      ]);
+    // パーツ分割が進行中なら完了を待つ（内部でタイムアウトを持ち有界）。
+    if (partsPromiseRef.current) {
+      await partsPromiseRef.current.catch(() => undefined);
       if (runIdRef.current !== runId) {
         inFlightRef.current = false;
         return;
       }
     }
 
-    const startedAt = performance.now();
     try {
       const output = await colorizeInBrowser(
         {
@@ -435,17 +332,14 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
           finish: selectedFinish,
           quality: selectedQuality,
           variant: attemptRef.current,
-          colorHints: colorHintsRef.current,
           personParts: personPartsRef.current,
           onProgress: (p) => {
             if (runIdRef.current !== runId) return;
             setProgress(p);
             if (p.stage === "downloading_model" && !modelDownloadLoggedRef.current) {
               modelDownloadLoggedRef.current = true;
-              sendEvent({ executionId, eventType: "model_download_started", status: "started" });
             } else if (p.stage === "initializing" && modelDownloadLoggedRef.current) {
               modelDownloadLoggedRef.current = false;
-              sendEvent({ executionId, eventType: "model_download_completed", status: "completed" });
             }
           },
         }
@@ -466,9 +360,6 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
       );
       if (!blob) throw new ColorizeError("INTERNAL_ERROR", clientSessionId);
       if (runIdRef.current !== runId) return;
-
-      const durationMs = Math.round(performance.now() - startedAt);
-      lastResultMetaRef.current = { mode: output.backend, executionId };
 
       revokePreviewUrl(resultUrl);
       revokePreviewUrl(vividResultUrl);
@@ -498,48 +389,21 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
       setWarnings([...prepared.warnings, ...output.warnings]);
       setPhase("done");
       trackEvent("colorize_success", { backend: output.backend, quality: selectedQuality });
-
-      sendEvent({
-        executionId,
-        eventType: "colorize_succeeded",
-        status: "succeeded",
-        processingMode: output.backend,
-        imageWidth: prepared.width,
-        imageHeight: prepared.height,
-        outputWidth: output.width,
-        outputHeight: output.height,
-        durationMs,
-        retriedWith: output.retriedWith ?? null,
-        collageTiles: output.collageTiles ?? null,
-        variant: output.variant ?? 0,
-        hintApplied: colorHintsRef.current !== null,
-      });
     } catch (err) {
       if (runIdRef.current !== runId) return;
       const colorizeErr =
         err instanceof ColorizeError ? err : new ColorizeError("INTERNAL_ERROR", clientSessionId, err);
-      const durationMs = Math.round(performance.now() - startedAt);
 
       if (colorizeErr.errorCode === "PROCESS_CANCELLED") {
         setPhase("ready");
         setProgress(null);
         trackEvent("colorize_cancel");
-        sendEvent({ executionId, eventType: "colorize_cancelled", status: "cancelled", durationMs });
         return;
       }
 
       setErrorDisplay(buildErrorDisplay(colorizeErr));
       setPhase("error");
       trackEvent("colorize_error", { code: colorizeErr.errorCode, clientSessionId });
-      sendEvent({
-        executionId,
-        eventType: "colorize_failed",
-        status: "failed",
-        imageWidth: prepared?.width,
-        imageHeight: prepared?.height,
-        errorCode: colorizeErr.errorCode,
-        durationMs,
-      });
     } finally {
       inFlightRef.current = false;
       if (runIdRef.current === runId) abortRef.current = null;
@@ -599,10 +463,6 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
     const url = activeCandidate === "vivid" && vividResultUrl ? vividResultUrl : resultUrl;
     if (!url) return;
     trackEvent("colorize_download");
-    const executionId = lastResultMetaRef.current?.executionId ?? lastExecutionIdRef.current;
-    if (executionId) {
-      sendEvent({ executionId, eventType: "download_clicked", status: "clicked" });
-    }
     const a = document.createElement("a");
     a.href = url;
     a.download = buildDownloadFilename();
@@ -621,14 +481,11 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
         {phase === "error" && errorDisplay && `${errorDisplay.heading} ${errorDisplay.message}`}
       </div>
 
-      {/* 匿名ユーザーへの無料枠インジケーター */}
-      {isAnonymous && (
-        <p className="colorize-free-limit-note">
-          {dailyRemaining !== null
-            ? `本日あと${dailyRemaining}回ご利用いただけます（1日3回まで無料、日本時間0時リセット）`
-            : "1日3回まで無料でご利用いただけます（日本時間0時リセット）"}
-        </p>
-      )}
+      <p className="colorize-free-limit-note">
+        {dailyRemaining !== null
+          ? `本日あと${dailyRemaining}回ご利用いただけます（1日3回まで無料、日本時間0時リセット）`
+          : "1日3回まで無料でご利用いただけます（日本時間0時リセット）"}
+      </p>
 
       {phase === "select" && (
         <div
@@ -656,9 +513,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
             className="colorize-file-input"
           />
           <p className="colorize-dropzone-privacy">
-            {isAnonymous
-              ? "この写真は端末内（お使いのブラウザの中）で処理されます。写真はSHIMA CRAFTや外部AIサービスへ送信されません。"
-              : "会員機能として、色解析の精度向上のため写真の縮小版（最大512px）をSHIMA CRAFTサーバー経由でGroq AI（Meta Llama 4）に送信します。写真はサーバーに保存されません。"}
+            この写真は端末内（お使いのブラウザの中）で処理されます。写真はSHIMA CRAFTや外部サービスへ送信されません。
           </p>
           {preparing && (
             <p className="colorize-preparing" role="status">画像を準備しています…</p>
@@ -723,14 +578,6 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
             </fieldset>
           )}
 
-          {!isAnonymous && hintStatus !== "idle" && (
-            <p className={`colorize-hint-status colorize-hint-status--${hintStatus}`}>
-              {hintStatus === "loading" && "AIが写真の内容を解析中…"}
-              {hintStatus === "success" && "AI解析完了 — より正確な色が適用されます"}
-              {hintStatus === "failed" && "AI解析スキップ — 通常品質で処理します"}
-            </p>
-          )}
-
           <div className="colorize-consent">
             <label className="colorize-consent-label">
               <input
@@ -742,10 +589,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
               <span>
                 自分が権利を持つ画像であること、色はAIによる推定であり元の色を正確に復元するものではないことを理解の上、
                 <a href="/privacy" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>
-                に同意します。
-                {isAnonymous
-                  ? "写真は端末内で処理され、SHIMA CRAFTへ送信されません。"
-                  : "色解析のため写真の縮小版（最大512px）をSHIMA CRAFTサーバー経由でGroq AI（Meta Llama 4）に送信することに同意します。"}
+                に同意します。写真は端末内で処理され、SHIMA CRAFTへ送信されません。
               </span>
             </label>
           </div>
@@ -878,10 +722,6 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
             <>
               <h2 className="colorize-error-heading">本日の無料回数を使い切りました</h2>
               <p>1日3回まで無料でご利用いただけます。日本時間0時にリセットされます。</p>
-              <p style={{ marginTop: 8 }}>
-                回数制限なしでご利用いただける会員プランについては{" "}
-                <a href={contactHref}>SHIMA CRAFTへお問い合わせ</a> ください。
-              </p>
               <div className="colorize-result-actions">
                 <button type="button" className="btn btn-ghost colorize-btn-ghost" onClick={handleRemoveImage}>
                   はじめからやり直す

@@ -76,7 +76,9 @@ beforeEach(() => {
   fetchMock = vi.fn(async (url: string) => {
     if (String(url).includes("/api/colorize/executions")) {
       execCounter += 1;
-      return new Response(JSON.stringify({ ok: true, executionId: `exec-${execCounter}` }), { status: 200 });
+      return new Response(JSON.stringify({ ok: true, executionId: `exec-${execCounter}`, remaining: 2 }), {
+        status: 200,
+      });
     }
     return new Response(JSON.stringify({ ok: true }), { status: 200 });
   });
@@ -110,7 +112,7 @@ afterEach(() => {
 });
 
 function renderClient() {
-  return render(<PhotoColorizeClient contactHref="mailto:test@example.com" isAnonymous={false} />);
+  return render(<PhotoColorizeClient contactHref="mailto:test@example.com" />);
 }
 
 async function selectFileAndReachReady() {
@@ -125,18 +127,25 @@ async function startColorize() {
   fireEvent.click(screen.getByText("カラー化を開始する"));
 }
 
-function eventBodies() {
+function executionBodies() {
   return fetchMock.mock.calls
-    .filter(([u]) => String(u).includes("/api/colorize/events"))
+    .filter(([u]) => String(u).includes("/api/colorize/executions"))
     .map(([, init]) => JSON.parse((init as RequestInit).body as string));
 }
 
-describe("PhotoColorizeClient（Firebase会員フロー）", () => {
-  it("会員向けのAI送信説明が表示される", () => {
+describe("PhotoColorizeClient（ログイン不要の公開フロー）", () => {
+  it("端末内処理・外部送信なしの説明が表示され、Groqや会員への言及がない", () => {
     renderClient();
     expect(
-      screen.getByText(/写真の縮小版（最大512px）をSHIMA CRAFTサーバー経由でGroq AI/)
+      screen.getByText(/この写真は端末内（お使いのブラウザの中）で処理されます/)
     ).toBeInTheDocument();
+    expect(screen.queryByText(/Groq/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/会員/)).not.toBeInTheDocument();
+  });
+
+  it("無料枠の残り回数インジケーターが表示される", () => {
+    renderClient();
+    expect(screen.getByText(/1日3回まで無料でご利用いただけます/)).toBeInTheDocument();
   });
 
   it("同意するまで開始ボタンが無効", async () => {
@@ -157,12 +166,13 @@ describe("PhotoColorizeClient（Firebase会員フロー）", () => {
     expect(execCall).toBeGreaterThanOrEqual(0);
     const [, opts] = mocks.colorizeInBrowser.mock.calls[0];
     expect(opts.finish).toBe("vivid");
+    expect(opts.colorHints).toBeUndefined();
   });
 
-  it("実行許可が拒否されたらモデルを読み込まずエラー表示", async () => {
+  it("実行許可が拒否（日次上限）されたらモデルを読み込まずエラー表示", async () => {
     fetchMock.mockImplementation(async (url: string) => {
       if (String(url).includes("/api/colorize/executions")) {
-        return new Response(JSON.stringify({ ok: false, reason: "NOT_ALLOWED" }), { status: 403 });
+        return new Response(JSON.stringify({ ok: false, reason: "DAILY_LIMIT", remaining: 0 }), { status: 429 });
       }
       return new Response(JSON.stringify({ ok: true }), { status: 200 });
     });
@@ -170,40 +180,33 @@ describe("PhotoColorizeClient（Firebase会員フロー）", () => {
     await startColorize();
     await waitFor(() => expect(screen.getByRole("alert")).toBeInTheDocument());
     expect(mocks.colorizeInBrowser).not.toHaveBeenCalled();
+    expect(screen.getByText("本日の無料回数を使い切りました")).toBeInTheDocument();
   });
 
-  it("成功でBefore/After・保存・再試行が表示される", async () => {
+  it("成功でBefore/After・保存・再試行が表示され、残り回数が更新される", async () => {
     mocks.colorizeInBrowser.mockResolvedValue(successOutput());
     await selectFileAndReachReady();
     await startColorize();
     await waitFor(() => expect(screen.getByText("結果画像を保存する")).toBeInTheDocument());
     expect(screen.getByText("同じ画像でもう一度試す")).toBeInTheDocument();
+    expect(screen.getByText(/本日あと2回ご利用いただけます/)).toBeInTheDocument();
   });
 
-  it("成功時に colorize_succeeded イベントが送られ、画像データを含まない", async () => {
+  it("実行許可API呼び出しに画像データを含まない（寸法情報のみ）", async () => {
     mocks.colorizeInBrowser.mockResolvedValue(successOutput());
     await selectFileAndReachReady();
     await startColorize();
     await waitFor(() => screen.getByText("結果画像を保存する"));
 
-    const events = eventBodies();
-    expect(events.some((e) => e.eventType === "colorize_succeeded")).toBe(true);
-    for (const e of events) {
-      const raw = JSON.stringify(e);
+    const bodies = executionBodies();
+    expect(bodies.length).toBeGreaterThan(0);
+    for (const b of bodies) {
+      const raw = JSON.stringify(b);
       expect(raw).not.toContain("blob:");
       expect(raw).not.toContain("base64");
-      expect(e.rgba).toBeUndefined();
-      expect(e.executionId).toMatch(/^exec-/);
+      expect(b.image).toBeUndefined();
+      expect(typeof b.inputWidth).toBe("number");
     }
-  });
-
-  it("ダウンロード操作で download_clicked が送られる", async () => {
-    mocks.colorizeInBrowser.mockResolvedValue(successOutput());
-    await selectFileAndReachReady();
-    await startColorize();
-    await waitFor(() => screen.getByText("結果画像を保存する"));
-    fireEvent.click(screen.getByText("結果画像を保存する"));
-    expect(eventBodies().some((e) => e.eventType === "download_clicked")).toBe(true);
   });
 });
 
@@ -220,9 +223,7 @@ describe("同じ画像でもう一度試す（回帰テスト）", () => {
     expect(mocks.prepareImageForColorize).toHaveBeenCalledTimes(1);
 
     // 実行許可APIが2回呼ばれ、2回目は retryOf に前回IDが付く
-    const execBodies = fetchMock.mock.calls
-      .filter(([u]) => String(u).includes("/api/colorize/executions"))
-      .map(([, init]) => JSON.parse((init as RequestInit).body as string));
+    const execBodies = executionBodies();
     expect(execBodies.length).toBe(2);
     expect(execBodies[1].retryOfExecutionId).toBe("exec-1");
   });
@@ -254,24 +255,6 @@ describe("同じ画像でもう一度試す（回帰テスト）", () => {
     expect(o1.clientSessionId).not.toBe(o2.clientSessionId);
     expect(o1.signal).not.toBe(o2.signal);
     expect(o2.signal.aborted).toBe(false);
-  });
-
-  it("完了ログAPIの応答が遅くても直後の再試行が無視されない（回帰）", async () => {
-    fetchMock.mockImplementation((url: string) => {
-      if (String(url).includes("/api/colorize/executions")) {
-        execCounter += 1;
-        return Promise.resolve(new Response(JSON.stringify({ ok: true, executionId: `exec-${execCounter}` }), { status: 200 }));
-      }
-      // events は永遠に解決しない
-      return new Promise(() => {});
-    });
-    mocks.colorizeInBrowser.mockResolvedValue(successOutput());
-    await selectFileAndReachReady();
-    await startColorize();
-    await waitFor(() => screen.getByText("結果画像を保存する"));
-    fireEvent.click(screen.getByText("同じ画像でもう一度試す"));
-    await waitFor(() => expect(mocks.colorizeInBrowser).toHaveBeenCalledTimes(2));
-    await waitFor(() => screen.getByText("結果画像を保存する"));
   });
 
   it("2回以上連続で再試行できる", async () => {

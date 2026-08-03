@@ -4,7 +4,16 @@ import {
   buildDailyCookieValue,
   checkAndIncrementFreeGate,
   parseDailyCookie,
+  secondsUntilNextJstMidnight,
 } from "../freeGate";
+
+describe("secondsUntilNextJstMidnight", () => {
+  it("returns a positive number no greater than 24h in seconds", () => {
+    const seconds = secondsUntilNextJstMidnight();
+    expect(seconds).toBeGreaterThan(0);
+    expect(seconds).toBeLessThanOrEqual(24 * 60 * 60);
+  });
+});
 
 describe("parseDailyCookie", () => {
   it("undefined → null", () => {

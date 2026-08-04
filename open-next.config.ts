@@ -1,6 +1,8 @@
 import { defineCloudflareConfig } from "@opennextjs/cloudflare/config";
-import r2IncrementalCache from "@opennextjs/cloudflare/overrides/incremental-cache/r2-incremental-cache";
+// R2はこのCloudflareアカウントで有効化しない方針のため、ISR/revalidateの
+// incremental cacheはKVバックエンドを使う（R2版と同じOpenNext公式実装の切替のみ）。
+import kvIncrementalCache from "@opennextjs/cloudflare/overrides/incremental-cache/kv-incremental-cache";
 
 export default defineCloudflareConfig({
-	incrementalCache: r2IncrementalCache,
+	incrementalCache: kvIncrementalCache,
 });

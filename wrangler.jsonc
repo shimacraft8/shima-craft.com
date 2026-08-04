@@ -16,27 +16,40 @@
 			"service": "shima-craft-com"
 		}
 	],
-	"r2_buckets": [
-		// Use R2 incremental cache for ISR/revalidate (used by /amami-tide). R2 free tier covers this site's scale.
-		{
-			"binding": "NEXT_INC_CACHE_R2_BUCKET",
-			"bucket_name": "shima-craft-com-cache"
-		}
-	],
 	"kv_namespaces": [
-		// Login rate limiting (lib/rateLimit/loginRateLimit.ts). Free tier, no payment required.
-		// This top-level config is the "preview" context (CF_ENV=preview below): both "id" and
-		// "preview_id" point at the dedicated RATE_LIMIT_KV_preview namespace, so local `wrangler dev`
-		// and any non-production remote preview never touch production rate-limit data.
-		// Production uses a separate namespace, set only under env.production below.
+		// Anonymous photo colorize daily-limit auxiliary check (lib/rateLimit/colorizeIpLimit.ts).
+		// Free tier, no payment required. This top-level config is the "preview" context
+		// (CF_ENV=preview below): both "id" and "preview_id" point at the dedicated preview
+		// namespace, so local `wrangler dev` and any non-production remote preview never touch
+		// production rate-limit data. Production uses a separate namespace, set only under
+		// env.production below.
 		{
 			"binding": "RATE_LIMIT_KV",
 			"id": "4dfc156527fa46c18771f006e55516de",
 			"preview_id": "4dfc156527fa46c18771f006e55516de"
+		},
+		// Next.js ISR/revalidate incremental cache (used by /amami-tide), via OpenNext's
+		// kv-incremental-cache. R2 is intentionally not used (not enabled on this Cloudflare
+		// account, and excluded by policy) — this shares the SAME KV namespace as RATE_LIMIT_KV
+		// above (distinct binding name, OpenNext's own key scheme keeps entries separate from
+		// the "colorize:..." rate-limit keys). No new namespace/cost.
+		{
+			"binding": "NEXT_INC_CACHE_KV",
+			"id": "4dfc156527fa46c18771f006e55516de",
+			"preview_id": "4dfc156527fa46c18771f006e55516de"
 		}
 	],
+	// 秘密ではない値のみ（NEXT_PUBLIC_*はクライアントJSに埋め込まれる前提で元々非秘密。
+	// COLORIZE_ENABLED/MICROCMS_SERVICE_DOMAIN/RESEND_FROMも識別子・フラグであり秘密情報ではない）。
+	// 秘密値（RESEND_API_KEY・LOG_IP_HASH_SALT・MICROCMS_API_KEY）は `wrangler secret put` で登録し、
+	// ここには置かない。
 	"vars": {
-		"CF_ENV": "preview"
+		"CF_ENV": "preview",
+		"NEXT_PUBLIC_SITE_URL": "https://shima-craft.com",
+		"NEXT_PUBLIC_GA_ID": "G-Z10VXQG5XY",
+		"RESEND_FROM": "onboarding@resend.dev",
+		"COLORIZE_ENABLED": "true",
+		"MICROCMS_SERVICE_DOMAIN": "shimacraft-blog"
 	},
 	"env": {
 		"production": {
@@ -45,7 +58,12 @@
 				{ "pattern": "www.shima-craft.com", "custom_domain": true }
 			],
 			"vars": {
-				"CF_ENV": "production"
+				"CF_ENV": "production",
+				"NEXT_PUBLIC_SITE_URL": "https://shima-craft.com",
+				"NEXT_PUBLIC_GA_ID": "G-Z10VXQG5XY",
+				"RESEND_FROM": "onboarding@resend.dev",
+				"COLORIZE_ENABLED": "true",
+				"MICROCMS_SERVICE_DOMAIN": "shimacraft-blog"
 			},
 			"services": [
 				{
@@ -53,16 +71,16 @@
 					"service": "shima-craft-com"
 				}
 			],
-			"r2_buckets": [
-				{
-					"binding": "NEXT_INC_CACHE_R2_BUCKET",
-					"bucket_name": "shima-craft-com-cache"
-				}
-			],
 			"kv_namespaces": [
 				// Production namespace, distinct from the top-level preview one above.
 				{
 					"binding": "RATE_LIMIT_KV",
+					"id": "5ade18fa11734e8f9086bd2d64f4aa52"
+				},
+				// Same production namespace, second binding name for the ISR incremental cache
+				// (see the top-level kv_namespaces comment above for why R2 isn't used).
+				{
+					"binding": "NEXT_INC_CACHE_KV",
 					"id": "5ade18fa11734e8f9086bd2d64f4aa52"
 				}
 			]

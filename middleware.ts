@@ -13,10 +13,12 @@ export function middleware(request: NextRequest) {
   const needsHttps = request.headers.get("x-forwarded-proto") === "http";
   const needsApex = hostname === WWW_HOST;
   if (isOurDomain && (needsHttps || needsApex)) {
-    const url = request.nextUrl.clone();
-    url.protocol = "https:";
-    url.hostname = APEX_HOST;
-    url.port = "";
+    // NextURLのclone()にhostname/protocolを個別代入すると、setterの実装差異により
+    // 一部の組み合わせ（www+http同時）でprotocolの変更が反映されないことが実機検証で
+    // 判明したため、素のURLを文字列から新規構築する（既存クエリ・パスは保持）。
+    const url = new URL(
+      `https://${APEX_HOST}${request.nextUrl.pathname}${request.nextUrl.search}`
+    );
     return NextResponse.redirect(url, 308);
   }
 

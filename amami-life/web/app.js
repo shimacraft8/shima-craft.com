@@ -11,7 +11,7 @@ import {
   safetyLinks,
   freshness,
 } from "./core.js";
-import { findOfficialLinks, nextTideEvent, precipitationWindow } from "./usage.js";
+import { findOfficialLinks, tideOverview, precipitationWindow } from "./usage.js";
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) =>
@@ -70,9 +70,9 @@ let sky = params.get("sky") === "rain" ? "rain" : "sun",
   snapshot = null,
   requestId = 0,
   fetchError = false;
-let observation = null, observationLoading = false, observationScope = null;
+let observation = null, observationLoading = state === "ready", observationScope = null;
 let forecast = null,
-  forecastLoading = false,
+  forecastLoading = state === "ready",
   forecastAreaId = null;
 let saved =
   stored("saved", []).filter?.((id) => LINKS.some((l) => l.id === id)) ?? [];
@@ -229,8 +229,25 @@ function forecastBrief() {
 }
 function todayFacts() {
   const sun=snapshot?.solar ?? solarForDate(date,area().lat,area().lon);
-  const next=nextTideEvent(snapshot?.tide ?? null,snapshot?.tomorrowTide ?? null,new Date());
-  return `<div class="facts-grid today-brief"><div class="fact"><div class="fact-label">${next ? (next.date!==date ? "翌日・" : date===todayJST() ? "次の" : "この日の")+next.kind : "潮汐予測"}</div><div class="fact-value">${next?.time ?? "—"}</div><div class="fact-note">${next ? `${next.heightCm} cm · O9予測` : area().station ? "この日の値は未取得" : "対象局は未連携"}</div></div><div class="fact"><div class="fact-label">日の入り</div><div class="fact-value">${sun.sunset ?? "—"}</div><div class="fact-note">地点別の参考計算</div></div></div>`;
+  const tides=tideOverview(snapshot?.tide ?? null,snapshot?.tomorrowTide ?? null,new Date());
+  const event=(item,kind)=>`<div class="fact"><div class="fact-label">${date===todayJST() ? "次の" : "この日の"}${kind}${item?.date!==date && item ? '<span class="day-tag">翌日</span>' : ""}</div><div class="fact-value">${item?.time ?? "—"}</div><div class="fact-note">${item ? `${item.heightCm} cm · 潮位予測` : area().station ? "時刻は未取得" : "この地域は未連携"}</div></div>`;
+  return `<div class="facts-grid today-brief">${event(tides.high,"満潮")}${event(tides.low,"干潮")}<div class="fact"><div class="fact-label">日の入り</div><div class="fact-value">${sun.sunset ?? "—"}</div><div class="fact-note">地点別の参考計算</div></div></div>`;
+}
+function tideChart() {
+  const model=tideOverview(snapshot?.tide ?? null,snapshot?.tomorrowTide ?? null,new Date());
+  if (model.min===null) return '<p class="readable-note">この地域・日付の潮汐予測は未取得です。別地点の値は表示しません。</p>';
+  const low=model.min, high=model.max, range=Math.max(10,high-low);
+  const x=minute=>minute/1440*720, y=height=>196-(height-low)/range*172;
+  const curve=model.segments.filter(points=>points.length>1).map(points=>`<polyline class="tide-curve" points="${points.map(p=>`${x(p.minute)},${y(p.heightCm)}`).join(" ")}" vector-effect="non-scaling-stroke"/>`).join("");
+  const label=model.heightCm===null ? "選択日の毎時予測" : "いまの推定潮位";
+  const now=model.minute!==null && model.heightCm!==null ? `<line class="tide-now" x1="${x(model.minute)}" x2="${x(model.minute)}" y1="8" y2="210" vector-effect="non-scaling-stroke"/><circle class="tide-now-dot" cx="${x(model.minute)}" cy="${y(model.heightCm)}" r="5" vector-effect="non-scaling-stroke"/>` : "";
+  return `<div class="chart-summary"><div><span>${label}</span><strong>${model.heightCm===null ? "24時間の潮の動き" : `${model.heightCm.toFixed(1)}<small>cm</small>`}</strong></div><p>${model.trend ? `予測では${model.trend}` : "現在値ではありません"}<small>名瀬小湊 O9 · 天文潮位予測</small></p></div><figure class="tide-chart"><div class="chart-grid"><div class="chart-y" aria-hidden="true"><span>${high} cm</span><span>${Math.round((high+low)/2)}</span><span>${low}</span></div><div><svg viewBox="0 0 720 220" preserveAspectRatio="none" role="img" aria-labelledby="tide-chart-title tide-chart-description"><title id="tide-chart-title">${date} 名瀬小湊の毎時潮位予測</title><desc id="tide-chart-description">保存済み公式毎時値を直線で接続。欠測箇所は接続しません。${model.heightCm===null ? "現在位置は表示していません。" : `現在時刻の補間値は${model.heightCm.toFixed(1)}センチメートル。`}実測値ではありません。満潮・干潮の時刻は別表で確認できます。</desc>${[24,110,196].map(a=>`<line class="chart-guide" x1="0" x2="720" y1="${a}" y2="${a}"/>`).join("")}${[0,180,360,540,720].map(a=>`<line class="chart-guide" x1="${a}" x2="${a}" y1="24" y2="196"/>`).join("")}${curve}${now}</svg><div class="chart-x" aria-hidden="true"><span>0時</span><span>6時</span><span>12時</span><span>18時</span><span>24時</span></div></div></div><figcaption>気象庁の毎時の天文潮位予測。時刻の間は直線補間した参考値で、実測ではありません。${now ? "縦線は現在時刻です。" : ""}欠測がある区間は線をつなぎません。</figcaption></figure>`;
+}
+function tideOutlook() {
+  const days=snapshot?.outlook;
+  if (!days?.length) return "";
+  const label=value=>new Intl.DateTimeFormat("ja-JP",{month:"numeric",day:"numeric",weekday:"short",timeZone:"Asia/Tokyo"}).format(new Date(value+"T12:00:00+09:00"));
+  return `<section class="tide-outlook"><div class="section-head"><h3>7日間の潮と夕日</h3><span>選択日から7日間</span></div><p class="readable-note">日付を押すと、その日の詳細へ。潮は名瀬小湊の2026年予測、夕日は地点別の参考計算です。</p><div class="outlook-days">${days.map(day=>`<button type="button" data-day="${day.date}" aria-pressed="${day.date===date}" aria-label="${label(day.date)}の詳細を見る"><strong>${label(day.date)}</strong>${day.tide ? `<span>満潮 <b>${day.tide.highTides.map(t=>t.time).join(" / ") || "なし"}</b></span><span>干潮 <b>${day.tide.lowTides.map(t=>t.time).join(" / ") || "なし"}</b></span>` : '<span class="missing-tide">潮汐は未連携・未取得</span>'}<span>夕日 <b>${day.solar.sunset ?? "—"}</b></span></button>`).join("")}</div></section>`;
 }
 function observationHero() {
   const p = observationScope === areaId + ":" + date ? observation : null;
@@ -258,13 +275,13 @@ async function loadObservation(id) {
   }
 }
 function today() {
-  const sun = snapshot?.solar ?? solarForDate(date, area().lat, area().lon);
-  const tide = snapshot?.tide;
-  const isReady = state === "ready" && !fetchError;
-  return `${date!==todayJST() ? '<button class="text-button" data-action="go-today">今日の日付に戻る</button>' : ""}<div class="today-heading"><h2>今日の奄美</h2><div class="date-row"><button data-date="-1" aria-label="前の日">‹</button><div class="date-label">${dateLabel()}<span>${date.replaceAll("-", ".")} / JST</span></div><button data-date="1" aria-label="次の日">›</button></div></div><div class="today-layout"><section class="weather-overview" aria-label="観測気温と今日の要約">${isReady ? `<div id="current-observation">${observationHero()}</div>` : statePanel()}</section>
-  <div class="today-details"><section aria-label="潮汐の予測"><div class="section-head"><h3>潮の満ち引き</h3><span>${area().station ? "O9 / 予測" : "対象局未連携"}</span></div>${tide && isReady ? `<div class="tide-events"><div><div class="fact-label">満潮</div>${tide.highTides.map((t) => `<p>${t.time}　${t.heightCm} cm</p>`).join("") || "<p>対象なし</p>"}</div><div><div class="fact-label">干潮</div>${tide.lowTides.map((t) => `<p>${t.time}　${t.heightCm} cm</p>`).join("") || "<p>対象なし</p>"}</div></div><p class="source-note">気象庁・奄美（名瀬小湊）2026年の保存済み天文潮位予測を加工表示。基準面上cm。実測値ではありません。</p>` : `<p class="body-copy compact">${area().station ? "この日付の予測値は未取得です。" : "この地点の潮汐データは未連携です。名瀬小湊の値を流用しません。"}</p>`}${area().station ? `<p class="source-note">取得：${timeJST(snapshot?.tideSource?.fetchedAt ?? null)} · 予測対象：2026年。原データの発表時刻は未確認。</p>` : ""}<a class="inline-link" target="_blank" rel="noopener" href="https://www.data.jma.go.jp/kaiyou/db/tide/suisan/suisan.php?stn=O9">気象庁の潮位表 · 名瀬小湊<span aria-hidden="true">↗</span></a></section><section class="sun-section" aria-label="日の出と日の入り"><div class="section-head"><h3>太陽の時間</h3><span>参考計算</span></div><div class="facts-grid"><div class="fact"><div class="fact-label">日の出</div><div class="fact-value">${sun.sunrise ?? "—"}</div><div class="fact-note">方位 ${sun.riseAzimuth ?? "—"}° / 真北基準</div></div><div class="fact"><div class="fact-label">日の入り</div><div class="fact-value">${sun.sunset ?? "—"}</div><div class="fact-note">方位 ${sun.setAzimuth ?? "—"}° / 真北基準</div></div></div><p class="source-note">SunCalcによる地点別の参考計算。地形・標高による見え方は異なります。</p></section></div>
-  <section class="today-access" aria-label="島の公式情報への入口"><div class="section-head"><h3>島で、すぐ使う</h3><span>QUICK ACCESS</span></div><div class="quick-links"><a class="inline-link" href="#move"><span><small>GET AROUND</small>飛行機・フェリー・バス</span><span aria-hidden="true">→</span></a><a class="inline-link" href="#explore"><span><small>EXPLORE</small>観光・旅先の情報</span><span aria-hidden="true">→</span></a><a class="inline-link" href="#safety"><span><small>OFFICIAL INFORMATION</small>台風・地震・避難情報</span><span aria-hidden="true">→</span></a></div><div class="notice"><strong>防災情報は未接続です</strong><p>現在の警報状況は公式発表をご確認ください。</p></div></section>
-  <section id="forecast" class="today-forecast">${forecastPanel()}</section></div>`;
+  const sun=snapshot?.solar ?? solarForDate(date,area().lat,area().lon);
+  const tide=snapshot?.tide;
+  const isReady=state==="ready" && !fetchError;
+  const eventList=(events)=>events.map(t=>`<p><strong>${t.time}</strong><small>${t.heightCm} cm</small></p>`).join("") || '<p class="readable-note">対象なし</p>';
+  return `<div class="today-heading"><div class="selected-date"><span class="date-context">${date===todayJST() ? "今日" : "選択日"}</span><h2>${dateLabel()}</h2></div><div class="date-controls"><button class="date-step" data-date="-1" aria-label="前の日">‹</button><label for="view-date">日付を選ぶ<input id="view-date" name="date" type="date" value="${date}" autocomplete="off" /></label><button class="date-step" data-date="1" aria-label="次の日">›</button><button class="text-button" data-action="go-today">今日へ</button></div></div><div class="today-layout"><section class="weather-overview" aria-label="観測気温と今日の要約">${isReady ? `<div id="current-observation">${observationHero()}</div>` : statePanel()}</section><div class="today-details"><section aria-label="潮汐の予測"><div class="section-head"><h3 id="tide-heading">${date===todayJST() ? "今日" : "この日"}の満潮・干潮</h3><span>${area().station ? "O9 / 予測" : "対象局未連携"}</span></div>${tide && isReady ? `<div class="tide-events"><div><div class="fact-label">満潮</div>${eventList(tide.highTides)}</div><div><div class="fact-label">干潮</div>${eventList(tide.lowTides)}</div></div>` : '<p class="readable-note">この地域・日付の潮汐予測は未取得です。</p>'}<p class="readable-note">天文潮位の予測です。実測ではありません。</p><details class="source-details"><summary>潮汐の出典・予測について</summary><p class="source-note">気象庁・奄美（名瀬小湊）2026年の保存済み天文潮位予測を加工表示。基準面上cm。別地点へ流用しません。取得：${timeJST(snapshot?.tideSource?.fetchedAt ?? null)}。原データの発表時刻は未確認。</p><a class="inline-link" target="_blank" rel="noopener" href="https://www.data.jma.go.jp/kaiyou/db/tide/suisan/suisan.php?stn=O9">気象庁の潮位表 · 名瀬小湊<span aria-hidden="true">↗</span></a></details></section><section class="sun-section" aria-label="日の出と日の入り"><div class="section-head"><h3>日の出・日の入り</h3><span>参考計算</span></div><div class="facts-grid"><div class="fact"><div class="fact-label">日の出</div><div class="fact-value">${sun.sunrise ?? "—"}</div><div class="fact-note">方位 ${sun.riseAzimuth ?? "—"}°</div></div><div class="fact"><div class="fact-label">日の入り</div><div class="fact-value">${sun.sunset ?? "—"}</div><div class="fact-note">方位 ${sun.setAzimuth ?? "—"}°</div></div></div><p class="readable-note">地点別の参考計算。地形・標高で見え方は変わります。</p></section></div>
+  <section class="today-tide-chart"><div class="section-head"><h3>潮の動きを見る</h3><span>予測・参考値</span></div><div id="tide-chart-content">${isReady ? tideChart() : '<p class="readable-note">潮汐の予測を取得できませんでした。</p>'}</div></section>${isReady ? tideOutlook() : ""}
+  <section class="today-access" aria-label="島の公式情報への入口"><div class="section-head"><h3>島で、すぐ使う</h3><span>QUICK ACCESS</span></div><div class="quick-links"><a class="inline-link" href="#move"><span><small>GET AROUND</small>飛行機・フェリー・バス</span><span aria-hidden="true">→</span></a><a class="inline-link" href="#explore"><span><small>EXPLORE</small>観光・旅先の情報</span><span aria-hidden="true">→</span></a><a class="inline-link" href="#safety"><span><small>OFFICIAL INFORMATION</small>台風・地震・避難情報</span><span aria-hidden="true">→</span></a></div><div class="notice"><strong>防災情報は未接続です</strong><p>現在の警報状況は公式発表をご確認ください。</p></div></section><section id="forecast" class="today-forecast">${forecastPanel()}</section></div>`;
 }
 function explore() {
   const results = findOfficialLinks(query,filter,areaId);
@@ -444,6 +461,9 @@ document.addEventListener("click", (event) => {
     persist("theme", theme);
     render();
   }
+  if (target.dataset.day && validDate(target.dataset.day)) {
+    date=target.dataset.day; snapshot=null; render(true); void load();
+  }
   if (target.dataset.date) {
     date = addDays(date, Number(target.dataset.date));
     snapshot = null;
@@ -498,6 +518,7 @@ document.addEventListener("click", (event) => {
 });
 document.addEventListener("change", (event) => {
   const { id, value, checked } = event.target;
+  if (id === "view-date" && validDate(value)) { date=value; snapshot=null; render(); void load(); }
   if (id === "region") changeArea(value);
   if (id === "theme") {
     theme = value;
@@ -556,6 +577,9 @@ if (!PUBLIC && "serviceWorker" in navigator)
 
 // Re-evaluate displayed age while a page remains open; this does not poll the source.
 setInterval(() => {
+  const context=$(".date-context"), tideHeading=$("#tide-heading");
+  if (context) context.textContent=date===todayJST() ? "今日" : "選択日";
+  if (tideHeading) tideHeading.textContent=(date===todayJST() ? "今日" : "この日")+"の満潮・干潮";
   const hero = $("#current-observation");
   if (hero && observation?.data && observationScope === areaId + ":" + date) {
     const status = hero.querySelector('[role="status"]');
@@ -567,6 +591,8 @@ setInterval(() => {
   }
   const brief=$("#forecast-brief");
   if (brief) brief.innerHTML=forecastBrief();
+  const chart=$("#tide-chart-content");
+  if (chart && snapshot?.date===date) chart.innerHTML=tideChart();
   const facts=$(".today-brief");
   if (facts) facts.outerHTML=todayFacts();
   const section = $("#forecast");

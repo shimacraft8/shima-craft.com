@@ -1,0 +1,35 @@
+{
+  "version": "0.3.4",
+  "checkedAt": "2026-10-14T09:16:58.766471+00:00",
+  "publicURL": "https://shima-craft.com/",
+  "email": "shimacraft8@gmail.com",
+  "accountId": "42f69e35f08bb21dca5194467e2f59de",
+  "zoneId": "cdfc2875eb9e0bf217159ec8be376373",
+  "currentVersions": [
+    {
+      "version_id": "041f929c-6251-4d53-9323-6e094fe5e014",
+      "percentage": 100
+    }
+  ],
+  "originalVersions": [
+    {
+      "version_id": "117ff8f0-149d-4cfb-ae86-8a11aaf20c25",
+      "percentage": 100
+    }
+  ],
+  "routes": [
+    {
+      "id": "9b1b9b2693b547598ac9eb71a45e1842",
+      "pattern": "www.shima-craft.com/*",
+      "script": "shima-craft-amami-life",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "627bbb5b5bee43f49b38bde4e5df5009",
+      "pattern": "shima-craft.com/*",
+      "script": "shima-craft-amami-life",
+      "request_limit_fail_open": false
+    }
+  ],
+  "sourceBranch": "codex/amami-life-home-20261014"
+}

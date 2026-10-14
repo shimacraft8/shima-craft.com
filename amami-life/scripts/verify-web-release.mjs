@@ -16,7 +16,7 @@ const rows=await Promise.all(paths.map(async path=>{
     if(path==="/") row.passed=row.passed && row.title.includes("AMAMI LIFE") && row.csp.includes("frame-ancestors 'none'");
     if(path.startsWith("/amami-life-api/weather")) row.passed=row.passed && !!row.data.data?.description && ["ready","stale","refresh-failed"].includes(row.data.status);
     if(path.startsWith("/amami-life-api/observations")) row.passed=row.passed && typeof row.data.data?.temperatureC==="number";
-    if(path.includes("today?area=naze")) row.passed=row.passed && row.data.mode==="reference" && row.data.data.tide?.date===date && row.data.data.hazards.state==="unknown" && !row.data.data.weather;
+    if(path.includes("today?area=naze")) row.passed=row.passed && row.data.mode==="reference" && row.data.data.tide?.date===date && row.data.data.hazards.state==="unknown" && !row.data.data.weather && row.data.data.outlook?.length===7;
     if(path.includes("today?area=koniya")) row.passed=row.passed && row.data.data.tide===null;
     return row;
   }catch(error){return {path,passed:false,error:error.name};}

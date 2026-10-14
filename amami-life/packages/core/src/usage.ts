@@ -1,4 +1,4 @@
-import { LINKS, safetyLinks, todayJST, addDays, type AreaId, type TideDay } from "./index.ts";
+import { LINKS, safetyLinks, todayJST, addDays, interpolateTide, type AreaId, type TideDay } from "./index.ts";
 import type { ForecastDay } from "./weather.ts";
 
 const SEARCH_WORDS: Record<string, string> = {
@@ -24,15 +24,35 @@ export function findOfficialLinks(query: string, category = "all", area: AreaId 
     (category === "all" || category === link.category) &&
     words.every(word => normalized([link.title, link.subtitle, link.jurisdiction, SEARCH_WORDS[link.id] ?? ""].join(" ")).includes(word)));
 }
-export function nextTideEvent(day: TideDay | null, tomorrow: TideDay | null, now: Date) {
+export function nextTideEvent(day: TideDay | null, tomorrow: TideDay | null, now: Date, kind?: "満潮" | "干潮") {
   if (!day) return null;
   const current = day.date === todayJST(now);
   const days = [day, ...(current && tomorrow?.date === addDays(day.date, 1) ? [tomorrow] : [])];
   return days.flatMap(d => [
     ...d.highTides.map(t => ({ ...t, kind: "満潮" as const, date: d.date })),
     ...d.lowTides.map(t => ({ ...t, kind: "干潮" as const, date: d.date })),
-  ]).filter(t => !current || Date.parse(`${t.date}T${t.time}:00+09:00`) >= now.getTime())
+  ]).filter(t => (!kind || t.kind === kind) && (!current || Date.parse(`${t.date}T${t.time}:00+09:00`) >= now.getTime()))
     .sort((a,b) => (a.date + a.time).localeCompare(b.date + b.time))[0] ?? null;
+}
+export function tideOverview(day: TideDay | null, tomorrow: TideDay | null, now: Date) {
+  const next = day && tomorrow?.date === addDays(day.date, 1) ? tomorrow : null;
+  const jst = new Date(now.getTime() + 9 * 60 * 60_000);
+  const minute = day?.date === todayJST(now) ? jst.getUTCHours() * 60 + jst.getUTCMinutes() + jst.getUTCSeconds() / 60 : null;
+  const heightCm = day && minute !== null ? interpolateTide(day, next, minute) : null;
+  const segments: { minute: number; heightCm: number }[][] = [];
+  let segment: { minute: number; heightCm: number }[] = [];
+  for (let hour = 0; hour <= 24; hour++) {
+    const height = hour === 24 ? next?.hourly.find(p => p.hour === 0)?.heightCm : day?.hourly.find(p => p.hour === hour)?.heightCm;
+    if (typeof height === "number" && Number.isFinite(height)) segment.push({ minute: hour * 60, heightCm: height });
+    else if (segment.length) { segments.push(segment); segment = []; }
+  }
+  if (segment.length) segments.push(segment);
+  const heights = segments.flat().map(p => p.heightCm);
+  const hour = minute === null ? null : Math.floor(minute / 60);
+  const a = hour === null ? null : day?.hourly.find(p => p.hour === hour)?.heightCm;
+  const b = hour === null ? null : hour === 23 ? next?.hourly.find(p => p.hour === 0)?.heightCm : day?.hourly.find(p => p.hour === hour + 1)?.heightCm;
+  const trend = heightCm === null || a == null || b == null ? null : b > a ? "満ちる傾向" : b < a ? "引く傾向" : "ほぼ横ばい";
+  return { minute, heightCm, trend, high: nextTideEvent(day, next, now, "満潮"), low: nextTideEvent(day, next, now, "干潮"), segments, min: heights.length ? Math.min(...heights) : null, max: heights.length ? Math.max(...heights) : null };
 }
 export function precipitationWindow(day: ForecastDay | null, now: Date) {
   if (!day) return null;

@@ -197,3 +197,167 @@ body:not([data-tab="today"]) .body-copy { max-width:680px; }
   .weather-art, .weather-art svg { height:84px; }
 }
 @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+
+/* 0.3.4: use weight and scale to distinguish decisions from provenance. */
+.tabbar a { font-weight:600; }
+.tabbar a[aria-current="page"] { color:var(--accent); }
+.section-head h3 { font-size:20px; font-weight:650; line-height:1.5; }
+.section-head span { font-size:12px; letter-spacing:.04em; }
+.today-heading { padding:20px 0 24px; }
+.selected-date { display:flex; align-items:center; gap:16px; min-width:0; }
+.today-heading h2 { font:650 26px var(--body); display:block; }
+.date-context { font-size:14px; font-weight:700; color:var(--accent); border-bottom:2px solid currentColor; padding:6px 0; white-space:nowrap; }
+.date-controls { display:flex; align-items:center; gap:12px; }
+.date-controls label { display:flex; align-items:center; gap:12px; font-size:14px; font-weight:600; }
+.date-controls input { background:var(--paper); color:var(--ink); border:1px solid var(--hair); padding:10px; min-height:48px; max-width:180px; font-weight:600; }
+.date-step { background:none; border:0; min-width:40px; min-height:48px; font-size:24px; }
+.date-step:hover { color:var(--accent); }
+.date-controls .text-button { margin:0; font-weight:650; white-space:nowrap; }
+.weather-caption .weather-name { font-family:var(--body); font-size:18px; font-weight:650; }
+.weather-caption small { font-size:13px; }
+.forecast-brief { font-size:26px; font-weight:650; line-height:1.5; text-wrap:balance; }
+#forecast-brief .source-note { font-size:15px; line-height:1.7; color:var(--ink); font-weight:500; }
+.weather-art, .weather-art svg { height:190px; }
+.place-caption { margin:8px 0 0; }
+.today-brief { grid-template-columns:repeat(3,minmax(0,1fr)); background:var(--panel); margin-top:20px; }
+.today-brief .fact { padding:16px; }
+.today-brief .fact + .fact { padding-left:16px; }
+.fact-label { font-size:14px; font-weight:650; color:var(--ink); }
+.fact-value { font-family:var(--display); font-weight:600; font-size:36px; letter-spacing:-.03em; }
+.today-brief .fact-value { font-size:36px; font-weight:600; }
+.fact-note { font-size:12px; }
+.day-tag { display:inline-block; margin-left:6px; font-size:11px; color:var(--accent); }
+.tide-events p { display:flex; align-items:baseline; flex-wrap:wrap; gap:10px; margin:10px 0; }
+.tide-events p strong { font:600 26px var(--display); letter-spacing:-.02em; font-variant-numeric:tabular-nums; }
+.tide-events p small { font-size:14px; color:var(--muted); }
+.today-details .fact-value { font-size:36px; font-weight:600; }
+.readable-note { font-size:14px; line-height:1.8; color:var(--muted); margin:12px 0 0; }
+.source-details { font-size:13px; }
+.source-note { font-size:13px; line-height:1.8; }
+.source-details summary { font-size:13px; color:var(--muted); font-weight:500; }
+.today-tide-chart, .tide-outlook { grid-column:1 / -1; border-top:1px solid var(--hair); padding-top:24px; }
+.today-tide-chart > .section-head, .tide-outlook > .section-head { margin-top:0; }
+.chart-summary { display:flex; justify-content:space-between; align-items:center; gap:24px; padding:20px 24px; background:var(--panel); border-left:3px solid var(--accent); }
+.chart-summary span { display:block; font-size:14px; font-weight:650; margin-bottom:6px; }
+.chart-summary strong { font:600 36px var(--display); font-variant-numeric:tabular-nums; }
+.chart-summary strong small { font:500 16px var(--body); margin-left:6px; }
+.chart-summary p { font-size:18px; font-weight:600; line-height:1.6; margin:0; }
+.chart-summary p small { display:block; font-size:13px; font-weight:400; color:var(--muted); }
+.tide-chart { margin:24px 0 0; }
+.chart-grid { display:grid; grid-template-columns:64px minmax(0,1fr); }
+.chart-y { height:220px; padding:14px 4px 14px 0; display:flex; flex-direction:column; justify-content:space-between; color:var(--muted); font-size:13px; }
+.tide-chart svg { display:block; width:100%; height:220px; overflow:visible; }
+.tide-curve { fill:none; stroke:var(--accent); stroke-width:3; stroke-linejoin:round; stroke-linecap:round; }
+.chart-guide { stroke:var(--hair); stroke-width:1; stroke-dasharray:4 6; vector-effect:non-scaling-stroke; }
+.tide-now { stroke:var(--ink); stroke-width:2; }
+.tide-now-dot { fill:var(--ink); stroke:var(--paper); stroke-width:2; }
+.chart-x { display:flex; justify-content:space-between; font-size:13px; color:var(--muted); margin-top:8px; }
+.tide-chart figcaption { font-size:13px; line-height:1.8; color:var(--muted); margin:16px 0 0; }
+.outlook-days { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); margin-top:20px; border-top:1px solid var(--hair); border-bottom:1px solid var(--hair); }
+.outlook-days button { background:none; border:0; padding:20px 12px; text-align:left; min-width:0; }
+.outlook-days button + button { border-left:1px solid var(--hair); }
+.outlook-days button[aria-pressed="true"] { background:var(--panel); box-shadow:inset 0 3px var(--accent); }
+.outlook-days button:hover { background:var(--panel); }
+.outlook-days strong { display:block; font-size:17px; font-weight:700; margin-bottom:16px; }
+.outlook-days span { display:block; font-size:12px; color:var(--muted); line-height:1.7; margin-top:10px; }
+.outlook-days b { display:block; font-size:14px; color:var(--ink); font-weight:650; }
+.quick-links .inline-link { font-weight:650; }
+.row-main strong { font-size:18px; font-weight:650; }
+.row-main small { font-size:14px; }
+.page-top h2 { font-size:32px; font-weight:550; }
+.body-copy { font-size:16px; }
+.notice { border-left:3px solid var(--accent); }
+.notice strong { font-size:17px; font-weight:700; }
+.notice p { font-size:14px; }
+@media(min-width:761px) and (max-width:1099px) {
+  .date-controls { gap:4px; }
+  .date-controls label { font-size:0; gap:0; }
+  .today-heading h2 { font-size:22px; }
+  .outlook-days { grid-template-columns:repeat(4,minmax(0,1fr)); }
+  .outlook-days button { border-bottom:1px solid var(--hair); }
+  .outlook-days button:nth-child(5) { border-left:0; }
+}
+@media(max-width:760px) {
+  .today-heading { padding:16px 0 12px; display:block; }
+  .today-heading h2 { font-size:22px; }
+  .selected-date { gap:12px; }
+  .date-controls { justify-content:space-between; gap:4px; margin-top:4px; }
+  .date-controls label { font-size:0; gap:0; }
+  .date-controls input { font-size:14px; min-height:44px; padding:8px; width:152px; }
+  .date-step { min-width:32px; min-height:44px; }
+  .date-controls .text-button { min-height:44px; font-size:13px; }
+  #current-observation { display:grid; grid-template-columns:minmax(0,1fr) 112px; column-gap:8px; }
+  .weather-top { grid-column:1 / -1; margin:0 0 8px; padding-top:0; }
+  .temperature { font-size:86px; }
+  .weather-caption small { font-size:12px; }
+  #forecast-brief { grid-column:1; grid-row:2; padding:4px 0 0; }
+  .forecast-brief { font-size:20px; font-weight:650; }
+  #forecast-brief .source-note { font-size:13px; line-height:1.6; }
+  .weather-art { grid-column:2; grid-row:2; margin:0; }
+  .weather-art, .weather-art svg { height:100px; }
+  .weather-art svg { width:100%; }
+  .place-caption { grid-column:1 / -1; grid-row:3; text-align:left; margin:4px 0 0; }
+  .place-caption strong { display:none; }
+  .place-caption small { font-size:11px; margin-top:0; }
+  .today-brief { grid-column:1 / -1; margin-top:12px; grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .today-brief .fact, .today-brief .fact + .fact { padding:12px 8px; }
+  .today-brief .fact-label { font-size:12px; }
+  .today-brief .fact-value { font-size:26px; font-weight:600; }
+  .today-brief .fact-note { font-size:11px; }
+  .day-tag { display:inline-block; margin-left:4px; font-size:10px; white-space:nowrap; }
+  .source-details { margin-top:4px; }
+  .section-head h3 { font-size:20px; }
+  .today-details .section-head:first-child { margin-top:24px; }
+  .today-tide-chart, .tide-outlook { margin-top:28px; padding-top:24px; }
+  .chart-summary { padding:16px; display:block; }
+  .chart-summary p { margin-top:12px; font-size:16px; }
+  .chart-summary strong { font-size:32px; }
+  .chart-grid { grid-template-columns:48px minmax(0,1fr); }
+  .chart-y, .chart-x { font-size:12px; }
+  .outlook-days { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .outlook-days button { border-bottom:1px solid var(--hair); padding:16px; }
+  .outlook-days button:nth-child(odd) { border-left:0; }
+  .outlook-days strong { font-size:17px; margin-bottom:12px; }
+  .outlook-days span { font-size:13px; }
+  .outlook-days b { font-size:16px; }
+  .row-main strong { font-size:17px; }
+  .row-main small { font-size:14px; }
+}
+@media(max-width:340px) {
+  .today-heading h2 { font-size:20px; }
+  .today-brief .fact, .today-brief .fact + .fact { padding:10px 5px; }
+  .today-brief .fact-value { font-size:24px; }
+  .today-brief .fact-note { font-size:10px; }
+  .temperature { font-size:76px; }
+  .forecast-brief { font-size:18px; }
+  .weather-art, .weather-art svg { height:84px; }
+}
+body[data-text="large"] .today-brief { grid-template-columns:1fr; }
+body[data-text="large"] .today-brief .fact + .fact { border-left:0; border-top:1px solid var(--hair); }
+body[data-text="large"] #current-observation { display:block; }
+body[data-text="large"] .today-layout { grid-template-columns:1fr; }
+body[data-text="large"] .today-details { border-left:0; padding-left:0; }
+body[data-text="large"] .outlook-days { grid-template-columns:repeat(2,minmax(0,1fr)); }
+@media(min-width:1100px) and (max-height:820px) {
+  .today-heading { padding-top:16px; padding-bottom:16px; }
+  .weather-art, .weather-art svg { height:160px; }
+  .today-brief { margin-top:12px; }
+}
+@media(max-width:760px) and (max-height:740px) {
+  .today-heading { padding-top:8px; padding-bottom:8px; }
+  .weather-top { margin-bottom:4px; }
+  .place-caption { margin-top:0; }
+  .today-brief { margin-top:8px; }
+}
+@media(min-width:1000px) and (max-height:820px) {
+  .today-heading { padding-top:12px; padding-bottom:12px; }
+  .weather-art, .weather-art svg { height:160px; }
+  .weather-caption { padding-top:12px; }
+  .today-brief { margin-top:8px; }
+}
+@media(min-width:1000px) and (max-height:820px) {
+  .today-brief .fact { padding-top:12px; padding-bottom:12px; }
+}
+@media(max-width:760px) and (max-height:740px) {
+  .today-heading { padding-bottom:4px; }
+}

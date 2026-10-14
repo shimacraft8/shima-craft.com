@@ -1,4 +1,4 @@
-const CACHE = "amami-local-v6";
+const CACHE = "amami-local-v7";
 const SHELL = [
   "/",
   "/index.html",

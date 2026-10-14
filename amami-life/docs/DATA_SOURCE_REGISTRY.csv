@@ -1,7 +1,7 @@
 id,機能,情報源,公式URL,予定方式,更新目安,確認状況,許諾/制約・残課題,今回のstatus,今回の根拠,採用方式,今回の残課題
 shima-tide,潮汐・天気既存実装,SHIMA CRAFT既存サイト,https://shima-craft.com/amami-tide,既存コード監査→共通API化,現行の更新ロジックを調査,公開ページ確認、非公開実装未確認,潮位予測/補間/実測の区別、元ソースを調査,verified,ローカルコード・remote・HEADを確認。本番一致は未確認,reference,既存サイトへの変更は承認後
-jma-tide,潮汐予測,気象庁 潮位表,https://www.data.jma.go.jp/kaiyou/db/tide/suisan/suisan.php?stn=O9,公式提供データを解析、利用条件の詳細確認,日・月,公式公開確認、API契約未確認,地点/潮汐基準/日付/利用規約を確認,verified,公式O9.txtを取得。365日・50005bytes、旧データとSHA一致,reference,年次更新・運用監視・原発表時刻未確認
-jma-forecast,天気,気象庁 防災情報,https://www.jma.go.jp/bosai/,気象庁発表または正式配信,発表ごと,公式公開確認,情報鮮度・対象地域・2026仕様改訂,verified,実応答の460040/88837を確認、API実接続とキャッシュ/不正/失敗試験,local-common-api,長時間監視・公開提供方式の継続性と本番基盤は未検証。実況は別AMeDASソースで連携
+jma-tide,潮汐予測,気象庁 潮位表,https://www.data.jma.go.jp/kaiyou/db/tide/suisan/suisan.php?stn=O9,公式提供データを解析、利用条件の詳細確認,日・月,公式公開確認、API契約未確認,地点/潮汐基準/日付/利用規約を確認,verified,公式O9.txtを取得。365日・50005bytes、旧データとSHA一致。0.3.4で毎時グラフ/現在補間/7日潮・夕日へ利用。82試験,public-web-reference,2026年O9限定。補間は参考、実測/潮流/安全判定ではない。年次更新・運用監視・原発表時刻未確認
+jma-forecast,天気,気象庁 防災情報,https://www.jma.go.jp/bosai/,気象庁発表または正式配信,発表ごと,公式公開確認,情報鮮度・対象地域・2026仕様改訂,verified,実応答の460040/88837を確認、API実接続とキャッシュ/不正/失敗試験,public-web-api,SHIMA CRAFT Cloudflareで公開取得確認済み。長期監視・スキーマ変更対応・実機未確認
 jma-xml,警報・地震・台風関連,気象庁 防災XML PULL,https://xml.kishou.go.jp/xmlpull.html,Cloudflare WorkerでPULL取得→正規化,フィード仕様に準ずる,公式仕様・商用利用FAQ確認,遅延/停止あり、PUSHではない,verified,2026更新と5種公式XML・Atom部分fixtureの解析/取消/訂正試験。ライブ種類別サンプル4件取得,external-link,現在状態の全件取込・永続化・欠落検知・全新電文/区域未実装
 jma-typhoon,台風と発達する熱帯低気圧,気象庁 台風情報,https://www.jma.go.jp/jma/kishou/know/typhoon/7-1.html,公式進路図導線→元電文検証後API,台風情報の発表周期,24h以内発達見込みを確認,すべての発生初期熱帯低気圧は網羅不可,verified,気象庁の台風解説を閲覧,external-link,全初期熱帯低気圧を網羅しない
 jma-typhoon-map,台風の公式現況,気象庁 台風経路図,https://www.jma.go.jp/bosai/map.html?contents=typhoon,公式リンク,発表ごと,公式公開確認,予報円70%の意味、台風→低気圧変化,verified,公式進路図URL。ただしこの実行のWeb取得は一部エラー,external-link,遷移先の実機確認
@@ -28,4 +28,4 @@ setouchi-hazard,瀬戸内町ハザード,瀬戸内町,https://www.town.setouchi.
 jma-weather-map,発達前TDの参考,気象庁 天気図,https://www.jma.go.jp/bosai/weather_map/,external-link,,,,verified,予想天気図のTD表記の公式解説と天気図導線確認,external-link,全初期TD網羅なし、独自OCR予測なし
 amami-tourism,観光・案内所・交通,あまみ大島観光物産連盟,https://www.amami-tourism.org/scenic-spots/,external-link,,,,verified,見どころ/案内所/交通/パンフレットの公式公開ページを確認,external-link,個別POI/画像/電話の再配布許諾と事業者確認は別
 jtwc-early,台風発達前の参考候補,JTWC,https://www.metoc.navy.mil/jtwc/jtwc.html,not-adopted,,,,not-verified,公式ページ取得403。最新の配信/条件を確認できず,not-adopted,転載条件・更新/取消・定義と平均風速を確認してから採否決定
-jma-amedas,観測気温,気象庁アメダス,https://www.jma.go.jp/bosai/amedas/,公式latest_time→全国map→固定3観測所,必要時10分/失敗1分,公式地点表/最新mapを2026-10-14取得,非バージョンWeb JSON・SLAなし。品質0限定。公開利用/基盤運用の再確認,verified,名瀬88837/笠利88821/古仁屋88901、抽出fixtureと原mapSHA、品質/時刻/欠測/古さ/失敗の9試験,local-common-api,実機/長期監視/公開HTTPS API/利用条件の最終確認
+jma-amedas,観測気温,気象庁アメダス,https://www.jma.go.jp/bosai/amedas/,公式latest_time→全国map→固定3観測所,必要時10分/失敗1分,公式地点表/最新mapを2026-10-14取得,非バージョンWeb JSON・SLAなし。品質0限定。公開利用/基盤運用の再確認,verified,名瀬88837/笠利88821/古仁屋88901、抽出fixtureと原mapSHA、品質/時刻/欠測/古さ/失敗の9試験,public-web-api,SHIMA CRAFT Cloudflareで公開取得確認済み。長期監視・スキーマ変更対応・実機未確認

@@ -1,0 +1,83 @@
+[
+  {
+    "curveSegments": 1,
+    "factsBottom": 581.0703125,
+    "height": 667,
+    "outlookDays": 7,
+    "scrollWidth": 320,
+    "tabsTop": 590,
+    "width": 320
+  },
+  {
+    "curveSegments": 1,
+    "factsBottom": 570.9765625,
+    "height": 667,
+    "outlookDays": 7,
+    "scrollWidth": 375,
+    "tabsTop": 590,
+    "width": 375
+  },
+  {
+    "curveSegments": 1,
+    "factsBottom": 591.3828125,
+    "height": 844,
+    "outlookDays": 7,
+    "scrollWidth": 390,
+    "tabsTop": 767,
+    "width": 390
+  },
+  {
+    "curveSegments": 1,
+    "factsBottom": 591.3828125,
+    "height": 932,
+    "outlookDays": 7,
+    "scrollWidth": 430,
+    "tabsTop": 855,
+    "width": 430
+  },
+  {
+    "curveSegments": 1,
+    "factsBottom": 817.4375,
+    "height": 1024,
+    "outlookDays": 7,
+    "scrollWidth": 768,
+    "tabsTop": 233.7421875,
+    "width": 768
+  },
+  {
+    "curveSegments": 1,
+    "factsBottom": 758.1796875,
+    "height": 768,
+    "outlookDays": 7,
+    "scrollWidth": 1024,
+    "tabsTop": 190.59375,
+    "width": 1024
+  },
+  {
+    "curveSegments": 1,
+    "factsBottom": 707.1796875,
+    "height": 720,
+    "outlookDays": 7,
+    "scrollWidth": 1280,
+    "tabsTop": 178.59375,
+    "width": 1280
+  },
+  {
+    "curveSegments": 1,
+    "factsBottom": 829.53125,
+    "height": 900,
+    "outlookDays": 7,
+    "scrollWidth": 1440,
+    "tabsTop": 237.7421875,
+    "width": 1440
+  },
+  {
+    "curveSegments": 1,
+    "factsBottom": 834.328125,
+    "height": 1080,
+    "outlookDays": 7,
+    "scrollWidth": 1920,
+    "tabsTop": 237.7421875,
+    "width": 1920
+  }
+]

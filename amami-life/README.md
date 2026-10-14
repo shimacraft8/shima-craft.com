@@ -1,8 +1,8 @@
-# AMAMI LIFE — Web公開版 0.3.3 / Native開発版 0.3.1
+# AMAMI LIFE — Web公開版 0.3.4 / Native開発版 0.3.1
 
 添付リファレンスの和紙、朱の日輪、墨の雨雲、金の夜を基にした操作可能な5画面と、Expo SDK 57 / TypeScriptのアプリ土台です。**Web版は https://shima-craft.com/ に公開済み。iOS/Androidストア版は未公開・実機未確認です。**
 
-最新の構成・検証・再公開・復旧は [SHIMA CRAFT Web公開記録](docs/SHIMACRAFT_WEB_RELEASE.md)。
+[情報の強弱・潮グラフ・7日一覧の改修](docs/INFORMATION_HIERARCHY.md)。最新の構成・検証・再公開・復旧は [SHIMA CRAFT Web公開記録](docs/SHIMACRAFT_WEB_RELEASE.md)。
 
 - [デザイン比較](design/review.html) / [開発・検証レポート](docs/DEVELOPMENT_REPORT.md)
 - [旧コード監査](docs/LEGACY_AUDIT.md) / [データソース確認台帳](docs/DATA_SOURCE_REGISTRY.csv)

@@ -60,7 +60,8 @@ export function createHomeWorker({ weather = createWeatherProvider({onError:erro
         if (name==="today") {
           const day=area.station==="O9" ? tides.find(t=>t.date===date) ?? null : null;
           const tomorrow=area.station==="O9" ? tides.find(t=>t.date===addDays(date,1)) ?? null : null;
-          return json({schemaVersion:1,mode:"reference",data:{area,date,state:"ready",solar:solarForDate(date,area.lat,area.lon),tide:day,tomorrowTide:tomorrow,tideSource:provenance,hazards:{state:"unknown",source:unknownSource("official-links","https://www.jma.go.jp/bosai/")}},source:provenance});
+          const outlook=Array.from({length:7},(_,i)=>{const selected=addDays(date,i);return {date:selected,tide:area.station==="O9" ? tides.find(t=>t.date===selected) ?? null : null,solar:solarForDate(selected,area.lat,area.lon)};});
+          return json({schemaVersion:1,mode:"reference",data:{area,date,state:"ready",solar:solarForDate(date,area.lat,area.lon),tide:day,tomorrowTide:tomorrow,outlook,tideSource:provenance,hazards:{state:"unknown",source:unknownSource("official-links","https://www.jma.go.jp/bosai/")}},source:provenance});
         }
         return json({error:"not-found"},404);
       }

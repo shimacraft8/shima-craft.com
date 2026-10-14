@@ -1,0 +1,24 @@
+
+ ⛅️ wrangler 4.124.0 (update available 4.151.0)
+───────────────────────────────────────────────
+🌀 Building list of assets...
+✨ Read 14 files from the assets directory /Users/hiroshikento/Documents/Codex/2026-10-13/start-here-md-docs-codex-task/outputs/amami-life/dist/public
+🌀 Starting asset upload...
+🌀 Found 1 new or modified static asset to upload. Proceeding with upload...
++ /amami-life/app.js
+Uploaded 1 of 1 asset
+✨ Success! Uploaded 1 file (11 already uploaded) (1.21 sec)
+
+Total Upload: 349.47 KiB / gzip: 48.37 KiB
+Worker Startup Time: 3 ms
+Your Worker has access to the following bindings:
+Binding                                             Resource                  
+env.SHIMA_ORIGIN (shima-craft-com-production)       Worker                    
+env.ASSETS                                          Assets                    
+env.DEBUG_SOURCES ("0")                             Environment Variable      
+
+Uploaded shima-craft-amami-life (5.20 sec)
+Deployed shima-craft-amami-life triggers (1.77 sec)
+  shima-craft.com/* (zone id: cdfc2875eb9e0bf217159ec8be376373)
+  www.shima-craft.com/* (zone id: cdfc2875eb9e0bf217159ec8be376373)
+Current Version ID: 041f929c-6251-4d53-9323-6e094fe5e014

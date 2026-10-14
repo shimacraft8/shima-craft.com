@@ -1,0 +1,1 @@
+{"mode":"official-sample-download","documents":4,"output":"/Users/hiroshikento/Documents/Codex/2026-10-13/start-here-md-docs-codex-task/outputs/amami-life/research/jma-inspection/inspection.json","currentStateVerified":false}

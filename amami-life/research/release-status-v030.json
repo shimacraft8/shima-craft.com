@@ -1,0 +1,30 @@
+{
+  "recordedAt": "2026-10-13T23:46:22.273455+00:00",
+  "sourceVersion": "0.3.0",
+  "unitAndHttpTests": {
+    "passed": 64,
+    "failed": 0
+  },
+  "typecheck": "passed",
+  "lint": "passed",
+  "bundleExport": "ios/android/web; see native-export-v030.txt",
+  "signedBinaryCreated": false,
+  "physicalDevicesTested": false,
+  "storeAccounts": "not registered (user confirmed)",
+  "requestedGitHubOwner": "shimacraft8",
+  "verifiedGitHubLogin": "camiordersystem-maker",
+  "identityMismatchResolved": false,
+  "publicHttpsApiDeployed": false,
+  "publicLegalSupportPages": "not configured",
+  "dependencyAudit": {
+    "high": 18,
+    "moderate": 11,
+    "total": 29,
+    "unresolved": true
+  },
+  "storeSubmissionPerformed": false,
+  "publicReleasePerformed": false,
+  "sourcePushed": false,
+  "existingSiteChanged": false,
+  "canSubmitToStores": false
+}

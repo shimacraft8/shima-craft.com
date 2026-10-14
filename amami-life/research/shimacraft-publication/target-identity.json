@@ -1,0 +1,260 @@
+{
+  "verifiedAt": "2026-10-14T14:26:07.091530+09:00",
+  "email": "shimacraft8@gmail.com",
+  "accountId": "42f69e35f08bb21dca5194467e2f59de",
+  "zoneId": "cdfc2875eb9e0bf217159ec8be376373",
+  "zoneStatus": "active",
+  "domains": [
+    {
+      "id": "7bed3c0171ffa4c899eb9d777d929b45edae7780",
+      "zone_id": "cdfc2875eb9e0bf217159ec8be376373",
+      "zone_name": "shima-craft.com",
+      "hostname": "shima-craft.com",
+      "service": "shima-craft-com-production",
+      "environment": "production",
+      "cert_id": "38792a28-9f32-4498-af7c-406f2cf75ee6",
+      "previews_enabled": false,
+      "enabled": true
+    },
+    {
+      "id": "7bcc99d7535d83f8ec3e2787de2715c20a8f3185",
+      "zone_id": "cdfc2875eb9e0bf217159ec8be376373",
+      "zone_name": "shima-craft.com",
+      "hostname": "www.shima-craft.com",
+      "service": "shima-craft-com-production",
+      "environment": "production",
+      "cert_id": "bbd5e5ec-3dcf-4058-903e-8dd044b94b3e",
+      "previews_enabled": false,
+      "enabled": true
+    }
+  ],
+  "routes": [],
+  "shima-craft-com-production_deployments": {
+    "deployments": [
+      {
+        "id": "9de39572-58dd-4b4b-867d-df9ab1ce8382",
+        "source": "wrangler",
+        "strategy": "percentage",
+        "author_email": "shimacraft8@gmail.com",
+        "annotations": {
+          "workers/triggered_by": "deployment"
+        },
+        "versions": [
+          {
+            "version_id": "117ff8f0-149d-4cfb-ae86-8a11aaf20c25",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-08-10T07:33:20.763828Z"
+      },
+      {
+        "id": "b9ff3e61-147e-4937-8d02-912281535f79",
+        "source": "wrangler",
+        "strategy": "percentage",
+        "author_email": "shimacraft8@gmail.com",
+        "annotations": {
+          "workers/triggered_by": "deployment"
+        },
+        "versions": [
+          {
+            "version_id": "740ec1f1-94c5-4100-a8e2-b871683eb023",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-08-10T01:06:11.906557Z"
+      },
+      {
+        "id": "e7f7b653-bddf-46db-8b2b-9ae264012d67",
+        "source": "wrangler",
+        "strategy": "percentage",
+        "author_email": "shimacraft8@gmail.com",
+        "annotations": {
+          "workers/triggered_by": "deployment"
+        },
+        "versions": [
+          {
+            "version_id": "ddbd9844-32b6-49c2-9fa5-b45f39be09d2",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-08-09T03:25:11.508022Z"
+      },
+      {
+        "id": "02df49bb-def1-4549-b602-9c6ebd11a6c5",
+        "source": "wrangler",
+        "strategy": "percentage",
+        "author_email": "shimacraft8@gmail.com",
+        "annotations": {
+          "workers/triggered_by": "deployment"
+        },
+        "versions": [
+          {
+            "version_id": "aa8a0e2e-7b9d-4c46-9976-4c47376325d4",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-08-09T03:21:40.690979Z"
+      },
+      {
+        "id": "7fea1b5a-c3a4-40e7-a8d2-fd30fb9b24db",
+        "source": "wrangler",
+        "strategy": "percentage",
+        "author_email": "shimacraft8@gmail.com",
+        "annotations": {
+          "workers/triggered_by": "deployment"
+        },
+        "versions": [
+          {
+            "version_id": "3c9453b7-53c3-44e9-a3c8-29604da82516",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-08-09T03:17:19.445564Z"
+      },
+      {
+        "id": "4f676c20-aeba-44b9-9f2b-2dceea64136e",
+        "source": "wrangler",
+        "strategy": "percentage",
+        "author_email": "shimacraft8@gmail.com",
+        "annotations": {
+          "workers/triggered_by": "deployment"
+        },
+        "versions": [
+          {
+            "version_id": "c40071c9-8746-495f-8a54-57acb6fb2419",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-08-09T03:13:16.623887Z"
+      },
+      {
+        "id": "851e4569-b5e7-4cbb-9593-94299039654c",
+        "source": "wrangler",
+        "strategy": "percentage",
+        "author_email": "shimacraft8@gmail.com",
+        "annotations": {
+          "workers/triggered_by": "deployment"
+        },
+        "versions": [
+          {
+            "version_id": "bf4f0d6e-416b-4ffc-aefb-f972a8a7843b",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-08-09T03:06:53.167082Z"
+      },
+      {
+        "id": "a76a4da9-e49f-46e3-a318-a795a68828ba",
+        "source": "wrangler",
+        "strategy": "percentage",
+        "author_email": "shimacraft8@gmail.com",
+        "annotations": {
+          "workers/triggered_by": "secret"
+        },
+        "versions": [
+          {
+            "version_id": "d2d02614-93c5-4b2b-b3d0-4d925262e730",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-08-09T03:02:07.25869Z"
+      },
+      {
+        "id": "7d46ec4a-1280-4d58-aa61-dfada07862df",
+        "source": "wrangler",
+        "strategy": "percentage",
+        "author_email": "shimacraft8@gmail.com",
+        "annotations": {
+          "workers/triggered_by": "secret"
+        },
+        "versions": [
+          {
+            "version_id": "b6709369-2c11-4b29-b99b-f9f782a19fb2",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-08-09T03:01:44.060676Z"
+      },
+      {
+        "id": "8ccac805-6436-4af0-9e9b-0e5cfd95e599",
+        "source": "wrangler",
+        "strategy": "percentage",
+        "author_email": "shimacraft8@gmail.com",
+        "annotations": {
+          "workers/message": "Automatic deployment on upload.",
+          "workers/triggered_by": "upload"
+        },
+        "versions": [
+          {
+            "version_id": "e811efa2-337f-4d79-9e84-6efcc25681fd",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-08-09T03:01:43.480635Z"
+      }
+    ]
+  },
+  "shima-craft-com-production_settings": {
+    "compatibility_date": "2026-07-29",
+    "compatibility_flags": [
+      "nodejs_compat",
+      "global_fetch_strictly_public"
+    ],
+    "bindings": [
+      {
+        "name": "ASSETS",
+        "type": "assets"
+      },
+      {
+        "name": "CF_ENV",
+        "type": "plain_text"
+      },
+      {
+        "name": "COLORIZE_ENABLED",
+        "type": "plain_text"
+      },
+      {
+        "name": "LOG_IP_HASH_SALT",
+        "type": "secret_text"
+      },
+      {
+        "name": "MICROCMS_API_KEY",
+        "type": "secret_text"
+      },
+      {
+        "name": "MICROCMS_SERVICE_DOMAIN",
+        "type": "plain_text"
+      },
+      {
+        "name": "NEXT_INC_CACHE_KV",
+        "type": "kv_namespace",
+        "namespace_id": "5ade18fa11734e8f9086bd2d64f4aa52"
+      },
+      {
+        "name": "NEXT_PUBLIC_GA_ID",
+        "type": "plain_text"
+      },
+      {
+        "name": "NEXT_PUBLIC_SITE_URL",
+        "type": "plain_text"
+      },
+      {
+        "name": "RATE_LIMIT_KV",
+        "type": "kv_namespace",
+        "namespace_id": "5ade18fa11734e8f9086bd2d64f4aa52"
+      },
+      {
+        "name": "RESEND_FROM",
+        "type": "plain_text"
+      },
+      {
+        "name": "WORKER_SELF_REFERENCE",
+        "type": "service",
+        "service": "shima-craft-com",
+        "environment": "production"
+      }
+    ],
+    "usage_model": "standard",
+    "limits": null
+  }
+}

@@ -1,0 +1,789 @@
+{
+  "inspectedAt": "2026-10-13T15:02:20.769Z",
+  "mode": "official-sample-download",
+  "coverage": "one-sample-per-supported-kind; not current warnings or a complete event history",
+  "documents": [
+    {
+      "sourceUrl": "https://www.data.jma.go.jp/developer/xml/data/20261013130813_0_VXSE53_010000.xml",
+      "kind": "earthquake-history",
+      "scope": "document-only",
+      "isCurrentState": false,
+      "status": "通常",
+      "operational": true,
+      "title": "震源・震度情報",
+      "eventId": "20261013220530",
+      "serial": 1,
+      "infoType": "発表",
+      "action": "issue",
+      "issuedAt": "2026-10-13T13:08:00.000Z",
+      "controlledAt": "2026-10-13T13:08:13.000Z",
+      "validUntil": null,
+      "headline": "１３日２２時０５分ころ、地震がありました。",
+      "details": {
+        "originTime": "2026-10-13T13:05:00.000Z",
+        "hypocenter": {
+          "code": "287",
+          "name": "宮城県沖"
+        },
+        "maxIntensity": "1",
+        "cities": [
+          {
+            "code": "0320300",
+            "name": "大船渡市",
+            "intensity": "1"
+          },
+          {
+            "code": "0320900",
+            "name": "一関市",
+            "intensity": "1"
+          },
+          {
+            "code": "0420500",
+            "name": "気仙沼市",
+            "intensity": "1"
+          },
+          {
+            "code": "0450100",
+            "name": "涌谷町",
+            "intensity": "1"
+          },
+          {
+            "code": "0460600",
+            "name": "南三陸町",
+            "intensity": "1"
+          },
+          {
+            "code": "0420200",
+            "name": "石巻市",
+            "intensity": "1"
+          }
+        ]
+      }
+    },
+    {
+      "sourceUrl": "https://www.data.jma.go.jp/developer/xml/data/20261009183743_0_VTSE41_010000.xml",
+      "kind": "tsunami",
+      "scope": "document-only",
+      "isCurrentState": false,
+      "status": "通常",
+      "operational": true,
+      "title": "津波予報",
+      "eventId": "20261010025608",
+      "serial": null,
+      "infoType": "発表",
+      "action": "issue",
+      "issuedAt": "2026-10-09T18:37:00.000Z",
+      "controlledAt": "2026-10-09T18:37:42.000Z",
+      "validUntil": "2026-10-11T11:00:00.000Z",
+      "headline": "津波予報（若干の海面変動）を発表しました。",
+      "details": {
+        "areas": [
+          {
+            "code": "100",
+            "name": "北海道太平洋沿岸東部",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "101",
+            "name": "北海道太平洋沿岸中部",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "102",
+            "name": "北海道太平洋沿岸西部",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "201",
+            "name": "青森県太平洋沿岸",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "210",
+            "name": "岩手県",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "220",
+            "name": "宮城県",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "250",
+            "name": "福島県",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "300",
+            "name": "茨城県",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "310",
+            "name": "千葉県九十九里・外房",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "311",
+            "name": "千葉県内房",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "320",
+            "name": "伊豆諸島",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "321",
+            "name": "小笠原諸島",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "330",
+            "name": "相模湾・三浦半島",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "380",
+            "name": "静岡県",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "390",
+            "name": "愛知県外海",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "391",
+            "name": "伊勢・三河湾",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "400",
+            "name": "三重県南部",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "530",
+            "name": "和歌山県",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "580",
+            "name": "徳島県",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "600",
+            "name": "愛媛県宇和海沿岸",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "610",
+            "name": "高知県",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "760",
+            "name": "宮崎県",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "770",
+            "name": "鹿児島県東部",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "771",
+            "name": "種子島・屋久島地方",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "772",
+            "name": "奄美群島・トカラ列島",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "800",
+            "name": "沖縄本島地方",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "801",
+            "name": "大東島地方",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "802",
+            "name": "宮古島・八重山地方",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          }
+        ]
+      }
+    },
+    {
+      "sourceUrl": "https://www.data.jma.go.jp/developer/xml/data/20261013145606_0_VPWW54_380000.xml",
+      "kind": "weather-warning",
+      "scope": "document-only",
+      "isCurrentState": false,
+      "status": "通常",
+      "operational": true,
+      "title": "愛媛県気象警報・注意報",
+      "eventId": null,
+      "serial": null,
+      "infoType": "発表",
+      "action": "issue",
+      "issuedAt": "2026-10-13T14:56:00.000Z",
+      "controlledAt": "2026-10-13T14:56:05.000Z",
+      "validUntil": null,
+      "headline": "南予では、土砂災害や低い土地の浸水、強風、高波に注意してください。愛媛県では、落雷に注意してください。",
+      "details": {
+        "groups": [
+          {
+            "type": "気象警報・注意報（府県予報区等）",
+            "areas": [
+              {
+                "code": "380000",
+                "name": "愛媛県",
+                "kinds": [
+                  {
+                    "code": "10",
+                    "name": "大雨注意報",
+                    "status": "発表"
+                  },
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  },
+                  {
+                    "code": "15",
+                    "name": "強風注意報",
+                    "status": "継続"
+                  },
+                  {
+                    "code": "16",
+                    "name": "波浪注意報",
+                    "status": "継続"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "気象警報・注意報（一次細分区域等）",
+            "areas": [
+              {
+                "code": "380010",
+                "name": "中予",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "380020",
+                "name": "東予",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "380030",
+                "name": "南予",
+                "kinds": [
+                  {
+                    "code": "10",
+                    "name": "大雨注意報",
+                    "status": "発表"
+                  },
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  },
+                  {
+                    "code": "15",
+                    "name": "強風注意報",
+                    "status": "継続"
+                  },
+                  {
+                    "code": "16",
+                    "name": "波浪注意報",
+                    "status": "継続"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "気象警報・注意報（市町村等をまとめた地域等）",
+            "areas": [
+              {
+                "code": "380010",
+                "name": "中予",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "380021",
+                "name": "東予東部",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "380022",
+                "name": "東予西部",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "380031",
+                "name": "南予北部",
+                "kinds": [
+                  {
+                    "code": "10",
+                    "name": "大雨注意報",
+                    "status": "発表"
+                  },
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "380032",
+                "name": "南予南部",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  },
+                  {
+                    "code": "15",
+                    "name": "強風注意報",
+                    "status": "継続"
+                  },
+                  {
+                    "code": "16",
+                    "name": "波浪注意報",
+                    "status": "継続"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "気象警報・注意報（市町村等）",
+            "areas": [
+              {
+                "code": "3820100",
+                "name": "松山市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "3820200",
+                "name": "今治市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "3820300",
+                "name": "宇和島市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  },
+                  {
+                    "code": "15",
+                    "name": "強風注意報",
+                    "status": "継続"
+                  },
+                  {
+                    "code": "16",
+                    "name": "波浪注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "3820400",
+                "name": "八幡浜市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "3820500",
+                "name": "新居浜市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "3820600",
+                "name": "西条市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "3820700",
+                "name": "大洲市",
+                "kinds": [
+                  {
+                    "code": "10",
+                    "name": "大雨注意報",
+                    "status": "発表"
+                  },
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "3821000",
+                "name": "伊予市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "3821300",
+                "name": "四国中央市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "3821400",
+                "name": "西予市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "3821500",
+                "name": "東温市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "3835600",
+                "name": "上島町",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "3838600",
+                "name": "久万高原町",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "3840100",
+                "name": "松前町",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "3840200",
+                "name": "砥部町",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "3842200",
+                "name": "内子町",
+                "kinds": [
+                  {
+                    "code": "10",
+                    "name": "大雨注意報",
+                    "status": "発表"
+                  },
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "3844200",
+                "name": "伊方町",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "3848400",
+                "name": "松野町",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  },
+                  {
+                    "code": "15",
+                    "name": "強風注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "3848800",
+                "name": "鬼北町",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  },
+                  {
+                    "code": "15",
+                    "name": "強風注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "3850600",
+                "name": "愛南町",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  },
+                  {
+                    "code": "15",
+                    "name": "強風注意報",
+                    "status": "継続"
+                  },
+                  {
+                    "code": "16",
+                    "name": "波浪注意報",
+                    "status": "継続"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "sourceUrl": "https://www.data.jma.go.jp/developer/xml/data/20261013124028_0_VPTW61_010000.xml",
+      "kind": "cyclone",
+      "scope": "document-only",
+      "isCurrentState": false,
+      "status": "通常",
+      "operational": true,
+      "title": "台風解析・予報情報",
+      "eventId": "TC2634",
+      "serial": 73,
+      "infoType": "発表",
+      "action": "issue",
+      "issuedAt": "2026-10-13T12:45:00.000Z",
+      "controlledAt": "2026-10-13T12:40:28.000Z",
+      "validUntil": null,
+      "headline": "",
+      "details": {
+        "observedAt": "2026-10-13T12:00:00.000Z",
+        "rawClass": "台風(STS)",
+        "stage": "typhoon",
+        "developmentWithin24h": null,
+        "number": "2629",
+        "name": "コグマ"
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "url": "https://www.data.jma.go.jp/developer/xml/feed/eqvol_l.xml",
+      "fetchedAt": "2026-10-13T15:02:19.930Z",
+      "sha256": "c0f23eee6a65b798988d5356e8de1a31feac783aae62914c4c109d7c10ec31c0",
+      "updatedAt": "2026-10-13T14:00:57.000Z"
+    },
+    {
+      "url": "https://www.data.jma.go.jp/developer/xml/data/20261013130813_0_VXSE53_010000.xml",
+      "fetchedAt": "2026-10-13T15:02:19.970Z",
+      "sha256": "c8c5745e73a403fcd5799e225fceb7bdc7f16f9a568018b68b215bea5e9a1f61",
+      "filename": "20261013130813_0_VXSE53_010000.xml"
+    },
+    {
+      "url": "https://www.data.jma.go.jp/developer/xml/data/20261009183743_0_VTSE41_010000.xml",
+      "fetchedAt": "2026-10-13T15:02:20.015Z",
+      "sha256": "e088e061cdf7abf68821df26c2ed709775cdbf493905b53d5e7135bfc4483196",
+      "filename": "20261009183743_0_VTSE41_010000.xml"
+    },
+    {
+      "url": "https://www.data.jma.go.jp/developer/xml/feed/extra_l.xml",
+      "fetchedAt": "2026-10-13T15:02:20.624Z",
+      "sha256": "c28c1acd8632162408cd75e38bea2bde2f82ea2b86ea1e83afb8d33e501fcbdc",
+      "updatedAt": "2026-10-13T14:56:40.000Z"
+    },
+    {
+      "url": "https://www.data.jma.go.jp/developer/xml/data/20261013145606_0_VPWW54_380000.xml",
+      "fetchedAt": "2026-10-13T15:02:20.683Z",
+      "sha256": "41378184b1527005ed978bd3e2bb01a88d13688859cd8030d11e3dc2d0b38918",
+      "filename": "20261013145606_0_VPWW54_380000.xml"
+    },
+    {
+      "url": "https://www.data.jma.go.jp/developer/xml/data/20261013124028_0_VPTW61_010000.xml",
+      "fetchedAt": "2026-10-13T15:02:20.762Z",
+      "sha256": "604739f53fc8354289f1f23d96488c5e394b9f1333f5d9ad7bcd38a6dc9269de",
+      "filename": "20261013124028_0_VPTW61_010000.xml"
+    }
+  ]
+}

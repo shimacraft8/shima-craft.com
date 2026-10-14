@@ -1,0 +1,87 @@
+/* Local SHIMA CRAFT homepage proposal. Reuses the AMAMI LIFE tokens and UI. */
+body { background: var(--paper); }
+.craft-header {
+  max-width: 1240px;
+  margin: auto;
+  padding: max(16px, env(safe-area-inset-top)) 64px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--hair);
+}
+.craft-wordmark { text-decoration: none; font-size: 16px; letter-spacing: .12em; font-weight: 500; }
+.craft-wordmark span { display: block; font-size: 10px; letter-spacing: .2em; margin-top: 5px; color: var(--muted); }
+.craft-menu-button { border: 0; background: transparent; padding: 4px 0 4px 12px; min-height: 48px; font-size: 13px; flex-shrink: 0; }
+.craft-menu-button span { margin-left: 8px; }
+.showroom { min-height: calc(100dvh - 89px); padding-top: 32px; padding-bottom: 32px; align-items: start; }
+.device { padding: 0; background: var(--paper); border-radius: 0; box-shadow: none; border: 1px solid var(--hair); }
+.app-shell { min-height: 0; height: min(844px, calc(100dvh - 156px)); }
+.app-shell main { min-height: 0; scroll-padding: 12px; }
+.studio, body[data-theme="ink"] .studio { color: var(--ink); }
+.studio .overline, .studio-copy { color: var(--muted); }
+.craft-heading { font-family: var(--serif); font-size: clamp(36px, 3.65vw, 56px); line-height: 1.65; font-weight: 400; letter-spacing: .04em; margin: 24px 0; text-wrap: balance; }
+.studio-en { font-size: 38px; margin-bottom: 24px; }
+.studio .red-dot, body[data-theme="ink"] .studio .red-dot { color: var(--accent); }
+.craft-shortcuts { border-top: 1px solid var(--hair); margin-top: 24px; }
+.craft-shortcuts a { display: flex; justify-content: space-between; gap: 16px; align-items: center; min-height: 48px; padding: 12px 0; border-bottom: 1px solid var(--hair); text-decoration: none; font-size: 14px; line-height: 1.7; }
+.craft-shortcuts a:hover, .craft-business a:hover { color: var(--accent); }
+.craft-theme { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 16px; }
+.craft-theme button { border: 0; background: none; min-height: 48px; padding: 8px 0; font-size: 13px; color: var(--muted); }
+.craft-theme button[aria-pressed="true"] { color: var(--ink); text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: 8px; }
+.craft-business { border-top: 1px solid var(--hair); margin-top: 24px; padding-top: 16px; }
+.craft-business p { font-family: var(--serif); margin: 0 0 8px; }
+.craft-business a { display: flex; align-items: center; gap: 12px; min-height: 48px; font-size: 13px; color: var(--muted); }
+.craft-preview-note { color: var(--muted); }
+.forecast-brief { font-size: 17px; line-height: 1.65; margin: 0 0 4px; }
+#forecast-brief .source-note { margin: 4px 0; }
+.forecast-warning { color: var(--warning); }
+.source-details { margin-top: 12px; font-size: 13px; }
+.source-details summary { min-height: 48px; padding: 12px 0; }
+.place-caption { margin: 8px 0 16px; }
+.weather-top { margin: 8px 0 12px; }
+.today-brief { margin-top: 16px; }
+.weather-art, .weather-art svg { height: 160px; }
+@media(max-width:1050px) {
+  .craft-header { padding-left: 32px; padding-right: 32px; }
+  .showroom { gap: 36px; }
+}
+@media(max-width:760px) {
+  .craft-header { padding: max(8px, env(safe-area-inset-top)) 20px 8px; min-height: 64px; }
+  .craft-wordmark { font-size: 13px; }
+  .craft-wordmark span { display: none; }
+  .craft-menu-button { font-size: 12px; }
+  .showroom { min-height: 0; padding: 0; }
+  .device { border: 0; }
+  .app-shell { height: calc(100dvh - max(8px, env(safe-area-inset-top)) - 57px); max-width: 600px; }
+  .app-header { padding-top: 8px; padding-bottom: 2px; }
+  .page-top { margin: 20px 0; }
+}
+@media(max-height:740px) and (max-width:760px) {
+  .weather-art, .weather-art svg { height: 96px; }
+  .app-header { padding-top: 2px; }
+  .date-row { margin: 2px 0; }
+  .weather-top { padding-top: 0; margin: 4px 0 8px; }
+  .place-caption { margin: 2px 0 8px; }
+  .place-caption strong { display: none; }
+  .place-caption small { margin-top: 0; }
+  .today-brief { margin-top: 8px; }
+  .today-brief .fact { padding-top: 5px; padding-bottom: 5px; }
+}
+@media(min-width:761px) and (max-height:980px) {
+  .app-header { padding-top: 8px; padding-bottom: 0; }
+  .date-row { margin: 0; }
+  .weather-top { padding-top: 0; margin: 4px 0 8px; }
+  .weather-art, .weather-art svg { height: 144px; }
+  .place-caption { margin: 0 0 4px; }
+  .place-caption strong { display: none; }
+  .place-caption small { margin-top: 0; }
+  .today-brief { margin-top: 8px; }
+  .today-brief .fact { padding-top: 8px; padding-bottom: 8px; }
+}
+@media(min-width:761px) and (max-height:800px) {
+  .app-header { padding-top: 0; }
+  .temperature { font-size: 82px; }
+  .weather-art, .weather-art svg { height: 80px; }
+}
+@media(prefers-reduced-motion:reduce) { html { scroll-behavior: auto; } }

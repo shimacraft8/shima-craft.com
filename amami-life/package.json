@@ -1,0 +1,32 @@
+{
+  "name": "amami-life-local",
+  "version": "0.3.2",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/mobile"
+  ],
+  "scripts": {
+    "build": "node scripts/build-tokens.mjs && esbuild packages/core/src/index.ts --bundle --format=esm --platform=browser --outfile=web/core.js && esbuild packages/core/src/usage.ts --bundle --format=esm --platform=browser --outfile=web/usage.js",
+    "start": "npm run build && node server/index.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p apps/mobile/tsconfig.json",
+    "lint": "eslint packages/core/src web/app.js server scripts/*.mjs tests apps/mobile/src web/shimacraft.js worker",
+    "inspect:jma": "node scripts/inspect-jma.mjs",
+    "package": "python3 scripts/package-project.py",
+    "web:build": "npm run build && node scripts/build-public.mjs"
+  },
+  "dependencies": {
+    "@xmldom/xmldom": "^0.8.15",
+    "suncalc": "1.9.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@types/suncalc": "^1.9.2",
+    "esbuild": "^0.25.0",
+    "eslint": "^9.0.0",
+    "globals": "^16.0.0",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.0.0"
+  }
+}

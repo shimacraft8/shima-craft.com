@@ -1,0 +1,24 @@
+- heading "結果" [level=2]
+- heading "日の出入り" [level=3]
+- generic: 指定地点
+- text: "緯度:28.4450° 経度:129.7040° 標高: 0.0 m 標準時:UT+9"
+- superscript: h
+- table "データ":
+  - rowgroup:
+    - row "年月日 出 方位[°] 南中 高度[°] 入り 方位[°]":
+      - columnheader "年月日"
+      - columnheader "出"
+      - columnheader "方位[°]"
+      - columnheader "南中"
+      - columnheader "高度[°]"
+      - columnheader "入り"
+      - columnheader "方位[°]"
+    - row "2026/10/13 6:20 98.2 12:07:31 53.8 17:54 261.5":
+      - cell "2026/10/13"
+      - cell "6:20"
+      - cell "98.2"
+      - cell "12:07:31"
+      - cell "53.8"
+      - cell "17:54"
+      - cell "261.5"
+- separator

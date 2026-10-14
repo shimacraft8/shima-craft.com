@@ -1,0 +1,22 @@
+/* Generated from design-system/tokens.json. */
+:root {
+  --paper: #f7f3e9;
+  --ink: #242520;
+  --muted: #66675d;
+  --hair: #d6d1c4;
+  --accent: #bf2e23;
+  --art: #ed2518;
+  --panel: #eee9dc;
+  --gold: #b7995b;
+}
+
+body[data-theme="ink"] {
+  --paper: #222522;
+  --ink: #f3efe5;
+  --muted: #c0bbaa;
+  --hair: #56574c;
+  --accent: #e1b96e;
+  --art: #d6b06c;
+  --panel: #30332e;
+  --gold: #e1b96e;
+}

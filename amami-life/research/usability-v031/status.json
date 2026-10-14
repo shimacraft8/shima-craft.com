@@ -1,0 +1,60 @@
+{
+  "recordedAt": "2026-10-14T04:35:53.272993+00:00",
+  "version": "0.3.1",
+  "automatedTests": {
+    "passed": 71,
+    "failed": 0
+  },
+  "typecheck": "passed",
+  "lint": "passed",
+  "bundles": [
+    "ios",
+    "android",
+    "web"
+  ],
+  "browserInteractionRecords": 16,
+  "screenSizes": [
+    {
+      "width": 320,
+      "height": 667,
+      "scrollWidth": 320,
+      "tabTop": 592,
+      "tideBottom": 571
+    },
+    {
+      "width": 375,
+      "height": 667,
+      "scrollWidth": 375,
+      "tabTop": 592,
+      "tideBottom": 571
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "tabTop": 769,
+      "tideBottom": 635
+    },
+    {
+      "width": 430,
+      "height": 932,
+      "scrollWidth": 430,
+      "tabTop": 857,
+      "tideBottom": 635
+    }
+  ],
+  "physicalIphoneTested": false,
+  "iosSimulatorTested": false,
+  "phoneCallPerformed": false,
+  "publicReleasePerformed": false,
+  "sourcePushed": false,
+  "existingSiteChanged": false,
+  "localPreview": "http://localhost:4901/",
+  "knownRemaining": [
+    "Physical iPhone and VoiceOver/Dynamic Type/SQLite/keyboard/safe area",
+    "Persistent weather cache not implemented",
+    "Official links instead of integrated live hazard/transport status",
+    "Previous dependency audit 29 unresolved; not rerun in UX iteration",
+    "Store accounts, identity, production API and legal/support pages"
+  ]
+}

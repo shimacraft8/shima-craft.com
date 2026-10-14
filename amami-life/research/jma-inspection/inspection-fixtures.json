@@ -1,0 +1,1411 @@
+{
+  "inspectedAt": "2026-10-13T15:20:19.793Z",
+  "mode": "saved-official-fixtures",
+  "coverage": "one-sample-per-supported-kind; not current warnings or a complete event history",
+  "documents": [
+    {
+      "sourceUrl": "https://www.data.jma.go.jp/developer/xml/data/20261013130813_0_VXSE53_010000.xml",
+      "kind": "earthquake-history",
+      "infoKind": "地震情報",
+      "infoKindVersion": "1.0_1",
+      "scope": "document-only",
+      "isCurrentState": false,
+      "status": "通常",
+      "operational": true,
+      "title": "震源・震度情報",
+      "eventId": "20261013220530",
+      "serial": 1,
+      "infoType": "発表",
+      "action": "issue",
+      "issuedAt": "2026-10-13T13:08:00.000Z",
+      "controlledAt": "2026-10-13T13:08:13.000Z",
+      "validUntil": null,
+      "headline": "１３日２２時０５分ころ、地震がありました。",
+      "details": {
+        "originTime": "2026-10-13T13:05:00.000Z",
+        "hypocenter": {
+          "code": "287",
+          "name": "宮城県沖"
+        },
+        "maxIntensity": "1",
+        "cities": [
+          {
+            "code": "0320300",
+            "name": "大船渡市",
+            "intensity": "1"
+          },
+          {
+            "code": "0320900",
+            "name": "一関市",
+            "intensity": "1"
+          },
+          {
+            "code": "0420500",
+            "name": "気仙沼市",
+            "intensity": "1"
+          },
+          {
+            "code": "0450100",
+            "name": "涌谷町",
+            "intensity": "1"
+          },
+          {
+            "code": "0460600",
+            "name": "南三陸町",
+            "intensity": "1"
+          },
+          {
+            "code": "0420200",
+            "name": "石巻市",
+            "intensity": "1"
+          }
+        ]
+      }
+    },
+    {
+      "sourceUrl": "https://www.data.jma.go.jp/developer/xml/data/20261009183743_0_VTSE41_010000.xml",
+      "kind": "tsunami",
+      "infoKind": "津波警報・注意報・予報",
+      "infoKindVersion": "1.0_1",
+      "scope": "document-only",
+      "isCurrentState": false,
+      "status": "通常",
+      "operational": true,
+      "title": "津波予報",
+      "eventId": "20261010025608",
+      "serial": null,
+      "infoType": "発表",
+      "action": "issue",
+      "issuedAt": "2026-10-09T18:37:00.000Z",
+      "controlledAt": "2026-10-09T18:37:42.000Z",
+      "validUntil": "2026-10-11T11:00:00.000Z",
+      "headline": "津波予報（若干の海面変動）を発表しました。",
+      "details": {
+        "areas": [
+          {
+            "code": "100",
+            "name": "北海道太平洋沿岸東部",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "101",
+            "name": "北海道太平洋沿岸中部",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "102",
+            "name": "北海道太平洋沿岸西部",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "201",
+            "name": "青森県太平洋沿岸",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "210",
+            "name": "岩手県",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "220",
+            "name": "宮城県",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "250",
+            "name": "福島県",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "300",
+            "name": "茨城県",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "310",
+            "name": "千葉県九十九里・外房",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "311",
+            "name": "千葉県内房",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "320",
+            "name": "伊豆諸島",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "321",
+            "name": "小笠原諸島",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "330",
+            "name": "相模湾・三浦半島",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "380",
+            "name": "静岡県",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "390",
+            "name": "愛知県外海",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "391",
+            "name": "伊勢・三河湾",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "400",
+            "name": "三重県南部",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "530",
+            "name": "和歌山県",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "580",
+            "name": "徳島県",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "600",
+            "name": "愛媛県宇和海沿岸",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "610",
+            "name": "高知県",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "760",
+            "name": "宮崎県",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "770",
+            "name": "鹿児島県東部",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "771",
+            "name": "種子島・屋久島地方",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "772",
+            "name": "奄美群島・トカラ列島",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "800",
+            "name": "沖縄本島地方",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "801",
+            "name": "大東島地方",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          },
+          {
+            "code": "802",
+            "name": "宮古島・八重山地方",
+            "categoryCode": "71",
+            "categoryName": "津波予報（若干の海面変動）",
+            "previousCategoryCode": "00"
+          }
+        ]
+      }
+    },
+    {
+      "sourceUrl": "https://www.data.jma.go.jp/developer/xml/data/20261013124028_0_VPTW61_010000.xml",
+      "kind": "cyclone",
+      "infoKind": "台風解析・予報情報（５日予報）",
+      "infoKindVersion": "1.0_2",
+      "scope": "document-only",
+      "isCurrentState": false,
+      "status": "通常",
+      "operational": true,
+      "title": "台風解析・予報情報",
+      "eventId": "TC2634",
+      "serial": 73,
+      "infoType": "発表",
+      "action": "issue",
+      "issuedAt": "2026-10-13T12:45:00.000Z",
+      "controlledAt": "2026-10-13T12:40:28.000Z",
+      "validUntil": null,
+      "headline": "",
+      "details": {
+        "observedAt": "2026-10-13T12:00:00.000Z",
+        "rawClass": "台風(STS)",
+        "stage": "typhoon",
+        "developmentWithin24h": null,
+        "number": "2629",
+        "name": "コグマ"
+      }
+    },
+    {
+      "sourceUrl": "https://www.data.jma.go.jp/developer/xml/data/20261013135810_0_VPWW54_471000.xml",
+      "kind": "weather-warning",
+      "infoKind": "気象警報・注意報",
+      "infoKindVersion": "1.2_2",
+      "scope": "document-only",
+      "isCurrentState": false,
+      "status": "通常",
+      "operational": true,
+      "title": "沖縄本島地方気象警報・注意報",
+      "eventId": null,
+      "serial": null,
+      "infoType": "発表",
+      "action": "issue",
+      "issuedAt": "2026-10-13T13:58:00.000Z",
+      "controlledAt": "2026-10-13T13:58:09.000Z",
+      "validUntil": null,
+      "headline": "本島中南部、本島北部では、落雷に注意してください。",
+      "details": {
+        "groups": [
+          {
+            "type": "気象警報・注意報（府県予報区等）",
+            "areas": [
+              {
+                "code": "471000",
+                "name": "沖縄本島地方",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "気象警報・注意報（一次細分区域等）",
+            "areas": [
+              {
+                "code": "471010",
+                "name": "本島中南部",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "471020",
+                "name": "本島北部",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "471030",
+                "name": "久米島",
+                "kinds": [
+                  {
+                    "code": null,
+                    "name": null,
+                    "status": "発表警報・注意報はなし"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "気象警報・注意報（市町村等をまとめた地域等）",
+            "areas": [
+              {
+                "code": "471011",
+                "name": "南部",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "471012",
+                "name": "中部",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "471013",
+                "name": "慶良間・粟国諸島",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "471021",
+                "name": "伊是名・伊平屋",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "471022",
+                "name": "国頭地区",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "471023",
+                "name": "名護地区",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "471024",
+                "name": "恩納・金武地区",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "471030",
+                "name": "久米島",
+                "kinds": [
+                  {
+                    "code": null,
+                    "name": null,
+                    "status": "発表警報・注意報はなし"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "気象警報・注意報（市町村等）",
+            "areas": [
+              {
+                "code": "4720100",
+                "name": "那覇市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4720500",
+                "name": "宜野湾市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4720800",
+                "name": "浦添市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4720900",
+                "name": "名護市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4721000",
+                "name": "糸満市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4721100",
+                "name": "沖縄市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4721200",
+                "name": "豊見城市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4721300",
+                "name": "うるま市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4721500",
+                "name": "南城市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4730100",
+                "name": "国頭村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4730200",
+                "name": "大宜味村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4730300",
+                "name": "東村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4730600",
+                "name": "今帰仁村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4730800",
+                "name": "本部町",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4731100",
+                "name": "恩納村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4731300",
+                "name": "宜野座村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4731400",
+                "name": "金武町",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4731500",
+                "name": "伊江村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4732400",
+                "name": "読谷村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4732500",
+                "name": "嘉手納町",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4732600",
+                "name": "北谷町",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4732700",
+                "name": "北中城村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4732800",
+                "name": "中城村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4732900",
+                "name": "西原町",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4734800",
+                "name": "与那原町",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4735000",
+                "name": "南風原町",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4735300",
+                "name": "渡嘉敷村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4735400",
+                "name": "座間味村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4735500",
+                "name": "粟国村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4735600",
+                "name": "渡名喜村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4735900",
+                "name": "伊平屋村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4736000",
+                "name": "伊是名村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4736100",
+                "name": "久米島町",
+                "kinds": [
+                  {
+                    "code": null,
+                    "name": null,
+                    "status": "発表警報・注意報はなし"
+                  }
+                ]
+              },
+              {
+                "code": "4736200",
+                "name": "八重瀬町",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "sourceUrl": "https://www.data.jma.go.jp/developer/xml/data/20261013135810_0_VPWW53_471000.xml",
+      "kind": "weather-warning",
+      "infoKind": "気象警報・注意報",
+      "infoKindVersion": "1.1_2",
+      "scope": "document-only",
+      "isCurrentState": false,
+      "status": "通常",
+      "operational": true,
+      "title": "沖縄本島地方気象警報・注意報",
+      "eventId": null,
+      "serial": null,
+      "infoType": "発表",
+      "action": "issue",
+      "issuedAt": "2026-10-13T13:58:00.000Z",
+      "controlledAt": "2026-10-13T13:58:09.000Z",
+      "validUntil": null,
+      "headline": "本島中南部、本島北部では、落雷に注意してください。",
+      "details": {
+        "groups": [
+          {
+            "type": "気象警報・注意報（府県予報区等）",
+            "areas": [
+              {
+                "code": "471000",
+                "name": "沖縄本島地方",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "気象警報・注意報（一次細分区域等）",
+            "areas": [
+              {
+                "code": "471010",
+                "name": "本島中南部",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "471020",
+                "name": "本島北部",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "471030",
+                "name": "久米島",
+                "kinds": [
+                  {
+                    "code": null,
+                    "name": null,
+                    "status": "発表警報・注意報はなし"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "気象警報・注意報（市町村等をまとめた地域等）",
+            "areas": [
+              {
+                "code": "471011",
+                "name": "南部",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "471012",
+                "name": "中部",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "471013",
+                "name": "慶良間・粟国諸島",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "471021",
+                "name": "伊是名・伊平屋",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "471022",
+                "name": "国頭地区",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "471023",
+                "name": "名護地区",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "471024",
+                "name": "恩納・金武地区",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "471030",
+                "name": "久米島",
+                "kinds": [
+                  {
+                    "code": null,
+                    "name": null,
+                    "status": "発表警報・注意報はなし"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "気象警報・注意報（市町村等）",
+            "areas": [
+              {
+                "code": "4720100",
+                "name": "那覇市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4720500",
+                "name": "宜野湾市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4720800",
+                "name": "浦添市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4720900",
+                "name": "名護市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4721000",
+                "name": "糸満市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4721100",
+                "name": "沖縄市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4721200",
+                "name": "豊見城市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4721300",
+                "name": "うるま市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4721500",
+                "name": "南城市",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4730100",
+                "name": "国頭村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4730200",
+                "name": "大宜味村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4730300",
+                "name": "東村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4730600",
+                "name": "今帰仁村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4730800",
+                "name": "本部町",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4731100",
+                "name": "恩納村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4731300",
+                "name": "宜野座村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4731400",
+                "name": "金武町",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4731500",
+                "name": "伊江村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4732400",
+                "name": "読谷村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4732500",
+                "name": "嘉手納町",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4732600",
+                "name": "北谷町",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4732700",
+                "name": "北中城村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4732800",
+                "name": "中城村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4732900",
+                "name": "西原町",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4734800",
+                "name": "与那原町",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4735000",
+                "name": "南風原町",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4735300",
+                "name": "渡嘉敷村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4735400",
+                "name": "座間味村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4735500",
+                "name": "粟国村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4735600",
+                "name": "渡名喜村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4735900",
+                "name": "伊平屋村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4736000",
+                "name": "伊是名村",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              },
+              {
+                "code": "4736100",
+                "name": "久米島町",
+                "kinds": [
+                  {
+                    "code": null,
+                    "name": null,
+                    "status": "発表警報・注意報はなし"
+                  }
+                ]
+              },
+              {
+                "code": "4736200",
+                "name": "八重瀬町",
+                "kinds": [
+                  {
+                    "code": "14",
+                    "name": "雷注意報",
+                    "status": "継続"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": []
+}

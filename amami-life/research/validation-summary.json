@@ -1,0 +1,28 @@
+{
+  "recordedAt": "2026-10-13T15:29:27.973925+00:00",
+  "tests": {
+    "pass": 51,
+    "fail": 0,
+    "evidence": "all-tests.txt"
+  },
+  "typecheck": "passed",
+  "lint": "passed",
+  "export": [
+    "ios Hermes",
+    "android Hermes",
+    "web"
+  ],
+  "physicalDevices": "not-run",
+  "expoWebApiConnection": "verified in browser",
+  "dependencyAudit": {
+    "info": 0,
+    "low": 0,
+    "moderate": 11,
+    "high": 18,
+    "critical": 0,
+    "total": 29
+  },
+  "existingSiteChanged": false,
+  "pushed": false,
+  "deployed": false
+}

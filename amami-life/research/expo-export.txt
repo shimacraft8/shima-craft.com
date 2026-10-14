@@ -1,0 +1,33 @@
+Using src/app as the root directory for Expo Router.
+Expo Autolinking module resolution enabled
+Starting Metro Bundler
+
+| (node:94115) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:94115) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+iOS Bundled 16493ms node_modules/expo-router/entry.js (1187 modules)
+Android Bundled 30240ms node_modules/expo-router/entry.js (1398 modules)
+Static rendering is enabled. Learn more: https://docs.expo.dev/router/web/static-rendering/
+λ Bundled 1601ms node_modules/@expo/cli/node_modules/@expo/router-server/node/render.js (792 modules)
+Web Bundled 2026ms node_modules/expo-router/entry.js (807 modules)
+
+› ios bundles (1):
+_expo/static/js/ios/entry-35b2eea9c1886dc686fde7e3f1df3fa9.hbc (2.9MB)
+
+› android bundles (1):
+_expo/static/js/android/entry-f6076c18d9b93f76e5e94979d652756b.hbc (3.2MB)
+
+› web bundles (1):
+_expo/static/js/web/entry-c77d420f1c8f32bcf022b1a8871abc3e.js (1.5MB)
+
+› Static routes (7):
+/more (41KB)
+/move (39KB)
+/ (index) (42KB)
+/safety (45KB)
+/explore (39KB)
+/_sitemap (17KB)
+/+not-found (17KB)
+
+Exported: ../../design/native-web

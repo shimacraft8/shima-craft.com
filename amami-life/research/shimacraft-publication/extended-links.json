@@ -1,0 +1,75 @@
+{
+  "checkedAt": "2026-10-14T06:04:04.878Z",
+  "checks": [
+    {
+      "url": "https://shima-craft.com/demo03",
+      "status": 200,
+      "finalURL": "https://shima-craft.com/demo03",
+      "title": "SHIMA CRAFT｜奄美発・全国対応のホームページ制作",
+      "passed": true
+    },
+    {
+      "url": "https://shima-craft.com/demo02",
+      "status": 200,
+      "finalURL": "https://shima-craft.com/demo02",
+      "title": "SHIMA CRAFT｜奄美発・全国対応のホームページ制作",
+      "passed": true
+    },
+    {
+      "url": "https://shima-craft.com/demo05",
+      "status": 200,
+      "finalURL": "https://shima-craft.com/demo05",
+      "title": "SHIMA CRAFT｜奄美発・全国対応のホームページ制作",
+      "passed": true
+    },
+    {
+      "url": "https://shima-craft.com/demo14",
+      "status": 200,
+      "finalURL": "https://shima-craft.com/demo14",
+      "title": "SHIMA CRAFT｜奄美発・全国対応のホームページ制作",
+      "passed": true
+    },
+    {
+      "url": "https://shima-craft.com/nagino-yado-lp/",
+      "status": 200,
+      "finalURL": "https://shima-craft.com/nagino-yado-lp/",
+      "title": "宿泊施設向け体験型LP制作サンプル｜SHIMA CRAFT｜SHIMA CRAFT",
+      "passed": true
+    },
+    {
+      "url": "https://shima-craft.com/tools/photo-colorize",
+      "status": 200,
+      "finalURL": "https://shima-craft.com/tools/photo-colorize",
+      "title": "白黒写真をカラー化｜古写真をAI着色サービス - SHIMA CRAFT",
+      "passed": true
+    },
+    {
+      "url": "https://nanpu-seitai.vercel.app/",
+      "status": 200,
+      "finalURL": "https://nanpu-seitai.vercel.app/",
+      "title": "南風整体院｜産後骨盤矯正・腰痛・肩こり専門",
+      "passed": true
+    },
+    {
+      "url": "https://luce-hair.vercel.app/",
+      "status": 200,
+      "finalURL": "https://luce-hair.vercel.app/",
+      "title": "Luce hair｜北欧風ミニマル美容院 ─ カット・カラー・ヘッドスパ",
+      "passed": true
+    },
+    {
+      "url": "https://kuro-stand.vercel.app/",
+      "status": 200,
+      "finalURL": "https://kuro-stand.vercel.app/",
+      "title": "KURO STAND｜BLACK. BOLD. BEAUTIFUL.",
+      "passed": true
+    },
+    {
+      "url": "https://www.shima-craft.com/?area=kasari",
+      "status": 200,
+      "finalURL": "https://shima-craft.com/?area=kasari",
+      "title": "AMAMI LIFE｜奄美の今日・天気・潮汐・交通｜SHIMA CRAFT",
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+exitCode=72
+xcrun: error: unable to find utility "simctl", not a developer tool or in PATH

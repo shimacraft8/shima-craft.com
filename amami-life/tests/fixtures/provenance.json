@@ -1,0 +1,59 @@
+{
+  "bulletins": [
+    {
+      "title": "震源・震度に関する情報",
+      "url": "https://www.data.jma.go.jp/developer/xml/data/20261013130813_0_VXSE53_010000.xml",
+      "updated": "2026-10-13T13:08:13Z",
+      "file": "jma-earthquake.xml",
+      "downloadCompletedAt": "2026-10-13T14:56:36.727965+00:00",
+      "sha256": "c8c5745e73a403fcd5799e225fceb7bdc7f16f9a568018b68b215bea5e9a1f61",
+      "modified": false
+    },
+    {
+      "title": "津波警報・注意報・予報a",
+      "url": "https://www.data.jma.go.jp/developer/xml/data/20261009183743_0_VTSE41_010000.xml",
+      "updated": "2026-10-09T18:37:42Z",
+      "file": "jma-tsunami.xml",
+      "downloadCompletedAt": "2026-10-13T14:56:36.731913+00:00",
+      "sha256": "e088e061cdf7abf68821df26c2ed709775cdbf493905b53d5e7135bfc4483196",
+      "modified": false
+    },
+    {
+      "title": "台風解析・予報情報（５日予報）（Ｈ３０）",
+      "url": "https://www.data.jma.go.jp/developer/xml/data/20261013124028_0_VPTW61_010000.xml",
+      "updated": "2026-10-13T12:40:28Z",
+      "file": "jma-cyclone.xml",
+      "downloadCompletedAt": "2026-10-13T14:56:36.730077+00:00",
+      "sha256": "604739f53fc8354289f1f23d96488c5e394b9f1333f5d9ad7bcd38a6dc9269de",
+      "modified": false
+    },
+    {
+      "title": "気象警報・注意報（Ｈ２７）",
+      "url": "https://www.data.jma.go.jp/developer/xml/data/20261013135810_0_VPWW54_471000.xml",
+      "updated": "2026-10-13T13:58:09Z",
+      "file": "jma-warning.xml",
+      "downloadCompletedAt": "2026-10-13T14:56:36.767985+00:00",
+      "sha256": "4dd357034e43d491a522cac30d4da0f9cc416608ac494dfa589100bf19334d38",
+      "modified": false
+    },
+    {
+      "title": "気象特別警報・警報・注意報",
+      "url": "https://www.data.jma.go.jp/developer/xml/data/20261013135810_0_VPWW53_471000.xml",
+      "updated": "2026-10-13T13:58:09Z",
+      "file": "jma-warning-new.xml",
+      "downloadCompletedAt": "2026-10-13T14:56:36.736908+00:00",
+      "sha256": "a83c4296d715facab8cd87d502a9d1f4386b2122b47c8f94c9fc2acace8b11c8",
+      "modified": false
+    }
+  ],
+  "forecast": {
+    "file": "jma-forecast-20261013.json",
+    "url": "https://www.jma.go.jp/bosai/forecast/data/forecast/460100.json",
+    "sha256": "e6fc70012aade2789be6675ed9a98556c7f24e503c3c1252cf0978c7d8b9d8d5",
+    "issuedAt": "2026-10-13T11:00:00+09:00"
+  },
+  "atomSubsets": {
+    "modified": true,
+    "modification": "Selected one entry per title from official feeds; namespace reserialization. Full downloaded feeds remain in task work/."
+  }
+}

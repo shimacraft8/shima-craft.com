@@ -1,0 +1,125 @@
+{
+  "url": "https://www.jma.go.jp/bosai/forecast/data/forecast/460100.json",
+  "verifiedOn": "2026-10-13",
+  "officeMetadata": {
+    "460100": {
+      "name": "鹿児島県（奄美地方除く）",
+      "enName": "Kagoshima (Excluding Amami)",
+      "officeName": "鹿児島地方気象台",
+      "parent": "011000",
+      "children": [
+        "460010",
+        "460020",
+        "460030"
+      ]
+    },
+    "460040": {
+      "name": "奄美地方",
+      "enName": "Amami",
+      "officeName": "名瀬測候所",
+      "parent": "011000",
+      "children": [
+        "460040"
+      ]
+    }
+  },
+  "payloadScope": [
+    {
+      "reportDatetime": "2026-10-13T11:00:00+09:00",
+      "areas": [
+        [
+          {
+            "name": "薩摩地方",
+            "code": "460010"
+          },
+          {
+            "name": "大隅地方",
+            "code": "460020"
+          },
+          {
+            "name": "種子島・屋久島地方",
+            "code": "460030"
+          },
+          {
+            "name": "奄美地方",
+            "code": "460040"
+          }
+        ],
+        [
+          {
+            "name": "薩摩地方",
+            "code": "460010"
+          },
+          {
+            "name": "大隅地方",
+            "code": "460020"
+          },
+          {
+            "name": "種子島・屋久島地方",
+            "code": "460030"
+          },
+          {
+            "name": "奄美地方",
+            "code": "460040"
+          }
+        ],
+        [
+          {
+            "name": "鹿児島",
+            "code": "88317"
+          },
+          {
+            "name": "阿久根",
+            "code": "88061"
+          },
+          {
+            "name": "枕崎",
+            "code": "88466"
+          },
+          {
+            "name": "鹿屋",
+            "code": "88442"
+          },
+          {
+            "name": "種子島",
+            "code": "88612"
+          },
+          {
+            "name": "名瀬",
+            "code": "88837"
+          },
+          {
+            "name": "沖永良部",
+            "code": "88971"
+          }
+        ]
+      ]
+    },
+    {
+      "reportDatetime": "2026-10-13T11:00:00+09:00",
+      "areas": [
+        [
+          {
+            "name": "鹿児島県（奄美地方除く）",
+            "code": "460100"
+          },
+          {
+            "name": "奄美地方",
+            "code": "460040"
+          }
+        ],
+        [
+          {
+            "name": "鹿児島",
+            "code": "88317"
+          },
+          {
+            "name": "名瀬",
+            "code": "88837"
+          }
+        ]
+      ]
+    }
+  ],
+  "finding": "460100 office label excludes Amami, but retrieved payload actually contains 460040 and Naze 88837. Do not infer payload coverage from office label alone."
+}

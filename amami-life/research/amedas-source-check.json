@@ -1,0 +1,68 @@
+{
+  "verifiedAt": "2026-10-13T23:39:35.683883+00:00",
+  "tableUrl": "https://www.jma.go.jp/bosai/amedas/const/amedastable.json",
+  "tableSha256": "319d215c6c9243ccb794e925dded2f849a0202f1b2cd74ce607b232f2bc2ddc5",
+  "stations": {
+    "88837": {
+      "type": "B",
+      "elems": "11111011",
+      "lat": [
+        28,
+        23.1
+      ],
+      "lon": [
+        129,
+        29.6
+      ],
+      "alt": 3,
+      "kjName": "名瀬",
+      "knName": "ナゼ",
+      "enName": "Naze"
+    },
+    "88821": {
+      "type": "C",
+      "elems": "11110000",
+      "lat": [
+        28,
+        25.8
+      ],
+      "lon": [
+        129,
+        42.7
+      ],
+      "alt": 4,
+      "kjName": "笠利",
+      "knName": "カサリ：奄美空港",
+      "enName": "Kasari"
+    },
+    "88901": {
+      "type": "C",
+      "elems": "11112010",
+      "lat": [
+        28,
+        8.6
+      ],
+      "lon": [
+        129,
+        18.9
+      ],
+      "alt": 2,
+      "kjName": "古仁屋",
+      "knName": "コニヤ",
+      "enName": "Koniya"
+    }
+  },
+  "map": {
+    "upstreamUrl": "https://www.jma.go.jp/bosai/amedas/data/map/20261014081000.json",
+    "observedAt": "2026-10-14T08:10:00+09:00",
+    "fetchedAt": "2026-10-13T23:22:36.214033+00:00",
+    "originalMapSha256": "ebb23183e08ff7cdba5088ef603c90b28b4cf3831a8655ffacf90d6cecdcba19",
+    "scope": "Three-station subset extracted from official map; not whole-map bytes"
+  },
+  "endpointEvidence": "Official amedas page inline client constructs ../amedas/data/map/<JST YYYYMMDDHHmmss>.json",
+  "qualityEvidence": "Official page AQC_INFO[0] is unmarked; other codes have symbols. Initial implementation deliberately displays only quality 0.",
+  "limitations": [
+    "Non-versioned web JSON; no SLA confirmed",
+    "No long-running production or physical-device validation"
+  ]
+}

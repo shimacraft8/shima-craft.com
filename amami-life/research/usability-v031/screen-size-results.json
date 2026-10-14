@@ -1,0 +1,30 @@
+[
+  {
+    "width": 320,
+    "height": 667,
+    "scrollWidth": 320,
+    "tabTop": 592,
+    "tideBottom": 571
+  },
+  {
+    "width": 375,
+    "height": 667,
+    "scrollWidth": 375,
+    "tabTop": 592,
+    "tideBottom": 571
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "scrollWidth": 390,
+    "tabTop": 769,
+    "tideBottom": 635
+  },
+  {
+    "width": 430,
+    "height": 932,
+    "scrollWidth": 430,
+    "tabTop": 857,
+    "tideBottom": 635
+  }
+]

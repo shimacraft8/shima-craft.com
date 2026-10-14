@@ -1,0 +1,15 @@
+{
+  "sourceId": "jma-tide-O9",
+  "publisher": "気象庁",
+  "url": "https://www.data.jma.go.jp/kaiyou/data/db/tide/suisan/txt/2026/O9.txt",
+  "officialUrl": "https://www.data.jma.go.jp/kaiyou/db/tide/suisan/suisan.php?stn=O9",
+  "fetchedAt": "2026-10-13T06:50:37.983Z",
+  "issuedAt": null,
+  "expiresAt": "2026-12-31T15:00:00Z",
+  "sha256": "0e1c58dab99054eaa478874082a5f301d5fc4c2ca94612991d07166d12dce175",
+  "oldArchiveByteIdentical": true,
+  "kind": "astronomical_tide_prediction",
+  "unit": "cm_above_tide_table_datum",
+  "datumElevationCm": -108,
+  "processedBy": "SHIMA CRAFT / AMAMI LIFE local prototype"
+}

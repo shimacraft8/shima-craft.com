@@ -1,0 +1,106 @@
+{
+  "base": "https://shima-craft.com",
+  "passed": true,
+  "checks": [
+    {
+      "path": "/",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "path": "/studio",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "path": "/services",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "path": "/amami-tide",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "path": "/privacy",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "path": "/about",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "path": "/amami-dialect",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "path": "/system-samples",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "path": "/web-check",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "path": "/amami-life/privacy.html",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "path": "/amami-life-api/service-health",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "path": "/amami-life-api/today?area=naze&date=2026-10-14",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "path": "/amami-life-api/today?area=koniya&date=2026-10-14",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "path": "/amami-life-api/weather?mode=live&area=naze&date=2026-10-14",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "path": "/amami-life-api/observations?area=naze&date=2026-10-14",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "path": "/amami-life/app.js",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "path": "/amami-life/core.js",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "path": "/amami-life/usage.js",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "path": "/amami-life/style.css",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "path": "/amami-life/shimacraft.css",
+      "status": 200,
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "imageFiles": 34,
+  "missingFiles": [],
+  "visibleBrokenImages": [],
+  "deferredImagePolicy": "State screenshots use loading=lazy inside details; not-yet-loaded is not a broken image."
+}

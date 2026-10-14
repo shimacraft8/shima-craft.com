@@ -1,0 +1,18 @@
+{
+  "cli": { "appVersionSource": "remote" },
+  "build": {
+    "preview": {
+      "distribution": "internal",
+      "environment": "preview",
+      "env": { "AMAMI_RELEASE_BUILD": "1" },
+      "android": { "buildType": "apk" }
+    },
+    "production": {
+      "distribution": "store",
+      "environment": "production",
+      "autoIncrement": true,
+      "env": { "AMAMI_RELEASE_BUILD": "1" },
+      "android": { "buildType": "app-bundle" }
+    }
+  }
+}

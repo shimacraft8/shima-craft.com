@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf-8'?>
+<feed xmlns="http://www.w3.org/2005/Atom" lang="ja">
+  <title>長期（随時）</title>
+  <subtitle>JMAXML publishing feed</subtitle>
+  <updated>2026-10-13T23:01:16+09:00</updated>
+  <id>https://www.data.jma.go.jp/developer/xml/feed/extra.xml#long_1791900076</id>
+  <link rel="related" href="https://www.jma.go.jp/" />
+  <link rel="self" href="https://www.data.jma.go.jp/developer/xml/feed/extra.xml" />
+  <link rel="hub" href="http://alert-hub.appspot.com/" />
+  <rights type="html">
+&lt;a href="https://www.jma.go.jp/jma/kishou/info/coment.html"&gt;利用規約&lt;/a&gt;,
+&lt;a href="https://www.jma.go.jp/jma/en/copyright.html"&gt;Terms of Use&lt;/a&gt;
+</rights>
+  <entry>
+    <title>気象特別警報・警報・注意報</title>
+    <id>https://www.data.jma.go.jp/developer/xml/data/20261013135810_0_VPWW53_471000.xml</id>
+    <updated>2026-10-13T13:58:09Z</updated>
+    <author>
+      <name>沖縄気象台</name>
+    </author>
+    <link type="application/xml" href="https://www.data.jma.go.jp/developer/xml/data/20261013135810_0_VPWW53_471000.xml" />
+    <content type="text">【沖縄本島地方気象警報・注意報】本島中南部、本島北部では、落雷に注意してください。</content>
+  </entry>
+  <entry>
+    <title>気象警報・注意報（Ｈ２７）</title>
+    <id>https://www.data.jma.go.jp/developer/xml/data/20261013135810_0_VPWW54_471000.xml</id>
+    <updated>2026-10-13T13:58:09Z</updated>
+    <author>
+      <name>沖縄気象台</name>
+    </author>
+    <link type="application/xml" href="https://www.data.jma.go.jp/developer/xml/data/20261013135810_0_VPWW54_471000.xml" />
+    <content type="text">【沖縄本島地方気象警報・注意報】本島中南部、本島北部では、落雷に注意してください。</content>
+  </entry>
+  <entry>
+    <title>台風解析・予報情報（５日予報）（Ｈ３０）</title>
+    <id>https://www.data.jma.go.jp/developer/xml/data/20261013124028_0_VPTW61_010000.xml</id>
+    <updated>2026-10-13T12:40:28Z</updated>
+    <author>
+      <name>気象庁</name>
+    </author>
+    <link type="application/xml" href="https://www.data.jma.go.jp/developer/xml/data/20261013124028_0_VPTW61_010000.xml" />
+    <content type="text">【台風解析・予報情報】</content>
+  </entry>
+  </feed>

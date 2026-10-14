@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?>
+<feed xmlns="http://www.w3.org/2005/Atom" lang="ja">
+  <title>長期（地震火山）</title>
+  <subtitle>JMAXML publishing feed</subtitle>
+  <updated>2026-10-13T23:00:57+09:00</updated>
+  <id>https://www.data.jma.go.jp/developer/xml/feed/eqvol.xml#long_1791900057</id>
+  <link rel="related" href="https://www.jma.go.jp/" />
+  <link rel="self" href="https://www.data.jma.go.jp/developer/xml/feed/eqvol.xml" />
+  <link rel="hub" href="http://alert-hub.appspot.com/" />
+  <rights type="html">
+&lt;a href="https://www.jma.go.jp/jma/kishou/info/coment.html"&gt;利用規約&lt;/a&gt;,
+&lt;a href="https://www.jma.go.jp/jma/en/copyright.html"&gt;Terms of Use&lt;/a&gt;
+</rights>
+  <entry>
+    <title>震源・震度に関する情報</title>
+    <id>https://www.data.jma.go.jp/developer/xml/data/20261013130813_0_VXSE53_010000.xml</id>
+    <updated>2026-10-13T13:08:13Z</updated>
+    <author>
+      <name>気象庁</name>
+    </author>
+    <link type="application/xml" href="https://www.data.jma.go.jp/developer/xml/data/20261013130813_0_VXSE53_010000.xml" />
+    <content type="text">【震源・震度情報】１３日２２時０５分ころ、地震がありました。</content>
+  </entry>
+  <entry>
+    <title>津波警報・注意報・予報a</title>
+    <id>https://www.data.jma.go.jp/developer/xml/data/20261009183743_0_VTSE41_010000.xml</id>
+    <updated>2026-10-09T18:37:42Z</updated>
+    <author>
+      <name>気象庁</name>
+    </author>
+    <link type="application/xml" href="https://www.data.jma.go.jp/developer/xml/data/20261009183743_0_VTSE41_010000.xml" />
+    <content type="text">【津波予報】津波予報（若干の海面変動）を発表しました。</content>
+  </entry>
+  </feed>

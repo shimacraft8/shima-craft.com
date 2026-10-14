@@ -1,0 +1,25 @@
+Using src/app as the root directory for Expo Router.
+Expo Autolinking module resolution enabled
+Starting Metro Bundler
+
+Static rendering is enabled. Learn more: https://docs.expo.dev/router/web/static-rendering/
+| (node:15571) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:15571) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+λ Bundled 1090ms node_modules/@expo/cli/node_modules/@expo/router-server/node/render.js (826 modules)
+Web Bundled 1393ms node_modules/expo-router/entry.js (815 modules)
+
+› web bundles (1):
+_expo/static/js/web/entry-ee05037988b41cf9363798411a7b9b5e.js (1.5MB)
+
+› Static routes (7):
+/more (39KB)
+/move (39KB)
+/ (index) (45KB)
+/safety (46KB)
+/explore (59KB)
+/_sitemap (17KB)
+/+not-found (17KB)
+
+Exported: ../../research/native-export-v031

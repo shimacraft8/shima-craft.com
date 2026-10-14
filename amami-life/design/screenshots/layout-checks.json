@@ -1,0 +1,24 @@
+{
+  "largeText": {
+    "content": 390,
+    "page": 390,
+    "width": 390
+  },
+  "layouts": [
+    {
+      "height": 1024,
+      "page": 768,
+      "width": 768
+    },
+    {
+      "height": 768,
+      "page": 1024,
+      "width": 1024
+    },
+    {
+      "height": 375,
+      "page": 667,
+      "width": 667
+    }
+  ]
+}

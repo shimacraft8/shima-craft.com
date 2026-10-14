@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>AMAMI LIFE — デザイン比較</title>
+    <style>
+      :root {
+        color-scheme: light;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: #e8ded9;
+        color: #242520;
+        font:
+          16px/1.9 -apple-system,
+          "Hiragino Sans",
+          sans-serif;
+      }
+      main {
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 48px 32px;
+      }
+      h1 {
+        font:
+          400 42px/1.5 "Hiragino Mincho ProN",
+          serif;
+        margin: 16px 0;
+      }
+      h2 {
+        font-size: 18px;
+        font-weight: 500;
+      }
+      p {
+        max-width: 900px;
+      }
+      a {
+        color: inherit;
+        text-underline-offset: 4px;
+        display: inline-block;
+        padding: 8px 0;
+        min-height: 44px;
+      }
+      a:focus-visible,
+      summary:focus-visible {
+        outline: 2px solid #b12b20;
+        outline-offset: 4px;
+      }
+      .meta {
+        font-size: 12px;
+        letter-spacing: 0.16em;
+      }
+      .actions {
+        display: flex;
+        gap: 24px;
+        flex-wrap: wrap;
+        border-top: 1px solid #c6baad;
+        border-bottom: 1px solid #c6baad;
+        padding: 12px 0;
+        margin: 28px 0 40px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 48px;
+      }
+      .grid img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      .grid p {
+        font-size: 14px;
+      }
+      .grid article > div {
+        display: flex;
+        gap: 16px;
+      }
+      details {
+        margin: 20px 0;
+        border-top: 1px solid #c6baad;
+        padding-top: 20px;
+      }
+      summary {
+        cursor: pointer;
+        min-height: 48px;
+      }
+      .states {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 12px;
+      }
+      .states img {
+        width: 100%;
+        height: auto;
+      }
+      .states a {
+        font-size: 12px;
+        text-decoration: none;
+      }
+      .banner {
+        border-left: 2px solid #bf2e23;
+        padding: 12px 20px;
+        margin: 32px 0;
+        background: #f3ede3;
+      }
+      .wide {
+        width: 100%;
+        height: auto;
+        margin: 20px 0;
+      }
+      .note {
+        font-size: 14px;
+        color: #615d55;
+      }
+      @media (max-width: 800px) {
+        .grid {
+          grid-template-columns: 1fr;
+          max-width: 430px;
+        }
+        .states {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        h1 {
+          font-size: 30px;
+        }
+        main {
+          padding: 30px 24px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          scroll-behavior: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="meta">SHIMA CRAFT / 2026.10.13 / LOCAL ONLY</p>
+      <h1>島の時間を、手のひらに。</h1>
+      <p>
+        添付の和紙、細い数字、朱の日輪、墨の雨雲、金の夜を軸にしたデザイン比較です。独立した方向性はA/Bの2系統。CはBの夜版です。ユーザーの継続指定により、B昼＋C夜を共通デザインとして採用しています。
+      </p>
+      <div class="actions">
+        <a href="../?theme=paper&amp;area=naze#today">B 昼の試作を開く →</a
+        ><a href="../?theme=ink&amp;area=naze#today">C 夜の試作を開く →</a
+        ><a href="option-a/index.html">A 比較基準を開く →</a>
+      </div>
+      <div class="grid">
+        <article>
+          <h2>A — Editorial / original</h2>
+          <a href="screenshots/A-390.jpg"
+            ><img
+              src="screenshots/A-390.jpg"
+              width="390"
+              height="844"
+              alt="Editorial / original、390pxでの実画面"
+          /></a>
+          <p>既存の比較基準。紙と深緑。</p>
+          <div>
+            <a href="screenshots/A-375.jpg">375px</a>
+            <a href="screenshots/A-390.jpg">390px</a>
+            <a href="screenshots/A-430.jpg">430px</a>
+          </div>
+        </article>
+        <article>
+          <h2>B — 朱と和紙 / 昼</h2>
+          <a href="screenshots/B-390.jpg"
+            ><img
+              src="screenshots/B-390.jpg"
+              width="390"
+              height="844"
+              alt="朱と和紙 / 昼、390pxでの実画面"
+          /></a>
+          <p>添付の雰囲気をもとにした操作可能な新UI。</p>
+          <div>
+            <a href="screenshots/B-375.jpg">375px</a>
+            <a href="screenshots/B-390.jpg">390px</a>
+            <a href="screenshots/B-430.jpg">430px</a>
+          </div>
+        </article>
+        <article>
+          <h2>C — 墨と金 / 夜</h2>
+          <a href="screenshots/C-390.jpg"
+            ><img
+              src="screenshots/C-390.jpg"
+              width="390"
+              height="844"
+              alt="墨と金 / 夜、390pxでの実画面"
+          /></a>
+          <p>Bと同じ構図・部品を使う夜版。</p>
+          <div>
+            <a href="screenshots/C-375.jpg">375px</a>
+            <a href="screenshots/C-390.jpg">390px</a>
+            <a href="screenshots/C-430.jpg">430px</a>
+          </div>
+        </article>
+      </div>
+      <div class="banner">
+        大きな天気の数値・絵はデモです。別欄の地域予報は気象庁の実データで、発表・取得・古さを表示します。潮汐は保存済みの2026年O9予測、太陽は参考計算。現在の防災速報は未接続です。
+      </div>
+      <h2>公式情報と追加した機能</h2>
+      <p>
+        <a href="screenshots/B-official-forecast-390.jpg"
+          >地域予報・時刻と古さの表示</a
+        >　<a href="screenshots/B-tourism-filter-390.jpg">観光カテゴリ</a>
+      </p>
+      <h2>晴れ、雨、夜のあしらい</h2>
+      <a href="atmosphere.jpg"
+        ><img
+          class="wide"
+          src="atmosphere.jpg"
+          width="1400"
+          height="1130"
+          alt="朱の昼・墨雲の雨・金の夜を並べたスタディ"
+      /></a>
+      <h2>5画面の状態確認 / 390px</h2>
+      <details>
+        <summary>今日 — 全6状態</summary>
+        <div class="states">
+          <a href="screenshots/B-today-ready-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-today-ready-390.jpg"
+              width="390"
+              height="844"
+              alt="今日のready状態"
+            /><span>ready</span></a
+          ><a href="screenshots/B-today-loading-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-today-loading-390.jpg"
+              width="390"
+              height="844"
+              alt="今日のloading状態"
+            /><span>loading</span></a
+          ><a href="screenshots/B-today-empty-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-today-empty-390.jpg"
+              width="390"
+              height="844"
+              alt="今日のempty状態"
+            /><span>empty</span></a
+          ><a href="screenshots/B-today-error-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-today-error-390.jpg"
+              width="390"
+              height="844"
+              alt="今日のerror状態"
+            /><span>error</span></a
+          ><a href="screenshots/B-today-stale-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-today-stale-390.jpg"
+              width="390"
+              height="844"
+              alt="今日のstale状態"
+            /><span>stale</span></a
+          ><a href="screenshots/B-today-offline-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-today-offline-390.jpg"
+              width="390"
+              height="844"
+              alt="今日のoffline状態"
+            /><span>offline</span></a
+          >
+        </div>
+      </details>
+      <details>
+        <summary>探す — 全6状態</summary>
+        <div class="states">
+          <a href="screenshots/B-explore-ready-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-explore-ready-390.jpg"
+              width="390"
+              height="844"
+              alt="探すのready状態"
+            /><span>ready</span></a
+          ><a href="screenshots/B-explore-loading-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-explore-loading-390.jpg"
+              width="390"
+              height="844"
+              alt="探すのloading状態"
+            /><span>loading</span></a
+          ><a href="screenshots/B-explore-empty-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-explore-empty-390.jpg"
+              width="390"
+              height="844"
+              alt="探すのempty状態"
+            /><span>empty</span></a
+          ><a href="screenshots/B-explore-error-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-explore-error-390.jpg"
+              width="390"
+              height="844"
+              alt="探すのerror状態"
+            /><span>error</span></a
+          ><a href="screenshots/B-explore-stale-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-explore-stale-390.jpg"
+              width="390"
+              height="844"
+              alt="探すのstale状態"
+            /><span>stale</span></a
+          ><a href="screenshots/B-explore-offline-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-explore-offline-390.jpg"
+              width="390"
+              height="844"
+              alt="探すのoffline状態"
+            /><span>offline</span></a
+          >
+        </div>
+      </details>
+      <details>
+        <summary>移動 — 全6状態</summary>
+        <div class="states">
+          <a href="screenshots/B-move-ready-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-move-ready-390.jpg"
+              width="390"
+              height="844"
+              alt="移動のready状態"
+            /><span>ready</span></a
+          ><a href="screenshots/B-move-loading-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-move-loading-390.jpg"
+              width="390"
+              height="844"
+              alt="移動のloading状態"
+            /><span>loading</span></a
+          ><a href="screenshots/B-move-empty-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-move-empty-390.jpg"
+              width="390"
+              height="844"
+              alt="移動のempty状態"
+            /><span>empty</span></a
+          ><a href="screenshots/B-move-error-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-move-error-390.jpg"
+              width="390"
+              height="844"
+              alt="移動のerror状態"
+            /><span>error</span></a
+          ><a href="screenshots/B-move-stale-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-move-stale-390.jpg"
+              width="390"
+              height="844"
+              alt="移動のstale状態"
+            /><span>stale</span></a
+          ><a href="screenshots/B-move-offline-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-move-offline-390.jpg"
+              width="390"
+              height="844"
+              alt="移動のoffline状態"
+            /><span>offline</span></a
+          >
+        </div>
+      </details>
+      <details>
+        <summary>防災 — 全6状態</summary>
+        <div class="states">
+          <a href="screenshots/B-safety-ready-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-safety-ready-390.jpg"
+              width="390"
+              height="844"
+              alt="防災のready状態"
+            /><span>ready</span></a
+          ><a href="screenshots/B-safety-loading-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-safety-loading-390.jpg"
+              width="390"
+              height="844"
+              alt="防災のloading状態"
+            /><span>loading</span></a
+          ><a href="screenshots/B-safety-empty-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-safety-empty-390.jpg"
+              width="390"
+              height="844"
+              alt="防災のempty状態"
+            /><span>empty</span></a
+          ><a href="screenshots/B-safety-error-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-safety-error-390.jpg"
+              width="390"
+              height="844"
+              alt="防災のerror状態"
+            /><span>error</span></a
+          ><a href="screenshots/B-safety-stale-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-safety-stale-390.jpg"
+              width="390"
+              height="844"
+              alt="防災のstale状態"
+            /><span>stale</span></a
+          ><a href="screenshots/B-safety-offline-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-safety-offline-390.jpg"
+              width="390"
+              height="844"
+              alt="防災のoffline状態"
+            /><span>offline</span></a
+          >
+        </div>
+      </details>
+      <details>
+        <summary>その他 — 全6状態</summary>
+        <div class="states">
+          <a href="screenshots/B-more-ready-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-more-ready-390.jpg"
+              width="390"
+              height="844"
+              alt="その他のready状態"
+            /><span>ready</span></a
+          ><a href="screenshots/B-more-loading-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-more-loading-390.jpg"
+              width="390"
+              height="844"
+              alt="その他のloading状態"
+            /><span>loading</span></a
+          ><a href="screenshots/B-more-empty-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-more-empty-390.jpg"
+              width="390"
+              height="844"
+              alt="その他のempty状態"
+            /><span>empty</span></a
+          ><a href="screenshots/B-more-error-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-more-error-390.jpg"
+              width="390"
+              height="844"
+              alt="その他のerror状態"
+            /><span>error</span></a
+          ><a href="screenshots/B-more-stale-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-more-stale-390.jpg"
+              width="390"
+              height="844"
+              alt="その他のstale状態"
+            /><span>stale</span></a
+          ><a href="screenshots/B-more-offline-390.jpg"
+            ><img
+              loading="lazy"
+              src="screenshots/B-more-offline-390.jpg"
+              width="390"
+              height="844"
+              alt="その他のoffline状態"
+            /><span>offline</span></a
+          >
+        </div>
+      </details>
+      <p class="note">
+        撮影はブラウザでの実表示です。iOS/Androidのバンドル生成は成功していますが、実機起動・字体・VoiceOver/TalkBackの確認は未実施です。Aは元の比較用デザインを保持しています。詳しい実装・出典・監査・テスト結果は同梱のREADMEと開発レポートを参照してください。
+      </p>
+    </main>
+  </body>
+</html>

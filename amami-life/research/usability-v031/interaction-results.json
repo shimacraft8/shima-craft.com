@@ -1,0 +1,70 @@
+[
+  {
+    "task": "すべての初期一覧",
+    "links": 15
+  },
+  {
+    "task": "飛行機で空港を検索",
+    "pass": true
+  },
+  {
+    "task": "船でフェリーを検索",
+    "links": 2
+  },
+  {
+    "task": "検索条件リセット",
+    "links": 15
+  },
+  {
+    "task": "保存した空港リンクを閲覧",
+    "pass": true
+  },
+  {
+    "task": "メモの自動保存と再読込",
+    "pass": true
+  },
+  {
+    "task": "古仁屋で名瀬の潮を流用しない",
+    "pass": true
+  },
+  {
+    "task": "古仁屋の避難情報",
+    "setouchi": true,
+    "nazeAbsent": true
+  },
+  {
+    "task": "緊急番号の確認画面",
+    "pass": true
+  },
+  {
+    "task": "発信せず確認を閉じる",
+    "pass": true
+  },
+  {
+    "task": "通信断時のセッション保存値",
+    "observationError": true,
+    "forecastError": true
+  },
+  {
+    "task": "API停止中にメモと保存リンクを再読込",
+    "memo": true,
+    "link": true
+  },
+  {
+    "task": "API停止で再起動したときは実況未取得",
+    "missingTemperature": true,
+    "bundledTide": true
+  },
+  {
+    "task": "通信復旧後に再取得",
+    "pass": true
+  },
+  {
+    "task": "地域選択をEscapeで閉じる",
+    "pass": true
+  },
+  {
+    "task": "日付を進めて今日へ戻る",
+    "pass": true
+  }
+]

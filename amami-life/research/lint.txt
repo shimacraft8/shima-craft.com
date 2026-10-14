@@ -1,0 +1,4 @@
+
+> amami-life-local@0.2.0 lint
+> eslint packages/core/src web/app.js server scripts/*.mjs tests apps/mobile/src
+

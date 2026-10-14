@@ -1,0 +1,39 @@
+
+> amami-life-local@0.1.0 test
+> node --test tests/*.test.mjs
+
+✔ JST boundary 23:59→00:00 (51.203094ms)
+✔ real dates only; leap dates and rollover (1.12631ms)
+✔ solar coordinates and date validation (1.967897ms)
+✔ NAOJ Naze 2026-10-13 at sea level: within 2 min and 1 degree (3.885509ms)
+✔ NAOJ Kasari and Koniya at sea level: within 2 min and 1 degree (2.481773ms)
+✔ solar output does not depend on overseas system timezone (1200.503172ms)
+✔ three areas calculate own solar positions (10.021441ms)
+✔ fetchedAt alone never creates freshness (0.986859ms)
+✔ expiration, future clock skew and invalid dates fail closed (0.941046ms)
+✔ partial source cannot confirm no warnings (1.206819ms)
+✔ unknown and stale do not say safe or no warning (0.609555ms)
+✔ corrections replace older revisions irrespective of arrival order (0.528507ms)
+✔ cancellation preserved; old retry cannot revive event (0.235288ms)
+✔ release and post-typhoon stage cannot silently clear other hazards (0.284526ms)
+✔ EEW, earthquake history, tsunami and region remain distinct (0.286365ms)
+✔ conflicting same revision is rejected, duplicate ID is idempotent (0.297359ms)
+✔ unknown earthquake intensity never becomes zero (0.23066ms)
+✔ annual archive 365 continuous dates, 24 hourly values (3.483623ms)
+✔ O9 matches JMA official Oct 13 table, multiple highs/lows (0.485082ms)
+✔ wrong station and malformed date rejected (0.395233ms)
+✔ missing hourly value stays missing instead of zero (0.798146ms)
+✔ hourly interpolation across midnight requires next-day value (0.474917ms)
+✔ safe phones reject unverified business and injected URI (0.619081ms)
+✔ API rejects invalid area/date/state (2.394037ms)
+✔ API tide station does not leak Naze values to other areas (1.257631ms)
+✔ all failure state fixtures: no mock weather on error/empty/loading/stale/offline (7.891973ms)
+✔ hazards endpoint never infers none from empty history (0.333914ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2091.619569

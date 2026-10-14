@@ -1,0 +1,4 @@
+
+> amami-life-local@0.2.0 typecheck
+> tsc --noEmit && tsc --noEmit -p apps/mobile/tsconfig.json
+

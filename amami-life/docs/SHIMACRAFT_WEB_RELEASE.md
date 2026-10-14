@@ -1,5 +1,7 @@
 # SHIMA CRAFT / AMAMI LIFE Web公開記録 0.3.2
 
+> 現行Webは0.3.3。既存ロゴとPC向け配置を反映。最新検証はDESKTOP_UI_REVIEW.md、公開versionはresearch/desktop-v033/release.json。以下は0.3.2初回公開時の構成・復旧記録で、ルーティングと元Workerの保持方針は共通です。
+
 2026-10-14 JST。ユーザーの明示指示でSHIMA CRAFTトップをWeb公開。iOS/Androidストア版は未公開・実機未確認です。
 
 ## 公開先と所有者

@@ -1,6 +1,6 @@
 # 続行時の作業指示
 
-ユーザーの最終目標は、旅行者と島民が日常利用できるiPhone/Android向け一般公開アプリです。Web0.3.2はSHIMA CRAFTトップへ公開済み。iOS/Androidストア版は未公開。まずSHIMACRAFT_WEB_RELEASE.mdを読み、WebとNativeの状況を区別します。
+ユーザーの最終目標は、旅行者と島民が日常利用できるiPhone/Android向け一般公開アプリです。Web0.3.3はSHIMA CRAFTトップへ公開済み。iOS/Androidストア版は未公開。まずSHIMACRAFT_WEB_RELEASE.mdを読み、WebとNativeの状況を区別します。
 
 まず `../START_HERE.md` と本書、`DEVELOPMENT_REPORT.md` を読み、原仕様は `specification/CODEX_TASK.md` 以下を参照してください。ユーザーの最新の明示指示を優先します。
 
@@ -20,3 +20,5 @@
 0.3.0で初版のストア準備を追加。`STORE_RELEASE.md` と `STORE_METADATA.md` を読み、ストア未登録・Native API/窓口設定未確定・依存29件・実機未確認を公開阻害事項として残します。公開ビルドの必須設定をダミー値で回避しません。
 
 0.3.1：ユーザーはiPhoneから開始し、利用者操作を重視。USABILITY_REVIEW_IPHONE.mdを最初に読む。ホーム要約/次の潮/日付復帰/検索/メモ自動保存/地域ダイアログ/発表時刻判定を維持。71試験とExpo Web実操作を実機試験と混同しない。
+
+0.3.3：ユーザー指定の既存SHIMA CRAFTロゴを再利用。PCはフル幅/上部ナビ/天気と潮・太陽の並列、一覧は2列。スマホ下部5タブは維持。DESKTOP_UI_REVIEW.mdとresearch/desktop-v033を参照し、スマホ枠をPCへ戻さない。

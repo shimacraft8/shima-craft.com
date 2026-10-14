@@ -9,9 +9,9 @@
 
   web/core.js  24.1kb
 
-⚡ Done in 9ms
+⚡ Done in 6ms
 
   web/usage.js  18.3kb
 
-⚡ Done in 9ms
+⚡ Done in 6ms
 Public assets built; local QA/demo files and credentials excluded.

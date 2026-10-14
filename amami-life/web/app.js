@@ -261,11 +261,10 @@ function today() {
   const sun = snapshot?.solar ?? solarForDate(date, area().lat, area().lon);
   const tide = snapshot?.tide;
   const isReady = state === "ready" && !fetchError;
-  return `${date!==todayJST() ? '<button class="text-button" data-action="go-today">今日の日付に戻る</button>' : ""}<div class="date-row"><button data-date="-1" aria-label="前の日">‹</button><div class="date-label">${dateLabel()}<span>${date.replaceAll("-", ".")} / JST</span></div><button data-date="1" aria-label="次の日">›</button></div>${isReady ? `<div id="current-observation">${observationHero()}</div>` : statePanel()}
-  <div class="facts-grid"><div class="fact"><div class="fact-label">日の出</div><div class="fact-value">${sun.sunrise ?? "—"}</div><div class="fact-note">方位 ${sun.riseAzimuth ?? "—"}° / 真北基準</div></div><div class="fact"><div class="fact-label">日の入り</div><div class="fact-value">${sun.sunset ?? "—"}</div><div class="fact-note">方位 ${sun.setAzimuth ?? "—"}° / 真北基準</div></div></div><p class="source-note">SunCalcによる地点別の参考計算。地形・標高による見え方は異なります。</p>
-  <section id="forecast">${forecastPanel()}</section>
-  <div class="section-head"><h3>潮の満ち引き</h3><span>${area().station ? "O9 / 予測" : "対象局未連携"}</span></div>${tide && isReady ? `<div class="tide-events"><div><div class="fact-label">満潮</div>${tide.highTides.map((t) => `<p>${t.time}　${t.heightCm} cm</p>`).join("") || "<p>対象なし</p>"}</div><div><div class="fact-label">干潮</div>${tide.lowTides.map((t) => `<p>${t.time}　${t.heightCm} cm</p>`).join("") || "<p>対象なし</p>"}</div></div><p class="source-note">気象庁・奄美（名瀬小湊）2026年の保存済み天文潮位予測を加工表示。基準面上cm。実測値ではありません。</p>` : `<p class="body-copy compact">${area().station ? "この日付の予測値は未取得です。" : "この地点の潮汐データは未連携です。名瀬小湊の値を流用しません。"}</p>`}${area().station ? `<p class="source-note">取得：${timeJST(snapshot?.tideSource?.fetchedAt ?? null)} · 予測対象：2026年。原データの発表時刻は未確認。</p>` : ""}<a class="inline-link" target="_blank" rel="noopener" href="https://www.data.jma.go.jp/kaiyou/db/tide/suisan/suisan.php?stn=O9">気象庁の潮位表 · 名瀬小湊<span aria-hidden="true">↗</span></a>
-  <div class="section-head"><h3>島で、すぐ使う</h3><span>QUICK ACCESS</span></div><a class="inline-link" href="#move">飛行機・フェリー・バス<span aria-hidden="true">→</span></a><a class="inline-link" href="#safety">台風・地震・避難情報<span aria-hidden="true">→</span></a><div class="notice"><strong>防災情報は未接続です</strong><p>現在の警報状況は公式発表をご確認ください。</p></div>`;
+  return `${date!==todayJST() ? '<button class="text-button" data-action="go-today">今日の日付に戻る</button>' : ""}<div class="today-heading"><h2>今日の奄美</h2><div class="date-row"><button data-date="-1" aria-label="前の日">‹</button><div class="date-label">${dateLabel()}<span>${date.replaceAll("-", ".")} / JST</span></div><button data-date="1" aria-label="次の日">›</button></div></div><div class="today-layout"><section class="weather-overview" aria-label="観測気温と今日の要約">${isReady ? `<div id="current-observation">${observationHero()}</div>` : statePanel()}</section>
+  <div class="today-details"><section aria-label="潮汐の予測"><div class="section-head"><h3>潮の満ち引き</h3><span>${area().station ? "O9 / 予測" : "対象局未連携"}</span></div>${tide && isReady ? `<div class="tide-events"><div><div class="fact-label">満潮</div>${tide.highTides.map((t) => `<p>${t.time}　${t.heightCm} cm</p>`).join("") || "<p>対象なし</p>"}</div><div><div class="fact-label">干潮</div>${tide.lowTides.map((t) => `<p>${t.time}　${t.heightCm} cm</p>`).join("") || "<p>対象なし</p>"}</div></div><p class="source-note">気象庁・奄美（名瀬小湊）2026年の保存済み天文潮位予測を加工表示。基準面上cm。実測値ではありません。</p>` : `<p class="body-copy compact">${area().station ? "この日付の予測値は未取得です。" : "この地点の潮汐データは未連携です。名瀬小湊の値を流用しません。"}</p>`}${area().station ? `<p class="source-note">取得：${timeJST(snapshot?.tideSource?.fetchedAt ?? null)} · 予測対象：2026年。原データの発表時刻は未確認。</p>` : ""}<a class="inline-link" target="_blank" rel="noopener" href="https://www.data.jma.go.jp/kaiyou/db/tide/suisan/suisan.php?stn=O9">気象庁の潮位表 · 名瀬小湊<span aria-hidden="true">↗</span></a></section><section class="sun-section" aria-label="日の出と日の入り"><div class="section-head"><h3>太陽の時間</h3><span>参考計算</span></div><div class="facts-grid"><div class="fact"><div class="fact-label">日の出</div><div class="fact-value">${sun.sunrise ?? "—"}</div><div class="fact-note">方位 ${sun.riseAzimuth ?? "—"}° / 真北基準</div></div><div class="fact"><div class="fact-label">日の入り</div><div class="fact-value">${sun.sunset ?? "—"}</div><div class="fact-note">方位 ${sun.setAzimuth ?? "—"}° / 真北基準</div></div></div><p class="source-note">SunCalcによる地点別の参考計算。地形・標高による見え方は異なります。</p></section></div>
+  <section class="today-access" aria-label="島の公式情報への入口"><div class="section-head"><h3>島で、すぐ使う</h3><span>QUICK ACCESS</span></div><div class="quick-links"><a class="inline-link" href="#move"><span><small>GET AROUND</small>飛行機・フェリー・バス</span><span aria-hidden="true">→</span></a><a class="inline-link" href="#explore"><span><small>EXPLORE</small>観光・旅先の情報</span><span aria-hidden="true">→</span></a><a class="inline-link" href="#safety"><span><small>OFFICIAL INFORMATION</small>台風・地震・避難情報</span><span aria-hidden="true">→</span></a></div><div class="notice"><strong>防災情報は未接続です</strong><p>現在の警報状況は公式発表をご確認ください。</p></div></section>
+  <section id="forecast" class="today-forecast">${forecastPanel()}</section></div>`;
 }
 function explore() {
   const results = findOfficialLinks(query,filter,areaId);
@@ -274,7 +273,7 @@ function explore() {
 function searchResults(results) {
   if (state !== "ready" || fetchError) return statePanel();
   return results.length
-    ? `<p class="source-note">${results.length}件の公式リンク</p>${results.map(linkRow).join("")}`
+    ? `<p class="source-note">${results.length}件の公式リンク</p><div class="link-directory">${results.map(linkRow).join("")}</div>`
     : `<div class="empty-illustration">${emptyArt()}</div><h3 class="empty-title">${query ? "条件に合う情報がありません" : "まだ知らない、島のかたち。"}</h3><p class="empty-copy">${query ? "キーワードや検索対象を変えてください。" : "空港・船・バス・観光・防災の公式情報を検索できます。"}<span>店舗・設備の地点情報は確認・整備中です。</span></p><div class="notice"><strong>地図とスポット情報は準備中</strong><p>施設の位置・利用条件を確認してから掲載します。</p></div>${
         !query && filter === "all"
           ? `<div class="section-head"><h3>島の公式ガイド</h3><span>LOCAL GUIDE</span></div>${LINKS.filter(
@@ -286,16 +285,16 @@ function searchResults(results) {
       }`;
 }
 function move() {
-  return `${top("GET AROUND", "島をめぐる", "03")}<p class="body-copy">空から、海から、島の道へ。<br>移動の前に、公式の案内を。</p>${statePanel()}${LINKS.filter(
+  return `${top("GET AROUND", "島をめぐる", "03")}<p class="body-copy">空から、海から、島の道へ。<br>移動の前に、公式の案内を。</p>${statePanel()}<div class="link-directory">${LINKS.filter(
     (l) => l.category === "transport",
   )
     .map(linkRow)
     .join(
       "",
-    )}<div class="section-head"><h3>タクシー・運転代行</h3><span>DIRECTORY</span></div><p class="body-copy compact">営業状況と電話番号の掲載確認を進めています。確認前の番号は公開・発信できません。</p><a class="inline-link" href="https://www.city.amami.lg.jp/kanko/kanko/kanko/access.html" target="_blank" rel="noopener">奄美市の交通案内<span aria-hidden="true">↗</span></a><p class="source-note">このアプリで運航の正常・遅延・欠航を判定していません。日付・便・寄港地は各社の発表でご確認ください。</p>`;
+    )}</div><div class="section-head"><h3>タクシー・運転代行</h3><span>DIRECTORY</span></div><p class="body-copy compact">営業状況と電話番号の掲載確認を進めています。確認前の番号は公開・発信できません。</p><a class="inline-link" href="https://www.city.amami.lg.jp/kanko/kanko/kanko/access.html" target="_blank" rel="noopener">奄美市の交通案内<span aria-hidden="true">↗</span></a><p class="source-note">このアプリで運航の正常・遅延・欠航を判定していません。日付・便・寄港地は各社の発表でご確認ください。</p>`;
 }
 function safety() {
-  return `${top("OFFICIAL INFORMATION", "防災と避難", "04")}<div class="notice"><div class="eyebrow">重要 / 状況未確認</div><strong>現在の状況を確認できません</strong><p>地震・津波・気象警報の自動取得は未接続です。公式発表をご確認ください。</p></div>${statePanel()}<p class="body-copy">強い揺れ・長い揺れを感じたら、情報を待たず、海岸から離れて高い場所へ避難してください。</p><div class="emergency"><button data-call="110"><span>警察</span><strong>110</strong></button><button data-call="119"><span>消防・救急</span><strong>119</strong></button></div>${safetyLinks(areaId).map(linkRow).join("")}${areaId === "koniya" ? '<div class="notice"><strong>ここは瀬戸内町です</strong><p>奄美市ハザードマップの対象外です。この地域の公式情報は瀬戸内町ハザードマップをご確認ください。</p></div>' : ""}${sourceBlock()}<p class="source-note">台風情報には、24時間以内に台風へ発達する見込みの熱帯低気圧が含まれます。その前段階のすべての熱帯低気圧を網羅しません。地震履歴・緊急地震速報・現在の津波警報は別の情報です。端末標準の緊急速報を代替しません。</p>`;
+  return `${top("OFFICIAL INFORMATION", "防災と避難", "04")}<div class="notice"><div class="eyebrow">重要 / 状況未確認</div><strong>現在の状況を確認できません</strong><p>地震・津波・気象警報の自動取得は未接続です。公式発表をご確認ください。</p></div>${statePanel()}<p class="body-copy">強い揺れ・長い揺れを感じたら、情報を待たず、海岸から離れて高い場所へ避難してください。</p><div class="emergency"><button data-call="110"><span>警察</span><strong>110</strong></button><button data-call="119"><span>消防・救急</span><strong>119</strong></button></div><div class="link-directory">${safetyLinks(areaId).map(linkRow).join("")}</div>${areaId === "koniya" ? '<div class="notice"><strong>ここは瀬戸内町です</strong><p>奄美市ハザードマップの対象外です。この地域の公式情報は瀬戸内町ハザードマップをご確認ください。</p></div>' : ""}${sourceBlock()}<p class="source-note">台風情報には、24時間以内に台風へ発達する見込みの熱帯低気圧が含まれます。その前段階のすべての熱帯低気圧を網羅しません。地震履歴・緊急地震速報・現在の津波警報は別の情報です。端末標準の緊急速報を代替しません。</p>`;
 }
 function more() {
   return `${top("MAKE IT YOURS", "島との付き合い方", "05")}${statePanel()}<div class="controls"><div class="control-row"><label for="region">表示する地域</label><select id="region">${AREAS.map((a) => `<option value="${a.id}" ${a.id === areaId ? "selected" : ""}>${a.name} · ${a.municipality}</option>`).join("")}</select></div><div class="control-row"><label for="theme">画面のあしらい</label><select id="theme"><option value="paper" ${theme === "paper" ? "selected" : ""}>朱と和紙</option><option value="ink" ${theme === "ink" ? "selected" : ""}>墨と金</option></select></div><div class="control-row"><label for="large-text">文字を大きく</label><input type="checkbox" id="large-text" ${document.body.dataset.text === "large" ? "checked" : ""}></div></div><div class="section-head"><h3>保存した公式情報</h3><span>${saved.length} SAVED</span></div>${
@@ -339,6 +338,7 @@ function syncUrl() {
 function render(focus = false) {
   if (syncUrl() === false) return;
   document.body.dataset.theme = theme;
+  document.body.dataset.tab = tab;
   document
     .querySelectorAll("[data-theme]")
     .forEach((b) =>
@@ -364,6 +364,9 @@ function render(focus = false) {
   if (focus) {
     $("#content").scrollTop = 0;
     $("#content").focus({ preventScroll: true });
+    if (document.querySelector(".craft-header") && matchMedia("(min-width:761px)").matches) {
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }
   }
 }
 async function load() {

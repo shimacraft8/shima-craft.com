@@ -75,3 +75,7 @@ EXPO_PUBLIC_API_BASE_URL=http://localhost:4837 EXPO_NO_TELEMETRY=1 npx expo star
 research/shimacraft-publication/local-viewports.jsonの8サイズを測定。320/375/390/430/768/1024/1280/1440pxで横スクロールなし、通常のホーム要約はタブに隠れない。本番PC/390px・昼夜の画面を保存。検索/5タブ/地域/メモ再読込/旧制作FAQ/公式データ表示はブラウザで確認。実iPhone SafariとAndroid Chrome、OS文字200%、VoiceOver/TalkBack、圏外起動はnot-run。
 
 iPhoneではSafariで https://shima-craft.com/ を開き、5タブ・予報出典・次の潮・制作相談を確認。墨と金への切替、地域切替（他地点へ潮を流用しない）、メモ保存→再読込、文字拡大、通信断の表示を記録。ホーム画面追加後の動作も未確認。電話は発信せずキャンセルし、問い合わせは試験送信しない。
+
+## 0.3.3 PC/ロゴ
+
+ブラウザ確認を9サイズへ拡張。PCの横幅活用と上部ナビ、検索/交通の2列、昼夜の既存ロゴを確認。サイト内文字拡大はPCで試験。実機OS文字拡大は未実施。証跡: research/desktop-v033。

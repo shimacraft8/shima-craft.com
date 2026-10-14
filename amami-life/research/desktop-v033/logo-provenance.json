@@ -1,0 +1,14 @@
+[
+  {
+    "file": "web/assets/shimacraft-logo.png",
+    "source": "Existing SHIMA CRAFT repository public/logo.png",
+    "sha256": "d728ead4f2095a55c2f06c9be914effb8b59a04effc0bb00db281ef98293dcea",
+    "modified": false
+  },
+  {
+    "file": "web/assets/shimacraft-logo-white.png",
+    "source": "Existing SHIMA CRAFT repository public/logo-white.png",
+    "sha256": "0c6a533b21e5cce37d5eabdb7c8dc3db4f9fd2409a6a0f96adc78f2530d5b12a",
+    "modified": false
+  }
+]

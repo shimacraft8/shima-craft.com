@@ -268,6 +268,15 @@ main::-webkit-scrollbar {
   gap: 8px;
   margin: 12px 0;
 }
+.today-heading h2 {
+  display: none;
+}
+.quick-links small {
+  display: block;
+  font-size: 9px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
 .date-row button {
   width: 48px;
   min-height: 48px;

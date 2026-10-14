@@ -24,8 +24,10 @@ html=html.replace('<html lang="ja">','<html lang="ja" data-release="public">')
  .replaceAll('（公開中のサイト・別タブ）','（制作サービス・別タブ）')
  .replaceAll('ローカル確認用。サービスのリンクは公開中のSHIMA CRAFTへ移動します。','制作サービス・写真・映像のご相談はSHIMA CRAFTへ。')
  .replace(/(href|src)="\/(theme-tokens\.css|style\.css|shimacraft\.css|app\.js|shimacraft\.js)"/g,'$1="/amami-life/$2"');
+html=html.replaceAll('src="/assets/', 'src="/amami-life/assets/');
 html=html.replace('<main id="content" tabindex="-1"></main>','<main id="content" tabindex="-1"><noscript><h1>奄美の今日・AMAMI LIFE</h1><p>表示にはJavaScriptが必要です。</p><a href="https://www.jma.go.jp/bosai/">気象庁の公式情報</a><p><a href="/studio">SHIMA CRAFTの制作サービス</a></p></noscript></main>');
 await writeFile(resolve(out,"index.html"),html);
 await copyFile(resolve(root,"web/assets/paper.svg"),resolve(out,"assets/paper.svg"));
+for (const name of ["shimacraft-logo.png", "shimacraft-logo-white.png"]) await copyFile(resolve(root,"web/assets",name),resolve(out,"assets",name));
 await copyFile(resolve(root,"web/public-privacy.html"),resolve(out,"privacy.html"));
 console.log("Public assets built; local QA/demo files and credentials excluded.");

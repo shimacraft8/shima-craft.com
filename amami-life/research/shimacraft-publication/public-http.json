@@ -1,6 +1,6 @@
 {
   "base": "https://shima-craft.com",
-  "checkedAt": "2026-10-14T06:04:52.841Z",
+  "checkedAt": "2026-10-14T08:51:29.213Z",
   "passed": true,
   "checks": [
     {
@@ -484,44 +484,39 @@
             "code": "460040",
             "name": "奄美地方"
           },
-          "description": "晴れ 時々 くもり",
-          "textIssuedAt": "2026-10-14T02:00:00.000Z",
-          "codeIssuedAt": "2026-10-14T02:00:00.000Z",
+          "description": "晴れ 夜のはじめ頃 くもり",
+          "textIssuedAt": "2026-10-14T08:00:00.000Z",
+          "codeIssuedAt": "2026-10-14T08:00:00.000Z",
           "weeklyIssuedAt": null,
           "weatherCode": "101",
           "wind": "北の風　やや強く",
           "waves": "２．５メートル",
           "precipitation": [
             {
-              "startsAt": "2026-10-14T03:00:00.000Z",
-              "percent": 10,
-              "issuedAt": "2026-10-14T02:00:00.000Z"
-            },
-            {
               "startsAt": "2026-10-14T09:00:00.000Z",
               "percent": 10,
-              "issuedAt": "2026-10-14T02:00:00.000Z"
+              "issuedAt": "2026-10-14T08:00:00.000Z"
             }
           ],
           "weeklyPrecipitation": null,
           "reliability": null,
           "temperature": null,
           "reportTimes": [
-            "2026-10-14T02:00:00.000Z"
+            "2026-10-14T08:00:00.000Z"
           ]
         },
         "source": {
           "sourceId": "jma-amami-forecast",
           "officialUrl": "https://www.jma.go.jp/bosai/forecast/#area_type=offices&area_code=460040",
-          "issuedAt": "2026-10-14T02:00:00.000Z",
-          "fetchedAt": "2026-10-14T06:04:52.191Z",
-          "checkedAt": "2026-10-14T06:04:52.091Z",
-          "expiresAt": "2026-10-14T08:00:00.000Z",
+          "issuedAt": "2026-10-14T08:00:00.000Z",
+          "fetchedAt": "2026-10-14T08:51:28.467Z",
+          "checkedAt": "2026-10-14T08:51:28.409Z",
+          "expiresAt": "2026-10-14T14:00:00.000Z",
           "freshness": "recent",
           "upstreamUrl": "https://www.jma.go.jp/bosai/forecast/data/forecast/460100.json"
         },
         "status": "ready",
-        "lastAttemptAt": "2026-10-14T06:04:52.091Z",
+        "lastAttemptAt": "2026-10-14T08:51:28.409Z",
         "refreshPolicy": "取得間隔1時間、失敗再試行1分。発表から6時間で古い表示（アプリの鮮度基準、気象庁の有効期限ではない）。"
       },
       "passed": true
@@ -540,8 +535,8 @@
             "lat": 28.385,
             "lon": 129.49333333333334
           },
-          "observedAt": "2026-10-14T05:50:00.000Z",
-          "temperatureC": 26.1,
+          "observedAt": "2026-10-14T08:40:00.000Z",
+          "temperatureC": 24.7,
           "qualityCode": 0
         },
         "status": "ready",
@@ -549,12 +544,12 @@
           "sourceId": "jma-amedas",
           "officialUrl": "https://www.jma.go.jp/bosai/amedas/",
           "issuedAt": null,
-          "fetchedAt": "2026-10-14T06:04:52.245Z",
-          "checkedAt": "2026-10-14T06:04:52.207Z",
-          "expiresAt": "2026-10-14T06:10:00.000Z",
+          "fetchedAt": "2026-10-14T08:51:28.885Z",
+          "checkedAt": "2026-10-14T08:51:28.419Z",
+          "expiresAt": "2026-10-14T09:00:00.000Z",
           "freshness": "recent",
-          "observedAt": "2026-10-14T05:50:00.000Z",
-          "upstreamUrl": "https://www.jma.go.jp/bosai/amedas/data/map/20261014145000.json"
+          "observedAt": "2026-10-14T08:40:00.000Z",
+          "upstreamUrl": "https://www.jma.go.jp/bosai/amedas/data/map/20261014174000.json"
         },
         "refreshPolicy": "取得間隔10分、失敗時1分。観測から20分を鮮度目安とするアプリ基準。品質0のみ表示。過去・未来の実況は未提供。"
       },

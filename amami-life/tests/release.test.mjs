@@ -11,14 +11,15 @@ test('release API requires a public HTTPS origin without credentials/query/path'
   assert.equal(apiBase('http://192.168.1.9:4837',true),'http://192.168.1.9:4837');assert.equal(apiBase('http://evil.org',true),null);
 });
 test('API-only mode never serves the web app, demo data or unfinished hazard endpoints', async()=>{
-  const server=createApp({apiOnly:true,weatherProvider:{get:async()=>({status:'ready',mode:'live',data:null})},observationProvider:{get:async()=>({status:'empty',data:null})}});
+  const server=createApp({apiOnly:true,weatherProvider:{get:async()=>({status:'ready',mode:'live',data:null})},observationProvider:{get:async()=>({status:'empty',data:null})},cycloneProvider:{get:async()=>({schemaVersion:1,status:'empty',data:[]}),image:async()=>null}});
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
   const origin='http://127.0.0.1:'+server.address().port;
   try {
-    for(const path of ['/','/design/review.html','/v1/today','/v1/hazards','/v1/cyclones','/v1/places']) assert.equal((await fetch(origin+path)).status,404);
+    for(const path of ['/','/design/review.html','/v1/today','/v1/hazards','/v1/places']) assert.equal((await fetch(origin+path)).status,404);
     assert.equal((await fetch(origin+'/v1/weather')).status,400);
     assert.equal((await fetch(origin+'/v1/weather?mode=live')).status,200);
     assert.equal((await fetch(origin+'/v1/observations')).status,200);
+    assert.equal((await (await fetch(origin+'/v1/cyclones')).json()).status,'empty');
     assert.equal((await (await fetch(origin+'/v1/service-health')).json()).currentHazardsIntegrated,false);
   } finally { await new Promise(resolve=>server.close(resolve)); }
 });

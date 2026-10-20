@@ -2,7 +2,7 @@
 
 ## SunCalc 1.9.0
 
-Used for local reference solar calculation.
+Used for local reference solar and lunar calculations.
 
 ```text
 Copyright (c) 2014, Vladimir Agafonkin
@@ -53,3 +53,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ```
 
 Expo/React Native and their transitive dependencies retain their upstream licenses through npm installation. A complete production distribution license review is still required before store submission.
+
+## 地理院タイル・気象庁台風情報・空港の画面内表示
+
+Web0.3.6の方位図は国土地理院の淡色タイルをブラウザで読み込み色調加工。地図上に出典と加工を表示。https://maps.gsi.go.jp/help/use.html
+台風の発表対象リストと実況天気図は気象庁から取得し出典を明示。実況天気図は改変しない。https://www.jma.go.jp/jma/kishou/info/coment.html
+奄美空港のフライトページは公式サイトをiframe表示。転載データや許諾済みAPIとは扱わず、元の表示を維持。
+SunCalc 1.9.0の完全なライセンスを公開素材 `assets/suncalc-LICENSE.txt` として提供。

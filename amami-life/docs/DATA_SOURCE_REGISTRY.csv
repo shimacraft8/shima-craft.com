@@ -6,7 +6,7 @@ jma-xml,警報・地震・台風関連,気象庁 防災XML PULL,https://xml.kish
 jma-typhoon,台風と発達する熱帯低気圧,気象庁 台風情報,https://www.jma.go.jp/jma/kishou/know/typhoon/7-1.html,公式進路図導線→元電文検証後API,台風情報の発表周期,24h以内発達見込みを確認,すべての発生初期熱帯低気圧は網羅不可,verified,気象庁の台風解説を閲覧,external-link,全初期熱帯低気圧を網羅しない
 jma-typhoon-map,台風の公式現況,気象庁 台風経路図,https://www.jma.go.jp/bosai/map.html?contents=typhoon,公式リンク,発表ごと,公式公開確認,予報円70%の意味、台風→低気圧変化,verified,公式進路図URL。ただしこの実行のWeb取得は一部エラー,external-link,遷移先の実機確認
 p2pquake,最近の地震/津波情報,P2P地震情報 API v2,https://www.p2pquake.net/develop/json_api_v2/,参考コードのAPIクライアント監査→集約サーバー,サービス側レート制限に準ずる,旧試作接続試行、公開品質未確認,二次利用規約、速報/履歴/津波警報を区別,not-verified,今回の実行では未再検証,not-adopted,原資料の課題を継続。確認済みと扱わない
-amami-airport,航空便・空港,奄美空港ターミナル,https://www.amami-airport.co.jp/flight,公式リンク優先、API許諾取得後に直接表示,便ごと,公式運航案内確認、API未確認,無断継続スクレイピングをしない,verified,公式flightページの公開と運航情報導線確認,external-link,運航データAPI・転載許諾は未確認
+amami-airport,航空便・空港,奄美空港ターミナル,https://www.amami-airport.co.jp/flight/today,公式リンク優先、API許諾取得後に直接表示,便ごと,公式運航案内確認、API未確認,無断継続スクレイピングをしない,verified,2026-10-20に本日の運航状況ページと画面内表示を確認,official-embed,独自表の転載許諾・API・元情報の更新間隔は未確認。AMAMI LIFEから定期スクレイピングしない
 aline,フェリー,A''LINE（マルエーフェリー/奄美海運）,https://www.aline-ferry.com/,公式リンク優先、正式配信を照会,運航発表ごと,公式運航案内確認、API未確認,条件付き運航・寄港地変更・欠航を区別,verified,公式ホームに運航案内・会社別導線あり,external-link,直接表示・定常取得・再配信の許諾
 marix,フェリー,マリックスライン,https://marixline.com/service/,公式リンク優先,運航発表ごと,公式運航案内確認、API未確認,会社ごとの船と便を区別,verified,公式運航状況ページを閲覧,external-link,直接表示・再配信の許諾
 shimabus,バス,しまバス,https://shimabus.co.jp/,公式ダイヤ/運行情報へのリンク,改正/お知らせごと,2026年10月1日ダイヤ改正確認,API有無・転載可否・最新版PDFを確認,verified,公式サイトを閲覧。今回の確認はリンクの存在,external-link,最新PDF・改正内容・転載条件は未検証
@@ -29,3 +29,7 @@ jma-weather-map,発達前TDの参考,気象庁 天気図,https://www.jma.go.jp/b
 amami-tourism,観光・案内所・交通,あまみ大島観光物産連盟,https://www.amami-tourism.org/scenic-spots/,external-link,,,,verified,見どころ/案内所/交通/パンフレットの公式公開ページを確認,external-link,個別POI/画像/電話の再配布許諾と事業者確認は別
 jtwc-early,台風発達前の参考候補,JTWC,https://www.metoc.navy.mil/jtwc/jtwc.html,not-adopted,,,,not-verified,公式ページ取得403。最新の配信/条件を確認できず,not-adopted,転載条件・更新/取消・定義と平均風速を確認してから採否決定
 jma-amedas,観測気温,気象庁アメダス,https://www.jma.go.jp/bosai/amedas/,公式latest_time→全国map→固定3観測所,必要時10分/失敗1分,公式地点表/最新mapを2026-10-14取得,非バージョンWeb JSON・SLAなし。品質0限定。公開利用/基盤運用の再確認,verified,名瀬88837/笠利88821/古仁屋88901、抽出fixtureと原mapSHA、品質/時刻/欠測/古さ/失敗の9試験,public-web-api,SHIMA CRAFT Cloudflareで公開取得確認済み。長期監視・スキーマ変更対応・実機未確認
+jma-cyclone-targets,台風・発達見込みのTD,気象庁,https://www.jma.go.jp/bosai/typhoon/data/targetTc.json,公式JSONをサーバー取得、5分キャッシュ,全国の発表対象,24h以内の発達見込みTDを含む。全TDではない,公式利用条件に従い出典明示,verified,2026-10-20に実応答・空/失敗/古さの試験を確認,live-api,停止・新スキーマ時は未取得表示。SLAは未確認
+jma-weather-chart,台風欄の公式画像,気象庁,https://www.jma.go.jp/bosai/weather_map/,公式list.jsonから実況天気図PNGを同一オリジン中継,全国実況天気図,対象時刻を独立表示、6h以上古い画像を非表示,画像改変なし・出典明示・公式進路図へリンク,verified,2026-10-20に実PNGの取得・表示を確認,live-image,進路予報図の固定PNG APIは未確認。画像は実況天気図
+gsi-pale-tiles,太陽・月方位図の背景,国土地理院,https://maps.gsi.go.jp/development/ichiran.html,Z10淡色地図を利用者ブラウザで直接読込、色調加工,奄美大島,出典と加工を表示,リアルタイム読込・出典明示による利用,verified,2026-10-20公式利用条件とブラウザ表示確認,live-tiles,地図取得失敗でも方位・時刻は表示する
+suncalc-moon,月の出入り・方位,SunCalc 1.9.0,https://github.com/mourner/suncalc/tree/v1.9.0,同梱版でUTC2日を走査し選択したJST日に限定,選択3地点・選択日,参考計算。実際の可視性ではない,BSD-2-Clause・既存同梱ライセンス,reference,2026-10の31日とTZ違い・出入りなしを試験,calculated,国立天文台等との独立した実時刻照合・実機未確認

@@ -320,7 +320,7 @@ export const LINKS: OfficialLink[] = [
     id: "airport",
     title: "奄美空港",
     subtitle: "本日のフライト・空港アクセス",
-    url: "https://www.amami-airport.co.jp/flight",
+    url: "https://www.amami-airport.co.jp/flight/today",
     category: "transport",
     jurisdiction: "奄美空港",
     checkedOn: "2026-10-13",

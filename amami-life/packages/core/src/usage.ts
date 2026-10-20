@@ -1,3 +1,4 @@
+import SunCalc from "suncalc";
 import { LINKS, safetyLinks, todayJST, addDays, interpolateTide, type AreaId, type TideDay } from "./index.ts";
 import type { ForecastDay } from "./weather.ts";
 
@@ -72,4 +73,34 @@ export function createOrderedWriter(write: (key: string, value: string) => Promi
     pending = next;
     return next;
   };
+}
+
+/** A chart selection never bridges missing hours or a non-consecutive day. */
+export function tideAtMinute(day: TideDay | null, tomorrow: TideDay | null, minute: number) {
+  if (!day || !Number.isInteger(minute) || minute < 0 || minute > 1440) return null;
+  const next = tomorrow?.date === addDays(day.date, 1) ? tomorrow : null;
+  const heightCm = minute === 1440 ? next?.hourly.find(p => p.hour === 0)?.heightCm ?? null : interpolateTide(day, next, minute);
+  if (heightCm === null || !Number.isFinite(heightCm)) return null;
+  return { heightCm, time: `${String(Math.floor(minute / 60)).padStart(2,"0")}:${String(minute % 60).padStart(2,"0")}`, interpolated: minute % 60 !== 0 };
+}
+
+/** SunCalc 1.9.0 scans UTC days. Scan both overlapping the chosen JST day. */
+export function moonForDate(iso: string, lat: number, lon: number) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(iso) || !Number.isFinite(lat) || !Number.isFinite(lon) || Math.abs(lat)>90 || Math.abs(lon)>180) throw new Error("invalid-moon-input");
+  const start = Date.parse(`${iso}T00:00:00+09:00`), end = start + 86400_000;
+  if (!Number.isFinite(start) || todayJST(new Date(start)) !== iso) throw new Error("invalid-moon-date");
+  const events = [start, end - 1].map(t => SunCalc.getMoonTimes(new Date(t), lat, lon, true));
+  const event = (kind: "rise" | "set") => {
+    const found = events.map(e=>e[kind]).filter((d): d is Date => !!d && d.getTime()>=start && d.getTime()<end).sort((a,b)=>a.getTime()-b.getTime())[0];
+    return found ? { at: found.toISOString(), time: new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Tokyo",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).format(found), azimuth: Math.round((SunCalc.getMoonPosition(found,lat,lon).azimuth*180/Math.PI+540)%360) % 360 } : null;
+  };
+  return {rise:event("rise"),set:event("set")};
+}
+export function compassRay(azimuth: number, length = 1) {
+  const radians=azimuth*Math.PI/180;
+  return {x:Math.sin(radians)*length,y:-Math.cos(radians)*length};
+}
+export function mapPoint(lat: number, lon: number, zoom = 10) {
+  const scale=256*2**zoom, radians=lat*Math.PI/180;
+  return {x:(lon+180)/360*scale,y:(1-Math.asinh(Math.tan(radians))/Math.PI)/2*scale};
 }

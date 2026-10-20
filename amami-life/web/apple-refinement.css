@@ -326,3 +326,94 @@ html[data-theme-mode="ink-only"] body::before { content: ""; position: fixed; in
 html[data-theme-mode="ink-only"] .device,html[data-theme-mode="ink-only"] .app-shell { background: transparent; }
 html[data-theme-mode="ink-only"] .app-shell::after { content: none; }
 html[data-theme-mode="ink-only"] .craft-logo { display: block; height: auto; }
+
+/* Sun/moon directions share the ink, fine rules and numeric hierarchy. */
+.today-celestial { grid-column:2;grid-row:1;min-width:0;border-left:1px solid var(--hair);padding-left:32px; }
+.today-celestial .section-head { align-items:center;margin-top:0; }
+.today-celestial h3 {font-size:24px;margin:0;font-weight:650;letter-spacing:-.035em;}
+.celestial-tabs {display:flex;flex-shrink:0;gap:4px;}
+.celestial-tabs button {min-width:48px;min-height:48px;border-radius:24px;border:1px solid transparent;background:transparent;color:var(--muted);font:600 14px var(--body);cursor:pointer;}
+.celestial-tabs button[aria-selected="true"] {border-color:var(--accent);color:var(--ink);background:var(--ui-control-surface);}
+.celestial-map {position:relative;aspect-ratio:1;overflow:hidden;background:#1b211f;border:1px solid var(--hair);border-radius:12px;margin-top:12px;}
+.celestial-map svg {width:100%;height:100%;display:block;}
+.gsi-map {filter:grayscale(1) invert(.9);opacity:.75;}
+.celestial-ray {stroke:var(--accent);stroke-width:6;fill:none;}
+.celestial-ray.set {stroke:#fff5df;stroke-dasharray:14 9;}
+.celestial-origin,.celestial-end {fill:var(--accent);stroke:#1b211f;stroke-width:5;}
+.celestial-end.set {fill:#fff5df;}
+.celestial-place,.compass-north {font:600 25px var(--body);fill:#fff5df;paint-order:stroke;stroke:#1b211f;stroke-width:6;stroke-linejoin:round;}
+.celestial-facts {display:grid;grid-template-columns:1fr 1fr;margin-top:16px;gap:16px;}
+.celestial-fact span,.celestial-fact small {display:block;font-size:13px;line-height:1.8;}
+.celestial-fact span::before {content:"";display:inline-block;width:20px;margin-right:6px;border-top:2px solid var(--accent);vertical-align:middle;}
+.celestial-fact.set span::before {border-top:2px dashed var(--ink);}
+.celestial-fact strong {display:block;font-size:34px;line-height:1.4;font-weight:650;font-variant-numeric:tabular-nums;}
+.celestial-fact small,.map-credit {color:var(--muted);font-size:12px;}
+.map-credit {display:inline-flex;align-items:center;min-height:32px;}
+.map-error {position:absolute;inset:auto 12px 12px;background:var(--paper);padding:12px;font-size:13px;}
+.today-access {grid-column:1/-1;grid-row:auto;border-left:0;border-top:1px solid var(--hair);padding:28px 0 0;}
+.quick-links {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;}
+.journey-link:first-child {border-top:0;}
+.tide-plot {position:relative;min-width:0;}
+#interactive-tide {cursor:crosshair;touch-action:pan-y;}
+.tide-callout {position:absolute;top:0;z-index:2;transform:translateX(-50%);min-width:150px;padding:12px 16px;background:var(--paper);border:1px solid var(--accent);box-shadow:0 4px 20px #0003;border-radius:12px;pointer-events:none;}
+.tide-callout span,.tide-callout small {display:block;font-size:12px;line-height:1.7;}
+.tide-callout strong {display:block;font-size:26px;font-weight:650;font-variant-numeric:tabular-nums;}
+.tide-callout strong small {display:inline;font-size:14px;}
+.tide-selection {stroke:var(--accent);stroke-width:2;stroke-dasharray:4 3;}
+.tide-time-label {display:block;color:var(--ink);font-size:14px;margin:12px 0 18px;}
+#tide-time {display:block;width:100%;min-height:44px;accent-color:var(--accent);cursor:pointer;}
+.cyclone-home {display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:24px;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:24px 0;margin-bottom:32px;}
+.cyclone-home:not(:has(.cyclone-chart)) {grid-template-columns:1fr;}
+.cyclone-home h3 {font-size:22px;font-weight:650;line-height:1.6;margin:0;}
+.cyclone-events {list-style:none;padding:0;margin:12px 0;display:flex;flex-wrap:wrap;gap:12px 24px;}
+.cyclone-events strong,.cyclone-events small {display:block;}
+.cyclone-events small {font-size:12px;color:var(--muted);margin-top:6px;}
+.cyclone-actions {display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;}
+.cyclone-chart {margin:0;}
+.cyclone-chart a {display:block;position:relative;}
+.cyclone-chart img {display:block;width:100%;height:auto;border-radius:8px;background:white;}
+.cyclone-chart a > span {position:absolute;right:4px;bottom:4px;background:var(--paper);padding:4px 8px;font-size:12px;}
+.cyclone-chart figcaption {font-size:12px;line-height:1.7;margin-top:8px;}
+.flight-panel {border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:24px 0;margin-bottom:32px;}
+.flight-panel .section-head {margin-top:0;}
+.flight-panel > .inline-link {margin:0 16px;}
+.flight-frame {display:block;width:100%;height:760px;margin-top:20px;border:1px solid var(--hair);background:white;}
+@media(max-width:1050px) {
+ .today-celestial {grid-column:1;grid-row:auto;border-left:0;border-top:1px solid var(--hair);padding:28px 0 0;}
+ .celestial-map {max-width:520px;}
+ .quick-links {grid-template-columns:1fr;gap:0;}
+}
+@media(max-width:700px) {
+ .today-celestial {margin-top:28px;}
+ .today-celestial h3 {font-size:23px;}
+ .cyclone-home {grid-template-columns:1fr;padding:20px 0;}
+ .cyclone-chart {max-width:320px;}
+ .cyclone-home h3 {font-size:20px;}
+ .flight-panel > .inline-link {margin:8px 0;display:block;}
+ .flight-frame {height:600px;}
+ .tide-callout {min-width:126px;padding:8px 10px;}
+ .tide-callout strong {font-size:24px;}
+}
+body[data-text="large"] .today-celestial {grid-column:1;grid-row:auto;border-left:0;padding-left:0;}
+/* Keep the worldwide advisory smaller than local weather and directions. */
+.cyclone-home {grid-template-columns:minmax(0,1fr) 140px;gap:20px;padding:16px 0;margin-bottom:28px;}
+.cyclone-home .section-kicker {font-size:10px;margin-bottom:6px;}
+.cyclone-home h3 {font-size:20px;}
+.cyclone-home .source-details summary {padding:8px 0;min-height:40px;}
+.cyclone-events {margin:6px 0;}
+.cyclone-events li {display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;}
+.cyclone-events small {margin-top:0;}
+.cyclone-chart figcaption {font-size:10px;}
+.cyclone-actions .text-button {margin:0;}
+.celestial-tabs button:hover,.celestial-tabs button:focus-visible {color:var(--ink);border-color:var(--accent);}
+@media(max-width:700px) {
+ .cyclone-home {grid-template-columns:minmax(0,1fr) 96px;gap:12px;}
+ .cyclone-home h3 {font-size:17px;}
+ .cyclone-home .section-kicker {letter-spacing:.05em;}
+ .cyclone-actions {grid-column:1/-1;gap:8px;}
+ .cyclone-home .source-details summary {font-size:12px;}
+ .cyclone-chart figcaption {font-size:10px;}
+}
+.tide-callout {width:180px;min-width:0;box-sizing:border-box;left:clamp(90px,var(--tide-x,50%),calc(100% - 90px));}
+@media(max-width:700px) {.tide-callout {width:144px;left:clamp(72px,var(--tide-x,50%),calc(100% - 72px));}}
+.gsi-map {filter:url(#island-map-tone);opacity:1;}

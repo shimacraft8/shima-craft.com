@@ -1,8 +1,3 @@
-const openButton = document.getElementById("craft-menu-button");
-const craftDialog = document.getElementById("craft-dialog");
-openButton.addEventListener("click", () => craftDialog.showModal());
-craftDialog.addEventListener("close", () => openButton.focus({ preventScroll: true }));
-
 // Dismiss a lightweight dialog only when both pointer ends are on its backdrop.
 // A drag that starts inside a sheet must not discard the current interaction.
 for (const dialog of document.querySelectorAll("dialog")) {

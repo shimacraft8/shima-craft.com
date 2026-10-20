@@ -31,3 +31,5 @@ await copyFile(resolve(root,"web/assets/paper.svg"),resolve(out,"assets/paper.sv
 for (const name of ["shimacraft-logo.png", "shimacraft-logo-white.png", "shimacraft-logo-white-red.svg"]) await copyFile(resolve(root,"web/assets",name),resolve(out,"assets",name));
 await copyFile(resolve(root,"web/public-privacy.html"),resolve(out,"privacy.html"));
 console.log("Public assets built; local QA/demo files and credentials excluded.");
+
+await copyFile(resolve(root,"web/assets/suncalc-LICENSE.txt"),resolve(out,"assets/suncalc-LICENSE.txt"));

@@ -1,3 +1,4 @@
+import { createCycloneProvider } from "../server/cyclones.mjs";
 import { AREAS, validDate, todayJST, addDays, solarForDate, unknownSource } from "../packages/core/src/index.ts";
 import { createWeatherProvider } from "../server/weather.mjs";
 import { createObservationProvider } from "../server/observations.mjs";
@@ -9,9 +10,9 @@ const security = {
   "Referrer-Policy": "strict-origin-when-cross-origin",
   "Cache-Control": "no-store",
 };
-const csp = "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; font-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'";
+const csp = "default-src 'self'; img-src 'self' data: https://cyberjapandata.gsi.go.jp; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; font-src 'self'; frame-src https://www.amami-airport.co.jp https://amami-airport.co.jp; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'";
 const sourceErrors={};
-export function createHomeWorker({ weather = createWeatherProvider({onError:error=>{sourceErrors.weather=error;}}), observations = createObservationProvider({onError:error=>{sourceErrors.observations=error;}}), clock = () => new Date() } = {}) {
+export function createHomeWorker({ cyclones = createCycloneProvider(), weather = createWeatherProvider({onError:error=>{sourceErrors.weather=error;}}), observations = createObservationProvider({onError:error=>{sourceErrors.observations=error;}}), clock = () => new Date() } = {}) {
   return {
     async fetch(request, env) {
       const url = new URL(request.url);
@@ -47,7 +48,9 @@ export function createHomeWorker({ weather = createWeatherProvider({onError:erro
         const json = (body,status=200) => new Response(request.method==="HEAD" ? null : JSON.stringify(body),{status,headers:{...security,"Content-Type":"application/json; charset=utf-8"}});
         if (!area || !validDate(date) || (url.searchParams.has("state") && url.searchParams.get("state")!=="ready")) return json({error:"invalid-input"},400);
         const name=url.pathname.slice("/amami-life-api/".length);
-        if (name==="service-health") return json({schemaVersion:1,mode:"public-web",currentHazardsIntegrated:false,tideYear:2026,...(env.DEBUG_SOURCES==="1" ? {sourceErrors} : {})});
+        if(name==="cyclones") {const body=await cyclones.get();return json(body,body.status==="unavailable" ? 503 : 200);}
+        if(name==="cyclones/chart") {const image=await cyclones.image(url.searchParams.get("version"));return new Response(request.method==="HEAD" ? null : image,{status:image ? 200 : 410,headers:{...security,"Content-Type":image ? "image/png" : "text/plain"}});}
+        if (name==="service-health") return json({schemaVersion:1,mode:"public-web",currentHazardsIntegrated:false,cyclonesIntegrated:true,tideYear:2026,...(env.DEBUG_SOURCES==="1" ? {sourceErrors} : {})});
         if (name==="weather") {
           if (url.searchParams.get("mode")!=="live") return json({error:"live-mode-required"},400);
           const body=await weather.get(area.id,date);

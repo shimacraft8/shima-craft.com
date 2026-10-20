@@ -1,3 +1,4 @@
+import { createCycloneProvider } from "./cyclones.mjs";
 import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
@@ -58,6 +59,7 @@ export function api(url) {
         mode: "local",
         endpoints: ["/v1/weather?mode=live", "/v1/observations"],
         currentHazardsIntegrated: false,
+        cyclonesIntegrated: true,
         sources: [{ ...unknown, status: "not-connected" }],
       },
     };
@@ -78,7 +80,7 @@ export function api(url) {
         LINKS.filter((l) => l.category === "transport"),
         unknownSource(
           "official-links",
-          "https://www.amami-airport.co.jp/flight",
+          "https://www.amami-airport.co.jp/flight/today",
         ),
         "reference",
       ),
@@ -171,8 +173,9 @@ export function api(url) {
   }
   return { code: 404, body: { error: "not-found" } };
 }
-export async function requestApi(url, weatherProvider, observationProvider) {
+export async function requestApi(url, weatherProvider, observationProvider, cycloneProvider) {
   const result = api(url);
+  if(result.code===200 && url.pathname==="/v1/cyclones" && cycloneProvider) {const body=await cycloneProvider.get();return {code:body.status==="unavailable" ? 503 : 200,body};}
   if (result.code === 200 && url.pathname === "/v1/observations") {
     if ((url.searchParams.get("state") ?? "ready") !== "ready")
       return { code: 200, body: { schemaVersion: 1, mode: "reference", data: null, status: "unavailable", source: unknownSource("observation-qa", "https://www.jma.go.jp/bosai/amedas/"), refreshPolicy: "QA状態では上流を取得しません。" } };
@@ -200,7 +203,7 @@ export async function requestApi(url, weatherProvider, observationProvider) {
   }
   return result;
 }
-export function createApp({ weatherProvider = createWeatherProvider(), observationProvider = createObservationProvider(), apiOnly = false } = {}) {
+export function createApp({ cycloneProvider = createCycloneProvider(), weatherProvider = createWeatherProvider(), observationProvider = createObservationProvider(), apiOnly = false } = {}) {
   return createServer(async (req, res) => {
     const url = new URL(req.url, "http://localhost");
     const common = {
@@ -219,7 +222,7 @@ export function createApp({ weatherProvider = createWeatherProvider(), observati
       res.end();
       return;
     }
-    if (apiOnly && !["/v1/observations", "/v1/weather", "/v1/service-health"].includes(url.pathname)) {
+    if (apiOnly && !["/v1/observations", "/v1/weather", "/v1/service-health", "/v1/cyclones", "/v1/cyclones/chart"].includes(url.pathname)) {
       res.writeHead(404, common); res.end(); return;
     }
     if (apiOnly && url.pathname === "/v1/weather" && url.searchParams.get("mode") !== "live") {
@@ -239,7 +242,8 @@ export function createApp({ weatherProvider = createWeatherProvider(), observati
         res.end();
         return;
       }
-      const result = await requestApi(url, weatherProvider, observationProvider);
+      if(url.pathname==="/v1/cyclones/chart") {const image=await cycloneProvider.image(url.searchParams.get("version"));res.writeHead(image ? 200 : 410,{...common,"Content-Type":image ? "image/png" : "text/plain"});res.end(req.method==="HEAD" ? undefined : image ?? "Image unavailable");return;}
+      const result = await requestApi(url, weatherProvider, observationProvider, cycloneProvider);
       res.writeHead(result.code, {
         ...common,
         "Content-Type": "application/json; charset=utf-8",
@@ -277,7 +281,7 @@ export function createApp({ weatherProvider = createWeatherProvider(), observati
         ...common,
         "Content-Type": mime,
         "Content-Security-Policy":
-          "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; font-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'self'",
+          "default-src 'self'; img-src 'self' data: https://cyberjapandata.gsi.go.jp; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; font-src 'self'; frame-src 'self' https://www.amami-airport.co.jp https://amami-airport.co.jp; object-src 'none'; base-uri 'self'",
       });
       res.end(req.method === "HEAD" ? undefined : content);
     } catch {

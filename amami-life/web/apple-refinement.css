@@ -1,0 +1,328 @@
+/* Apple-inspired typography and purposeful navigation, in AMAMI LIFE materials.
+   System fonts only; no SF font files, external fonts or animation dependencies. */
+:root {
+  --body: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif;
+  --display: var(--body);
+  --ui-control-surface: #f0ece2;
+  --ui-glass: rgba(247,243,233,.94);
+  --ui-ease: cubic-bezier(.2,.75,.25,1);
+}
+body[data-theme="ink"] { --ui-control-surface: #30332e; --ui-glass: rgba(34,37,34,.95); }
+html { scroll-behavior: auto; scroll-padding-top: 100px; }
+body { font-size: 17px; letter-spacing: -.012em; }
+h1,h2,h3,p { overflow-wrap: break-word; }
+h2,h3 { font-family: var(--body); letter-spacing: -.035em; }
+button,a,input,select,textarea,summary { -webkit-tap-highlight-color: transparent; }
+button,a,summary { touch-action: manipulation; }
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,main:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+button,.tabbar a,.journey-link,.inline-link { transition: background-color 180ms var(--ui-ease), color 180ms var(--ui-ease), opacity 180ms var(--ui-ease); }
+button:active,.tabbar a:active,.journey-link:active { opacity: .7; }
+.craft-header { max-width: 1392px; min-height: 76px; padding: 12px 48px; border-bottom: 0; }
+.craft-logo { width: 112px; }
+.craft-menu-button { display: flex; align-items: center; gap: 16px; min-height: 48px; padding: 12px 20px; border-radius: 999px; background: var(--ui-control-surface); font-size: 14px; font-weight: 600; }
+.craft-menu-button span { margin: 0; }
+.showroom { max-width: 1392px; padding: 12px 48px 64px; }
+.island-intro { display: flex; align-items: center; gap: 24px; margin-bottom: 28px; }
+.island-intro .overline { display: block; font-size: 12px; color: var(--muted); letter-spacing: .16em; margin: 0 0 12px; font-weight: 650; }
+.island-intro-title { font: 650 clamp(36px,4vw,56px)/1.2 var(--body); letter-spacing: -.045em; margin: 0; text-wrap: balance; }
+body:not([data-tab="today"]) .island-intro-title,body:not([data-tab="today"]) .island-intro-copy { display: none; }
+.island-intro-copy { font-size: 16px; line-height: 1.7; color: var(--muted); margin: 14px 0 0; }
+.craft-theme { display: flex; flex-wrap: nowrap; gap: 4px; padding: 4px; border-radius: 999px; background: var(--ui-control-surface); }
+.craft-theme button { min-height: 44px; padding: 10px 16px; border-radius: 999px; font-size: 13px; white-space: nowrap; text-decoration: none; }
+.craft-theme button[aria-pressed="true"] { background: var(--paper); color: var(--ink); box-shadow: inset 0 0 0 1px var(--hair); text-decoration: none; }
+.app-shell { display: grid; grid-template-columns: minmax(0,1fr) auto; grid-template-areas: "tabs location" "notice notice" "content content"; column-gap: 16px; overflow: visible; background: transparent; }
+.tabbar { grid-area: tabs; position: sticky; top: 16px; z-index: 8; align-self: start; padding: 6px; border: 1px solid var(--hair); border-radius: 999px; background: var(--ui-control-surface); }
+.tabbar a { flex-direction: row; gap: 10px; min-height: 48px; padding: 10px 12px; border-radius: 999px; font-size: 14px; font-weight: 500; }
+.tabbar a[aria-current="page"] { color: var(--ink); font-weight: 650; background: var(--paper); box-shadow: inset 0 0 0 1px var(--hair); }
+.tabbar a[aria-current="page"] svg { color: var(--accent); }
+.tabbar a[aria-current="page"]::after { display: none; }
+.app-header { grid-area: location; position: sticky; top: 16px; right: auto; align-self: start; z-index: 8; min-height: 62px; padding: 0 20px; border: 1px solid var(--hair); border-radius: 999px; background: var(--paper); }
+.app-header .location { min-height: 60px; padding: 8px 4px; font-size: 14px; font-weight: 600; }
+.demo-strip { grid-area: notice; padding: 12px 4px 0; border: 0; text-align: left; font-size: 12px; line-height: 1.7; }
+.app-shell main { grid-area: content; min-width: 0; padding: 0 0 24px; overflow: visible; overscroll-behavior: auto; scroll-margin-top: 100px; }
+.today-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; padding: 28px 0; gap: 16px 24px; }
+.selected-date { gap: 14px; }
+.today-heading h2 { font: 650 24px/1.4 var(--body); letter-spacing: -.025em; }
+.date-context { font-size: 13px; font-weight: 650; color: var(--accent); border: 0; }
+.date-controls { gap: 6px; }
+.date-controls label { font-size: 13px; gap: 10px; color: var(--muted); }
+.date-controls input { min-height: 48px; padding: 10px 12px; border: 1px solid var(--hair); border-radius: 12px; background: var(--paper); font-size: 16px; }
+.date-step { min-width: 48px; min-height: 48px; border-radius: 999px; }
+.date-step:hover { background: var(--ui-control-surface); }
+.date-controls .text-button { border: 0; border-radius: 999px; padding: 10px 16px; margin: 0; background: var(--ui-control-surface); }
+.today-layout { display: grid; grid-template-columns: minmax(0,1.8fr) minmax(310px,1fr); gap: 40px 56px; }
+.weather-overview { padding: 0; }
+#current-observation { display: grid; grid-template-columns: minmax(0,1fr) minmax(170px,.65fr); gap: 8px 20px; }
+.weather-top { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; padding: 0; margin: 0; }
+.temperature { font-family: var(--display); font-size: clamp(104px,8.5vw,124px); font-weight: 350; line-height: 1; letter-spacing: -.075em; font-variant-numeric: tabular-nums; }
+.temperature .degree { font-size: .42em; top: -.65em; margin-left: .08em; }
+.temperature .unit { font: 500 14px var(--body); letter-spacing: 0; }
+.weather-caption { text-align: right; padding: 0 0 10px; }
+.weather-caption .weather-name { font-size: 17px; font-weight: 650; }
+.weather-caption small { font-size: 12px; line-height: 1.7; }
+#forecast-brief { grid-column: 1; padding-top: 10px; }
+.forecast-brief { margin: 0; font-size: clamp(22px,2vw,28px); font-weight: 650; line-height: 1.45; letter-spacing: -.035em; text-wrap: balance; }
+.forecast-local { font-size: 14px; line-height: 1.7; margin: 8px 0 0; }
+#forecast-brief .source-note { margin: 10px 0 0; font-size: 14px; font-weight: 450; line-height: 1.7; }
+.weather-art { grid-column: 2; grid-row: 1 / 3; align-self: center; margin: 0; }
+.weather-art,.weather-art svg { height: 220px; }
+.place-caption { grid-column: 1 / -1; grid-row: auto; text-align: left; margin: 6px 0 0; }
+.place-caption strong { display: none; }
+.place-caption small { font-size: 11px; line-height: 1.7; margin: 0; }
+.today-brief { grid-column: 1 / -1; grid-template-columns: repeat(3,minmax(0,1fr)); margin-top: 16px; border-top: 1px solid var(--hair); border-bottom: 0; background: none; }
+.today-brief .fact { padding: 20px 0 8px; }
+.today-brief .fact + .fact { padding-left: 20px; }
+.today-brief .fact-label { font-size: 13px; font-weight: 600; }
+.today-brief .fact-value { font-size: clamp(30px,2.8vw,38px); font-weight: 650; letter-spacing: -.035em; line-height: 1.3; }
+.today-brief .fact-note { margin-top: 6px; font-size: 12px; line-height: 1.7; }
+.fact-value,.tide-events p strong { font-family: var(--display); font-variant-numeric: tabular-nums; }
+.source-details { margin-top: 0; }
+.weather-refresh { justify-self: start; border: 0; border-radius: 999px; padding: 10px 18px; background: var(--ui-control-surface); font-size: 13px; font-weight: 600; }
+.source-details summary { cursor: pointer; min-height: 48px; padding: 14px 0; font-size: 13px; }
+.section-kicker { color: var(--muted); font-size: 11px; font-weight: 650; letter-spacing: .15em; margin: 0 0 12px; }
+.today-access { grid-column: 2; grid-row: 1; padding: 0 0 0 32px; border-top: 0; border-left: 1px solid var(--hair); }
+.today-access h3 { font-size: 29px; line-height: 1.4; font-weight: 650; margin: 0 0 20px; }
+.quick-links { display: block; }
+.journey-link { display: flex; align-items: center; gap: 12px; min-height: 88px; padding: 16px 0; border-bottom: 1px solid var(--hair); text-decoration: none; }
+.journey-link:first-child { border-top: 1px solid var(--hair); }
+.journey-icon { flex: 0 0 22px; }
+.journey-icon svg { display: block; width: 22px; height: 22px; stroke-width: 1.5; }
+.journey-link > span:nth-child(2) { flex: 1; min-width: 0; }
+.journey-link strong { display: block; font-size: 17px; font-weight: 650; line-height: 1.6; }
+.journey-link small { display: block; color: var(--muted); font-size: 12px; line-height: 1.7; margin-top: 3px; letter-spacing: 0; }
+.journey-arrow { display: block; font-size: 20px; transition: transform 200ms var(--ui-ease); }
+.safety-status { display: flex; align-items: flex-start; gap: 10px; margin: 20px 0 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
+.safety-status > span:first-child { display: inline-grid; place-items: center; flex: 0 0 18px; height: 18px; border: 1px solid currentColor; border-radius: 50%; font-size: 11px; font-weight: 700; margin-top: 2px; }
+.safety-status strong { display: block; font-size: 13px; color: var(--ink); font-weight: 600; }
+.today-tide-chart,.tide-outlook,.today-forecast { grid-column: 1 / -1; border-top: 1px solid var(--hair); padding-top: 32px; margin: 0; }
+.section-head { align-items: baseline; gap: 16px; }
+.section-head h3 { font-size: clamp(24px,2.5vw,32px); font-weight: 650; line-height: 1.5; letter-spacing: -.035em; }
+.section-head span { font-size: 12px; letter-spacing: 0; }
+.readable-note,.source-note { font-size: 13px; line-height: 1.8; }
+.chart-summary { background: none; border: 0; padding: 12px 0 0; align-items: flex-end; }
+.chart-summary strong { font-size: 46px; font-weight: 650; letter-spacing: -.045em; }
+.chart-summary p { font-size: 17px; font-weight: 500; }
+.chart-summary span { font-size: 14px; font-weight: 500; }
+.tide-chart { margin-top: 24px; }
+.tide-curve { stroke-width: 2.5; }
+.today-details { grid-column: 1 / -1; border: 1px solid var(--hair); border-radius: 18px; padding: 0 24px; margin-top: -12px; }
+.today-details > summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 86px; cursor: pointer; list-style: none; }
+.today-details > summary::-webkit-details-marker { display: none; }
+.today-details > summary strong { display: block; font-size: 17px; font-weight: 600; }
+.today-details > summary small { display: block; font-size: 13px; color: var(--muted); line-height: 1.7; margin-top: 4px; }
+.disclosure-symbol { font-size: 24px; font-weight: 400; transition: transform 220ms var(--ui-ease); }
+.today-details[open] .disclosure-symbol { transform: rotate(45deg); }
+.astronomy-content { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; padding: 24px 0; border-top: 1px solid var(--hair); }
+.today-details .sun-section { margin: 0; }
+.today-details .section-head h3 { font-size: 22px; }
+.today-details .fact-value { font-size: 34px; font-weight: 600; }
+.today-details .facts-grid { background: none; }
+.tide-events p { gap: 12px; }
+.tide-events p strong { font-size: 28px; font-weight: 600; }
+.outlook-days button { padding: 20px 16px; }
+.outlook-days button[aria-pressed="true"] { background: var(--panel); box-shadow: inset 0 2px var(--accent); }
+.outlook-days strong { font-size: 17px; font-weight: 650; }
+.today-forecast { max-width: none; }
+.today-forecast > .body-copy,.today-forecast > .source-note { max-width: 760px; }
+.page-top { margin: 36px 0 24px; }
+.page-top h2 { font-size: clamp(34px,4vw,48px); font-weight: 650; line-height: 1.25; }
+.page-index,.empty-title,.empty-copy,.brand-footer { font-family: var(--body); }
+.empty-title { font-weight: 650; }
+.body-copy { font-size: 17px; line-height: 1.9; }
+.search-label { font-size: 14px; }
+.search-input { font-size: 17px; border: 1px solid var(--hair); border-radius: 16px; background: var(--ui-control-surface); padding: 14px 18px; }
+.filters { padding: 4px; gap: 4px; width: fit-content; max-width: 100%; border-radius: 24px; background: var(--ui-control-surface); }
+.filters button { min-width: 64px; min-height: 48px; border: 0; border-radius: 24px; font-size: 14px; }
+.filters button[aria-pressed="true"] { background: var(--paper); color: var(--ink); box-shadow: inset 0 0 0 1px var(--hair); }
+.link-directory { gap: 0 48px; }
+.link-directory .row { padding: 8px 0; }
+.row-main strong { font-size: 18px; font-weight: 600; line-height: 1.6; }
+.row-main small { font-size: 14px; line-height: 1.8; }
+.row .save { width: 48px; height: 48px; border-radius: 50%; }
+.row .save:hover { background: var(--ui-control-surface); }
+.notice { padding: 20px 24px; background: var(--panel); }
+.notice strong { font-size: 17px; }
+.notice p { font-size: 14px; line-height: 1.8; }
+.craft-page-footer { display: flex; max-width: 1296px; padding: 32px 0 48px; }
+.craft-page-footer p { font: 600 22px/1.7 var(--body); letter-spacing: -.03em; }
+.craft-page-footer a { font-size: 14px; }
+dialog { overscroll-behavior: contain; width: min(calc(100% - 40px),520px); padding: 28px; border-radius: 24px; box-shadow: 0 24px 80px #00000028; }
+dialog[open] { animation: sheet-arrive 240ms var(--ui-ease); }
+dialog::backdrop { background: #14171366; }
+.dialog-head h2 { font-size: 24px; font-weight: 650; }
+.dialog-head button { min-width: 48px; min-height: 48px; border-radius: 50%; background: var(--ui-control-surface); }
+.craft-shortcuts { display: grid; grid-template-columns: 1fr 1fr; column-gap: 24px; }
+.craft-shortcuts a { min-height: 64px; font-size: 14px; }
+dialog .craft-theme { margin-top: 24px; width: fit-content; }
+#area-options button { min-height: 72px; border-radius: 12px; padding: 14px 16px; font-size: 17px; }
+#area-options button[aria-pressed="true"] { background: var(--ui-control-surface); color: var(--ink); font-weight: 600; }
+.provenance dd { min-width: 0; overflow-wrap: anywhere; }
+@keyframes sheet-arrive { from { opacity: .6; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@media (hover:hover) and (pointer:fine) {
+  .journey-link:hover { color: var(--accent); }
+  .journey-link:hover .journey-arrow { transform: translateX(4px); }
+}
+@supports ((backdrop-filter:blur(12px)) or (-webkit-backdrop-filter:blur(12px))) {
+  .tabbar { background: var(--ui-glass); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+}
+@media (min-width:761px) and (max-width:1099px) {
+  .craft-header { padding: 12px 32px; }
+  .showroom { padding: 12px 32px 48px; }
+  .island-intro-title { font-size: 36px; }
+  .tabbar a { gap: 7px; padding: 10px 8px; font-size: 13px; }
+  .app-header { padding: 0 14px; }
+  .app-header .location { font-size: 13px; }
+  .today-layout { grid-template-columns: 1fr; gap: 32px; }
+  #current-observation { grid-template-columns: minmax(0,1fr) minmax(180px,1fr); }
+  .today-access { grid-row: auto; grid-column: 1; border-left: 0; border-top: 1px solid var(--hair); padding: 28px 0 0; }
+  .quick-links { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 24px; }
+  .journey-link { flex-wrap: wrap; min-height: 140px; border-top: 1px solid var(--hair); }
+  .journey-link > span:nth-child(2) { flex-basis: calc(100% - 44px); }
+  .journey-icon { display: none; }
+  .safety-status { max-width: 560px; }
+  .today-access h3 { font-size: 26px; }
+  .craft-page-footer { margin: 0 32px; display: block; }
+  .craft-page-footer nav { margin-top: 20px; }
+}
+@media (max-width:760px) {
+  html { scroll-padding-top: 16px; scroll-padding-bottom: calc(112px + env(safe-area-inset-bottom)); }
+  .craft-header { min-height: 72px; padding: max(10px,env(safe-area-inset-top)) 24px 10px; }
+  .craft-logo { width: 96px; }
+  .craft-menu-button { font-size: 12px; gap: 12px; padding: 10px 16px; }
+  .showroom { position: relative; padding: 0; }
+  .island-intro { display: block; padding: 16px 24px 18px; margin: 0; }
+  .island-intro .overline { font-size: 13px; margin: 0 0 16px; line-height: 24px; }
+  .island-intro-title { font-size: clamp(26px,7.2vw,32px); line-height: 1.4; letter-spacing: -.045em; }
+  .island-intro-copy,.island-intro > .craft-theme { display: none; }
+  .app-shell { position: static; display: flex; height: auto; max-width: none; min-height: 0; overflow: visible; }
+  .app-header { position: absolute; top: 4px; right: 24px; align-self: auto; border: 0; padding: 0; background: transparent; min-height: 48px; }
+  .app-header .wordmark { display: none; }
+  .app-header .location { min-height: 48px; padding: 10px 16px; border-radius: 999px; background: var(--ui-control-surface); font-size: 14px; }
+  .demo-strip { order: 1; font-size: 11px; padding: 0 24px 4px; }
+  .app-shell main { order: 2; padding: 0 24px 40px; overflow: visible; scroll-margin-top: 16px; }
+  .app-shell main :is(a,button,input,select,textarea,summary) { scroll-margin-bottom: calc(112px + env(safe-area-inset-bottom)); }
+  .tabbar { position: fixed; inset: auto 16px max(12px,env(safe-area-inset-bottom)); max-width: 480px; margin: auto; padding: 6px; border-radius: 34px; box-shadow: 0 8px 32px #00000010; }
+  .tabbar a { flex-direction: column; min-height: 60px; gap: 5px; padding: 8px 4px; font-size: 11px; line-height: 1.4; }
+  .tabbar svg { width: 21px; height: 21px; }
+  .today-heading { display: block; padding: 12px 0 24px; }
+  .today-heading h2 { font-size: 22px; }
+  .selected-date { gap: 12px; }
+  .date-controls { justify-content: flex-start; gap: 4px; margin-top: 12px; }
+  .date-controls label { font-size: 0; gap: 0; }
+  .date-controls input { width: 144px; padding: 10px 8px; }
+  .date-controls .text-button { padding: 10px 12px; font-size: 13px; }
+  .today-layout { display: block; }
+  #current-observation { grid-template-columns: minmax(0,1fr) 112px; gap: 8px; }
+  .weather-top { display: flex; grid-column: 1 / -1; justify-content: space-between; align-items: flex-end; margin: 0 0 8px; }
+  .temperature { font-size: clamp(96px,27vw,120px); }
+  .weather-caption { text-align: right; padding: 0 0 10px; }
+  .weather-caption .weather-name { font-size: 17px; }
+  #forecast-brief { grid-column: 1; grid-row: 2; padding: 4px 0 0; }
+  .forecast-brief { font-size: 22px; }
+  #forecast-brief .source-note { font-size: 13px; }
+  .weather-art { grid-row: 2; margin: 0; }
+  .weather-art,.weather-art svg { height: 112px; }
+  .place-caption { grid-column: 1 / -1; grid-row: 3; margin-top: 4px; }
+  .today-brief { margin-top: 12px; }
+  .today-brief .fact { padding: 16px 0 8px; }
+  .today-brief .fact + .fact { padding-left: 10px; }
+  .today-brief .fact-label { font-size: 12px; }
+  .today-brief .fact-value { font-size: clamp(26px,7.5vw,32px); }
+  .today-brief .fact-note { font-size: 11px; }
+  .today-access { margin-top: 28px; padding: 28px 0 0; border: 0; border-top: 1px solid var(--hair); }
+  .today-access h3 { font-size: 28px; margin-bottom: 18px; }
+  .section-kicker { font-size: 10px; }
+  .journey-link { min-height: 92px; }
+  .journey-link strong { font-size: 18px; }
+  .journey-link small { font-size: 13px; }
+  .safety-status { font-size: 13px; }
+  .today-tide-chart,.tide-outlook,.today-forecast { margin-top: 36px; padding-top: 28px; }
+  .section-head h3 { font-size: 26px; }
+  .today-details { margin-top: 24px; padding: 0 18px; }
+  .today-details > summary { min-height: 96px; }
+  .today-details > summary strong { font-size: 16px; }
+  .today-details > summary small { font-size: 12px; }
+  .astronomy-content { display: block; padding-top: 20px; }
+  .today-details .sun-section { margin-top: 28px; }
+  .today-details .section-head:first-child { margin-top: 0; }
+  .today-details .fact-value { font-size: 32px; }
+  .chart-summary { display: block; padding: 8px 0; }
+  .chart-summary strong { font-size: 40px; }
+  .chart-summary p { font-size: 16px; margin-top: 12px; }
+  .chart-grid { grid-template-columns: 46px minmax(0,1fr); }
+  .outlook-days { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .outlook-days button { padding: 20px 14px; }
+  .page-top { margin-top: 24px; }
+  .page-top h2 { font-size: 36px; }
+  .filters { width: 100%; }
+  .filters button { flex: 1; min-width: 52px; padding: 10px 8px; }
+  .link-directory { display: block; }
+  .notice { padding: 18px; }
+  .craft-page-footer { display: block; margin: 0 24px; padding: 28px 0 calc(116px + env(safe-area-inset-bottom)); }
+  .craft-page-footer p { font-size: 22px; }
+  .craft-page-footer nav { display: block; margin-top: 20px; }
+  .craft-page-footer a { padding: 10px 0; }
+  dialog { margin: auto 12px max(12px,env(safe-area-inset-bottom)); width: calc(100% - 24px); padding: 24px; max-height: calc(100dvh - 40px); }
+  .craft-shortcuts { display: block; }
+  .craft-theme button { min-height: 48px; }
+  .control-row select { font-size: 16px; }
+  body:not([data-tab="today"]) .island-intro-title { display: none; }
+  body:not([data-tab="today"]) .island-intro { padding-bottom: 4px; }
+  body:not([data-tab="today"]) .island-intro .overline { margin-bottom: 4px; }
+}
+@media (max-width:360px) {
+  .craft-header,.island-intro,.app-shell main { padding-left: 20px; padding-right: 20px; }
+  .app-header { right: 20px; }
+  .demo-strip { padding-left: 20px; padding-right: 20px; }
+  .date-controls { flex-wrap: wrap; }
+  .date-controls label { flex: 1; }
+  .date-controls input { width: 100%; }
+  .date-controls .text-button { flex-basis: 100%; margin-top: 4px; }
+  #current-observation { grid-template-columns: minmax(0,1fr) 94px; }
+  .weather-art,.weather-art svg { height: 96px; }
+  .today-brief .fact-value { font-size: 25px; }
+}
+@media (min-width:1100px) and (max-height:820px) {
+  .craft-header { min-height: 64px; padding-top: 8px; padding-bottom: 8px; }
+  .showroom { padding-top: 0; }
+  .island-intro { margin-bottom: 16px; }
+  .island-intro .overline { display: none; }
+  .island-intro-title { font-size: 36px; }
+  .island-intro-copy { display: none; }
+  .demo-strip { padding-top: 8px; }
+  .today-heading { padding-top: 12px; padding-bottom: 12px; }
+  .temperature { font-size: 108px; }
+  .today-brief { margin-top: 12px; }
+  .today-brief .fact { padding-top: 14px; }
+  .weather-art,.weather-art svg { height: 180px; }
+}
+body[data-text="large"] .selected-date,body[data-text="large"] .date-controls { flex-wrap: wrap; }
+body[data-text="large"] .today-heading h2 { font-size: 32px; }
+body[data-text="large"] .forecast-brief { font-size: 28px; }
+body[data-text="large"] .today-brief { grid-template-columns: 1fr; }
+body[data-text="large"] .today-brief .fact + .fact { padding-left: 0; }
+body[data-text="large"] .tabbar a { font-size: 14px; }
+body[data-text="large"] .today-access { grid-row: auto; grid-column: 1; border-left: 0; padding-left: 0; }
+body[data-text="large"] .provenance dl { grid-template-columns: minmax(0,1fr); gap: 4px; }
+body[data-text="large"] .provenance dt { margin-top: 12px; font-weight: 600; }
+body[data-text="large"] .astronomy-content { grid-template-columns: 1fr; }
+@media (prefers-contrast:more) {
+  .tabbar,.app-header { background: var(--paper); backdrop-filter: none; -webkit-backdrop-filter: none; border-color: var(--ink); }
+  .tabbar a[aria-current="page"] { box-shadow: inset 0 0 0 2px var(--ink); }
+}
+@media (prefers-reduced-transparency:reduce) {
+  .tabbar { background: var(--paper); backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
+@media (prefers-reduced-motion:reduce) {
+  *,*::before,*::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+@media (forced-colors:active) {
+  .tabbar a[aria-current="page"] { outline: 2px solid Highlight; outline-offset: -4px; }
+}
+
+/* One continuous ink surface: texture follows the page, not a framed app. */
+html[data-theme-mode="ink-only"] body { isolation: isolate; background: var(--paper); }
+html[data-theme-mode="ink-only"] body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: url("/assets/paper.svg"); opacity: .1; }
+html[data-theme-mode="ink-only"] .device,html[data-theme-mode="ink-only"] .app-shell { background: transparent; }
+html[data-theme-mode="ink-only"] .app-shell::after { content: none; }
+html[data-theme-mode="ink-only"] .craft-logo { display: block; height: auto; }

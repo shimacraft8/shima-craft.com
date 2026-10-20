@@ -1,0 +1,122 @@
+[
+  {
+    "appBackground": "rgba(0, 0, 0, 0)",
+    "bodyBackground": "rgb(34, 37, 34)",
+    "deviceBackground": "rgba(0, 0, 0, 0)",
+    "height": 568,
+    "innerTexture": "none",
+    "outerTexture": "url(\"http://127.0.0.1:4914/amami-life/assets/paper.svg\")",
+    "overflow": false,
+    "theme": "ink",
+    "themeButtons": 0,
+    "width": 320
+  },
+  {
+    "appBackground": "rgba(0, 0, 0, 0)",
+    "bodyBackground": "rgb(34, 37, 34)",
+    "deviceBackground": "rgba(0, 0, 0, 0)",
+    "height": 667,
+    "innerTexture": "none",
+    "outerTexture": "url(\"http://127.0.0.1:4914/amami-life/assets/paper.svg\")",
+    "overflow": false,
+    "theme": "ink",
+    "themeButtons": 0,
+    "width": 375
+  },
+  {
+    "appBackground": "rgba(0, 0, 0, 0)",
+    "bodyBackground": "rgb(34, 37, 34)",
+    "deviceBackground": "rgba(0, 0, 0, 0)",
+    "height": 844,
+    "innerTexture": "none",
+    "outerTexture": "url(\"http://127.0.0.1:4914/amami-life/assets/paper.svg\")",
+    "overflow": false,
+    "theme": "ink",
+    "themeButtons": 0,
+    "width": 390
+  },
+  {
+    "appBackground": "rgba(0, 0, 0, 0)",
+    "bodyBackground": "rgb(34, 37, 34)",
+    "deviceBackground": "rgba(0, 0, 0, 0)",
+    "height": 932,
+    "innerTexture": "none",
+    "outerTexture": "url(\"http://127.0.0.1:4914/amami-life/assets/paper.svg\")",
+    "overflow": false,
+    "theme": "ink",
+    "themeButtons": 0,
+    "width": 430
+  },
+  {
+    "appBackground": "rgba(0, 0, 0, 0)",
+    "bodyBackground": "rgb(34, 37, 34)",
+    "deviceBackground": "rgba(0, 0, 0, 0)",
+    "height": 1024,
+    "innerTexture": "none",
+    "outerTexture": "url(\"http://127.0.0.1:4914/amami-life/assets/paper.svg\")",
+    "overflow": false,
+    "theme": "ink",
+    "themeButtons": 0,
+    "width": 768
+  },
+  {
+    "appBackground": "rgba(0, 0, 0, 0)",
+    "bodyBackground": "rgb(34, 37, 34)",
+    "deviceBackground": "rgba(0, 0, 0, 0)",
+    "height": 768,
+    "innerTexture": "none",
+    "outerTexture": "url(\"http://127.0.0.1:4914/amami-life/assets/paper.svg\")",
+    "overflow": false,
+    "theme": "ink",
+    "themeButtons": 0,
+    "width": 1024
+  },
+  {
+    "appBackground": "rgba(0, 0, 0, 0)",
+    "bodyBackground": "rgb(34, 37, 34)",
+    "deviceBackground": "rgba(0, 0, 0, 0)",
+    "height": 720,
+    "innerTexture": "none",
+    "outerTexture": "url(\"http://127.0.0.1:4914/amami-life/assets/paper.svg\")",
+    "overflow": false,
+    "theme": "ink",
+    "themeButtons": 0,
+    "width": 1280
+  },
+  {
+    "appBackground": "rgba(0, 0, 0, 0)",
+    "bodyBackground": "rgb(34, 37, 34)",
+    "deviceBackground": "rgba(0, 0, 0, 0)",
+    "height": 1000,
+    "innerTexture": "none",
+    "outerTexture": "url(\"http://127.0.0.1:4914/amami-life/assets/paper.svg\")",
+    "overflow": false,
+    "theme": "ink",
+    "themeButtons": 0,
+    "width": 1440
+  },
+  {
+    "appBackground": "rgba(0, 0, 0, 0)",
+    "bodyBackground": "rgb(34, 37, 34)",
+    "deviceBackground": "rgba(0, 0, 0, 0)",
+    "height": 1080,
+    "innerTexture": "none",
+    "outerTexture": "url(\"http://127.0.0.1:4914/amami-life/assets/paper.svg\")",
+    "overflow": false,
+    "theme": "ink",
+    "themeButtons": 0,
+    "width": 1920
+  },
+  {
+    "appBackground": "rgba(0, 0, 0, 0)",
+    "bodyBackground": "rgb(34, 37, 34)",
+    "deviceBackground": "rgba(0, 0, 0, 0)",
+    "height": 390,
+    "innerTexture": "none",
+    "outerTexture": "url(\"http://127.0.0.1:4914/amami-life/assets/paper.svg\")",
+    "overflow": false,
+    "theme": "ink",
+    "themeButtons": 0,
+    "width": 844
+  }
+]

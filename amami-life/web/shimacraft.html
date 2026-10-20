@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" data-theme-mode="ink-only">
   <head>
     <meta charset="utf-8" />
     <meta
@@ -7,7 +7,7 @@
       content="width=device-width,initial-scale=1,viewport-fit=cover"
     />
     <meta name="robots" content="noindex,nofollow" />
-    <meta name="theme-color" content="#f7f3e9" />
+    <meta name="theme-color" content="#222522" />
     <meta
       name="description"
       content="SHIMA CRAFTのトップ組み込み案。AMAMI LIFEで奄美の今日を知る、旅と暮らしの道具。ローカル確認専用。"
@@ -16,19 +16,19 @@
     <link rel="stylesheet" href="/theme-tokens.css" />
     <link rel="stylesheet" href="/style.css" />
     <link rel="stylesheet" href="/shimacraft.css" />
+    <link rel="stylesheet" href="/apple-refinement.css" />
     <script type="module" src="/app.js"></script>
     <script type="module" src="/shimacraft.js"></script>
   </head>
-  <body>
+  <body data-theme="ink">
     <a class="skip" href="#content">本文へ進む</a>
     <header class="craft-header">
-      <a class="craft-wordmark" href="#today" aria-label="SHIMA CRAFT 島の今日へ"><img class="craft-logo craft-logo-paper" src="/assets/shimacraft-logo.png" width="480" height="205" alt="SHIMA CRAFT" /><img class="craft-logo craft-logo-ink" src="/assets/shimacraft-logo-white.png" width="480" height="205" alt="" /></a>
+      <a class="craft-wordmark" href="#today" aria-label="SHIMA CRAFT 島の今日へ"><img class="craft-logo" src="/assets/shimacraft-logo-white-red.svg" width="480" height="206" alt="SHIMA CRAFT" /></a>
       <button id="craft-menu-button" class="craft-menu-button" type="button" aria-haspopup="dialog">制作・相談 <span aria-hidden="true">↗</span></button>
     </header>
     <div class="showroom">
       <div class="island-intro">
-        <div><p class="overline">AMAMI LIFE / BY SHIMA CRAFT</p><p class="island-intro-title">島の今日を、ここから<span class="red-dot">。</span></p></div>
-        <div class="craft-theme" role="group" aria-label="画面のあしらい"><button type="button" data-theme="paper">朱と和紙</button><button type="button" data-theme="ink">墨と金</button></div>
+        <div><p class="overline">AMAMI LIFE</p><p class="island-intro-title">島の今日を、ひと目で<span class="red-dot">。</span></p><p class="island-intro-copy">旅する人にも、ここで暮らす人にも。</p></div>
       </div>
       <div class="device">
         <div class="app-shell">
@@ -44,7 +44,7 @@
             </button>
           </header>
           <div class="demo-strip">
-            トップ組み込み案 · 気象庁の観測・予報 / 防災は公式発表へ
+            気象庁の観測・予報を加工表示。防災は公式発表へ。
           </div>
           <nav id="tabs" class="tabbar" aria-label="主要画面"></nav>
           <main id="content" tabindex="-1"></main>
@@ -66,9 +66,6 @@
           <a href="https://shima-craft.com/system-samples" target="_blank" rel="noopener noreferrer">業務システム画面サンプル <span aria-hidden="true">↗</span><span class="sr-only">（別タブ）</span></a>
           <a href="https://shima-craft.com/web-check" target="_blank" rel="noopener noreferrer">Web導線チェック <span aria-hidden="true">↗</span><span class="sr-only">（別タブ）</span></a>
         </nav>
-        <div class="craft-theme" role="group" aria-label="画面のあしらい">
-          <button type="button" data-theme="paper">朱と和紙</button><button type="button" data-theme="ink">墨と金</button>
-        </div>
         <p class="craft-preview-note">ローカル確認用。サービスのリンクは公開中のSHIMA CRAFTへ移動します。</p>
       </form>
     </dialog>

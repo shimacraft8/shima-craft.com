@@ -12,6 +12,9 @@ const env={
   }},
   SHIMA_ORIGIN:{async fetch(request){
     const url=new URL(request.url);url.protocol="https:";url.hostname="shima-craft.com";url.port="";
+    // The deployed service binding reaches the original homepage at /. The
+    // local HTTP stand-in must use /studio, because public / is now AMAMI LIFE.
+    if (url.pathname === "/") url.pathname = "/studio";
     const headers=new Headers(request.headers);headers.delete("host");
     return fetch(new Request(url,{method:request.method,headers}));
   }},

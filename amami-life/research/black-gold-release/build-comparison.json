@@ -1,0 +1,20 @@
+{
+  "index.html": true,
+  "app.js": true,
+  "core.js": true,
+  "usage.js": true,
+  "style.css": true,
+  "theme-tokens.css": true,
+  "shimacraft.css": true,
+  "apple-refinement.css": true,
+  "shimacraft.js": true,
+  "privacy.html": true,
+  "assets/shimacraft-logo-white-red.svg": true,
+  "assets/paper.svg": true,
+  "bundleOnlyModuleLabelsNormalized": [
+    "core.js",
+    "usage.js"
+  ],
+  "analyticsAssetsAbsent": true,
+  "workerUnchanged": true
+}

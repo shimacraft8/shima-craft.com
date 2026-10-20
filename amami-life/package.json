@@ -1,6 +1,6 @@
 {
   "name": "amami-life-local",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "private": true,
   "type": "module",
   "workspaces": [
@@ -14,7 +14,8 @@
     "lint": "eslint packages/core/src web/app.js server scripts/*.mjs tests apps/mobile/src web/shimacraft.js worker",
     "inspect:jma": "node scripts/inspect-jma.mjs",
     "package": "python3 scripts/package-project.py",
-    "web:build": "npm run build && node scripts/build-public.mjs"
+    "web:build": "npm run build && node scripts/build-public.mjs",
+    "home:preview": "npm run web:build && node scripts/preview-public.mjs"
   },
   "dependencies": {
     "@xmldom/xmldom": "^0.8.15",

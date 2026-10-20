@@ -13,3 +13,5 @@ web/core.js
 work/
 web/usage.js
 .wrangler/
+
+/node_modules

@@ -22,6 +22,7 @@ const esc = (s) =>
         c
       ],
   );
+const INK_ONLY = document.documentElement.dataset.themeMode === "ink-only";
 const PUBLIC = document.documentElement.dataset.release === "public";
 const API_BASE = PUBLIC ? "/amami-life-api" : "/v1";
 const params = new URLSearchParams(location.search);
@@ -50,7 +51,7 @@ function persist(key, value) {
 }
 let areaId = params.get("area") ?? stored("area", "naze");
 if (!AREAS.some((a) => a.id === areaId)) areaId = "naze";
-let theme = params.get("theme") ?? stored("theme", "paper");
+let theme = INK_ONLY ? "ink" : params.get("theme") ?? stored("theme", "paper");
 if (!["paper", "ink"].includes(theme)) theme = "paper";
 let date = validDate(params.get("date") ?? "")
     ? params.get("date")
@@ -136,7 +137,7 @@ function sourceBlock(
   return `<div class="provenance"><b>情報の取得状態 · 未接続</b><dl><dt>発表</dt><dd>${timeJST(source.issuedAt)}</dd><dt>取得</dt><dd>${timeJST(source.fetchedAt)}</dd><dt>有効期限</dt><dd>${timeJST(source.expiresAt)}</dd></dl><span>出典：気象庁。現在の警報状況は未確認です。</span></div>`;
 }
 function linkRow(link, index = 0) {
-  return `<div class="row"><a href="${link.url}" target="_blank" rel="noopener noreferrer"><span class="num" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span><span class="row-main"><strong>${link.title}</strong><small>${link.subtitle}<br>${link.jurisdiction} · リンク確認 ${link.checkedOn}</small></span><span aria-hidden="true">↗</span><span class="sr-only">（外部サイト）</span></a><button class="save" data-save="${link.id}" aria-pressed="${saved.includes(link.id)}" aria-label="${link.title}を${saved.includes(link.id) ? "保存から外す" : "保存する"}">${saved.includes(link.id) ? "◆" : "◇"}</button></div>`;
+  return `<div class="row"><a data-analytics-id="${link.id}" href="${link.url}" target="_blank" rel="noopener noreferrer"><span class="num" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span><span class="row-main"><strong>${link.title}</strong><small>${link.subtitle}<br>${link.jurisdiction} · リンク確認 ${link.checkedOn}</small></span><span aria-hidden="true">↗</span><span class="sr-only">（外部サイト）</span></a><button class="save" data-save="${link.id}" aria-pressed="${saved.includes(link.id)}" aria-label="${link.title}を${saved.includes(link.id) ? "保存から外す" : "保存する"}">${saved.includes(link.id) ? "◆" : "◇"}</button></div>`;
 }
 function forecastPanel() {
   const heading =
@@ -225,7 +226,8 @@ function forecastBrief() {
   const d=p.data, rain=precipitationWindow(d,new Date());
   const stale=p.status!=="ready" || freshness(p.source,new Date())!=="recent";
   const label=rain ? `${rain.label}の雨 ${rain.percent ?? "—"}%` : d.weeklyPrecipitation!==null ? `週間の降水確率 ${d.weeklyPrecipitation}%` : "降水確率は未取得";
-  return `<p class="forecast-brief">${esc(d.description ?? "週間予報")}</p><p class="source-note">${esc(label)} · 奄美地方の予報</p>${stale ? '<p class="source-note forecast-warning" role="status">古い予報・更新状態を詳細で確認してください</p><button class="text-button" data-action="retry-weather">予報を再取得</button>' : ""}`;
+  const [weather, ...localConditions] = (d.description ?? "週間予報").replace(/\s+/g, "").split("所により");
+  return `<p class="forecast-brief">${esc(weather)}</p>${localConditions.length ? `<p class="forecast-local">所により${esc(localConditions.join("所により"))}</p>` : ""}<p class="source-note">${esc(label)} · 奄美地方の予報</p>${stale ? '<p class="source-note forecast-warning" role="status">古い予報 · 詳細で更新時刻を確認</p>' : ""}`;
 }
 function todayFacts() {
   const sun=snapshot?.solar ?? solarForDate(date,area().lat,area().lon);
@@ -255,7 +257,19 @@ function observationHero() {
   const old = d && (p.status === "refresh-failed" || p.status === "stale" || Date.parse(p.source.expiresAt) <= Date.now());
   const value = typeof d?.temperatureC === "number" ? d.temperatureC.toFixed(1) : "—";
   const label = date !== todayJST() ? "実況は今日のみ表示" : observationLoading ? "観測値を読み込み中…" : old ? "古い観測値です" : !p || p.status === "unavailable" ? "観測値を取得できません" : d?.temperatureC == null ? "気温は未取得・欠測" : "気象庁の観測気温";
-  return `<div class="weather-top"><div class="temperature" aria-label="${esc(label)} ${value}度">${value}<span class="degree" aria-hidden="true">°</span><span class="unit">C</span></div><div class="weather-caption"><div class="weather-name">${esc(d?.station?.name ?? area().name)}</div><small role="status">${esc(label)}</small></div></div><div id="forecast-brief">${forecastBrief()}</div><div class="weather-art">${illustration(sky)}</div><div class="place-caption"><strong>AMAMI ŌSHIMA</strong><small>島の意匠 · 絵は天気の実況を示しません</small></div>${todayFacts()}${d ? `<details class="source-details"><summary>観測の出典・時刻</summary><p class="source-note">観測：${timeJST(d.observedAt)}<br>取得：${timeJST(p.source.fetchedAt)}<br>観測から20分を鮮度の目安としています。</p><button class="text-button" data-action="retry-weather">観測・予報を再取得</button></details>` : ""}${date === todayJST() && !observationLoading && (!d || old) ? '<button class="text-button" data-action="retry-weather">観測・予報を再取得</button>' : ""}`;
+  return `<div class="weather-top"><div class="temperature" aria-label="${esc(label)} ${value}度">${value}<span class="degree" aria-hidden="true">°</span><span class="unit">C</span></div><div class="weather-caption"><div class="weather-name">${esc(d?.station?.name ?? area().name)}</div><small role="status">${esc(label)}</small></div></div><div id="forecast-brief">${forecastBrief()}</div><div class="weather-art">${illustration(sky)}</div><div class="place-caption"><strong>AMAMI ŌSHIMA</strong><small>島の意匠 · 絵は天気の実況を示しません</small></div>${todayFacts()}${d ? `<details class="source-details" id="observation-details"><summary id="observation-toggle">観測の出典・時刻</summary><p class="source-note">観測：${timeJST(d.observedAt)}<br>取得：${timeJST(p.source.fetchedAt)}<br>観測から20分を鮮度の目安としています。</p></details>` : ""}<button class="text-button weather-refresh" data-action="retry-weather">観測・予報を更新</button>`;
+}
+function refreshObservationHero() {
+  const hero = $("#current-observation");
+  if (!hero) return;
+  const wasOpen = $("#observation-details")?.open;
+  const active = document.activeElement;
+  const activeId = hero.contains(active) ? active.id : null;
+  const retryFocused = hero.contains(active) && active.matches('[data-action="retry-weather"]');
+  hero.innerHTML = observationHero();
+  if (wasOpen && $("#observation-details")) $("#observation-details").open = true;
+  if (activeId) document.getElementById(activeId)?.focus({ preventScroll: true });
+  else if (retryFocused) hero.querySelector('[data-action="retry-weather"]')?.focus({ preventScroll: true });
 }
 async function loadObservation(id) {
   const previous=observationScope===areaId+":"+date ? observation : null;
@@ -271,7 +285,7 @@ async function loadObservation(id) {
   } catch { if (id === requestId) observation = previous ? {...previous,status:"refresh-failed"} : null; }
   finally {
     clearTimeout(timer);
-    if (id === requestId) { observationLoading = false; const hero = $("#current-observation"); if (hero) hero.innerHTML = observationHero(); }
+    if (id === requestId) { observationLoading = false; refreshObservationHero(); }
   }
 }
 function today() {
@@ -279,9 +293,10 @@ function today() {
   const tide=snapshot?.tide;
   const isReady=state==="ready" && !fetchError;
   const eventList=(events)=>events.map(t=>`<p><strong>${t.time}</strong><small>${t.heightCm} cm</small></p>`).join("") || '<p class="readable-note">対象なし</p>';
-  return `<div class="today-heading"><div class="selected-date"><span class="date-context">${date===todayJST() ? "今日" : "選択日"}</span><h2>${dateLabel()}</h2></div><div class="date-controls"><button class="date-step" data-date="-1" aria-label="前の日">‹</button><label for="view-date">日付を選ぶ<input id="view-date" name="date" type="date" value="${date}" autocomplete="off" /></label><button class="date-step" data-date="1" aria-label="次の日">›</button><button class="text-button" data-action="go-today">今日へ</button></div></div><div class="today-layout"><section class="weather-overview" aria-label="観測気温と今日の要約">${isReady ? `<div id="current-observation">${observationHero()}</div>` : statePanel()}</section><div class="today-details"><section aria-label="潮汐の予測"><div class="section-head"><h3 id="tide-heading">${date===todayJST() ? "今日" : "この日"}の満潮・干潮</h3><span>${area().station ? "O9 / 予測" : "対象局未連携"}</span></div>${tide && isReady ? `<div class="tide-events"><div><div class="fact-label">満潮</div>${eventList(tide.highTides)}</div><div><div class="fact-label">干潮</div>${eventList(tide.lowTides)}</div></div>` : '<p class="readable-note">この地域・日付の潮汐予測は未取得です。</p>'}<p class="readable-note">天文潮位の予測です。実測ではありません。</p><details class="source-details"><summary>潮汐の出典・予測について</summary><p class="source-note">気象庁・奄美（名瀬小湊）2026年の保存済み天文潮位予測を加工表示。基準面上cm。別地点へ流用しません。取得：${timeJST(snapshot?.tideSource?.fetchedAt ?? null)}。原データの発表時刻は未確認。</p><a class="inline-link" target="_blank" rel="noopener" href="https://www.data.jma.go.jp/kaiyou/db/tide/suisan/suisan.php?stn=O9">気象庁の潮位表 · 名瀬小湊<span aria-hidden="true">↗</span></a></details></section><section class="sun-section" aria-label="日の出と日の入り"><div class="section-head"><h3>日の出・日の入り</h3><span>参考計算</span></div><div class="facts-grid"><div class="fact"><div class="fact-label">日の出</div><div class="fact-value">${sun.sunrise ?? "—"}</div><div class="fact-note">方位 ${sun.riseAzimuth ?? "—"}°</div></div><div class="fact"><div class="fact-label">日の入り</div><div class="fact-value">${sun.sunset ?? "—"}</div><div class="fact-note">方位 ${sun.setAzimuth ?? "—"}°</div></div></div><p class="readable-note">地点別の参考計算。地形・標高で見え方は変わります。</p></section></div>
-  <section class="today-tide-chart"><div class="section-head"><h3>潮の動きを見る</h3><span>予測・参考値</span></div><div id="tide-chart-content">${isReady ? tideChart() : '<p class="readable-note">潮汐の予測を取得できませんでした。</p>'}</div></section>${isReady ? tideOutlook() : ""}
-  <section class="today-access" aria-label="島の公式情報への入口"><div class="section-head"><h3>島で、すぐ使う</h3><span>QUICK ACCESS</span></div><div class="quick-links"><a class="inline-link" href="#move"><span><small>GET AROUND</small>飛行機・フェリー・バス</span><span aria-hidden="true">→</span></a><a class="inline-link" href="#explore"><span><small>EXPLORE</small>観光・旅先の情報</span><span aria-hidden="true">→</span></a><a class="inline-link" href="#safety"><span><small>OFFICIAL INFORMATION</small>台風・地震・避難情報</span><span aria-hidden="true">→</span></a></div><div class="notice"><strong>防災情報は未接続です</strong><p>現在の警報状況は公式発表をご確認ください。</p></div></section><section id="forecast" class="today-forecast">${forecastPanel()}</section></div>`;
+  return `<div class="today-heading"><div class="selected-date"><span class="date-context">${date===todayJST() ? "今日" : "選択日"}</span><h2>${dateLabel()}</h2></div><div class="date-controls"><button class="date-step" data-date="-1" aria-label="前の日">‹</button><label for="view-date">日付を選ぶ<input id="view-date" name="date" type="date" value="${date}" autocomplete="off" /></label><button class="date-step" data-date="1" aria-label="次の日">›</button><button class="text-button" data-action="go-today">今日へ</button></div></div><div class="today-layout"><section class="weather-overview" aria-label="観測気温と今日の要約">${isReady ? `<div id="current-observation">${observationHero()}</div>` : statePanel()}</section>
+  <section class="today-access" aria-labelledby="journey-title"><p class="section-kicker">YOUR ISLAND DAY</p><h3 id="journey-title">このあと、どこへ。</h3><div class="quick-links"><a class="journey-link" href="#move"><span class="journey-icon">${icon("plane")}</span><span><strong>移動を調べる</strong><small>飛行機・フェリー・バスの公式案内</small></span><span class="journey-arrow" aria-hidden="true">→</span></a><a class="journey-link" href="#explore"><span class="journey-icon">${icon("compass")}</span><span><strong>島の情報を探す</strong><small>観光・施設・旅先の情報を検索</small></span><span class="journey-arrow" aria-hidden="true">→</span></a><a class="journey-link" href="#safety"><span class="journey-icon">${icon("shield")}</span><span><strong>防災情報を確認する</strong><small>台風・地震・津波・避難の公式情報</small></span><span class="journey-arrow" aria-hidden="true">→</span></a></div><p class="safety-status"><span aria-hidden="true">!</span><span><strong>防災情報は未接続</strong>現在の警報状況は公式発表をご確認ください。</span></p></section>
+  <section class="today-tide-chart"><div class="section-head"><h3>潮の動きを見る</h3><span>予測・参考値</span></div><div id="tide-chart-content">${isReady ? tideChart() : '<p class="readable-note">潮汐の予測を取得できませんでした。</p>'}</div></section><details class="today-details" id="astronomy-details"><summary id="astronomy-toggle"><span><strong>満潮・干潮と太陽の時刻</strong><small>${date===todayJST() ? "今日" : "選択日"}のすべての時刻・出典を見る</small></span><span class="disclosure-symbol" aria-hidden="true">＋</span></summary><div class="astronomy-content"><section aria-label="潮汐の予測"><div class="section-head"><h3 id="tide-heading">${date===todayJST() ? "今日" : "この日"}の満潮・干潮</h3><span>${area().station ? "O9 / 予測" : "対象局未連携"}</span></div>${tide && isReady ? `<div class="tide-events"><div><div class="fact-label">満潮</div>${eventList(tide.highTides)}</div><div><div class="fact-label">干潮</div>${eventList(tide.lowTides)}</div></div>` : '<p class="readable-note">この地域・日付の潮汐予測は未取得です。</p>'}<p class="readable-note">天文潮位の予測です。実測ではありません。</p><details class="source-details" id="tide-source-details"><summary id="tide-source-toggle">潮汐の出典・予測について</summary><p class="source-note">気象庁・奄美（名瀬小湊）2026年の保存済み天文潮位予測を加工表示。基準面上cm。別地点へ流用しません。取得：${timeJST(snapshot?.tideSource?.fetchedAt ?? null)}。原データの発表時刻は未確認。</p><a class="inline-link" target="_blank" rel="noopener" href="https://www.data.jma.go.jp/kaiyou/db/tide/suisan/suisan.php?stn=O9">気象庁の潮位表 · 名瀬小湊<span aria-hidden="true">↗</span></a></details></section><section class="sun-section" aria-label="日の出と日の入り"><div class="section-head"><h3>日の出・日の入り</h3><span>参考計算</span></div><div class="facts-grid"><div class="fact"><div class="fact-label">日の出</div><div class="fact-value">${sun.sunrise ?? "—"}</div><div class="fact-note">方位 ${sun.riseAzimuth ?? "—"}°</div></div><div class="fact"><div class="fact-label">日の入り</div><div class="fact-value">${sun.sunset ?? "—"}</div><div class="fact-note">方位 ${sun.setAzimuth ?? "—"}°</div></div></div><p class="readable-note">地点別の参考計算。地形・標高で見え方は変わります。</p></section></div></details>${isReady ? tideOutlook() : ""}
+  <section id="forecast" class="today-forecast">${forecastPanel()}</section></div>`;
 }
 function explore() {
   const results = findOfficialLinks(query,filter,areaId);
@@ -314,7 +329,7 @@ function safety() {
   return `${top("OFFICIAL INFORMATION", "防災と避難", "04")}<div class="notice"><div class="eyebrow">重要 / 状況未確認</div><strong>現在の状況を確認できません</strong><p>地震・津波・気象警報の自動取得は未接続です。公式発表をご確認ください。</p></div>${statePanel()}<p class="body-copy">強い揺れ・長い揺れを感じたら、情報を待たず、海岸から離れて高い場所へ避難してください。</p><div class="emergency"><button data-call="110"><span>警察</span><strong>110</strong></button><button data-call="119"><span>消防・救急</span><strong>119</strong></button></div><div class="link-directory">${safetyLinks(areaId).map(linkRow).join("")}</div>${areaId === "koniya" ? '<div class="notice"><strong>ここは瀬戸内町です</strong><p>奄美市ハザードマップの対象外です。この地域の公式情報は瀬戸内町ハザードマップをご確認ください。</p></div>' : ""}${sourceBlock()}<p class="source-note">台風情報には、24時間以内に台風へ発達する見込みの熱帯低気圧が含まれます。その前段階のすべての熱帯低気圧を網羅しません。地震履歴・緊急地震速報・現在の津波警報は別の情報です。端末標準の緊急速報を代替しません。</p>`;
 }
 function more() {
-  return `${top("MAKE IT YOURS", "島との付き合い方", "05")}${statePanel()}<div class="controls"><div class="control-row"><label for="region">表示する地域</label><select id="region">${AREAS.map((a) => `<option value="${a.id}" ${a.id === areaId ? "selected" : ""}>${a.name} · ${a.municipality}</option>`).join("")}</select></div><div class="control-row"><label for="theme">画面のあしらい</label><select id="theme"><option value="paper" ${theme === "paper" ? "selected" : ""}>朱と和紙</option><option value="ink" ${theme === "ink" ? "selected" : ""}>墨と金</option></select></div><div class="control-row"><label for="large-text">文字を大きく</label><input type="checkbox" id="large-text" ${document.body.dataset.text === "large" ? "checked" : ""}></div></div><div class="section-head"><h3>保存した公式情報</h3><span>${saved.length} SAVED</span></div>${
+  return `${top("MAKE IT YOURS", "島との付き合い方", "05")}${statePanel()}<div class="controls"><div class="control-row"><label for="region">表示する地域</label><select id="region" name="region">${AREAS.map((a) => `<option value="${a.id}" ${a.id === areaId ? "selected" : ""}>${a.name} · ${a.municipality}</option>`).join("")}</select></div>${INK_ONLY ? "" : `<div class="control-row"><label for="theme">画面のあしらい</label><select id="theme" name="theme"><option value="paper" ${theme === "paper" ? "selected" : ""}>朱と和紙</option><option value="ink" ${theme === "ink" ? "selected" : ""}>墨と金</option></select></div>`}<div class="control-row"><label for="large-text">文字を大きく</label><input type="checkbox" name="large-text" id="large-text" ${document.body.dataset.text === "large" ? "checked" : ""}></div></div><div class="section-head"><h3>保存した公式情報</h3><span>${saved.length} SAVED</span></div>${
     saved.length
       ? LINKS.filter((l) => saved.includes(l.id))
           .map(linkRow)
@@ -352,12 +367,33 @@ function syncUrl() {
   if (PUBLIC) { url.searchParams.delete("state"); url.searchParams.delete("sky"); url.hash=tab; }
   history.replaceState(null, "", url);
 }
+let renderedScope = null;
+let renderedTab = null;
 function render(focus = false) {
   if (syncUrl() === false) return;
+  const scope = `${tab}:${areaId}:${date}`;
+  const openDetails = renderedScope === scope
+    ? Array.from($("#content").querySelectorAll("details[id][open]"), (item) => item.id) : [];
+  const pageChanged = renderedTab !== null && renderedTab !== tab;
+  const active = document.activeElement;
+  let restoreSelector = null;
+  let selection = null;
+  if (!focus && active?.closest("#content")) {
+    if (active.id) restoreSelector = "#" + CSS.escape(active.id);
+    else {
+      for (const attribute of ["data-date", "data-action", "data-day", "data-save", "data-filter"]) {
+        if (active.hasAttribute(attribute)) {
+          restoreSelector = `button[${attribute}="${CSS.escape(active.getAttribute(attribute))}"]`;
+          break;
+        }
+      }
+    }
+    if (["search", "note"].includes(active.id)) selection = [active.selectionStart, active.selectionEnd];
+  }
   document.body.dataset.theme = theme;
   document.body.dataset.tab = tab;
   document
-    .querySelectorAll("[data-theme]")
+    .querySelectorAll("button[data-theme]")
     .forEach((b) =>
       b.setAttribute("aria-pressed", String(b.dataset.theme === theme)),
     );
@@ -378,10 +414,22 @@ function render(focus = false) {
     tabs.find((t) => t[0] === tab)[1] +
     " · AMAMI LIFE</h1>" +
     { today, explore, move, safety, more }[tab]();
+  for (const id of openDetails) {
+    const detail = document.getElementById(id);
+    if (detail instanceof HTMLDetailsElement) detail.open = true;
+  }
+  renderedScope = scope;
+  renderedTab = tab;
+  document.dispatchEvent(new CustomEvent("amami:view-rendered", { detail: { pageChanged } }));
+  if (restoreSelector) {
+    const control = $("#content").querySelector(restoreSelector);
+    control?.focus({ preventScroll: true });
+    if (selection && control?.setSelectionRange) control.setSelectionRange(...selection);
+  }
   if (focus) {
     $("#content").scrollTop = 0;
     $("#content").focus({ preventScroll: true });
-    if (document.querySelector(".craft-header") && matchMedia("(min-width:761px)").matches) {
+    if (document.querySelector(".craft-header")) {
       window.scrollTo({ top: 0, behavior: "instant" });
     }
   }
@@ -456,7 +504,7 @@ document.addEventListener("click", (event) => {
   const target = event.target.closest("button");
   if (!target) return;
   if (target.dataset.action === "go-today") { date=todayJST(); snapshot=null; render(true); void load(); return; }
-  if (target.dataset.theme) {
+  if (target.dataset.theme && !INK_ONLY) {
     theme = target.dataset.theme;
     persist("theme", theme);
     render();
@@ -520,7 +568,7 @@ document.addEventListener("change", (event) => {
   const { id, value, checked } = event.target;
   if (id === "view-date" && validDate(value)) { date=value; snapshot=null; render(); void load(); }
   if (id === "region") changeArea(value);
-  if (id === "theme") {
+  if (id === "theme" && !INK_ONLY) {
     theme = value;
     persist("theme", theme);
     render();

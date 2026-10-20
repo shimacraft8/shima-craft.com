@@ -1,0 +1,32 @@
+{
+  "version": "0.3.5",
+  "sourceCommit": "e5da40f",
+  "url": "https://shima-craft.com/",
+  "worker": "shima-craft-amami-life",
+  "cloudflareAccount": "42f69e35f08bb21dca5194467e2f59de",
+  "email": "shimacraft8@gmail.com",
+  "deployment": {
+    "id": "4614e23d-68a2-4460-b845-0f4ed7449b4d",
+    "source": "wrangler",
+    "strategy": "percentage",
+    "author_email": "shimacraft8@gmail.com",
+    "annotations": {
+      "workers/triggered_by": "deployment"
+    },
+    "versions": [
+      {
+        "version_id": "1281d93a-27ec-431e-84c1-4b8d61ef797f",
+        "percentage": 100
+      }
+    ],
+    "created_on": "2026-10-20T13:20:35.663687Z"
+  },
+  "originalWorkerUnchanged": true,
+  "assetHashChecks": {
+    "app.js": true,
+    "apple-refinement.css": true,
+    "shimacraft.js": true,
+    "assets/shimacraft-logo-white-red.svg": true
+  },
+  "analyticsPublished": false
+}

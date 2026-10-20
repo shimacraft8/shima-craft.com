@@ -24,3 +24,11 @@ Cloudflare本人 shimacraft8@gmail.com / account 42f69e35f08bb21dca5194467e2f59d
 iOS/Android実機、OS文字拡大/Reduce Motion、VoiceOver/TalkBackは未確認。防災の自動取得など以前の未完成機能を完成扱いにしません。
 
 公開結果・デプロイID・HTTP/実データ/既存ページ検証は research/black-gold-release/ に保存します。本書記載の事前検証だけで公開完了とは扱いません。
+
+## 公開完了
+
+https://shima-craft.com/ に0.3.5を公開しました。コード保存commit e5da40f、Cloudflare version 1281d93a-27ec-431e-84c1-4b8d61ef797f。公開後19項目のHTTP確認すべて成功。気象庁の観測気温・予報、潮/太陽、古仁屋の潮未連携、既存ページ、制作ページの4アンカーを確認しました。公開資産4ファイルのSHA-256がビルドと一致し、元Workerのdeployment IDも変更なし。
+
+公開ブラウザでPC1440×1000・スマホ390×844、検索「バス」→しまバス、旧theme=paper URLがinkへ正規化されることを確認。実機確認や問い合わせの実送信を行ったという意味ではありません。解析/GA4計測追加は引き続き未公開です。
+
+復旧する場合は、専用認証でこのWorkerを前版041f929c-6251-4d53-9323-6e094fe5e014へ戻します。既存Nextサイト用Workerを再デプロイしないでください。

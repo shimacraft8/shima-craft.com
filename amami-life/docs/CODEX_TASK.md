@@ -1,6 +1,6 @@
 # 続行時の作業指示
 
-ユーザーの最終目標は、旅行者と島民が日常利用できるiPhone/Android向け一般公開アプリです。Web0.3.4はSHIMA CRAFTトップへ公開済み。iOS/Androidストア版は未公開。まずSHIMACRAFT_WEB_RELEASE.mdを読み、WebとNativeの状況を区別します。
+ユーザーの最終目標は、旅行者と島民が日常利用できるiPhone/Android向け一般公開アプリです。Web0.3.5は黒金でSHIMA CRAFTトップへ公開済み。最新のBLACK_GOLD_WEB_RELEASE.mdを参照。iOS/Androidストア版は未公開。まずSHIMACRAFT_WEB_RELEASE.mdを読み、WebとNativeの状況を区別します。
 
 まず `../START_HERE.md` と本書、`DEVELOPMENT_REPORT.md` を読み、原仕様は `specification/CODEX_TASK.md` 以下を参照してください。ユーザーの最新の明示指示を優先します。
 
@@ -24,3 +24,6 @@
 0.3.3：ユーザー指定の既存SHIMA CRAFTロゴを再利用。PCはフル幅/上部ナビ/天気と潮・太陽の並列、一覧は2列。スマホ下部5タブは維持。DESKTOP_UI_REVIEW.mdとresearch/desktop-v033を参照し、スマホ枠をPCへ戻さない。
 
 0.3.4：重要な天気/時刻を太く大きくし、補足と出典を分離。満干潮別の次時刻/翌日表示、公式毎時予測グラフ、潮と夕日の7日一覧。INFORMATION_HIERARCHY.md参照。実測や安全な活動時間と混同しない。82試験。
+
+
+2026-10-20 最新公開：Web 0.3.5を https://shima-craft.com/ へ公開。HPは黒金に固定し、背景・質感を全体で統一、既存の白文字＋赤い波を使用。文字・導線・動きの前段改修も反映。公開はGitHub shimacraft8/shima-craft.comの専用ブランチとCloudflare shimacraft8@gmail.comの対象Workerを照合して実施。管理者解析・Google連携・計測追加とNativeは未公開。公開記録はdocs/BLACK_GOLD_WEB_RELEASE.md（docs内からはBLACK_GOLD_WEB_RELEASE.md）。開発全体118試験、公開HP専用87試験、公開HTTP19項目成功。実機未確認は継続。

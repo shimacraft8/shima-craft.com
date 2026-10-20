@@ -1,0 +1,51 @@
+{
+  "email": "shimacraft8@gmail.com",
+  "account": "42f69e35f08bb21dca5194467e2f59de",
+  "zone": "shima-craft.com",
+  "routes": [
+    {
+      "id": "9b1b9b2693b547598ac9eb71a45e1842",
+      "pattern": "www.shima-craft.com/*",
+      "script": "shima-craft-amami-life",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "627bbb5b5bee43f49b38bde4e5df5009",
+      "pattern": "shima-craft.com/*",
+      "script": "shima-craft-amami-life",
+      "request_limit_fail_open": false
+    }
+  ],
+  "current": {
+    "id": "d94be148-16e3-496b-887f-2f6fcf80fa07",
+    "source": "wrangler",
+    "strategy": "percentage",
+    "author_email": "shimacraft8@gmail.com",
+    "annotations": {
+      "workers/triggered_by": "deployment"
+    },
+    "versions": [
+      {
+        "version_id": "041f929c-6251-4d53-9323-6e094fe5e014",
+        "percentage": 100
+      }
+    ],
+    "created_on": "2026-10-14T09:15:51.361733Z"
+  },
+  "originalWorker": {
+    "id": "9de39572-58dd-4b4b-867d-df9ab1ce8382",
+    "source": "wrangler",
+    "strategy": "percentage",
+    "author_email": "shimacraft8@gmail.com",
+    "annotations": {
+      "workers/triggered_by": "deployment"
+    },
+    "versions": [
+      {
+        "version_id": "117ff8f0-149d-4cfb-ae86-8a11aaf20c25",
+        "percentage": 100
+      }
+    ],
+    "created_on": "2026-08-10T07:33:20.763828Z"
+  }
+}

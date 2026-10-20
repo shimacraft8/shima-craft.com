@@ -1,3 +1,5 @@
+> 最新公開はWeb0.3.5。黒金統一・背景・白赤ロゴ・文字/導線/動きの改修を反映。対象アカウント/ルート/元Worker保持を再確認済み。詳細は [BLACK_GOLD_WEB_RELEASE.md](BLACK_GOLD_WEB_RELEASE.md)。解析画面は未公開。
+
 # SHIMA CRAFT / AMAMI LIFE Web公開記録 0.3.2
 
 > 現行Web0.3.4: INFORMATION_HIERARCHY.md、research/hierarchy-v034/release.jsonを参照。構成と対象Worker/復旧手順は同じです。

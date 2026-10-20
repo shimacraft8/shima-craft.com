@@ -1,4 +1,4 @@
-# AMAMI LIFE — Web公開版 0.3.4 / Native開発版 0.3.1
+# AMAMI LIFE — Web公開版 0.3.5 / Native開発版 0.3.1
 
 添付リファレンスの和紙、朱の日輪、墨の雨雲、金の夜を基にした操作可能な5画面と、Expo SDK 57 / TypeScriptのアプリ土台です。**Web版は https://shima-craft.com/ に公開済み。iOS/Androidストア版は未公開・実機未確認です。**
 
@@ -83,3 +83,6 @@ npm run package
 ```
 
 XML解析は種類/区域/発表/訂正/取消の検証用です。実配信の常時取込、現在警報の確立、通知配信は未実装です。検証用ダウンロードを現在の安全判定として表示しません。
+
+
+2026-10-20 最新公開：Web 0.3.5を https://shima-craft.com/ へ公開。HPは黒金に固定し、背景・質感を全体で統一、既存の白文字＋赤い波を使用。文字・導線・動きの前段改修も反映。公開はGitHub shimacraft8/shima-craft.comの専用ブランチとCloudflare shimacraft8@gmail.comの対象Workerを照合して実施。管理者解析・Google連携・計測追加とNativeは未公開。公開記録はdocs/BLACK_GOLD_WEB_RELEASE.md（docs内からはBLACK_GOLD_WEB_RELEASE.md）。開発全体118試験、公開HP専用87試験、公開HTTP19項目成功。実機未確認は継続。

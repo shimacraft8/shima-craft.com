@@ -1,3 +1,5 @@
+> 2026-10-20：HP0.3.5は公開済み。現在の開発ZIPには未公開の解析機能も含まれます。HP再公開はGitHub専用ブランチ codex/amami-life-home-20261014 の amami-life/（ローカル work/shimacraft-release/amami-life）を使ってください。開発版のwrangler.jsoncをそのまま公開すると未公開機能が含まれます。最新結果はBLACK_GOLD_WEB_RELEASE.md。
+
 # 公開手順：未実施の手順書
 
 > 2026-10-14更新: Web0.3.2はユーザー承認で公開済み。GitHub/Cloudflare本人不一致は専用認証で解消。現在のWeb構成と復旧は [SHIMACRAFT_WEB_RELEASE.md](SHIMACRAFT_WEB_RELEASE.md)。以下の旧記述はストア版/過去の準備記録として読み、未公開のストア版と混同しないでください。
@@ -47,3 +49,10 @@ EASプロジェクト作成、クラウドビルド、署名鍵、TestFlight/Pla
 実機のP0、依存監査、データ条件、運用窓口、名義、費用、デモ除去、誤警報/取り逃しの試験記録を揃えます。ストア提出・公開、GitHub push、バックエンドの本番デプロイはそれぞれ対象と変更内容を提示し、明示的な承認を受けてから実行します。
 
 公開後はソース停止/鮮度/スキーマ変更、公式リンク、翌年の潮汐、事業者の取り下げ、クラッシュを継続監視する担当と周期を決めます。アプリ内に現在状態が不明なときの公式導線を残します。
+
+
+## 2026-10-20 Web 0.3.6の公開状態
+
+詳細は ISLAND_TOOLS_WEB_RELEASE.md。実装コミットf342b85、Worker shima-craft-amami-life、Version d952b9cf-87f4-40d3-9587-0c5af5abe170。復旧先は直前Version 1281d93a-27ec-431e-84c1-4b8d61ef797f。本人・account/zone・routes・SHIMA_ORIGINを照合済み。元Workerと未公開解析は変更しない。
+
+公開時は `work/shimacraft-release/amami-life` の専用コピーを使用した。開発全体側には未公開admin/analytics/trackerがあるため、そのビルド/Workerを一括で公開してはいけない。地理院タイルと公式空港iframeのCSP許可、SunCalcライセンスを含む。これらをrollback対象と取り違えない。

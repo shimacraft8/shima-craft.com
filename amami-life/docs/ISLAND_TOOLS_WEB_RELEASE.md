@@ -38,3 +38,17 @@ web-design-guidelinesの最新版を取得してレビュー。`web/app.js` の�
 iOS Safari・Android Chromeの実機、VoiceOver/TalkBack、端末OS文字拡大、ネットワーク遮断の実機試験は未確認。自動モック試験と実API取得確認は区別する。SunCalc参考計算の独立精度照合、全国災害統合、フライト独自表、継続運用監視/大規模負荷は未完了。
 
 証跡は `research/island-tools/`。公開先照合・本番結果は以下へ追記する。
+
+
+## 公開結果
+
+- 公開日時：2026-10-20 23:01 JST。https://shima-craft.com/ 。Web 0.3.6。
+- GitHub本人 `shimacraft8`、repository `shimacraft8/shima-craft.com`。専用ブランチ `codex/amami-life-home-20261014`、実装コミット `f342b85` をpush。mainへのマージはしていない。
+- Cloudflare本人 `shimacraft8@gmail.com`、account `42f69e35f08bb21dca5194467e2f59de`、zone `cdfc2875eb9e0bf217159ec8be376373`。Worker `shima-craft-amami-life`、公開Version `d952b9cf-87f4-40d3-9587-0c5af5abe170`（100%）。
+- ルートは `shima-craft.com/*` と `www.shima-craft.com/*`。既存サービスbinding `SHIMA_ORIGIN=shima-craft-com-production` を維持。公開前後で元サービスのdeployment一覧が一致し、既存制作サイトの公開を変更していない。
+- ホーム・既存ページ/LP導線・予報/観測/潮/台風・実況天気図・ライセンスを含むHTTP22項目成功。台風APIは初回HTTP確認で一度TypeErrorの通信失敗、失敗項目のみ再取得し200/readyを確認。初回証跡を `public-http-first-attempt.json` に保持。ブラウザでは実リスト・実画像が取得でき、Console errorなし。
+- 本番ブラウザで右上ボタン/詳細予報欄の削除、フッター導線、月タブと方位図、潮00:01の補間吹き出し、空港iframeの到着/出発切り替えを確認。iOS/Android実機確認とは区別。
+- 公開用ビルドにadmin/trackerなし。開発フォルダの未公開解析routerを公開用Workerへコピーしていない。Native・GA4連携・解析画面は今回未公開。
+- 復旧先：直前Web 0.3.5のVersion `1281d93a-27ec-431e-84c1-4b8d61ef797f`。専用認証・対象account/Workerを照合してから既存runbookのrollbackを実施する。
+
+公開ソースの正本は専用Gitブランチの `amami-life/`。開発全体のZIPには未公開解析コードも含まれるため、ZIP全体のWorkerをそのまま再デプロイしない。API秘密情報・認証プロファイル・node_modules・GitはZIPへ含めない。

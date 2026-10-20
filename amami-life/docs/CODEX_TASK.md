@@ -1,3 +1,5 @@
+> 最新公開：2026-10-20 Web 0.3.6。docs/ISLAND_TOOLS_WEB_RELEASE.md（docs内はISLAND_TOOLS_WEB_RELEASE.md）参照。方位図/潮位選択/台風/空港埋め込み/不要欄削除を公開済み。以下に旧版の時点記録も含みます。
+
 # 続行時の作業指示
 
 ユーザーの最終目標は、旅行者と島民が日常利用できるiPhone/Android向け一般公開アプリです。Web0.3.5は黒金でSHIMA CRAFTトップへ公開済み。最新のBLACK_GOLD_WEB_RELEASE.mdを参照。iOS/Androidストア版は未公開。まずSHIMACRAFT_WEB_RELEASE.mdを読み、WebとNativeの状況を区別します。
@@ -24,6 +26,15 @@
 0.3.3：ユーザー指定の既存SHIMA CRAFTロゴを再利用。PCはフル幅/上部ナビ/天気と潮・太陽の並列、一覧は2列。スマホ下部5タブは維持。DESKTOP_UI_REVIEW.mdとresearch/desktop-v033を参照し、スマホ枠をPCへ戻さない。
 
 0.3.4：重要な天気/時刻を太く大きくし、補足と出典を分離。満干潮別の次時刻/翌日表示、公式毎時予測グラフ、潮と夕日の7日一覧。INFORMATION_HIERARCHY.md参照。実測や安全な活動時間と混同しない。82試験。
+
+
+2026-10-15：管理者解析画面 `/admin/analytics` をローカル追加。**未公開・pushなし**。公開中Webは0.3.4のままです。`docs/analytics/README.md`（docsからはanalytics/README.md）を参照。GA4数字ID/ストリームID/GSC対象/サービスアカウント/Access未設定で、Google実データ照合は未完了です。計測追加は既定でOFF。Google設定や公開を完了済みと扱わないでください。
+
+
+2026-10-20：Apple Design Skill参照のHP改修候補をローカル実装。和紙/朱・墨/金・既存フォント/日輪は保持。PC上部/スマホ下部のナビ、余白、地域/日付/検索/ダイアログを調整。`docs/APPLE_DESIGN_REFINEMENT.md` を参照（docs内からはAPPLE_DESIGN_REFINEMENT.md）。プレビューは `npm run home:preview` → http://127.0.0.1:4914/ 。**本番デプロイ・pushなし。公開中Web0.3.4と区別。**
+
+
+2026-10-20追補：文字・アニメーション・構成も見直してよいというユーザー指示で、Webの字体をシステムサンセリフへ統一し、今日の要約→行動入口→詳細の順に再構成しました。前段の「既存フォント保持」は第1版の説明です。最新は `docs/USER_JOURNEY_REFINEMENT.md`（docs内からはUSER_JOURNEY_REFINEMENT.md）。全118テスト、ビルド/Lint/型検査成功。プレビュー http://127.0.0.1:4914/ 。**本番未反映・pushなし。実機未確認。**
 
 
 2026-10-20 最新公開：Web 0.3.5を https://shima-craft.com/ へ公開。HPは黒金に固定し、背景・質感を全体で統一、既存の白文字＋赤い波を使用。文字・導線・動きの前段改修も反映。公開はGitHub shimacraft8/shima-craft.comの専用ブランチとCloudflare shimacraft8@gmail.comの対象Workerを照合して実施。管理者解析・Google連携・計測追加とNativeは未公開。公開記録はdocs/BLACK_GOLD_WEB_RELEASE.md（docs内からはBLACK_GOLD_WEB_RELEASE.md）。開発全体118試験、公開HP専用87試験、公開HTTP19項目成功。実機未確認は継続。

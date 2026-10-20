@@ -1,0 +1,121 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "path": "/",
+      "status": 200,
+      "passed": true,
+      "title": "AMAMI LIFE｜奄美の今日・天気・潮汐・交通｜SHIMA CRAFT"
+    },
+    {
+      "path": "/?theme=paper",
+      "status": 200,
+      "passed": true,
+      "title": "AMAMI LIFE｜奄美の今日・天気・潮汐・交通｜SHIMA CRAFT"
+    },
+    {
+      "path": "/studio",
+      "status": 200,
+      "passed": true,
+      "title": "SHIMA CRAFT｜奄美発・全国対応のホームページ制作"
+    },
+    {
+      "path": "/services",
+      "status": 200,
+      "passed": true,
+      "title": "サービス一覧｜SHIMA CRAFT"
+    },
+    {
+      "path": "/amami-dialect",
+      "status": 200,
+      "passed": true,
+      "title": "奄美方言辞書｜SHIMA CRAFT"
+    },
+    {
+      "path": "/amami-tide",
+      "status": 200,
+      "passed": true,
+      "title": "奄美大島の潮見表｜2026年10月20日(火)の満潮・干潮・日の出・天気｜SHIMA CRAFT"
+    },
+    {
+      "path": "/system-samples",
+      "status": 200,
+      "passed": true,
+      "title": "業務システム画面サンプル｜SHIMA CRAFT"
+    },
+    {
+      "path": "/web-check",
+      "status": 200,
+      "passed": true,
+      "title": "Web導線かんたんチェック｜SHIMA CRAFT"
+    },
+    {
+      "path": "/privacy",
+      "status": 200,
+      "passed": true,
+      "title": "プライバシーポリシー｜SHIMA CRAFT"
+    },
+    {
+      "path": "/about",
+      "status": 200,
+      "passed": true,
+      "title": "SHIMA CRAFTについて｜奄美大島のWeb・写真の作り手｜SHIMA CRAFT"
+    },
+    {
+      "path": "/amami-life/privacy.html",
+      "status": 200,
+      "passed": true,
+      "title": "AMAMI LIFEの利用案内・プライバシー｜SHIMA CRAFT"
+    },
+    {
+      "path": "/amami-life/apple-refinement.css",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "path": "/amami-life/app.js",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "path": "/amami-life/assets/shimacraft-logo-white-red.svg",
+      "status": 200,
+      "passed": true,
+      "title": "SHIMA CRAFT"
+    },
+    {
+      "path": "/amami-life/assets/suncalc-LICENSE.txt",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "path": "/amami-life-api/cyclones",
+      "passed": false
+    },
+    {
+      "path": "/amami-life-api/service-health",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "path": "/amami-life-api/today?area=naze&date=2026-10-20",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "path": "/amami-life-api/today?area=koniya&date=2026-10-20",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "path": "/amami-life-api/weather?mode=live&area=naze&date=2026-10-20",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "path": "/amami-life-api/observations?area=naze&date=2026-10-20",
+      "status": 200,
+      "passed": true
+    }
+  ]
+}

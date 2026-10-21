@@ -118,3 +118,13 @@ export function viewportRay(origin: {x:number;y:number}, width: number, height: 
   if(distance<=0)return null;
   return {x:origin.x+dir.x*distance,y:origin.y+dir.y*distance};
 }
+
+/** Display the official report's time; never advance a reported position to now. */
+export function cycloneTime(at: string, hours: number, saved = false) {
+  const date = new Date(at);
+  if (!Number.isFinite(date.getTime()) || !Number.isInteger(hours) || hours < 0) return null;
+  const parts = new Intl.DateTimeFormat('en-GB', {timeZone:'Asia/Tokyo',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(date);
+  const part=(type:string)=>parts.find(p=>p.type===type)?.value ?? '';
+  const time=`${part('hour')}:${part('minute')}`,day=`${Number(part('month'))}/${Number(part('day'))}`;
+  return {label:hours===0 ? saved ? '保存' : '現在' : day,time:hours===0 ? `${time}時点` : time,asOf:`${day} ${time}${hours===0 ? '時点' : '予報'}`};
+}

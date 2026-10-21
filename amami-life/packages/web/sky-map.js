@@ -1,5 +1,5 @@
 import L from "leaflet";
-import { validSkyPoint, viewportRay } from "./usage.js";
+import { validSkyPoint, viewportRay, cycloneTime } from "./usage.js";
 
 /** View-only map. Point coordinates stay in memory; calculations run in the app. */
 export function createSkyMap(element,{origin,events,onPick,onError,view}={}) {
@@ -54,7 +54,7 @@ export function createSkyMap(element,{origin,events,onPick,onError,view}={}) {
 }
 
 /** Official forecast centers/circles. Text controls provide the same details. */
-export function createCycloneMap(element,{data,onSelect,onError}={}) {
+export function createCycloneMap(element,{data,stale=false,onSelect,onError}={}) {
  const map=L.map(element,{zoomControl:false,attributionControl:false,scrollWheelZoom:false,minZoom:2,maxZoom:8,maxBounds:[[-10,70],[65,205]],maxBoundsViscosity:1,inertia:false,fadeAnimation:false,zoomAnimation:false,markerZoomAnimation:false});
  element.setAttribute('role','region');element.setAttribute('aria-label','台風の予報進路と奄美大島の位置。矢印キーで移動できます。詳細は時刻ボタンでも選べます。');
  const base=L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png',{minZoom:2,maxZoom:8,className:'sky-base-tiles',keepBuffer:1,updateWhenIdle:true,updateWhenZooming:false}).addTo(map);
@@ -71,7 +71,7 @@ export function createCycloneMap(element,{data,onSelect,onError}={}) {
   const circle=p.radiusM ? L.circle(center,{radius:p.radiusM,color:'#fff5df',weight:1.5,opacity:.85,fillColor:'#e1b96e',fillOpacity:.025,interactive:false}).addTo(map) : null;
   if(circle)bounds.extend(circle.getBounds());
   const marker=L.circleMarker(center,{radius:p.hours===0 ? 9 : 4.5,color:p.hours===0 ? '#e1b96e' : '#fff5df',weight:2,fillColor:p.hours===0 ? '#e1b96e' : '#242925',fillOpacity:1,interactive:true}).addTo(map);
-  const label=p.hours===0 ? '実況' : new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',day:'numeric',hour:'2-digit',hourCycle:'h23'}).format(new Date(p.validAt));
+  const label=p.hours===0 ? `${stale ? '保存' : '現在'} · ${cycloneTime(p.validAt,0,stale).time}` : new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',day:'numeric',hour:'2-digit',hourCycle:'h23'}).format(new Date(p.validAt));
   marker.bindTooltip(label,{permanent:p.hours===0 || p===data.points.at(-1) || (element.clientWidth>=500 && (p===data.points[2] || p===data.points[4])),direction:p.hours===0 ? 'left' : 'right',className:'cyclone-time-label',offset:[8,0]});
   marker.on('click',()=>onSelect(p.hours));layers.push({p,circle,marker});
  }

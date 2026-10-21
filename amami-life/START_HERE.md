@@ -1,3 +1,5 @@
+> Web0.4.0：現在＋発表時点の表示と、全画面の説明整理。docs/CONCISE_UI_WEB_RELEASE.mdの公開結果参照。
+
 > Web0.3.9公開済み：太陽/月の初期地図を島を見渡す縮尺へ。docs/MAP_DEFAULT_WEB_RELEASE.mdの公開結果参照。
 
 > 2026-10-21 Web0.3.8公開済み：https://shima-craft.com/ 。太陽/月の地図を通常カラーへ変更。docs/STREET_MAP_WEB_RELEASE.md参照。公開結果は同書末尾。

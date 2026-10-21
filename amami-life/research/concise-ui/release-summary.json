@@ -1,0 +1,23 @@
+{
+  "publishedAt": "2026-10-21 22:20 JST",
+  "implementationCommits": [
+    "4dabed2",
+    "268b252"
+  ],
+  "version": "ff8a38bb-706c-4747-b2b5-bcf3b90fa2e0",
+  "rollback": "c3a3658c-5d6a-47c6-bc62-137a21ad6039",
+  "github": "shimacraft8/shima-craft.com",
+  "cloudflareEmail": "shimacraft8@gmail.com",
+  "account": "42f69e35f08bb21dca5194467e2f59de",
+  "worker": "shima-craft-amami-life",
+  "originalUnchanged": true,
+  "developmentTests": 144,
+  "publicTests": 113,
+  "httpChecks": 29,
+  "browserWidths": [
+    320,
+    390,
+    1440
+  ],
+  "physicalDevices": "unverified"
+}

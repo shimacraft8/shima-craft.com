@@ -1,0 +1,1783 @@
+{
+  "base": "https://shima-craft.com",
+  "checkedAt": "2026-10-21T13:21:09.142Z",
+  "passed": true,
+  "checks": [
+    {
+      "path": "/",
+      "status": 200,
+      "title": "AMAMI LIFE｜奄美の今日・天気・潮汐・交通｜SHIMA CRAFT",
+      "passed": true,
+      "cache": "no-store"
+    },
+    {
+      "path": "/?theme=paper",
+      "status": 200,
+      "title": "AMAMI LIFE｜奄美の今日・天気・潮汐・交通｜SHIMA CRAFT",
+      "passed": true,
+      "cache": "no-store"
+    },
+    {
+      "path": "/studio",
+      "status": 200,
+      "title": "SHIMA CRAFT｜奄美発・全国対応のホームページ制作",
+      "passed": true,
+      "cache": "no-store"
+    },
+    {
+      "path": "/services",
+      "status": 200,
+      "title": "サービス一覧｜SHIMA CRAFT",
+      "passed": true,
+      "cache": "s-maxage=31536000, stale-while-revalidate=2592000"
+    },
+    {
+      "path": "/amami-dialect",
+      "status": 200,
+      "title": "奄美方言辞書｜SHIMA CRAFT",
+      "passed": true,
+      "cache": "s-maxage=31536000, stale-while-revalidate=2592000"
+    },
+    {
+      "path": "/amami-tide",
+      "status": 200,
+      "title": "奄美大島の潮見表｜2026年10月21日(水)の満潮・干潮・日の出・天気｜SHIMA CRAFT",
+      "passed": true,
+      "cache": "private, no-cache, no-store, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/system-samples",
+      "status": 200,
+      "title": "業務システム画面サンプル｜SHIMA CRAFT",
+      "passed": true,
+      "cache": "s-maxage=31536000, stale-while-revalidate=2592000"
+    },
+    {
+      "path": "/web-check",
+      "status": 200,
+      "title": "Web導線かんたんチェック｜SHIMA CRAFT",
+      "passed": true,
+      "cache": "s-maxage=31536000, stale-while-revalidate=2592000"
+    },
+    {
+      "path": "/privacy",
+      "status": 200,
+      "title": "プライバシーポリシー｜SHIMA CRAFT",
+      "passed": true,
+      "cache": "s-maxage=31536000, stale-while-revalidate=2592000"
+    },
+    {
+      "path": "/about",
+      "status": 200,
+      "title": "SHIMA CRAFTについて｜奄美大島のWeb・写真の作り手｜SHIMA CRAFT",
+      "passed": true,
+      "cache": "s-maxage=31536000, stale-while-revalidate=2592000"
+    },
+    {
+      "path": "/amami-life/privacy.html",
+      "status": 200,
+      "title": "AMAMI LIFEの利用案内・プライバシー｜SHIMA CRAFT",
+      "passed": true,
+      "cache": "no-store"
+    },
+    {
+      "path": "/amami-life/apple-refinement.css",
+      "status": 200,
+      "passed": true,
+      "cache": "no-store"
+    },
+    {
+      "path": "/amami-life/app.js",
+      "status": 200,
+      "passed": true,
+      "cache": "no-store"
+    },
+    {
+      "path": "/amami-life/assets/shimacraft-logo-white-red.svg",
+      "status": 200,
+      "title": "SHIMA CRAFT",
+      "passed": true,
+      "cache": "no-store"
+    },
+    {
+      "path": "/amami-life/assets/suncalc-LICENSE.txt",
+      "status": 200,
+      "passed": true,
+      "cache": "no-store"
+    },
+    {
+      "path": "/amami-life-api/cyclones",
+      "status": 200,
+      "passed": true,
+      "cache": "no-store",
+      "data": {
+        "schemaVersion": 1,
+        "status": "ready",
+        "data": [
+          {
+            "id": "TC2636",
+            "category": "TY",
+            "number": "2630",
+            "issuedAt": "2026-10-21T12:45:00.000Z"
+          }
+        ],
+        "source": {
+          "url": "https://www.jma.go.jp/bosai/typhoon/data/targetTc.json",
+          "fetchedAt": "2026-10-21T13:21:07.338Z",
+          "checkedAt": "2026-10-21T13:21:07.325Z",
+          "expiresAt": "2026-10-21T13:31:07.338Z"
+        },
+        "chart": {
+          "version": "20261021110800_0_Z__C_010000_20261021090000_MET_CHT_JCIspas_JCP600x581_JRcolor_Tjmahp_image.png",
+          "validAt": "2026-10-21T09:00:00.000Z"
+        },
+        "coverage": "気象庁の発表対象（全国）。台風と、24時間以内に台風へ発達する見込みの熱帯低気圧。すべての熱帯低気圧や奄美への影響を示すものではありません。",
+        "refreshPolicy": "5分キャッシュ、失敗時1分後に再試行。10分未更新または発表から6時間で古い表示。アプリ独自の鮮度基準。"
+      }
+    },
+    {
+      "path": "/amami-life-api/service-health",
+      "status": 200,
+      "passed": true,
+      "cache": "no-store",
+      "data": {
+        "schemaVersion": 1,
+        "mode": "public-web",
+        "currentHazardsIntegrated": false,
+        "cyclonesIntegrated": true,
+        "tideYear": 2026
+      }
+    },
+    {
+      "path": "/amami-life/sky-map.js",
+      "status": 200,
+      "passed": true,
+      "cache": "no-store"
+    },
+    {
+      "path": "/amami-life/leaflet.css",
+      "status": 200,
+      "passed": true,
+      "cache": "no-store"
+    },
+    {
+      "path": "/amami-life/assets/leaflet-LICENSE.txt",
+      "status": 200,
+      "passed": true,
+      "cache": "no-store"
+    },
+    {
+      "path": "/amami-life/usage.js",
+      "status": 200,
+      "passed": true,
+      "cache": "no-store"
+    },
+    {
+      "path": "/amami-life-api/today?area=naze&date=2026-10-21",
+      "status": 200,
+      "passed": true,
+      "cache": "no-store",
+      "data": {
+        "schemaVersion": 1,
+        "mode": "reference",
+        "data": {
+          "area": {
+            "id": "naze",
+            "name": "名瀬小湊",
+            "municipality": "奄美市",
+            "lat": 28.3166667,
+            "lon": 129.5333333,
+            "station": "O9"
+          },
+          "date": "2026-10-21",
+          "state": "ready",
+          "solar": {
+            "sunrise": "06:26",
+            "sunset": "17:48",
+            "riseAzimuth": 102,
+            "setAzimuth": 259,
+            "dusk": "18:12"
+          },
+          "tide": {
+            "date": "2026-10-21",
+            "hourly": [
+              {
+                "hour": 0,
+                "heightCm": 136
+              },
+              {
+                "hour": 1,
+                "heightCm": 145
+              },
+              {
+                "hour": 2,
+                "heightCm": 149
+              },
+              {
+                "hour": 3,
+                "heightCm": 147
+              },
+              {
+                "hour": 4,
+                "heightCm": 137
+              },
+              {
+                "hour": 5,
+                "heightCm": 123
+              },
+              {
+                "hour": 6,
+                "heightCm": 105
+              },
+              {
+                "hour": 7,
+                "heightCm": 88
+              },
+              {
+                "hour": 8,
+                "heightCm": 77
+              },
+              {
+                "hour": 9,
+                "heightCm": 73
+              },
+              {
+                "hour": 10,
+                "heightCm": 78
+              },
+              {
+                "hour": 11,
+                "heightCm": 92
+              },
+              {
+                "hour": 12,
+                "heightCm": 112
+              },
+              {
+                "hour": 13,
+                "heightCm": 135
+              },
+              {
+                "hour": 14,
+                "heightCm": 155
+              },
+              {
+                "hour": 15,
+                "heightCm": 169
+              },
+              {
+                "hour": 16,
+                "heightCm": 173
+              },
+              {
+                "hour": 17,
+                "heightCm": 167
+              },
+              {
+                "hour": 18,
+                "heightCm": 152
+              },
+              {
+                "hour": 19,
+                "heightCm": 134
+              },
+              {
+                "hour": 20,
+                "heightCm": 116
+              },
+              {
+                "hour": 21,
+                "heightCm": 104
+              },
+              {
+                "hour": 22,
+                "heightCm": 100
+              },
+              {
+                "hour": 23,
+                "heightCm": 106
+              }
+            ],
+            "highTides": [
+              {
+                "time": "02:11",
+                "heightCm": 149
+              },
+              {
+                "time": "15:53",
+                "heightCm": 173
+              }
+            ],
+            "lowTides": [
+              {
+                "time": "08:56",
+                "heightCm": 73
+              },
+              {
+                "time": "21:51",
+                "heightCm": 100
+              }
+            ]
+          },
+          "tomorrowTide": {
+            "date": "2026-10-22",
+            "hourly": [
+              {
+                "hour": 0,
+                "heightCm": 120
+              },
+              {
+                "hour": 1,
+                "heightCm": 137
+              },
+              {
+                "hour": 2,
+                "heightCm": 152
+              },
+              {
+                "hour": 3,
+                "heightCm": 161
+              },
+              {
+                "hour": 4,
+                "heightCm": 160
+              },
+              {
+                "hour": 5,
+                "heightCm": 149
+              },
+              {
+                "hour": 6,
+                "heightCm": 129
+              },
+              {
+                "hour": 7,
+                "heightCm": 106
+              },
+              {
+                "hour": 8,
+                "heightCm": 84
+              },
+              {
+                "hour": 9,
+                "heightCm": 70
+              },
+              {
+                "hour": 10,
+                "heightCm": 66
+              },
+              {
+                "hour": 11,
+                "heightCm": 75
+              },
+              {
+                "hour": 12,
+                "heightCm": 95
+              },
+              {
+                "hour": 13,
+                "heightCm": 121
+              },
+              {
+                "hour": 14,
+                "heightCm": 149
+              },
+              {
+                "hour": 15,
+                "heightCm": 171
+              },
+              {
+                "hour": 16,
+                "heightCm": 182
+              },
+              {
+                "hour": 17,
+                "heightCm": 180
+              },
+              {
+                "hour": 18,
+                "heightCm": 166
+              },
+              {
+                "hour": 19,
+                "heightCm": 142
+              },
+              {
+                "hour": 20,
+                "heightCm": 116
+              },
+              {
+                "hour": 21,
+                "heightCm": 93
+              },
+              {
+                "hour": 22,
+                "heightCm": 82
+              },
+              {
+                "hour": 23,
+                "heightCm": 83
+              }
+            ],
+            "highTides": [
+              {
+                "time": "03:24",
+                "heightCm": 162
+              },
+              {
+                "time": "16:22",
+                "heightCm": 183
+              }
+            ],
+            "lowTides": [
+              {
+                "time": "09:48",
+                "heightCm": 66
+              },
+              {
+                "time": "22:24",
+                "heightCm": 80
+              }
+            ]
+          },
+          "outlook": [
+            {
+              "date": "2026-10-21",
+              "tide": {
+                "date": "2026-10-21",
+                "hourly": [
+                  {
+                    "hour": 0,
+                    "heightCm": 136
+                  },
+                  {
+                    "hour": 1,
+                    "heightCm": 145
+                  },
+                  {
+                    "hour": 2,
+                    "heightCm": 149
+                  },
+                  {
+                    "hour": 3,
+                    "heightCm": 147
+                  },
+                  {
+                    "hour": 4,
+                    "heightCm": 137
+                  },
+                  {
+                    "hour": 5,
+                    "heightCm": 123
+                  },
+                  {
+                    "hour": 6,
+                    "heightCm": 105
+                  },
+                  {
+                    "hour": 7,
+                    "heightCm": 88
+                  },
+                  {
+                    "hour": 8,
+                    "heightCm": 77
+                  },
+                  {
+                    "hour": 9,
+                    "heightCm": 73
+                  },
+                  {
+                    "hour": 10,
+                    "heightCm": 78
+                  },
+                  {
+                    "hour": 11,
+                    "heightCm": 92
+                  },
+                  {
+                    "hour": 12,
+                    "heightCm": 112
+                  },
+                  {
+                    "hour": 13,
+                    "heightCm": 135
+                  },
+                  {
+                    "hour": 14,
+                    "heightCm": 155
+                  },
+                  {
+                    "hour": 15,
+                    "heightCm": 169
+                  },
+                  {
+                    "hour": 16,
+                    "heightCm": 173
+                  },
+                  {
+                    "hour": 17,
+                    "heightCm": 167
+                  },
+                  {
+                    "hour": 18,
+                    "heightCm": 152
+                  },
+                  {
+                    "hour": 19,
+                    "heightCm": 134
+                  },
+                  {
+                    "hour": 20,
+                    "heightCm": 116
+                  },
+                  {
+                    "hour": 21,
+                    "heightCm": 104
+                  },
+                  {
+                    "hour": 22,
+                    "heightCm": 100
+                  },
+                  {
+                    "hour": 23,
+                    "heightCm": 106
+                  }
+                ],
+                "highTides": [
+                  {
+                    "time": "02:11",
+                    "heightCm": 149
+                  },
+                  {
+                    "time": "15:53",
+                    "heightCm": 173
+                  }
+                ],
+                "lowTides": [
+                  {
+                    "time": "08:56",
+                    "heightCm": 73
+                  },
+                  {
+                    "time": "21:51",
+                    "heightCm": 100
+                  }
+                ]
+              },
+              "solar": {
+                "sunrise": "06:26",
+                "sunset": "17:48",
+                "riseAzimuth": 102,
+                "setAzimuth": 259,
+                "dusk": "18:12"
+              }
+            },
+            {
+              "date": "2026-10-22",
+              "tide": {
+                "date": "2026-10-22",
+                "hourly": [
+                  {
+                    "hour": 0,
+                    "heightCm": 120
+                  },
+                  {
+                    "hour": 1,
+                    "heightCm": 137
+                  },
+                  {
+                    "hour": 2,
+                    "heightCm": 152
+                  },
+                  {
+                    "hour": 3,
+                    "heightCm": 161
+                  },
+                  {
+                    "hour": 4,
+                    "heightCm": 160
+                  },
+                  {
+                    "hour": 5,
+                    "heightCm": 149
+                  },
+                  {
+                    "hour": 6,
+                    "heightCm": 129
+                  },
+                  {
+                    "hour": 7,
+                    "heightCm": 106
+                  },
+                  {
+                    "hour": 8,
+                    "heightCm": 84
+                  },
+                  {
+                    "hour": 9,
+                    "heightCm": 70
+                  },
+                  {
+                    "hour": 10,
+                    "heightCm": 66
+                  },
+                  {
+                    "hour": 11,
+                    "heightCm": 75
+                  },
+                  {
+                    "hour": 12,
+                    "heightCm": 95
+                  },
+                  {
+                    "hour": 13,
+                    "heightCm": 121
+                  },
+                  {
+                    "hour": 14,
+                    "heightCm": 149
+                  },
+                  {
+                    "hour": 15,
+                    "heightCm": 171
+                  },
+                  {
+                    "hour": 16,
+                    "heightCm": 182
+                  },
+                  {
+                    "hour": 17,
+                    "heightCm": 180
+                  },
+                  {
+                    "hour": 18,
+                    "heightCm": 166
+                  },
+                  {
+                    "hour": 19,
+                    "heightCm": 142
+                  },
+                  {
+                    "hour": 20,
+                    "heightCm": 116
+                  },
+                  {
+                    "hour": 21,
+                    "heightCm": 93
+                  },
+                  {
+                    "hour": 22,
+                    "heightCm": 82
+                  },
+                  {
+                    "hour": 23,
+                    "heightCm": 83
+                  }
+                ],
+                "highTides": [
+                  {
+                    "time": "03:24",
+                    "heightCm": 162
+                  },
+                  {
+                    "time": "16:22",
+                    "heightCm": 183
+                  }
+                ],
+                "lowTides": [
+                  {
+                    "time": "09:48",
+                    "heightCm": 66
+                  },
+                  {
+                    "time": "22:24",
+                    "heightCm": 80
+                  }
+                ]
+              },
+              "solar": {
+                "sunrise": "06:27",
+                "sunset": "17:47",
+                "riseAzimuth": 102,
+                "setAzimuth": 258,
+                "dusk": "18:11"
+              }
+            },
+            {
+              "date": "2026-10-23",
+              "tide": {
+                "date": "2026-10-23",
+                "hourly": [
+                  {
+                    "hour": 0,
+                    "heightCm": 97
+                  },
+                  {
+                    "hour": 1,
+                    "heightCm": 120
+                  },
+                  {
+                    "hour": 2,
+                    "heightCm": 145
+                  },
+                  {
+                    "hour": 3,
+                    "heightCm": 166
+                  },
+                  {
+                    "hour": 4,
+                    "heightCm": 176
+                  },
+                  {
+                    "hour": 5,
+                    "heightCm": 173
+                  },
+                  {
+                    "hour": 6,
+                    "heightCm": 157
+                  },
+                  {
+                    "hour": 7,
+                    "heightCm": 131
+                  },
+                  {
+                    "hour": 8,
+                    "heightCm": 102
+                  },
+                  {
+                    "hour": 9,
+                    "heightCm": 77
+                  },
+                  {
+                    "hour": 10,
+                    "heightCm": 63
+                  },
+                  {
+                    "hour": 11,
+                    "heightCm": 63
+                  },
+                  {
+                    "hour": 12,
+                    "heightCm": 78
+                  },
+                  {
+                    "hour": 13,
+                    "heightCm": 105
+                  },
+                  {
+                    "hour": 14,
+                    "heightCm": 138
+                  },
+                  {
+                    "hour": 15,
+                    "heightCm": 168
+                  },
+                  {
+                    "hour": 16,
+                    "heightCm": 188
+                  },
+                  {
+                    "hour": 17,
+                    "heightCm": 193
+                  },
+                  {
+                    "hour": 18,
+                    "heightCm": 181
+                  },
+                  {
+                    "hour": 19,
+                    "heightCm": 155
+                  },
+                  {
+                    "hour": 20,
+                    "heightCm": 122
+                  },
+                  {
+                    "hour": 21,
+                    "heightCm": 90
+                  },
+                  {
+                    "hour": 22,
+                    "heightCm": 67
+                  },
+                  {
+                    "hour": 23,
+                    "heightCm": 59
+                  }
+                ],
+                "highTides": [
+                  {
+                    "time": "04:16",
+                    "heightCm": 177
+                  },
+                  {
+                    "time": "16:47",
+                    "heightCm": 193
+                  }
+                ],
+                "lowTides": [
+                  {
+                    "time": "10:28",
+                    "heightCm": 61
+                  },
+                  {
+                    "time": "22:56",
+                    "heightCm": 59
+                  }
+                ]
+              },
+              "solar": {
+                "sunrise": "06:28",
+                "sunset": "17:46",
+                "riseAzimuth": 102,
+                "setAzimuth": 258,
+                "dusk": "18:10"
+              }
+            },
+            {
+              "date": "2026-10-24",
+              "tide": {
+                "date": "2026-10-24",
+                "hourly": [
+                  {
+                    "hour": 0,
+                    "heightCm": 69
+                  },
+                  {
+                    "hour": 1,
+                    "heightCm": 93
+                  },
+                  {
+                    "hour": 2,
+                    "heightCm": 126
+                  },
+                  {
+                    "hour": 3,
+                    "heightCm": 159
+                  },
+                  {
+                    "hour": 4,
+                    "heightCm": 183
+                  },
+                  {
+                    "hour": 5,
+                    "heightCm": 192
+                  },
+                  {
+                    "hour": 6,
+                    "heightCm": 183
+                  },
+                  {
+                    "hour": 7,
+                    "heightCm": 160
+                  },
+                  {
+                    "hour": 8,
+                    "heightCm": 127
+                  },
+                  {
+                    "hour": 9,
+                    "heightCm": 94
+                  },
+                  {
+                    "hour": 10,
+                    "heightCm": 69
+                  },
+                  {
+                    "hour": 11,
+                    "heightCm": 59
+                  },
+                  {
+                    "hour": 12,
+                    "heightCm": 66
+                  },
+                  {
+                    "hour": 13,
+                    "heightCm": 89
+                  },
+                  {
+                    "hour": 14,
+                    "heightCm": 123
+                  },
+                  {
+                    "hour": 15,
+                    "heightCm": 159
+                  },
+                  {
+                    "hour": 16,
+                    "heightCm": 188
+                  },
+                  {
+                    "hour": 17,
+                    "heightCm": 202
+                  },
+                  {
+                    "hour": 18,
+                    "heightCm": 196
+                  },
+                  {
+                    "hour": 19,
+                    "heightCm": 173
+                  },
+                  {
+                    "hour": 20,
+                    "heightCm": 135
+                  },
+                  {
+                    "hour": 21,
+                    "heightCm": 94
+                  },
+                  {
+                    "hour": 22,
+                    "heightCm": 60
+                  },
+                  {
+                    "hour": 23,
+                    "heightCm": 41
+                  }
+                ],
+                "highTides": [
+                  {
+                    "time": "05:01",
+                    "heightCm": 192
+                  },
+                  {
+                    "time": "17:14",
+                    "heightCm": 202
+                  }
+                ],
+                "lowTides": [
+                  {
+                    "time": "11:05",
+                    "heightCm": 59
+                  },
+                  {
+                    "time": "23:28",
+                    "heightCm": 38
+                  }
+                ]
+              },
+              "solar": {
+                "sunrise": "06:28",
+                "sunset": "17:45",
+                "riseAzimuth": 103,
+                "setAzimuth": 257,
+                "dusk": "18:09"
+              }
+            },
+            {
+              "date": "2026-10-25",
+              "tide": {
+                "date": "2026-10-25",
+                "hourly": [
+                  {
+                    "hour": 0,
+                    "heightCm": 41
+                  },
+                  {
+                    "hour": 1,
+                    "heightCm": 62
+                  },
+                  {
+                    "hour": 2,
+                    "heightCm": 97
+                  },
+                  {
+                    "hour": 3,
+                    "heightCm": 138
+                  },
+                  {
+                    "hour": 4,
+                    "heightCm": 175
+                  },
+                  {
+                    "hour": 5,
+                    "heightCm": 198
+                  },
+                  {
+                    "hour": 6,
+                    "heightCm": 203
+                  },
+                  {
+                    "hour": 7,
+                    "heightCm": 188
+                  },
+                  {
+                    "hour": 8,
+                    "heightCm": 157
+                  },
+                  {
+                    "hour": 9,
+                    "heightCm": 120
+                  },
+                  {
+                    "hour": 10,
+                    "heightCm": 86
+                  },
+                  {
+                    "hour": 11,
+                    "heightCm": 65
+                  },
+                  {
+                    "hour": 12,
+                    "heightCm": 61
+                  },
+                  {
+                    "hour": 13,
+                    "heightCm": 77
+                  },
+                  {
+                    "hour": 14,
+                    "heightCm": 107
+                  },
+                  {
+                    "hour": 15,
+                    "heightCm": 145
+                  },
+                  {
+                    "hour": 16,
+                    "heightCm": 181
+                  },
+                  {
+                    "hour": 17,
+                    "heightCm": 204
+                  },
+                  {
+                    "hour": 18,
+                    "heightCm": 208
+                  },
+                  {
+                    "hour": 19,
+                    "heightCm": 191
+                  },
+                  {
+                    "hour": 20,
+                    "heightCm": 155
+                  },
+                  {
+                    "hour": 21,
+                    "heightCm": 109
+                  },
+                  {
+                    "hour": 22,
+                    "heightCm": 64
+                  },
+                  {
+                    "hour": 23,
+                    "heightCm": 32
+                  }
+                ],
+                "highTides": [
+                  {
+                    "time": "05:43",
+                    "heightCm": 204
+                  },
+                  {
+                    "time": "17:41",
+                    "heightCm": 209
+                  }
+                ],
+                "lowTides": [
+                  {
+                    "time": "11:41",
+                    "heightCm": 60
+                  }
+                ]
+              },
+              "solar": {
+                "sunrise": "06:29",
+                "sunset": "17:44",
+                "riseAzimuth": 103,
+                "setAzimuth": 257,
+                "dusk": "18:08"
+              }
+            },
+            {
+              "date": "2026-10-26",
+              "tide": {
+                "date": "2026-10-26",
+                "hourly": [
+                  {
+                    "hour": 0,
+                    "heightCm": 20
+                  },
+                  {
+                    "hour": 1,
+                    "heightCm": 30
+                  },
+                  {
+                    "hour": 2,
+                    "heightCm": 61
+                  },
+                  {
+                    "hour": 3,
+                    "heightCm": 105
+                  },
+                  {
+                    "hour": 4,
+                    "heightCm": 152
+                  },
+                  {
+                    "hour": 5,
+                    "heightCm": 189
+                  },
+                  {
+                    "hour": 6,
+                    "heightCm": 209
+                  },
+                  {
+                    "hour": 7,
+                    "heightCm": 208
+                  },
+                  {
+                    "hour": 8,
+                    "heightCm": 186
+                  },
+                  {
+                    "hour": 9,
+                    "heightCm": 151
+                  },
+                  {
+                    "hour": 10,
+                    "heightCm": 112
+                  },
+                  {
+                    "hour": 11,
+                    "heightCm": 81
+                  },
+                  {
+                    "hour": 12,
+                    "heightCm": 66
+                  },
+                  {
+                    "hour": 13,
+                    "heightCm": 71
+                  },
+                  {
+                    "hour": 14,
+                    "heightCm": 94
+                  },
+                  {
+                    "hour": 15,
+                    "heightCm": 129
+                  },
+                  {
+                    "hour": 16,
+                    "heightCm": 168
+                  },
+                  {
+                    "hour": 17,
+                    "heightCm": 199
+                  },
+                  {
+                    "hour": 18,
+                    "heightCm": 213
+                  },
+                  {
+                    "hour": 19,
+                    "heightCm": 206
+                  },
+                  {
+                    "hour": 20,
+                    "heightCm": 176
+                  },
+                  {
+                    "hour": 21,
+                    "heightCm": 131
+                  },
+                  {
+                    "hour": 22,
+                    "heightCm": 81
+                  },
+                  {
+                    "hour": 23,
+                    "heightCm": 37
+                  }
+                ],
+                "highTides": [
+                  {
+                    "time": "06:25",
+                    "heightCm": 211
+                  },
+                  {
+                    "time": "18:10",
+                    "heightCm": 214
+                  }
+                ],
+                "lowTides": [
+                  {
+                    "time": "00:02",
+                    "heightCm": 20
+                  },
+                  {
+                    "time": "12:16",
+                    "heightCm": 66
+                  }
+                ]
+              },
+              "solar": {
+                "sunrise": "06:30",
+                "sunset": "17:44",
+                "riseAzimuth": 104,
+                "setAzimuth": 257,
+                "dusk": "18:08"
+              }
+            },
+            {
+              "date": "2026-10-27",
+              "tide": {
+                "date": "2026-10-27",
+                "hourly": [
+                  {
+                    "hour": 0,
+                    "heightCm": 11
+                  },
+                  {
+                    "hour": 1,
+                    "heightCm": 7
+                  },
+                  {
+                    "hour": 2,
+                    "heightCm": 28
+                  },
+                  {
+                    "hour": 3,
+                    "heightCm": 67
+                  },
+                  {
+                    "hour": 4,
+                    "heightCm": 116
+                  },
+                  {
+                    "hour": 5,
+                    "heightCm": 164
+                  },
+                  {
+                    "hour": 6,
+                    "heightCm": 198
+                  },
+                  {
+                    "hour": 7,
+                    "heightCm": 213
+                  },
+                  {
+                    "hour": 8,
+                    "heightCm": 205
+                  },
+                  {
+                    "hour": 9,
+                    "heightCm": 179
+                  },
+                  {
+                    "hour": 10,
+                    "heightCm": 142
+                  },
+                  {
+                    "hour": 11,
+                    "heightCm": 106
+                  },
+                  {
+                    "hour": 12,
+                    "heightCm": 81
+                  },
+                  {
+                    "hour": 13,
+                    "heightCm": 74
+                  },
+                  {
+                    "hour": 14,
+                    "heightCm": 86
+                  },
+                  {
+                    "hour": 15,
+                    "heightCm": 114
+                  },
+                  {
+                    "hour": 16,
+                    "heightCm": 151
+                  },
+                  {
+                    "hour": 17,
+                    "heightCm": 186
+                  },
+                  {
+                    "hour": 18,
+                    "heightCm": 209
+                  },
+                  {
+                    "hour": 19,
+                    "heightCm": 213
+                  },
+                  {
+                    "hour": 20,
+                    "heightCm": 195
+                  },
+                  {
+                    "hour": 21,
+                    "heightCm": 157
+                  },
+                  {
+                    "hour": 22,
+                    "heightCm": 107
+                  },
+                  {
+                    "hour": 23,
+                    "heightCm": 57
+                  }
+                ],
+                "highTides": [
+                  {
+                    "time": "07:08",
+                    "heightCm": 213
+                  },
+                  {
+                    "time": "18:41",
+                    "heightCm": 214
+                  }
+                ],
+                "lowTides": [
+                  {
+                    "time": "00:38",
+                    "heightCm": 6
+                  },
+                  {
+                    "time": "12:52",
+                    "heightCm": 74
+                  }
+                ]
+              },
+              "solar": {
+                "sunrise": "06:30",
+                "sunset": "17:43",
+                "riseAzimuth": 104,
+                "setAzimuth": 256,
+                "dusk": "18:07"
+              }
+            }
+          ],
+          "tideSource": {
+            "sourceId": "jma-tide-O9",
+            "publisher": "気象庁",
+            "url": "https://www.data.jma.go.jp/kaiyou/data/db/tide/suisan/txt/2026/O9.txt",
+            "officialUrl": "https://www.data.jma.go.jp/kaiyou/db/tide/suisan/suisan.php?stn=O9",
+            "fetchedAt": "2026-10-13T06:50:37.983Z",
+            "issuedAt": null,
+            "expiresAt": "2026-12-31T15:00:00Z",
+            "sha256": "0e1c58dab99054eaa478874082a5f301d5fc4c2ca94612991d07166d12dce175",
+            "oldArchiveByteIdentical": true,
+            "kind": "astronomical_tide_prediction",
+            "unit": "cm_above_tide_table_datum",
+            "datumElevationCm": -108,
+            "processedBy": "SHIMA CRAFT / AMAMI LIFE local prototype"
+          },
+          "hazards": {
+            "state": "unknown",
+            "source": {
+              "sourceId": "official-links",
+              "officialUrl": "https://www.jma.go.jp/bosai/",
+              "issuedAt": null,
+              "fetchedAt": null,
+              "checkedAt": null,
+              "expiresAt": null,
+              "freshness": "unknown"
+            }
+          }
+        },
+        "source": {
+          "sourceId": "jma-tide-O9",
+          "publisher": "気象庁",
+          "url": "https://www.data.jma.go.jp/kaiyou/data/db/tide/suisan/txt/2026/O9.txt",
+          "officialUrl": "https://www.data.jma.go.jp/kaiyou/db/tide/suisan/suisan.php?stn=O9",
+          "fetchedAt": "2026-10-13T06:50:37.983Z",
+          "issuedAt": null,
+          "expiresAt": "2026-12-31T15:00:00Z",
+          "sha256": "0e1c58dab99054eaa478874082a5f301d5fc4c2ca94612991d07166d12dce175",
+          "oldArchiveByteIdentical": true,
+          "kind": "astronomical_tide_prediction",
+          "unit": "cm_above_tide_table_datum",
+          "datumElevationCm": -108,
+          "processedBy": "SHIMA CRAFT / AMAMI LIFE local prototype"
+        }
+      }
+    },
+    {
+      "path": "/amami-life-api/today?area=koniya&date=2026-10-21",
+      "status": 200,
+      "passed": true,
+      "cache": "no-store",
+      "data": {
+        "schemaVersion": 1,
+        "mode": "reference",
+        "data": {
+          "area": {
+            "id": "koniya",
+            "name": "古仁屋",
+            "municipality": "瀬戸内町",
+            "lat": 28.146,
+            "lon": 129.314,
+            "station": null
+          },
+          "date": "2026-10-21",
+          "state": "ready",
+          "solar": {
+            "sunrise": "06:27",
+            "sunset": "17:49",
+            "riseAzimuth": 101,
+            "setAzimuth": 259,
+            "dusk": "18:13"
+          },
+          "tide": null,
+          "tomorrowTide": null,
+          "outlook": [
+            {
+              "date": "2026-10-21",
+              "tide": null,
+              "solar": {
+                "sunrise": "06:27",
+                "sunset": "17:49",
+                "riseAzimuth": 101,
+                "setAzimuth": 259,
+                "dusk": "18:13"
+              }
+            },
+            {
+              "date": "2026-10-22",
+              "tide": null,
+              "solar": {
+                "sunrise": "06:28",
+                "sunset": "17:48",
+                "riseAzimuth": 102,
+                "setAzimuth": 258,
+                "dusk": "18:12"
+              }
+            },
+            {
+              "date": "2026-10-23",
+              "tide": null,
+              "solar": {
+                "sunrise": "06:28",
+                "sunset": "17:47",
+                "riseAzimuth": 102,
+                "setAzimuth": 258,
+                "dusk": "18:11"
+              }
+            },
+            {
+              "date": "2026-10-24",
+              "tide": null,
+              "solar": {
+                "sunrise": "06:29",
+                "sunset": "17:46",
+                "riseAzimuth": 103,
+                "setAzimuth": 257,
+                "dusk": "18:10"
+              }
+            },
+            {
+              "date": "2026-10-25",
+              "tide": null,
+              "solar": {
+                "sunrise": "06:30",
+                "sunset": "17:46",
+                "riseAzimuth": 103,
+                "setAzimuth": 257,
+                "dusk": "18:09"
+              }
+            },
+            {
+              "date": "2026-10-26",
+              "tide": null,
+              "solar": {
+                "sunrise": "06:30",
+                "sunset": "17:45",
+                "riseAzimuth": 103,
+                "setAzimuth": 257,
+                "dusk": "18:09"
+              }
+            },
+            {
+              "date": "2026-10-27",
+              "tide": null,
+              "solar": {
+                "sunrise": "06:31",
+                "sunset": "17:44",
+                "riseAzimuth": 104,
+                "setAzimuth": 256,
+                "dusk": "18:08"
+              }
+            }
+          ],
+          "tideSource": {
+            "sourceId": "jma-tide-O9",
+            "publisher": "気象庁",
+            "url": "https://www.data.jma.go.jp/kaiyou/data/db/tide/suisan/txt/2026/O9.txt",
+            "officialUrl": "https://www.data.jma.go.jp/kaiyou/db/tide/suisan/suisan.php?stn=O9",
+            "fetchedAt": "2026-10-13T06:50:37.983Z",
+            "issuedAt": null,
+            "expiresAt": "2026-12-31T15:00:00Z",
+            "sha256": "0e1c58dab99054eaa478874082a5f301d5fc4c2ca94612991d07166d12dce175",
+            "oldArchiveByteIdentical": true,
+            "kind": "astronomical_tide_prediction",
+            "unit": "cm_above_tide_table_datum",
+            "datumElevationCm": -108,
+            "processedBy": "SHIMA CRAFT / AMAMI LIFE local prototype"
+          },
+          "hazards": {
+            "state": "unknown",
+            "source": {
+              "sourceId": "official-links",
+              "officialUrl": "https://www.jma.go.jp/bosai/",
+              "issuedAt": null,
+              "fetchedAt": null,
+              "checkedAt": null,
+              "expiresAt": null,
+              "freshness": "unknown"
+            }
+          }
+        },
+        "source": {
+          "sourceId": "jma-tide-O9",
+          "publisher": "気象庁",
+          "url": "https://www.data.jma.go.jp/kaiyou/data/db/tide/suisan/txt/2026/O9.txt",
+          "officialUrl": "https://www.data.jma.go.jp/kaiyou/db/tide/suisan/suisan.php?stn=O9",
+          "fetchedAt": "2026-10-13T06:50:37.983Z",
+          "issuedAt": null,
+          "expiresAt": "2026-12-31T15:00:00Z",
+          "sha256": "0e1c58dab99054eaa478874082a5f301d5fc4c2ca94612991d07166d12dce175",
+          "oldArchiveByteIdentical": true,
+          "kind": "astronomical_tide_prediction",
+          "unit": "cm_above_tide_table_datum",
+          "datumElevationCm": -108,
+          "processedBy": "SHIMA CRAFT / AMAMI LIFE local prototype"
+        }
+      }
+    },
+    {
+      "path": "/amami-life-api/weather?mode=live&area=naze&date=2026-10-21",
+      "status": 200,
+      "passed": true,
+      "cache": "no-store",
+      "data": {
+        "schemaVersion": 1,
+        "mode": "live",
+        "data": {
+          "date": "2026-10-21",
+          "region": {
+            "code": "460040",
+            "name": "奄美地方"
+          },
+          "description": "くもり 所により 雨",
+          "textIssuedAt": "2026-10-21T08:00:00.000Z",
+          "codeIssuedAt": "2026-10-21T08:00:00.000Z",
+          "weeklyIssuedAt": null,
+          "weatherCode": "200",
+          "wind": "北東の風　やや強く",
+          "waves": "４メートル　うねり　を伴う　ただし　十島村　では　３メートル　うねり　を伴う",
+          "precipitation": [
+            {
+              "startsAt": "2026-10-21T09:00:00.000Z",
+              "percent": 30,
+              "issuedAt": "2026-10-21T08:00:00.000Z"
+            }
+          ],
+          "weeklyPrecipitation": null,
+          "reliability": null,
+          "temperature": null,
+          "reportTimes": [
+            "2026-10-21T08:00:00.000Z"
+          ]
+        },
+        "source": {
+          "sourceId": "jma-amami-forecast",
+          "officialUrl": "https://www.jma.go.jp/bosai/forecast/#area_type=offices&area_code=460040",
+          "issuedAt": "2026-10-21T08:00:00.000Z",
+          "fetchedAt": "2026-10-21T13:21:07.160Z",
+          "checkedAt": "2026-10-21T13:21:07.097Z",
+          "expiresAt": "2026-10-21T14:00:00.000Z",
+          "freshness": "recent",
+          "upstreamUrl": "https://www.jma.go.jp/bosai/forecast/data/forecast/460100.json"
+        },
+        "status": "ready",
+        "lastAttemptAt": "2026-10-21T13:21:07.097Z",
+        "refreshPolicy": "取得間隔1時間、失敗再試行1分。発表から6時間で古い表示（アプリの鮮度基準、気象庁の有効期限ではない）。"
+      }
+    },
+    {
+      "path": "/amami-life-api/observations?area=naze&date=2026-10-21",
+      "status": 200,
+      "passed": true,
+      "cache": "no-store",
+      "data": {
+        "schemaVersion": 1,
+        "mode": "live",
+        "data": {
+          "station": {
+            "code": "88837",
+            "name": "名瀬",
+            "lat": 28.385,
+            "lon": 129.49333333333334
+          },
+          "observedAt": "2026-10-21T13:10:00.000Z",
+          "temperatureC": 25.6,
+          "qualityCode": 0
+        },
+        "status": "ready",
+        "source": {
+          "sourceId": "jma-amedas",
+          "officialUrl": "https://www.jma.go.jp/bosai/amedas/",
+          "issuedAt": null,
+          "fetchedAt": "2026-10-21T13:21:07.353Z",
+          "checkedAt": "2026-10-21T13:21:07.290Z",
+          "expiresAt": "2026-10-21T13:30:00.000Z",
+          "freshness": "recent",
+          "observedAt": "2026-10-21T13:10:00.000Z",
+          "upstreamUrl": "https://www.jma.go.jp/bosai/amedas/data/map/20261021221000.json"
+        },
+        "refreshPolicy": "取得間隔10分、失敗時1分。観測から20分を鮮度目安とするアプリ基準。品質0のみ表示。過去・未来の実況は未提供。"
+      }
+    },
+    {
+      "path": "/amami-life-api/cyclones/track?id=TC2636",
+      "status": 200,
+      "data": {
+        "schemaVersion": 1,
+        "status": "ready",
+        "data": {
+          "id": "TC2636",
+          "number": "2630",
+          "category": "TY",
+          "name": "チャンパー",
+          "issuedAt": "2026-10-21T12:45:00.000Z",
+          "points": [
+            {
+              "hours": 0,
+              "validAt": "2026-10-21T12:00:00.000Z",
+              "lat": 19.3,
+              "lon": 128,
+              "radiusM": null,
+              "radiusKm": null,
+              "pressureHpa": 900,
+              "windMs": 60,
+              "gustMs": 85,
+              "category": "台風",
+              "intensity": "猛烈な",
+              "location": "フィリピンの東"
+            },
+            {
+              "hours": 12,
+              "validAt": "2026-10-22T00:00:00.000Z",
+              "lat": 20.3,
+              "lon": 126.1,
+              "radiusM": 46300,
+              "radiusKm": 45,
+              "pressureHpa": 915,
+              "windMs": 55,
+              "gustMs": 75,
+              "category": "台風",
+              "intensity": "猛烈な",
+              "location": "沖縄の南"
+            },
+            {
+              "hours": 24,
+              "validAt": "2026-10-22T12:00:00.000Z",
+              "lat": 21.1,
+              "lon": 124.8,
+              "radiusM": 92600,
+              "radiusKm": 95,
+              "pressureHpa": 935,
+              "windMs": 50,
+              "gustMs": 70,
+              "category": "台風",
+              "intensity": "非常に強い",
+              "location": "沖縄の南"
+            },
+            {
+              "hours": 48,
+              "validAt": "2026-10-23T12:00:00.000Z",
+              "lat": 23.5,
+              "lon": 122,
+              "radiusM": 212980,
+              "radiusKm": 210,
+              "pressureHpa": 955,
+              "windMs": 40,
+              "gustMs": 60,
+              "category": "台風",
+              "intensity": "強い",
+              "location": "与那国島の南西約150km"
+            },
+            {
+              "hours": 72,
+              "validAt": "2026-10-24T12:00:00.000Z",
+              "lat": 27,
+              "lon": 122.7,
+              "radiusM": 296320,
+              "radiusKm": 300,
+              "pressureHpa": 980,
+              "windMs": 30,
+              "gustMs": 45,
+              "category": "台風",
+              "intensity": "-",
+              "location": "東シナ海"
+            },
+            {
+              "hours": 96,
+              "validAt": "2026-10-25T12:00:00.000Z",
+              "lat": 31.6,
+              "lon": 125.6,
+              "radiusM": 370400,
+              "radiusKm": 370,
+              "pressureHpa": 992,
+              "windMs": 23,
+              "gustMs": 35,
+              "category": "台風",
+              "intensity": "-",
+              "location": "東シナ海"
+            },
+            {
+              "hours": 120,
+              "validAt": "2026-10-26T12:00:00.000Z",
+              "lat": 36.6,
+              "lon": 133.5,
+              "radiusM": 463000,
+              "radiusKm": 460,
+              "pressureHpa": 1002,
+              "windMs": 0,
+              "gustMs": 0,
+              "category": "温帯低気圧",
+              "intensity": "-",
+              "location": "日本海"
+            }
+          ]
+        },
+        "source": {
+          "urls": [
+            "https://www.jma.go.jp/bosai/typhoon/data/TC2636/forecast.json",
+            "https://www.jma.go.jp/bosai/typhoon/data/TC2636/specifications.json"
+          ],
+          "fetchedAt": "2026-10-21T13:21:08.879Z",
+          "issuedAt": "2026-10-21T12:45:00.000Z",
+          "expiresAt": "2026-10-21T13:31:08.879Z"
+        }
+      },
+      "passed": true
+    },
+    {
+      "path": "/amami-life-api/cyclones/track?id=TC9999",
+      "method": "GET",
+      "status": 503,
+      "passed": true
+    },
+    {
+      "path": "/amami-life-api/cyclones/track?id=TC9999",
+      "method": "HEAD",
+      "status": 503,
+      "passed": true
+    },
+    {
+      "path": "/amami-life-api/cyclones/track?id=TC9999",
+      "method": "POST",
+      "status": 405,
+      "passed": true
+    }
+  ]
+}

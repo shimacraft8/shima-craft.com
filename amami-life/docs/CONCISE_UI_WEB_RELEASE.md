@@ -23,4 +23,14 @@ ui-ux-pro-maxを参照。progressive disclosureの検索には直接対応する
 
 ## 公開結果
 
-公開前。GitHub/Cloudflare本人・対象repo/account/Worker/route/SHIMA_ORIGINを再照合して公開する。直前の復旧先：c3a3658c-5d6a-47c6-bc62-137a21ad6039。
+公開済み。GitHub/Cloudflare本人・対象repo/account/Worker/route/SHIMA_ORIGINを再照合して公開する。直前の復旧先：c3a3658c-5d6a-47c6-bc62-137a21ad6039。
+
+
+- 公開：2026-10-21 22:20 JST、https://shima-craft.com/ 。実装4dabed2・ラベル調整268b252。
+- Worker Version：ff8a38bb-706c-4747-b2b5-bcf3b90fa2e0。安定版への復旧先：c3a3658c-5d6a-47c6-bc62-137a21ad6039。
+- GitHub shimacraft8、Cloudflare shimacraft8@gmail.com、対象account/repo/Worker/両ドメインroute/SHIMA_ORIGINを照合済み。元サービスdeployment一覧は前後で同一。
+- 開発144/公開113試験、ビルド・Lint・型検査成功。公開HTTP29項目成功。初回HTTPは配信JSのUnicodeエスケープを検証スクリプトが未対応で1項目誤検出。検証条件を修正し、実ブラウザと再実行で全件成功。初回記録はローカル証跡に保持。
+- 地図の常時文字は現在位置と奄美に限定。選択した予報位置の時刻だけ追加。画面の高さで急に1段階引き過ぎないよう、台風図は小数ズームで範囲へ適合。通常カラーの太陽/月地図は初期Z10を維持。
+- 本番の現在/日付ボタン/数値の同期、PCと390pxで横はみ出しなし、2つの初期地図ラベル、コンソールエラーなしを確認。保存/未取得/取消等はproviderと時刻モデル試験で検証し、実機通信障害と混同しない。
+- 出典・強風域との区別・古さ警告・全国の発表という対象範囲は保持。管理者解析/Nativeは今回も未公開。実機未確認。
+- 証跡：research/concise-ui/。最新ZIPを再生成しCRCと収録全ファイルSHA256を検証。未公開解析ソースも含む開発全体のZIPのため、そのまま一括deployしない。

@@ -1,0 +1,12 @@
+{
+  "publishedAt": "2026-10-21 14:27 JST",
+  "implementationCommit": "0b31d57",
+  "version": "c3a3658c-5d6a-47c6-bc62-137a21ad6039",
+  "rollback": "a8ea2fd1-5f90-4150-b4b1-3cfe3f0885d6",
+  "defaultZoom": 10,
+  "resetZoom": 10,
+  "publicTests": 109,
+  "httpChecks": 29,
+  "originalUnchanged": true,
+  "physicalDevices": "unverified"
+}

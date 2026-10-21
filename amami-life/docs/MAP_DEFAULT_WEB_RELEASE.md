@@ -9,3 +9,6 @@
 - 実機iOS/Androidは未確認。OSMの条件/配信の限界、プライバシー、天文参考計算の限界はSTREET_MAP_WEB_RELEASE.mdを継続。
 
 公開先はGitHub shimacraft8/shima-craft.comの専用ブランチとCloudflare shimacraft8@gmail.com/account 42f69e35f08bb21dca5194467e2f59de、Worker shima-craft-amami-life、routeとSHIMA_ORIGINを再照合済み。公開結果は追記。復旧先：a8ea2fd1-5f90-4150-b4b1-3cfe3f0885d6。
+
+
+公開済み：2026-10-21 14:27 JST、https://shima-craft.com/ 。実装commit0b31d57。Worker Version：c3a3658c-5d6a-47c6-bc62-137a21ad6039。公開HTTP29項目成功。元サービスは前後同一。本番の初回と地域復帰がZ10で、添付の島を見渡す表示になることを430px幅で確認。横はみ出し・コンソールエラーなし。証跡はresearch/map-default/。最新ZIPを再生成し、CRCと全ファイルSHA256検証。実機未確認は継続。

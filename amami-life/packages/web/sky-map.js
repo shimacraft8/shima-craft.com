@@ -3,13 +3,13 @@ import { validSkyPoint, viewportRay } from "./usage.js";
 
 /** View-only map. Point coordinates stay in memory; calculations run in the app. */
 export function createSkyMap(element,{origin,events,onPick,onError,view}={}) {
-  const map=L.map(element,{zoomControl:false,attributionControl:false,scrollWheelZoom:false,minZoom:9,maxZoom:17,maxBounds:[[27.7,128.8],[28.95,130.2]],maxBoundsViscosity:1,keyboard:true,inertia:false,fadeAnimation:false,zoomAnimation:false,markerZoomAnimation:false});
+  const map=L.map(element,{zoomControl:false,attributionControl:false,scrollWheelZoom:false,minZoom:9,maxZoom:19,maxBounds:[[27.7,128.8],[28.95,130.2]],maxBoundsViscosity:1,keyboard:true,inertia:false,fadeAnimation:false,zoomAnimation:false,markerZoomAnimation:false});
   element.setAttribute("role","region");
   element.setAttribute("aria-label","出入りの方位を調べる地図。矢印キーで移動し、中央を選ぶボタンで計算地点を指定できます。");
-  map.setView(view?.center ?? [origin.lat,origin.lon],view?.zoom ?? 10,{animate:false});
+  map.setView(view?.center ?? [origin.lat,origin.lon],view?.zoom ?? 12,{animate:false});
   element.setAttribute("aria-busy","true");
   let tileFailed=false;
-  const base=L.tileLayer("https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png",{maxZoom:17,minZoom:9,className:"sky-base-tiles",keepBuffer:1,updateWhenIdle:true,updateWhenZooming:false}).addTo(map);
+  const base=L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,minZoom:9,className:"sky-street-tiles",keepBuffer:0,updateWhenIdle:true,updateWhenZooming:false}).addTo(map);
   base.on("loading",()=>{tileFailed=false;element.setAttribute("aria-busy","true");});
   base.on("load",()=>{element.setAttribute("aria-busy","false");if(!tileFailed)onError?.(null,"network");});
   base.on("tileerror",()=>{tileFailed=true;onError?.("地図の一部を取得できませんでした。時刻と方位は下に表示しています。","network");});
@@ -28,6 +28,7 @@ export function createSkyMap(element,{origin,events,onPick,onError,view}={}) {
       const end=viewportRay(start,size.x,size.y,event.azimuth);if(!end)continue;
       const endpoint=map.containerPointToLatLng(L.point(end.x,end.y));
       const color=kind==="rise" ? "#e1b96e" : "#fff5df";
+      L.polyline([[state.origin.lat,state.origin.lon],endpoint],{color:"#222522",weight:7,opacity:.85,interactive:false}).addTo(lines);
       L.polyline([[state.origin.lat,state.origin.lon],endpoint],{color,weight:3,dashArray:kind==="set" ? "7 6" : undefined,interactive:false}).addTo(lines);
       L.circleMarker(endpoint,{radius:4,color:"#222522",weight:2,fillColor:color,fillOpacity:1,interactive:false}).addTo(lines);
     }
@@ -45,7 +46,7 @@ export function createSkyMap(element,{origin,events,onPick,onError,view}={}) {
     setState(next){state=next;marker.setLatLng([next.origin.lat,next.origin.lon]);draw();},
     zoom(delta){map.setZoom(map.getZoom()+delta,{animate:false});},
     center(){pick(map.getCenter());},
-    reset(point){map.setView([point.lat,point.lon],10,{animate:false});},
+    reset(point){map.setView([point.lat,point.lon],12,{animate:false});},
     setView(view){map.setView(view.center,view.zoom,{animate:false});},
     getView(){return {center:[map.getCenter().lat,map.getCenter().lng],zoom:map.getZoom()};},
     destroy(){dead=true;resize.disconnect();element.removeEventListener("keydown",onKey);map.remove();},

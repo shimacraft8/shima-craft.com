@@ -64,3 +64,6 @@ EASプロジェクト作成、クラウドビルド、署名鍵、TestFlight/Pla
 - 台風の実況/予報円と奄美位置、時刻ボタンと予報値、拡大地図、公式リンク、保存情報/未取得/なしの区別。予報円を風の範囲と解釈しない。
 - 実機のピンチとページスクロール、Escape/閉じるとフォーカス復帰、VoiceOver/TalkBack、OS文字拡大、回線遮断/復帰。実機は未確認。
 - 公開は専用cloneのhomepage-only Workerから。開発rootのanalytics router/admin/trackerは未公開のため一括deployしない。対象repo/account/zone/route/serviceを毎回照合。0.3.7前のrollback先は d952b9cf-87f4-40d3-9587-0c5af5abe170。
+
+
+Web0.3.8：太陽/月の通常カラー地図で地名/道路/施設、出入り線の縁取り、クリック・ズーム・拡大・元地点復帰、常時OSM出典の可視性を確認。台風は従来の黒金地理院地図を維持。SLAなし・大量利用/タイルのオフライン保存を行わない。実機未確認。復旧先はbb8ad527-408a-424c-9c6e-1701bf053add。

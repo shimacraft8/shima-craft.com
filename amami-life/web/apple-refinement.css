@@ -519,3 +519,11 @@ body[data-text="large"] .track-stats dt {font-size:16px;}
 body[data-text="large"] .track-times button {font-size:16px;}
 body[data-text="large"] .track-times small {font-size:14px;}
 body[data-text="large"] .track-stats {grid-template-columns:1fr;}
+
+/* Sun/Moon uses normal street colours so geographic labels stay legible. */
+.sky-map-host {background:#e9ede8;color-scheme:light;}
+.sky-street-tiles img {filter:none;}
+.sky-map-attribution {position:absolute;right:0;bottom:0;z-index:700;display:flex;align-items:center;min-height:24px;padding:2px 7px;background:#fff;color:#263d4d;font:11px/1.5 var(--body);text-underline-offset:2px;}
+.sky-map-attribution:hover {color:#000;}
+.sky-map-attribution:focus-visible {outline:3px solid #222522;outline-offset:-3px;}
+.sky-map-frame .sky-map-message {bottom:28px;}

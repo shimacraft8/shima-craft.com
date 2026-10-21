@@ -11,7 +11,7 @@ const security = {
   "Referrer-Policy": "strict-origin-when-cross-origin",
   "Cache-Control": "no-store",
 };
-const csp = "default-src 'self'; img-src 'self' data: https://cyberjapandata.gsi.go.jp; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; font-src 'self'; frame-src https://www.amami-airport.co.jp https://amami-airport.co.jp; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'";
+const csp = "default-src 'self'; img-src 'self' data: https://cyberjapandata.gsi.go.jp https://tile.openstreetmap.org; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; font-src 'self'; frame-src https://www.amami-airport.co.jp https://amami-airport.co.jp; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'";
 const sourceErrors={};
 export function createHomeWorker({ cyclones = createCycloneProvider(), weather = createWeatherProvider({onError:error=>{sourceErrors.weather=error;}}), observations = createObservationProvider({onError:error=>{sourceErrors.observations=error;}}), clock = () => new Date() } = {}) {
   const tracks=createCycloneTrackProvider({cyclones,clock});

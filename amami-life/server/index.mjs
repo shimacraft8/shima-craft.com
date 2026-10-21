@@ -210,7 +210,7 @@ export function createApp({ cycloneProvider = createCycloneProvider(), weatherPr
     const url = new URL(req.url, "http://localhost");
     const common = {
       "X-Content-Type-Options": "nosniff",
-      "Referrer-Policy": "no-referrer",
+      "Referrer-Policy": "strict-origin-when-cross-origin",
       "Cache-Control": "no-store",
     };
     if (
@@ -284,7 +284,7 @@ export function createApp({ cycloneProvider = createCycloneProvider(), weatherPr
         ...common,
         "Content-Type": mime,
         "Content-Security-Policy":
-          "default-src 'self'; img-src 'self' data: https://cyberjapandata.gsi.go.jp; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; font-src 'self'; frame-src 'self' https://www.amami-airport.co.jp https://amami-airport.co.jp; object-src 'none'; base-uri 'self'",
+          "default-src 'self'; img-src 'self' data: https://cyberjapandata.gsi.go.jp https://tile.openstreetmap.org; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; font-src 'self'; frame-src 'self' https://www.amami-airport.co.jp https://amami-airport.co.jp; object-src 'none'; base-uri 'self'",
       });
       res.end(req.method === "HEAD" ? undefined : content);
     } catch {

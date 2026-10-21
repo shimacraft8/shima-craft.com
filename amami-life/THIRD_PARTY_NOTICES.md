@@ -68,3 +68,7 @@ Leaflet 1.9.4: Copyright (c) 2010-2023, Vladimir Agafonkin; Copyright (c) 2010-2
 Shoreline data is derived from: United States. National Imagery and Mapping Agency. "Vector Map Level 0 (VMAP0)." Bethesda, MD: Denver, CO: The Agency; USGS Information Services, 1997.
 https://maps.gsi.go.jp/development/ichiran.html の淡色地図欄に基づく。
 台風 forecast.json/specifications.json は気象庁から取得・加工、出典・発表/取得時刻・予報円の意味を明示。Yahoo!のデータや画像は使用していない。
+
+## Web0.3.8の方位図
+
+太陽/月は色調加工した地理院タイルからOSM Standardへ変更。© OpenStreetMap contributors（https://www.openstreetmap.org/copyright）。ODbLのOSMデータに基づく標準タイルをそのまま直接表示。地図内に常時出典/ライセンスへのリンクを表示する。台風の地理院タイルと追加出典は継続。OSMF配信条件: https://operations.osmfoundation.org/policies/tiles/ 。先読み/一括取得/オフライン配布はしない。

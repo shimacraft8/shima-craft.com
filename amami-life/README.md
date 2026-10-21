@@ -1,3 +1,5 @@
+> 2026-10-21 Web0.3.8：太陽/月の地図を通常カラーへ変更。docs/STREET_MAP_WEB_RELEASE.md参照。公開結果は同書末尾。
+
 > 2026-10-21 Web0.3.7公開済み：https://shima-craft.com/ 。地点選択・拡大地図と公式台風進路図。docs/MAP_INTERACTION_WEB_RELEASE.md参照。公開結果は同書末尾。旧版記録と区別。
 
 > 最新：Web0.3.6公開済み（2026-10-20）。https://shima-craft.com/ 。方位図・潮位選択・台風・空港埋め込み等の記録は [ISLAND_TOOLS_WEB_RELEASE.md](docs/ISLAND_TOOLS_WEB_RELEASE.md)。旧版の記録と未公開Native/解析は区別してください。

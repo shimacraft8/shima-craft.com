@@ -24,4 +24,13 @@ iOS Safari/Android Chrome実機、VoiceOver/TalkBack、実機OS文字拡大・�
 
 ## 公開結果
 
-公開前。管理者解析・GA計測追加・Nativeは公開対象外。GitHubとCloudflareの対象を再照合して、専用cloneのhomepage-only Workerから公開する。直前の復旧先は bb8ad527-408a-424c-9c6e-1701bf053add。
+公開済み。管理者解析・GA計測追加・Nativeは公開対象外。GitHubとCloudflareの対象を再照合して、専用cloneのhomepage-only Workerから公開する。直前の復旧先は bb8ad527-408a-424c-9c6e-1701bf053add。
+
+
+- 公開：2026-10-21 14:02 JST、https://shima-craft.com/ 。実装ae911f6、GitHub専用ブランチへpush済み。
+- Worker Version：a8ea2fd1-5f90-4150-b4b1-3cfe3f0885d6。復旧先bb8ad527-408a-424c-9c6e-1701bf053add。
+- GitHub shimacraft8、Cloudflare shimacraft8@gmail.com、account 42f69e35f08bb21dca5194467e2f59de、対象ドメイン両ルート、SHIMA_ORIGINを再照合。元サービスdeployment一覧は前後で同一。
+- 開発140/公開109試験、Lint/型検査/ビルド成功。本番29 HTTP項目成功。
+- ローカル320/1440pxで横はみ出しなし、出典が地図内で常時可視。台風は地理院フィルター、方位図はfilter:noneを確認。
+- 本番でもOSM実タイル・町名/施設・道路番号・暗い縁取りの方位線、地点変更後の再計算、可視出典とコンソールエラーなしを確認。公開証跡はresearch/street-map/。
+- 最新ZIPはnpm run packageで再生成。CRCと全ファイルSHA256を検証。認証設定/Git/依存は収録外。開発用未公開解析ソースを含むためZIP全体を直接deployしない。

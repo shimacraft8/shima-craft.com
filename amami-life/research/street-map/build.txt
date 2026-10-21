@@ -1,0 +1,21 @@
+
+> amami-life-local@0.3.8 web:build
+> npm run build && node scripts/build-public.mjs
+
+
+> amami-life-local@0.3.8 build
+> node scripts/build-tokens.mjs && esbuild packages/core/src/index.ts --bundle --format=esm --platform=browser --outfile=web/core.js && esbuild packages/core/src/usage.ts --bundle --format=esm --platform=browser --outfile=web/usage.js && esbuild packages/web/sky-map.js --bundle --minify --format=esm --platform=browser --external:./usage.js --outfile=web/sky-map.js
+
+
+  web/core.js  24.1kb
+
+⚡ Done in 19ms
+
+  web/usage.js  23.8kb
+
+⚡ Done in 7ms
+
+  web/sky-map.js  153.5kb
+
+⚡ Done in 32ms
+Public assets built; local QA/demo files and credentials excluded.

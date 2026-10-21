@@ -1,3 +1,4 @@
+import { createCycloneTrackProvider } from "../server/cyclone-tracks.mjs";
 import { createCycloneProvider } from "../server/cyclones.mjs";
 import { AREAS, validDate, todayJST, addDays, solarForDate, unknownSource } from "../packages/core/src/index.ts";
 import { createWeatherProvider } from "../server/weather.mjs";
@@ -13,6 +14,7 @@ const security = {
 const csp = "default-src 'self'; img-src 'self' data: https://cyberjapandata.gsi.go.jp; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; font-src 'self'; frame-src https://www.amami-airport.co.jp https://amami-airport.co.jp; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'";
 const sourceErrors={};
 export function createHomeWorker({ cyclones = createCycloneProvider(), weather = createWeatherProvider({onError:error=>{sourceErrors.weather=error;}}), observations = createObservationProvider({onError:error=>{sourceErrors.observations=error;}}), clock = () => new Date() } = {}) {
+  const tracks=createCycloneTrackProvider({cyclones,clock});
   return {
     async fetch(request, env) {
       const url = new URL(request.url);
@@ -49,6 +51,7 @@ export function createHomeWorker({ cyclones = createCycloneProvider(), weather =
         if (!area || !validDate(date) || (url.searchParams.has("state") && url.searchParams.get("state")!=="ready")) return json({error:"invalid-input"},400);
         const name=url.pathname.slice("/amami-life-api/".length);
         if(name==="cyclones") {const body=await cyclones.get();return json(body,body.status==="unavailable" ? 503 : 200);}
+        if(name==="cyclones/track") {const body=await tracks.get(url.searchParams.get("id"));return json(body,body.status==="unavailable" ? 503 : 200);}
         if(name==="cyclones/chart") {const image=await cyclones.image(url.searchParams.get("version"));return new Response(request.method==="HEAD" ? null : image,{status:image ? 200 : 410,headers:{...security,"Content-Type":image ? "image/png" : "text/plain"}});}
         if (name==="service-health") return json({schemaVersion:1,mode:"public-web",currentHazardsIntegrated:false,cyclonesIntegrated:true,tideYear:2026,...(env.DEBUG_SOURCES==="1" ? {sourceErrors} : {})});
         if (name==="weather") {

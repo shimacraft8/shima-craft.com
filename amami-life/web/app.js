@@ -11,7 +11,7 @@ import {
   safetyLinks,
   freshness,
 } from "./core.js";
-import { findOfficialLinks, tideOverview, precipitationWindow, tideAtMinute, moonForDate, compassRay, mapPoint } from "./usage.js";
+import { findOfficialLinks, tideOverview, precipitationWindow, tideAtMinute, moonForDate, validSkyPoint } from "./usage.js";
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) =>
@@ -79,6 +79,7 @@ let saved =
   stored("saved", []).filter?.((id) => LINKS.some((l) => l.id === id)) ?? [];
 let note = stored("note", "");
 if (typeof note !== "string") note = "";
+let skyMain=null,skyLarge=null,skyView=null,skyPicked=null,skyPointArea=null,skyLoading=null;
 let celestialTab=params.get("celestial")==="moon" ? "moon" : "sun", selectedTide=null, cyclones=null, cyclonesLoading=false, flightOpened=false;
 const area = () => AREAS.find((a) => a.id === areaId);
 function icon(name) {
@@ -195,55 +196,106 @@ function todayFacts() {
   const event=(item,kind)=>`<div class="fact"><div class="fact-label">${date===todayJST() ? "次の" : "この日の"}${kind}${item?.date!==date && item ? '<span class="day-tag">翌日</span>' : ""}</div><div class="fact-value">${item?.time ?? "—"}</div><div class="fact-note">${item ? `${item.heightCm} cm · 潮位予測` : area().station ? "時刻は未取得" : "この地域は未連携"}</div></div>`;
   return `<div class="facts-grid today-brief">${event(tides.high,"満潮")}${event(tides.low,"干潮")}<div class="fact"><div class="fact-label">日の入り</div><div class="fact-value">${sun.sunset ?? "—"}</div><div class="fact-note">地点別の参考計算</div></div></div>`;
 }
-function cycloneVersion() {return JSON.stringify([cyclones,cyclonesLoading,cyclones?.source?.expiresAt ? Date.parse(cyclones.source.expiresAt)<=Date.now() : false]);}
-function cyclonePanel() {
- const p=cyclones;
+let cycloneId=null,trackHour=0,trackMain=null,trackLarge=null,trackLoading=false;
+const trackCache=new Map();
+function stormName(e){return e?.category==="TD" ? "熱帯低気圧" : e?.category==="EX" ? "温帯低気圧（元台風）" : e?.category==="LOW" ? "低気圧" : e?.number ? `台風${Number(e.number.slice(2))}号` : "発表対象の低気圧";}
+function trackPayload(){return trackCache.get(cycloneId);}
+function trackStale(){const p=trackPayload();return !p || p.status!=="ready" || Date.parse(p.source?.expiresAt)<=Date.now() || cyclones?.status!=="ready" || Date.parse(cyclones?.source?.expiresAt)<=Date.now() || p.data?.issuedAt!==cyclones?.data?.find(e=>e.id===cycloneId)?.issuedAt;}
+function cycloneVersion(){const t=trackPayload();return JSON.stringify([cyclones?.status,cyclones?.data,!!cyclones && Date.parse(cyclones.source.expiresAt)<=Date.now(),!cyclones && cyclonesLoading,cycloneId,t?.status,t?.data,!t?.data && trackLoading,trackStale()]);}
+function mapCredits(){return `<details class="map-credits"><summary>地図の出典</summary><p>地理院タイルを加工して表示（<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank" rel="noopener">国土地理院 ↗</a>）。Shoreline data is derived from: United States. National Imagery and Mapping Agency. "Vector Map Level 0 (VMAP0)." Bethesda, MD: Denver, CO: The Agency; USGS Information Services, 1997.</p></details>`;}
+function trackFrame(scope){return `<div class="cyclone-map-frame"><div id="cyclone-map-${scope}" class="cyclone-map-host" tabindex="0"></div><span class="sky-north" aria-hidden="true">↑ N</span><div class="sky-zoom"><button type="button" data-track-zoom="1" data-track-scope="${scope}" aria-label="台風の地図を拡大">＋</button><button type="button" data-track-zoom="-1" data-track-scope="${scope}" aria-label="台風の地図を縮小">−</button></div><p id="track-error-${scope}" class="sky-map-message" role="status" hidden></p></div><div class="track-map-tools"><button type="button" class="text-button" data-track-fit data-track-scope="${scope}">奄美と進路を全体表示</button>${scope==="main" ? '<button type="button" class="text-button" data-track-expand aria-haspopup="dialog">大きく見る ↗</button>' : ""}</div><p class="track-legend"><span>● 実況位置</span><span>◯ 予報円</span><span>┄ 中心を結ぶ目安線</span></p>`;}
+function trackButtons(scope){return `<div class="track-times" role="group" aria-label="予報の時刻を選ぶ">${(trackPayload()?.data?.points ?? []).map(p=>`<button type="button" data-track-hour="${p.hours}" id="track-${scope}-${p.hours}" aria-pressed="${trackHour===p.hours}">${p.hours===0 ? '実況' : `＋${p.hours}時間`}<small>${trackShort(p.validAt)}</small></button>`).join("")}</div>`;}
+function trackShort(value){return new Intl.DateTimeFormat("ja-JP",{timeZone:"Asia/Tokyo",month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).format(new Date(value));}
+function trackFacts(){const p=trackPayload()?.data?.points.find(p=>p.hours===trackHour);if(!p)return "";return `<p class="track-selected-time">${p.hours===0 ? '実況' : '予報'} · ${timeJST(p.validAt)}</p><p class="track-location">${esc([p.intensity!=="-" ? p.intensity : null,p.category,p.location].filter(Boolean).join(" · "))}</p><dl class="track-stats"><div><dt>中心気圧</dt><dd>${p.pressureHpa ?? '—'}<small> hPa</small></dd></div><div><dt>最大風速</dt><dd>${p.windMs ?? '—'}<small> m/s</small></dd></div><div><dt>最大瞬間風速</dt><dd>${p.gustMs ?? '—'}<small> m/s</small></dd></div></dl>${p.radiusM ? `<p class="source-note">予報円の半径 ${p.radiusKm ?? `約${Math.round(p.radiusM/1000)}`} km</p>` : ''}`;}
+function trackCaution(){return '<p class="track-caution">予報円は中心が入る確率70%の範囲です。台風の大きさ・暴風域を示す円ではありません。点線は確定した進路ではありません。</p>';}
+function cyclonePanel(){
+ const p=cyclones,events=p?.data ?? [],track=trackPayload(),data=track?.data;
  const stale=p && (p.status==="refresh-failed" || p.status==="stale" || Date.parse(p.source.expiresAt)<=Date.now());
- const confirmed=p && !stale && p.status==="empty" && Array.isArray(p.data) && p.data.length===0;
- const events=p?.data ?? [];
- const label=cyclonesLoading && !p ? "台風・熱帯低気圧の情報を確認中…" : confirmed ? "台風の情報はありません。" : !p || p.status==="unavailable" ? "台風・熱帯低気圧の情報は未取得です" : stale ? "更新を確認できません · 保存済み情報" : "台風・熱帯低気圧の発表があります";
- return `<div class="cyclone-copy"><p class="section-kicker">TROPICAL CYCLONE · 気象庁の発表対象 / 全国</p><h3>${label}</h3>${events.length ? `<ul class="cyclone-events">${events.map(e=>`<li><strong>${e.category==="TD" ? "熱帯低気圧" : e.category==="EX" ? "温帯低気圧（元台風）" : e.category==="LOW" ? "低気圧" : e.number ? `台風${Number(e.number.slice(2))}号` : "発表対象の低気圧"}</strong><small>発表 ${timeJST(e.issuedAt)}</small></li>`).join("")}</ul>` : ""}<details class="source-details"><summary id="cyclone-source-toggle">現在の発表 · 取得時刻と対象範囲</summary><p class="source-note">現在の発表です。選択した日付の情報ではありません。奄美への接近や安全を示すものではありません。<br>最終取得 ${timeJST(p?.source.fetchedAt ?? null)}<br>台風と、24時間以内に台風へ発達する見込みの熱帯低気圧が対象です。すべての熱帯低気圧を網羅しません。5分ごとに更新、10分未更新または発表から6時間で古い表示にします（独自の鮮度基準）。</p></details><div class="cyclone-actions"><a class="inline-link" href="https://www.jma.go.jp/bosai/map.html?contents=typhoon" target="_blank" rel="noopener">気象庁の進路図を確認 ↗</a><button class="text-button" id="cyclone-retry" data-action="retry-cyclones" ${cyclonesLoading ? "disabled" : ""}>${cyclonesLoading ? "確認中…" : "情報を更新"}</button></div></div>${!stale && p?.chart ? `<figure class="cyclone-chart"><a href="${API_BASE}/cyclones/chart?version=${encodeURIComponent(p.chart.version)}" target="_blank" rel="noopener" aria-label="気象庁の実況天気図を別タブで拡大"><img class="cyclone-image" src="${API_BASE}/cyclones/chart?version=${encodeURIComponent(p.chart.version)}" width="600" height="581" alt="気象庁の実況天気図。台風の進路予報図とは異なります。"/><span aria-hidden="true">拡大 ↗</span></a><figcaption>気象庁の実況天気図 · ${timeJST(p.chart.validAt)}<br>進路予報は公式の進路図をご確認ください。</figcaption></figure>` : events.length ? '<p class="source-note cyclone-image-note">最新画像は未取得・期限切れです。公式の進路図をご確認ください。</p>' : ""}`;
+ const empty=p && !stale && p.status==="empty" && events.length===0;
+ const active=events.find(e=>e.id===cycloneId);
+ const title=active ? stormName(active) : cyclonesLoading && !p ? "台風情報を確認中…" : empty ? "台風の情報はありません。" : "台風情報は未取得です";
+ const diagram=data && active ? `<div class="cyclone-chart"><div class="track-mobile-heading"><h3>${stormName(active)}</h3>${trackStale() ? '<p class="track-stale">保存済み情報 · 最新情報は気象庁へ</p>' : ''}<p>発表 ${timeJST(data.issuedAt)}</p></div>${trackFrame("main")}${mapCredits()}</div>` : '';
+ return `<div class="cyclone-copy"><p class="section-kicker">気象庁の台風情報 · 全国の発表</p><div class="cyclone-heading"><h3>${title}</h3>${active ? `<span class="cyclone-state">${stale || (data && trackStale()) ? '保存済み情報' : '発表あり'}</span>` : ''}</div>${data ? `<p class="cyclone-name">${esc(data.name ?? '')}</p><p class="track-issued">発表 ${timeJST(data.issuedAt)}</p>` : active ? `<p class="track-issued">発表 ${timeJST(active.issuedAt)}</p>` : ''}${events.length>1 ? `<div class="cyclone-choices" role="group" aria-label="台風・熱帯低気圧を選ぶ">${events.map(e=>`<button type="button" data-cyclone-id="${e.id}" aria-pressed="${e.id===cycloneId}">${stormName(e)}</button>`).join('')}</div>` : ''}${stale || (data && trackStale()) ? '<p class="track-stale" role="status">最新の発表を確認できません。以下は保存済みの情報です。最新情報は気象庁で確認してください。</p>' : ''}${data ? `${trackButtons("main")}<div id="track-facts-main" class="track-facts" aria-live="polite" aria-atomic="true">${trackFacts()}</div>` : active ? `<p class="readable-note" role="status">${trackLoading ? '公式の進路予報を取得中…' : '進路予報は未取得です。気象庁で最新情報を確認してください。'}</p>` : ''}<div class="cyclone-actions"><a class="inline-link" href="https://www.jma.go.jp/bosai/map.html?contents=typhoon" target="_blank" rel="noopener">気象庁の詳しい情報 ↗</a><button class="text-button" id="cyclone-retry" data-action="retry-cyclones" ${cyclonesLoading || trackLoading ? 'disabled' : ''}>${cyclonesLoading || trackLoading ? '確認中…' : '情報を更新'}</button></div>${data ? trackCaution() : ''}<details class="source-details"><summary id="cyclone-source-toggle">取得時刻・表示の範囲</summary><p class="source-note">現在の発表です。選択した日付の情報ではありません。奄美への接近・安全を判定する表示ではありません。<br>一覧取得 ${timeJST(p?.source?.fetchedAt ?? null)}<br>進路取得 ${timeJST(track?.source?.fetchedAt ?? null)}<br>気象庁のデータを加工表示。台風と、24時間以内に台風へ発達する見込みの熱帯低気圧が対象です。すべての熱帯低気圧を網羅しません。暴風域・強風域はこの図では表示していません。5分キャッシュ。10分未更新または発表から6時間で古い表示（独自基準）。未取得の値は「—」。</p></details></div>${diagram}`;
 }
-function refreshCyclonePanel() {const section=$("#cyclone-home");if(section) {const version=cycloneVersion();if(section.dataset.version===version)return;const open=section.querySelector("details")?.open, focused=section.contains(document.activeElement) ? document.activeElement.id : null;section.innerHTML=cyclonePanel();section.dataset.version=version;if(open)section.querySelector("details").open=true;if(focused)document.getElementById(focused)?.focus({preventScroll:true});}}
-async function loadCyclones() {
- if(cyclonesLoading) return;
- cyclonesLoading=true;
- $("#cyclone-home")?.setAttribute("aria-busy","true");
+function destroyTrackMap(){trackMain?.destroy();trackMain=null;}
+async function mountTrackMap(scope='main'){
+ const host=$(`#cyclone-map-${scope}`),data=trackPayload()?.data;if(!host || !data)return;
+ try{const {createCycloneMap}=await skyModule();if(!host.isConnected || host!==$(`#cyclone-map-${scope}`))return;const map=createCycloneMap(host,{data,onSelect:selectTrackHour,onError:message=>{const note=$(`#track-error-${scope}`);if(note){note.hidden=!message;note.textContent=message ?? '';}}});if(scope==='main')trackMain=map;else trackLarge=map;map.select(trackHour);}
+ catch{const note=$(`#track-error-${scope}`);if(note){note.hidden=false;note.textContent='地図を表示できませんでした。予報の値は時刻ボタンから確認できます。';}}
+}
+function selectTrackHour(hours){if(!trackPayload()?.data?.points.some(p=>p.hours===hours))return;trackHour=hours;trackMain?.select(hours);trackLarge?.select(hours);document.querySelectorAll('[data-track-hour]').forEach(button=>button.setAttribute('aria-pressed',String(Number(button.dataset.trackHour)===hours)));for(const scope of ['main','large']){const facts=$(`#track-facts-${scope}`);if(facts)facts.innerHTML=trackFacts();}}
+async function openTrackMap(){const d=$('#cyclone-track-dialog');if(!d || !trackPayload()?.data)return;d.innerHTML=`<form method="dialog"><div class="dialog-head"><h2 id="cyclone-track-title">${stormName(trackPayload().data)} · 予報進路</h2><button value="cancel" aria-label="進路図を閉じる">×</button></div></form><p class="track-issued">発表 ${timeJST(trackPayload().data.issuedAt)}</p>${trackStale() ? '<p class="track-stale">保存済み情報 · 最新情報は気象庁で確認してください。</p>' : ''}${trackFrame('large')}${trackButtons('large')}<div id="track-facts-large" class="track-facts" aria-live="polite" aria-atomic="true">${trackFacts()}</div>${trackCaution()}${mapCredits()}`;d.showModal();await mountTrackMap('large');}
+function refreshCyclonePanel(){const section=$('#cyclone-home');if(!section)return;const version=cycloneVersion();if(section.dataset.version===version)return;const open=section.querySelector('details.source-details')?.open,focused=section.contains(document.activeElement) ? document.activeElement.id : null;destroyTrackMap();if($('#cyclone-track-dialog')?.open)$('#cyclone-track-dialog').close();section.innerHTML=cyclonePanel();section.dataset.version=version;if(open)section.querySelector('details.source-details').open=true;if(focused)document.getElementById(focused)?.focus({preventScroll:true});void mountTrackMap();}
+async function loadTrack(){
+ if(trackLoading || !cycloneId)return;const id=cycloneId;trackLoading=true;refreshCyclonePanel();
  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),12000);
- try{
-  const response=await fetch(`${API_BASE}/cyclones`,{signal:controller.signal}),p=await response.json();
-  if(p.schemaVersion!==1 || !p.source || !["ready","empty","stale","refresh-failed","unavailable"].includes(p.status) || (p.data!==null && !Array.isArray(p.data))) throw new Error("invalid-cyclones");
-  cyclones=p;
- }catch{cyclones=cyclones ? {...cyclones,status:"refresh-failed"} : null;}
- finally{clearTimeout(timer);cyclonesLoading=false;$("#cyclone-home")?.setAttribute("aria-busy","false");refreshCyclonePanel();}
+ try{const p=await (await fetch(`${API_BASE}/cyclones/track?id=${encodeURIComponent(id)}`,{signal:controller.signal})).json();if(p.schemaVersion!==1 || !p.source || !['ready','stale','refresh-failed','unavailable'].includes(p.status) || (p.data && (p.data.id!==id || !Array.isArray(p.data.points))))throw new Error('invalid-track');trackCache.set(id,p);}
+ catch{const old=trackCache.get(id);trackCache.set(id,old ? {...old,status:'refresh-failed'} : {status:'unavailable',data:null,source:{}});}
+ finally{clearTimeout(timer);trackLoading=false;if(id===cycloneId && !trackPayload()?.data?.points.some(p=>p.hours===trackHour))trackHour=0;refreshCyclonePanel();if(id!==cycloneId)void loadTrack();}
+}
+async function loadCyclones(){
+ if(cyclonesLoading)return;cyclonesLoading=true;$('#cyclone-home')?.setAttribute('aria-busy','true');
+ const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),12000);
+ try{const p=await (await fetch(`${API_BASE}/cyclones`,{signal:controller.signal})).json();if(p.schemaVersion!==1 || !p.source || !['ready','empty','stale','refresh-failed','unavailable'].includes(p.status) || (p.data!==null && !Array.isArray(p.data)))throw new Error('invalid-cyclones');cyclones=p;}
+ catch{cyclones=cyclones ? {...cyclones,status:'refresh-failed'} : null;}
+ finally{clearTimeout(timer);cyclonesLoading=false;const events=cyclones?.data ?? [];if(!events.some(e=>e.id===cycloneId)){cycloneId=events[0]?.id ?? null;trackHour=0;}for(const id of trackCache.keys())if(!events.some(e=>e.id===id))trackCache.delete(id);$('#cyclone-home')?.setAttribute('aria-busy','false');refreshCyclonePanel();if(cycloneId)void loadTrack();}
 }
 function flightPanel() {
  return `<section class="flight-panel" aria-labelledby="flight-heading"><div class="section-head"><h3 id="flight-heading">奄美空港 · 本日の運航状況</h3><span>公式ページ</span></div><p class="readable-note">到着便・出発便は空港の公式ページ内で切り替えられます。画面を移動せず確認できます。</p><button class="text-button" data-action="open-flights" aria-expanded="${flightOpened}" aria-controls="flight-embed">${flightOpened ? "公式ページを再読み込み" : "この画面で運航情報を見る"}</button><button class="text-button" data-action="close-flights" ${flightOpened ? "" : "hidden"}>表示を閉じる</button><a class="inline-link" href="https://www.amami-airport.co.jp/flight/today" target="_blank" rel="noopener noreferrer">公式サイトを別タブで開く ↗</a><div id="flight-embed">${flightOpened ? flightFrame() : ""}</div><p class="source-note">${flightOpened ? "下の表示は奄美空港の公式ページです。" : "表示ボタンを押すと空港のサイトへ接続します。"}当サイトで便の情報を転載・判定していません。自動再読み込みは行いません。更新状況は空港・航空会社の案内をご確認ください。表示できない場合は公式リンクをご利用ください。</p></section>`;
 }
 function flightFrame() {return '<iframe class="flight-frame" src="https://www.amami-airport.co.jp/flight/today" title="奄美空港公式・本日の到着便と出発便" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>';}
 
-function celestialPanel() {
-  const a=area(), sun=solarForDate(date,a.lat,a.lon), moon=moonForDate(date,a.lat,a.lon);
-  const isSun=celestialTab==="sun", rise=isSun ? {time:sun.sunrise,azimuth:sun.riseAzimuth} : moon.rise, set=isSun ? {time:sun.sunset,azimuth:sun.setAzimuth} : moon.set;
-  const center=mapPoint(28.28,129.42), marker=mapPoint(a.lat,a.lon), offset={x:center.x-384,y:center.y-384};
-  const px=marker.x-offset.x,py=marker.y-offset.y;
-  let tiles="";
-  for(let ty=Math.floor(offset.y/256);ty<=Math.floor((offset.y+768)/256);ty++) for(let tx=Math.floor(offset.x/256);tx<=Math.floor((offset.x+768)/256);tx++) tiles+=`<image class="gsi-tile" href="https://cyberjapandata.gsi.go.jp/xyz/pale/10/${tx}/${ty}.png" x="${tx*256-offset.x}" y="${ty*256-offset.y}" width="256" height="256"/>`;
-  const ray=(event,kind)=>{
-    if(!event || event.azimuth==null) return "";
-    const dir=compassRay(event.azimuth), distances=[dir.x>0 ? (744-px)/dir.x : dir.x<0 ? (24-px)/dir.x : Infinity,dir.y>0 ? (744-py)/dir.y : dir.y<0 ? (24-py)/dir.y : Infinity].filter(v=>v>0);
-    const distance=Math.min(...distances), x=px+dir.x*distance,y=py+dir.y*distance;
-    return `<line class="celestial-ray ${kind}" x1="${px}" y1="${py}" x2="${x}" y2="${y}"/><circle class="celestial-end ${kind}" cx="${x}" cy="${y}" r="8"/>`;
-  };
+function skyPoint() {
+  if(skyPointArea!==areaId){skyPointArea=areaId;skyPicked=null;skyView=null;}
+  return skyPicked ?? {lat:area().lat,lon:area().lon};
+}
+function skyState() {
+  const origin=skyPoint(),sun=solarForDate(date,origin.lat,origin.lon),moon=moonForDate(date,origin.lat,origin.lon),isSun=celestialTab==="sun";
+  return {origin,events:{rise:isSun ? {time:sun.sunrise,azimuth:sun.riseAzimuth} : moon.rise,set:isSun ? {time:sun.sunset,azimuth:sun.setAzimuth} : moon.set}};
+}
+function skyFacts() {
+  const {origin,events}=skyState(),isSun=celestialTab==="sun";
   const fact=(event,label,kind)=>`<div class="celestial-fact ${kind}"><span>${label}</span><strong>${event?.time ?? "—"}</strong><small>${event?.azimuth!=null ? `真北から ${event.azimuth}°` : "この日は出入りなし"}</small></div>`;
-  return `<div class="section-head"><div><p class="section-kicker">SUN & MOON</p><h3 id="celestial-heading">光の向きを知る</h3></div><div class="celestial-tabs" role="tablist" aria-label="太陽と月"><button id="celestial-tab-sun" role="tab" data-celestial="sun" aria-controls="celestial-panel" aria-selected="${isSun}" tabindex="${isSun ? 0 : -1}">太陽</button><button id="celestial-tab-moon" role="tab" data-celestial="moon" aria-controls="celestial-panel" aria-selected="${!isSun}" tabindex="${isSun ? -1 : 0}">月</button></div></div><div id="celestial-panel" role="tabpanel" aria-labelledby="celestial-tab-${celestialTab}"><p class="source-note">${esc(a.name)} · ${date} / JST</p><div class="celestial-map"><svg viewBox="0 0 768 768" role="img" aria-labelledby="celestial-map-title celestial-map-desc"><title id="celestial-map-title">${esc(a.name)}の${isSun ? "日の出・日の入り" : "月の出・月の入り"}の方角</title><desc id="celestial-map-desc">上が真北。金色の実線が出る方向、白い破線が入る方向。角度と時刻は下にも表示しています。</desc><defs><filter id="island-map-tone" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="2 0 -1.6 0 .15 1.8 0 -1.5 0 .22 1.4 0 -1.2 0 .23 0 0 0 1 0"/></filter></defs><g class="gsi-map">${tiles}</g>${ray(rise,"rise")}${ray(set,"set")}<circle class="celestial-origin" cx="${px}" cy="${py}" r="11"/><text class="celestial-place" x="${px}" y="${py-24}" text-anchor="middle">${esc(a.name)}</text><text class="compass-north" x="384" y="44" text-anchor="middle">N 真北</text><text class="compass-north" x="732" y="390" text-anchor="middle">E</text><text class="compass-north" x="36" y="390" text-anchor="middle">W</text><text class="compass-north" x="384" y="740" text-anchor="middle">S</text></svg><p class="map-error" hidden>地図を読み込めませんでした。方位と時刻は下に表示しています。</p></div><div class="celestial-facts">${fact(rise,isSun ? "日の出" : "月の出","rise")}${fact(set,isSun ? "日の入り" : "月の入り","set")}</div><p class="source-note">地点別の参考計算。地形・標高・大気により実際の見え方は異なります。</p><a class="map-credit" href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank" rel="noopener">地理院タイル（色調加工） ↗</a></div>`;
+  return `<p class="sky-point-name"><strong>${skyPicked ? "選択した地点" : esc(area().name)}</strong><span>北緯 ${origin.lat.toFixed(5)}° / 東経 ${origin.lon.toFixed(5)}°</span></p><p class="source-note">${date} / JST · 方位図の計算地点</p><div class="celestial-facts">${fact(events.rise,isSun ? "日の出" : "月の出","rise")}${fact(events.set,isSun ? "日の入り" : "月の入り","set")}</div>`;
+}
+function skyTabs(scope="main") {
+  const prefix=scope==="main" ? "celestial" : "sky-large";
+  return `<div class="celestial-tabs" role="tablist" aria-label="太陽と月">${[["sun","太陽"],["moon","月"]].map(([key,label])=>`<button type="button" id="${prefix}-tab-${key}" role="tab" data-celestial="${key}" aria-controls="${prefix}-panel" aria-selected="${celestialTab===key}" tabindex="${celestialTab===key ? 0 : -1}">${label}</button>`).join("")}</div>`;
+}
+function skyMapFrame(scope) {
+  return `<div class="sky-map-frame"><div id="sky-map-${scope}" class="sky-map-host" tabindex="0"></div><span class="sky-north" aria-hidden="true">↑ N 真北</span><div class="sky-zoom"><button type="button" data-sky-zoom="1" data-sky-scope="${scope}" aria-label="地図を拡大">＋</button><button type="button" data-sky-zoom="-1" data-sky-scope="${scope}" aria-label="地図を縮小">−</button></div><p class="sky-map-message" id="sky-map-message-${scope}" role="status" hidden></p></div><div class="sky-map-tools"><button type="button" class="text-button" data-sky-center data-sky-scope="${scope}">中央を計算地点にする</button><button type="button" class="text-button" data-sky-reset>地域の地点へ戻す</button></div>`;
+}
+function skyCredit() {return '<p class="source-note">地図をタップして地点を選択。実線は出る方角、破線は入る方角です。地形・標高・大気を含まない参考計算です。</p><a class="map-credit" href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank" rel="noopener">地理院タイル（色調加工） ↗</a>';}
+function celestialPanel() {
+  return `<div class="section-head"><div><p class="section-kicker">SUN & MOON</p><h3 id="celestial-heading">光の向きを知る</h3></div>${skyTabs()}</div><p class="sky-map-help">好きな場所から、出入りの方角を。</p><button type="button" class="text-button sky-expand" data-sky-expand aria-haspopup="dialog">地図を大きく見る ↗</button><div id="celestial-panel" role="tabpanel" aria-labelledby="celestial-tab-${celestialTab}">${skyMapFrame("main")}<div id="sky-readout-main" class="sky-readout" aria-live="polite" aria-atomic="true">${skyFacts()}</div>${skyCredit()}</div>`;
 }
 function refreshCelestial(focus=false) {
-  const section=$("#celestial-section");if(!section) return;
-  section.innerHTML=celestialPanel();
+  const next=skyState();
+  skyMain?.setState(next);skyLarge?.setState(next);
+  for(const scope of ["main","large"]){const readout=$(`#sky-readout-${scope}`);if(readout)readout.innerHTML=skyFacts();const prefix=scope==="main" ? "celestial" : "sky-large";const panel=$(`#${prefix}-panel`);panel?.setAttribute("aria-labelledby",`${prefix}-tab-${celestialTab}`);}
+  document.querySelectorAll("[data-celestial]").forEach(button=>{const selected=button.dataset.celestial===celestialTab;button.setAttribute("aria-selected",String(selected));button.tabIndex=selected ? 0 : -1;});
   syncUrl();
-  if(focus) $(`#celestial-tab-${celestialTab}`)?.focus({preventScroll:true});
+  if(focus) $(`#${$("#sky-map-dialog")?.open ? "sky-large" : "celestial"}-tab-${celestialTab}`)?.focus({preventScroll:true});
 }
+function skyPick(point) {
+  if(!validSkyPoint(point.lat,point.lon))return;
+  skyPicked={lat:point.lat,lon:point.lon};skyPointArea=areaId;document.querySelectorAll('.sky-map-message[data-kind="point"]').forEach(note=>{note.hidden=true;});refreshCelestial();
+}
+function skyError(scope,message,kind="network") {const note=$(`#sky-map-message-${scope}`);if(note){if(message===null){if(note.dataset.kind===kind)note.hidden=true;return;}note.dataset.kind=kind;note.hidden=false;note.textContent=message;}}
+function skyModule() {return skyLoading ??= import("./sky-map.js");}
+async function mountSkyMap() {
+  const host=$("#sky-map-main");if(!host)return;
+  try {const {createSkyMap}=await skyModule();if(!host.isConnected || host!==$("#sky-map-main"))return;skyMain=createSkyMap(host,{...skyState(),view:skyView,onPick:skyPick,onError:(message,kind)=>skyError("main",message,kind)});}
+  catch {skyError("main","地図を読み込めませんでした。時刻と方位は下に表示しています。");}
+}
+async function openSkyMap() {
+  const dialog=$("#sky-map-dialog");if(!dialog)return;
+  dialog.innerHTML=`<form method="dialog"><div class="dialog-head"><h2 id="sky-large-title">太陽と月の方位図</h2><button value="cancel" aria-label="方位図を閉じる">×</button></div></form>${skyTabs("large")}<div id="sky-large-panel" role="tabpanel" aria-labelledby="sky-large-tab-${celestialTab}">${skyMapFrame("large")}<div id="sky-readout-large" class="sky-readout" aria-live="polite" aria-atomic="true">${skyFacts()}</div>${skyCredit()}</div>`;
+  dialog.showModal();
+  try {const {createSkyMap}=await skyModule();if(!dialog.open)return;skyLarge=createSkyMap($("#sky-map-large"),{...skyState(),view:skyMain?.getView() ?? skyView,onPick:skyPick,onError:(message,kind)=>skyError("large",message,kind)});}
+  catch {skyError("large","地図を読み込めませんでした。時刻と方位は下に表示しています。");}
+}
+
 function selectTide(minute) {
   selectedTide={scope:areaId+":"+date,minute:Math.round(Math.max(0,Math.min(1440,minute)))};
   const result=tideAtMinute(snapshot?.tide ?? null,snapshot?.tomorrowTide ?? null,selectedTide.minute);
@@ -430,11 +482,14 @@ function render(focus = false) {
     theme === "ink" ? "dark" : "light";
   document.querySelector("meta[name=theme-color]").content =
     theme === "ink" ? "#222522" : "#f7f3e9";
+  destroyTrackMap();
+  if(skyMain){skyView=skyMain.getView();skyMain.destroy();skyMain=null;}
   $("#content").innerHTML =
     '<h1 class="sr-only">' +
     tabs.find((t) => t[0] === tab)[1] +
     " · AMAMI LIFE</h1>" +
     { today, explore, move, safety, more }[tab]();
+  if(tab==="today"){void mountSkyMap();void mountTrackMap();}else if($("#sky-map-dialog")?.open)$("#sky-map-dialog").close();
   for (const id of openDetails) {
     const detail = document.getElementById(id);
     if (detail instanceof HTMLDetailsElement) detail.open = true;
@@ -525,8 +580,20 @@ document.addEventListener("click", (event) => {
     if(changed) void load();
     return;
   }
+  const chartLink=event.target.closest("[data-cyclone-image]");
+  if(chartLink && $("#cyclone-image-dialog")){event.preventDefault();const image=chartLink.querySelector("img");$("#cyclone-large-image").innerHTML=`<img class="cyclone-large-image" src="${esc(image.src)}" width="600" height="581" alt="気象庁の実況天気図"/><p class="source-note">進路予報は気象庁の公式進路図をご確認ください。</p>`;$("#cyclone-image-dialog").showModal();return;}
   const target = event.target.closest("button");
   if (!target) return;
+  if(target.dataset.cycloneId){cycloneId=target.dataset.cycloneId;trackHour=0;refreshCyclonePanel();void loadTrack();return;}
+  if(target.hasAttribute('data-track-hour')){selectTrackHour(Number(target.dataset.trackHour));return;}
+  if(target.hasAttribute('data-track-expand')){void openTrackMap();return;}
+  if(target.hasAttribute('data-track-zoom')){(target.dataset.trackScope==='large' ? trackLarge : trackMain)?.zoom(Number(target.dataset.trackZoom));return;}
+  if(target.hasAttribute('data-track-fit')){(target.dataset.trackScope==='large' ? trackLarge : trackMain)?.fit();return;}
+  if(target.hasAttribute("data-sky-expand")){void openSkyMap();return;}
+  const activeMap=target.dataset.skyScope==="large" ? skyLarge : skyMain;
+  if(target.hasAttribute("data-sky-zoom")){activeMap?.zoom(Number(target.dataset.skyZoom));return;}
+  if(target.hasAttribute("data-sky-center")){activeMap?.center();return;}
+  if(target.hasAttribute("data-sky-reset")){skyPicked=null;skyPointArea=areaId;const point=skyPoint();skyMain?.reset(point);skyLarge?.reset(point);refreshCelestial();return;}
   if(target.dataset.action==="retry-cyclones") {void loadCyclones();return;}
   if(target.dataset.action==="open-flights") {flightOpened=true;$("#flight-embed").innerHTML=flightFrame();target.textContent="公式ページを再読み込み";target.setAttribute("aria-expanded","true");$('[data-action="close-flights"]').hidden=false;return;}
   if(target.dataset.action==="close-flights") {flightOpened=false;$("#flight-embed").innerHTML="";target.hidden=true;const opener=$('[data-action="open-flights"]');opener.textContent="この画面で運航情報を見る";opener.setAttribute("aria-expanded","false");opener.focus({preventScroll:true});return;}
@@ -683,5 +750,11 @@ document.addEventListener("keydown",event=>{
  if(target && ["ArrowLeft","ArrowRight","Home","End"].includes(event.key)){event.preventDefault();celestialTab=event.key==="Home" ? "sun" : event.key==="End" ? "moon" : celestialTab==="sun" ? "moon" : "sun";refreshCelestial(true);}
  if(event.key==="Escape" && event.target.closest(".today-tide-chart")){selectedTide=null;$("#tide-callout").hidden=true;$("#tide-selection").style.display="none";}
 });
-document.addEventListener("error",event=>{if(event.target.matches?.(".cyclone-image")){const figure=event.target.closest("figure");if(figure){figure.innerHTML='<p class="source-note">画像を取得できませんでした。公式の進路図をご確認ください。</p>';}}
+document.addEventListener("error",event=>{if(event.target.matches?.(".cyclone-large-image")){$("#cyclone-large-image").innerHTML='<p class="readable-note">画像を再取得できませんでした。閉じて台風情報を更新するか、気象庁の公式進路図をご確認ください。</p>';}
+ if(event.target.matches?.(".cyclone-image")){const figure=event.target.closest("figure");if(figure){figure.innerHTML='<p class="source-note">画像を取得できませんでした。公式の進路図をご確認ください。</p>';}}
  if(event.target.matches?.(".gsi-tile")){const error=$(".map-error");if(error)error.hidden=false;}},true);
+
+$("#sky-map-dialog")?.addEventListener("close",()=>{if(skyLarge){skyView=skyLarge.getView();skyLarge.destroy();skyLarge=null;skyMain?.setView(skyView);}$(".sky-expand")?.focus({preventScroll:true});});
+$("#cyclone-image-dialog")?.addEventListener("close",()=>{$("[data-cyclone-image]")?.focus({preventScroll:true});});
+
+$("#cyclone-track-dialog")?.addEventListener("close",()=>{trackLarge?.destroy();trackLarge=null;$("[data-track-expand]")?.focus({preventScroll:true});});

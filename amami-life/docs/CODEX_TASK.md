@@ -1,3 +1,5 @@
+> 2026-10-21 Web0.3.7作業中：地点選択・拡大地図と公式台風進路図。docs/MAP_INTERACTION_WEB_RELEASE.md参照。公開結果は同書末尾。旧版記録と区別。
+
 > 最新公開：2026-10-20 Web 0.3.6。docs/ISLAND_TOOLS_WEB_RELEASE.md（docs内はISLAND_TOOLS_WEB_RELEASE.md）参照。方位図/潮位選択/台風/空港埋め込み/不要欄削除を公開済み。以下に旧版の時点記録も含みます。
 
 # 続行時の作業指示

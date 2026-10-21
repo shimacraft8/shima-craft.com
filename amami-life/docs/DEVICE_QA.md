@@ -106,3 +106,11 @@ iPhone Safari/Android Chromeで次を確認する。PCブラウザの画面幅�
 5. VoiceOver/TalkBackでタブの選択、時刻スライダー、吹き出し、外部フレームを操作する。OS最大文字・Reduce Motionも確認。
 
 現時点：デスクトップ実ブラウザの320〜1440幅、Web内文字拡大、キーボード操作は確認。実機/OS文字拡大/読み上げは未確認。
+
+
+## Web0.3.7の確認項目
+
+- 太陽/月のタブ、地図拡大/縮小、タップで地点変更、中央地点の選択、地域へ戻す。計算座標/時刻/方位が変わること。日付・地域の切替も確認。
+- 台風の実況/予報円と奄美位置、時刻ボタンと予報値、拡大地図、公式リンク、保存情報/未取得/なしの区別。予報円を風の範囲と解釈しない。
+- 実機のピンチとページスクロール、Escape/閉じるとフォーカス復帰、VoiceOver/TalkBack、OS文字拡大、回線遮断/復帰。実機は未確認。
+- 公開は専用cloneのhomepage-only Workerから。開発rootのanalytics router/admin/trackerは未公開のため一括deployしない。対象repo/account/zone/route/serviceを毎回照合。0.3.7前のrollback先は d952b9cf-87f4-40d3-9587-0c5af5abe170。

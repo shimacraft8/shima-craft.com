@@ -362,18 +362,6 @@ html[data-theme-mode="ink-only"] .craft-logo { display: block; height: auto; }
 .tide-selection {stroke:var(--accent);stroke-width:2;stroke-dasharray:4 3;}
 .tide-time-label {display:block;color:var(--ink);font-size:14px;margin:12px 0 18px;}
 #tide-time {display:block;width:100%;min-height:44px;accent-color:var(--accent);cursor:pointer;}
-.cyclone-home {display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:24px;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:24px 0;margin-bottom:32px;}
-.cyclone-home:not(:has(.cyclone-chart)) {grid-template-columns:1fr;}
-.cyclone-home h3 {font-size:22px;font-weight:650;line-height:1.6;margin:0;}
-.cyclone-events {list-style:none;padding:0;margin:12px 0;display:flex;flex-wrap:wrap;gap:12px 24px;}
-.cyclone-events strong,.cyclone-events small {display:block;}
-.cyclone-events small {font-size:12px;color:var(--muted);margin-top:6px;}
-.cyclone-actions {display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;}
-.cyclone-chart {margin:0;}
-.cyclone-chart a {display:block;position:relative;}
-.cyclone-chart img {display:block;width:100%;height:auto;border-radius:8px;background:white;}
-.cyclone-chart a > span {position:absolute;right:4px;bottom:4px;background:var(--paper);padding:4px 8px;font-size:12px;}
-.cyclone-chart figcaption {font-size:12px;line-height:1.7;margin-top:8px;}
 .flight-panel {border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:24px 0;margin-bottom:32px;}
 .flight-panel .section-head {margin-top:0;}
 .flight-panel > .inline-link {margin:0 16px;}
@@ -386,34 +374,148 @@ html[data-theme-mode="ink-only"] .craft-logo { display: block; height: auto; }
 @media(max-width:700px) {
  .today-celestial {margin-top:28px;}
  .today-celestial h3 {font-size:23px;}
- .cyclone-home {grid-template-columns:1fr;padding:20px 0;}
- .cyclone-chart {max-width:320px;}
- .cyclone-home h3 {font-size:20px;}
  .flight-panel > .inline-link {margin:8px 0;display:block;}
  .flight-frame {height:600px;}
  .tide-callout {min-width:126px;padding:8px 10px;}
  .tide-callout strong {font-size:24px;}
 }
 body[data-text="large"] .today-celestial {grid-column:1;grid-row:auto;border-left:0;padding-left:0;}
-/* Keep the worldwide advisory smaller than local weather and directions. */
-.cyclone-home {grid-template-columns:minmax(0,1fr) 140px;gap:20px;padding:16px 0;margin-bottom:28px;}
-.cyclone-home .section-kicker {font-size:10px;margin-bottom:6px;}
-.cyclone-home h3 {font-size:20px;}
-.cyclone-home .source-details summary {padding:8px 0;min-height:40px;}
-.cyclone-events {margin:6px 0;}
-.cyclone-events li {display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;}
-.cyclone-events small {margin-top:0;}
-.cyclone-chart figcaption {font-size:10px;}
-.cyclone-actions .text-button {margin:0;}
 .celestial-tabs button:hover,.celestial-tabs button:focus-visible {color:var(--ink);border-color:var(--accent);}
-@media(max-width:700px) {
- .cyclone-home {grid-template-columns:minmax(0,1fr) 96px;gap:12px;}
- .cyclone-home h3 {font-size:17px;}
- .cyclone-home .section-kicker {letter-spacing:.05em;}
- .cyclone-actions {grid-column:1/-1;gap:8px;}
- .cyclone-home .source-details summary {font-size:12px;}
- .cyclone-chart figcaption {font-size:10px;}
-}
 .tide-callout {width:180px;min-width:0;box-sizing:border-box;left:clamp(90px,var(--tide-x,50%),calc(100% - 90px));}
 @media(max-width:700px) {.tide-callout {width:144px;left:clamp(72px,var(--tide-x,50%),calc(100% - 72px));}}
 .gsi-map {filter:url(#island-map-tone);opacity:1;}
+
+/* Interactive sky map. Leaflet remains inside this stacking context. */
+.sky-map-filter {position:absolute;width:0;height:0;overflow:hidden;pointer-events:none;}
+.sky-map-frame {position:relative;isolation:isolate;z-index:0;height:360px;margin-top:16px;border:1px solid var(--hair);border-radius:12px;overflow:hidden;background:#1b211f;}
+.sky-map-host {position:absolute;inset:0;background:#1b211f;}
+.sky-map-host:focus-visible {outline:3px solid var(--accent);outline-offset:-4px;}
+.sky-base-tiles img {filter:url(#island-map-tone);}
+.sky-map-host .leaflet-interactive {cursor:crosshair;}
+.sky-map-pin {border:0;background:none;}
+.sky-map-pin span {display:block;width:18px;height:18px;background:var(--accent);border:3px solid #222522;border-radius:50%;box-shadow:0 0 0 2px #fff5df;box-sizing:border-box;}
+.sky-north {position:absolute;top:14px;left:14px;z-index:700;padding:4px 10px;border-radius:8px;background:var(--paper);font-size:13px;font-weight:650;pointer-events:none;}
+.sky-zoom {position:absolute;right:12px;top:12px;z-index:700;display:grid;gap:8px;}
+.sky-zoom button {display:grid;place-items:center;width:48px;height:48px;border:1px solid var(--hair);border-radius:10px;color:var(--ink);background:var(--paper);font:500 26px var(--body);cursor:pointer;}
+.sky-zoom button:hover {border-color:var(--accent);color:var(--accent);}
+.sky-map-message {position:absolute;left:12px;right:12px;bottom:10px;z-index:700;background:var(--paper);padding:12px;border:1px solid var(--hair);font-size:13px;line-height:1.7;}
+.sky-map-tools {display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;}
+.sky-map-tools .text-button {font-size:13px;margin:0;}
+.sky-map-help {font-size:15px;line-height:1.7;margin:8px 0;}
+.sky-expand {font-weight:600;margin:0;}
+.sky-point-name {margin:16px 0 0;line-height:1.7;}
+.sky-point-name strong,.sky-point-name span {display:block;}
+.sky-point-name span {font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;}
+.sky-readout > .source-note {margin:4px 0 0;}
+#sky-map-dialog {width:min(1180px,calc(100vw - 32px));max-width:none;max-height:calc(100dvh - 32px);padding:24px;box-sizing:border-box;overflow:auto;}
+#sky-map-dialog .sky-map-frame {height:clamp(300px,60dvh,680px);}
+#sky-map-dialog .celestial-tabs {justify-content:flex-start;margin-top:12px;}
+#sky-map-dialog .sky-readout {display:grid;grid-template-columns:1fr 1fr;gap:0 24px;align-items:center;}
+#sky-map-dialog .celestial-facts {grid-column:2;grid-row:1/3;margin:12px 0 0;}
+#cyclone-image-dialog {width:min(1000px,calc(100vw - 32px));max-width:none;max-height:calc(100dvh - 32px);box-sizing:border-box;overflow:auto;}
+#cyclone-large-image img {display:block;width:100%;height:auto;max-height:72dvh;object-fit:contain;background:white;}
+@media(max-width:700px) {
+ .sky-map-frame {height:340px;}
+ .sky-map-tools {gap:8px 16px;}
+ #sky-map-dialog {padding:16px;width:calc(100vw - 16px);max-height:calc(100dvh - 16px);}
+ #sky-map-dialog .sky-map-frame {height:55dvh;min-height:280px;}
+ #sky-map-dialog .sky-readout {display:block;}
+}
+
+/* Current worldwide cyclone information: one group, readable type and diagram. */
+.cyclone-home {display:grid;grid-template-columns:minmax(260px,320px) minmax(0,1fr);gap:32px;align-items:center;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:24px 0;margin-bottom:32px;}
+.cyclone-home:not(:has(.cyclone-chart)) {grid-template-columns:1fr;}
+.cyclone-home:has(.cyclone-chart) .cyclone-copy {grid-column:2;grid-row:1;}
+.cyclone-home .section-kicker {font-size:14px;color:var(--accent);letter-spacing:.06em;margin:0 0 12px;}
+.cyclone-home h3 {font-size:22px;font-weight:650;line-height:1.6;margin:0;}
+.cyclone-events {list-style:none;padding:0;margin:16px 0;display:flex;flex-wrap:wrap;gap:12px 24px;}
+.cyclone-events li,.cyclone-events strong,.cyclone-events small {display:block;}
+.cyclone-events strong {font-size:32px;line-height:1.4;font-weight:700;letter-spacing:-.025em;}
+.cyclone-events small {font-size:14px;color:var(--muted);margin-top:6px;}
+.cyclone-home .source-details summary {font-size:14px;min-height:48px;padding:8px 0;}
+.cyclone-actions {display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;}
+.cyclone-actions .inline-link,.cyclone-actions .text-button {font-size:15px;}
+.cyclone-actions .text-button {margin:0;}
+.cyclone-actions .inline-link {border:1px solid var(--accent);border-radius:12px;padding:12px 16px;min-height:48px;box-sizing:border-box;font-weight:600;}
+.cyclone-chart {grid-column:1;grid-row:1;width:100%;max-width:320px;margin:0;}
+.cyclone-chart a {display:block;position:relative;}
+.cyclone-chart img {display:block;width:100%;height:auto;border-radius:8px;background:white;}
+.cyclone-chart a > span {position:absolute;right:4px;bottom:4px;background:var(--paper);padding:4px 8px;font-size:13px;}
+.cyclone-chart figcaption {font-size:13px;line-height:1.8;margin-top:8px;}
+@media(max-width:700px) {
+ .cyclone-home {grid-template-columns:1fr;gap:20px;}
+ .cyclone-home:has(.cyclone-chart) .cyclone-copy,.cyclone-chart {grid-column:1;grid-row:auto;}
+ .cyclone-home h3 {font-size:20px;}
+ .cyclone-events strong {font-size:28px;}
+ .cyclone-chart {max-width:100%;}
+ .cyclone-chart img {max-height:260px;object-fit:contain;}
+}
+/* Forecast map with an equivalent text view. */
+.cyclone-home {grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);align-items:start;gap:32px;}
+.cyclone-chart {max-width:none;min-width:0;}
+.cyclone-copy {min-width:0;}
+.cyclone-heading {display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+.cyclone-home .cyclone-heading h3 {font-size:34px;font-weight:750;letter-spacing:-.025em;}
+.cyclone-state {font-size:12px;border:1px solid var(--accent);color:var(--accent);padding:4px 10px;border-radius:20px;}
+.cyclone-name {font-size:16px;margin:4px 0;}
+.track-issued,.track-location {font-size:14px;color:var(--muted);margin:8px 0;line-height:1.6;}
+.cyclone-map-frame {height:380px;position:relative;isolation:isolate;z-index:0;overflow:hidden;border:1px solid var(--hair);border-radius:12px;background:#1b211f;}
+.cyclone-map-host {position:absolute;inset:0;background:#1b211f;}
+.cyclone-map-host:focus-visible {outline:3px solid var(--accent);outline-offset:-4px;}
+.cyclone-map-host .leaflet-tooltip {background:#222522;border:1px solid #e1b96e;color:#fff5df;box-shadow:none;font-family:var(--body);font-size:12px;line-height:1.4;}
+.cyclone-map-host .leaflet-tooltip::before {display:none;}
+.cyclone-map-host .cyclone-place-label {font-size:14px;font-weight:700;color:#e1b96e;}
+.track-map-tools {display:flex;flex-wrap:wrap;gap:8px 20px;}
+.track-map-tools .text-button {margin:0;font-size:14px;}
+.track-legend {display:flex;flex-wrap:wrap;gap:8px 14px;font-size:12px;color:var(--ink);line-height:1.7;margin:0;}
+.map-credits {font-size:11px;color:var(--muted);line-height:1.7;margin-top:8px;overflow-wrap:anywhere;}
+.map-credits summary {min-height:32px;cursor:pointer;}
+.track-times,.cyclone-choices {display:flex;flex-wrap:wrap;gap:6px;margin:16px 0;}
+.track-times button,.cyclone-choices button {background:transparent;color:var(--ink);border:1px solid var(--hair);border-radius:8px;padding:8px 10px;min-height:48px;font:600 13px var(--body);cursor:pointer;}
+.track-times small {display:block;font-size:11px;margin-top:4px;font-weight:400;}
+.track-times button[aria-pressed="true"],.cyclone-choices button[aria-pressed="true"] {border-color:var(--accent);color:var(--accent);background:rgba(225,185,110,.08);}
+.track-selected-time {font-size:16px;font-weight:650;margin:12px 0 8px;}
+.track-stats {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0;}
+.track-stats dt {font-size:12px;color:var(--muted);line-height:1.5;}
+.track-stats dd {font-size:28px;font-weight:700;margin:6px 0 0;font-variant-numeric:tabular-nums;}
+.track-stats dd small {font-size:13px;font-weight:400;white-space:nowrap;}
+.track-caution {font-size:12px;line-height:1.8;color:var(--muted);margin:16px 0 0;max-width:65ch;}
+.track-stale {border-left:3px solid var(--accent);padding:8px 12px;font-size:14px;line-height:1.7;}
+#cyclone-track-dialog {width:min(1180px,calc(100vw - 32px));max-width:none;max-height:calc(100dvh - 32px);box-sizing:border-box;padding:24px;overflow:auto;}
+#cyclone-track-dialog .cyclone-map-frame {height:55dvh;min-height:300px;}
+#cyclone-track-dialog .track-stats {max-width:560px;}
+@media(max-width:1000px) {
+ .cyclone-home {grid-template-columns:1fr;gap:20px;}
+ .cyclone-home:has(.cyclone-chart) .cyclone-copy {grid-column:1;grid-row:1;}
+ .cyclone-chart {grid-column:1;grid-row:2;}
+ .cyclone-map-frame {height:380px;}
+}
+@media(max-width:700px) {
+ .cyclone-home .cyclone-heading h3 {font-size:28px;}
+ .cyclone-map-frame {height:340px;}
+ .track-stats dd {font-size:26px;}
+ .track-stats dd small {display:block;}
+ #cyclone-track-dialog {width:calc(100vw - 16px);max-height:calc(100dvh - 16px);padding:16px;}
+}
+
+.track-mobile-heading {display:none;}
+@media(max-width:1000px) {
+ .cyclone-home:has(.cyclone-chart) .cyclone-copy {grid-row:2;}
+ .cyclone-chart {grid-row:1;}
+ .track-mobile-heading {display:block;}
+ .track-mobile-heading h3 {font-size:28px;font-weight:750;}
+ .track-mobile-heading p {font-size:13px;color:var(--muted);margin:8px 0 16px;}
+ .cyclone-home:has(.cyclone-chart) .cyclone-heading {display:none;}
+}
+
+#cyclone-track-dialog,#sky-map-dialog {overscroll-behavior:contain;}
+.track-times button:hover,.cyclone-choices button:hover {border-color:var(--accent);color:var(--accent);}
+.track-times button:focus-visible,.cyclone-choices button:focus-visible,.sky-zoom button:focus-visible {outline:3px solid var(--accent);outline-offset:3px;}
+body[data-text="large"] .cyclone-home {grid-template-columns:1fr;}
+body[data-text="large"] .cyclone-home .cyclone-copy {grid-column:1;grid-row:2;}
+body[data-text="large"] .cyclone-home .cyclone-chart {grid-column:1;grid-row:1;}
+body[data-text="large"] .track-mobile-heading {display:block;}
+body[data-text="large"] .track-stats dt {font-size:16px;}
+body[data-text="large"] .track-times button {font-size:16px;}
+body[data-text="large"] .track-times small {font-size:14px;}
+body[data-text="large"] .track-stats {grid-template-columns:1fr;}

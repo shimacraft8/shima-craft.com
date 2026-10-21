@@ -1,17 +1,17 @@
 {
   "name": "amami-life-local",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "private": true,
   "type": "module",
   "workspaces": [
     "apps/mobile"
   ],
   "scripts": {
-    "build": "node scripts/build-tokens.mjs && esbuild packages/core/src/index.ts --bundle --format=esm --platform=browser --outfile=web/core.js && esbuild packages/core/src/usage.ts --bundle --format=esm --platform=browser --outfile=web/usage.js",
+    "build": "node scripts/build-tokens.mjs && esbuild packages/core/src/index.ts --bundle --format=esm --platform=browser --outfile=web/core.js && esbuild packages/core/src/usage.ts --bundle --format=esm --platform=browser --outfile=web/usage.js && esbuild packages/web/sky-map.js --bundle --minify --format=esm --platform=browser --external:./usage.js --outfile=web/sky-map.js",
     "start": "npm run build && node server/index.mjs",
     "test": "node --test tests/*.test.mjs",
     "typecheck": "tsc --noEmit && tsc --noEmit -p apps/mobile/tsconfig.json",
-    "lint": "eslint packages/core/src web/app.js server scripts/*.mjs tests apps/mobile/src web/shimacraft.js worker",
+    "lint": "eslint packages/core/src packages/web web/app.js server scripts/*.mjs tests apps/mobile/src web/shimacraft.js worker",
     "inspect:jma": "node scripts/inspect-jma.mjs",
     "package": "python3 scripts/package-project.py",
     "web:build": "npm run build && node scripts/build-public.mjs",
@@ -19,7 +19,8 @@
   },
   "dependencies": {
     "@xmldom/xmldom": "^0.8.15",
-    "suncalc": "1.9.0"
+    "suncalc": "1.9.0",
+    "leaflet": "1.9.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",

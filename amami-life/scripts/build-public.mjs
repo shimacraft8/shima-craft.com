@@ -9,7 +9,7 @@ await mkdir(resolve(root,"worker"),{recursive:true});
 await writeFile(resolve(root,"worker/tides.json"),JSON.stringify(parseTideText(await readFile(resolve(root,"server/data/O9-2026.txt"),"utf8"))));
 await build({entryPoints:[resolve(root,"packages/core/src/index.ts")],bundle:true,format:"esm",platform:"browser",outfile:resolve(out,"core.js")});
 await build({entryPoints:[resolve(root,"packages/core/src/usage.ts")],bundle:true,format:"esm",platform:"browser",outfile:resolve(out,"usage.js")});
-for(const name of ["app.js","style.css","theme-tokens.css","shimacraft.css","apple-refinement.css","shimacraft.js"]) {
+for(const name of ["app.js","sky-map.js","leaflet.css","style.css","theme-tokens.css","shimacraft.css","apple-refinement.css","shimacraft.js"]) {
   let text=await readFile(resolve(root,"web",name),"utf8");
   if(name.endsWith(".css")) text=text.replaceAll('url("/assets/','url("/amami-life/assets/');
   await writeFile(resolve(out,name),text);
@@ -23,7 +23,7 @@ html=html.replace('<html lang="ja" data-theme-mode="ink-only">','<html lang="ja"
  .replaceAll('https://shima-craft.com/#','/studio#')
  .replaceAll('（公開中のサイト・別タブ）','（制作サービス・別タブ）')
  .replaceAll('ローカル確認用。サービスのリンクは公開中のSHIMA CRAFTへ移動します。','制作サービス・写真・映像のご相談はSHIMA CRAFTへ。')
- .replace(/(href|src)="\/(theme-tokens\.css|style\.css|shimacraft\.css|apple-refinement\.css|app\.js|shimacraft\.js)"/g,'$1="/amami-life/$2"');
+ .replace(/(href|src)="\/(leaflet\.css|theme-tokens\.css|style\.css|shimacraft\.css|apple-refinement\.css|app\.js|shimacraft\.js)"/g,'$1="/amami-life/$2"');
 html=html.replaceAll('src="/assets/', 'src="/amami-life/assets/');
 html=html.replace('<main id="content" tabindex="-1"></main>','<main id="content" tabindex="-1"><noscript><h1>奄美の今日・AMAMI LIFE</h1><p>表示にはJavaScriptが必要です。</p><a href="https://www.jma.go.jp/bosai/">気象庁の公式情報</a><p><a href="/studio">SHIMA CRAFTの制作サービス</a></p></noscript></main>');
 await writeFile(resolve(out,"index.html"),html);
@@ -33,3 +33,7 @@ await copyFile(resolve(root,"web/public-privacy.html"),resolve(out,"privacy.html
 console.log("Public assets built; local QA/demo files and credentials excluded.");
 
 await copyFile(resolve(root,"web/assets/suncalc-LICENSE.txt"),resolve(out,"assets/suncalc-LICENSE.txt"));
+
+await copyFile(resolve(root,"web/assets/leaflet-LICENSE.txt"),resolve(out,"assets/leaflet-LICENSE.txt"));
+await mkdir(resolve(out,"assets/leaflet"),{recursive:true});
+for(const name of ["layers.png","layers-2x.png","marker-icon.png","marker-icon-2x.png","marker-shadow.png"]) await copyFile(resolve(root,"web/assets/leaflet",name),resolve(out,"assets/leaflet",name));

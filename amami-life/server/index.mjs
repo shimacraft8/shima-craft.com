@@ -1,3 +1,4 @@
+import { createCycloneTrackProvider } from "./cyclone-tracks.mjs";
 import { createCycloneProvider } from "./cyclones.mjs";
 import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
@@ -204,6 +205,7 @@ export async function requestApi(url, weatherProvider, observationProvider, cycl
   return result;
 }
 export function createApp({ cycloneProvider = createCycloneProvider(), weatherProvider = createWeatherProvider(), observationProvider = createObservationProvider(), apiOnly = false } = {}) {
+  const tracks=createCycloneTrackProvider({cyclones:cycloneProvider});
   return createServer(async (req, res) => {
     const url = new URL(req.url, "http://localhost");
     const common = {
@@ -222,7 +224,7 @@ export function createApp({ cycloneProvider = createCycloneProvider(), weatherPr
       res.end();
       return;
     }
-    if (apiOnly && !["/v1/observations", "/v1/weather", "/v1/service-health", "/v1/cyclones", "/v1/cyclones/chart"].includes(url.pathname)) {
+    if (apiOnly && !["/v1/observations", "/v1/weather", "/v1/service-health", "/v1/cyclones", "/v1/cyclones/chart", "/v1/cyclones/track"].includes(url.pathname)) {
       res.writeHead(404, common); res.end(); return;
     }
     if (apiOnly && url.pathname === "/v1/weather" && url.searchParams.get("mode") !== "live") {
@@ -242,6 +244,7 @@ export function createApp({ cycloneProvider = createCycloneProvider(), weatherPr
         res.end();
         return;
       }
+      if(url.pathname==="/v1/cyclones/track") {const body=await tracks.get(url.searchParams.get("id"));res.writeHead(body.status==="unavailable" ? 503 : 200,{...common,"Content-Type":"application/json; charset=utf-8"});res.end(req.method==="HEAD" ? undefined : JSON.stringify(body));return;}
       if(url.pathname==="/v1/cyclones/chart") {const image=await cycloneProvider.image(url.searchParams.get("version"));res.writeHead(image ? 200 : 410,{...common,"Content-Type":image ? "image/png" : "text/plain"});res.end(req.method==="HEAD" ? undefined : image ?? "Image unavailable");return;}
       const result = await requestApi(url, weatherProvider, observationProvider, cycloneProvider);
       res.writeHead(result.code, {

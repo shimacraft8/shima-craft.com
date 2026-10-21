@@ -15,6 +15,8 @@
     <title>SHIMA CRAFT × AMAMI LIFE — トップページ案</title>
     <link rel="stylesheet" href="/theme-tokens.css" />
     <link rel="stylesheet" href="/style.css" />
+    <link rel="preconnect" href="https://cyberjapandata.gsi.go.jp" />
+    <link rel="stylesheet" href="/leaflet.css" />
     <link rel="stylesheet" href="/shimacraft.css" />
     <link rel="stylesheet" href="/apple-refinement.css" />
     <script type="module" src="/app.js"></script>
@@ -51,6 +53,10 @@
       </div>
     </div>
     <footer class="craft-page-footer"><p>島の魅力を、伝わるかたちに。<small>SHIMA CRAFT · AMAMI ŌSHIMA</small></p><nav aria-label="SHIMA CRAFTの制作案内"><a href="https://shima-craft.com/#service">ホームページ制作・写真・映像 <span aria-hidden="true">↗</span></a><a href="https://shima-craft.com/#contact">SHIMA CRAFTに相談する <span aria-hidden="true">↗</span></a></nav></footer>
+    <svg class="sky-map-filter" width="0" height="0" aria-hidden="true" focusable="false"><defs><filter id="island-map-tone" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="2 0 -1.6 0 .15 1.8 0 -1.5 0 .22 1.4 0 -1.2 0 .23 0 0 0 1 0"/></filter></defs></svg>
+    <dialog id="cyclone-track-dialog" aria-labelledby="cyclone-track-title"></dialog>
+    <dialog id="sky-map-dialog" aria-labelledby="sky-large-title"></dialog>
+    <dialog id="cyclone-image-dialog" aria-labelledby="cyclone-image-title"><form method="dialog"><div class="dialog-head"><h2 id="cyclone-image-title">気象庁の実況天気図</h2><button value="cancel" aria-label="天気図を閉じる">×</button></div></form><div id="cyclone-large-image"></div></dialog>
     <dialog id="area-dialog" aria-labelledby="area-title">
       <form method="dialog">
         <div class="dialog-head">

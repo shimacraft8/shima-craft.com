@@ -104,3 +104,17 @@ export function mapPoint(lat: number, lon: number, zoom = 10) {
   const scale=256*2**zoom, radians=lat*Math.PI/180;
   return {x:(lon+180)/360*scale,y:(1-Math.asinh(Math.tan(radians))/Math.PI)/2*scale};
 }
+
+/** Limit point picking to Amami and nearby waters; no GPS or geocoder involved. */
+export function validSkyPoint(lat: number, lon: number) {
+  return Number.isFinite(lat) && Number.isFinite(lon) && lat >= 27.7 && lat <= 28.95 && lon >= 128.8 && lon <= 130.2;
+}
+export function viewportRay(origin: {x:number;y:number}, width: number, height: number, azimuth: number, inset = 12) {
+  if (![origin.x,origin.y,width,height,azimuth].every(Number.isFinite) || width<=inset*2 || height<=inset*2 || origin.x<0 || origin.y<0 || origin.x>width || origin.y>height) return null;
+  const left=origin.x<inset ? 0 : inset,right=origin.x>width-inset ? width : width-inset,top=origin.y<inset ? 0 : inset,bottom=origin.y>height-inset ? height : height-inset;
+  const dir=compassRay(azimuth), times=[dir.x>1e-9 ? (right-origin.x)/dir.x : dir.x < -1e-9 ? (left-origin.x)/dir.x : Infinity,dir.y>1e-9 ? (bottom-origin.y)/dir.y : dir.y < -1e-9 ? (top-origin.y)/dir.y : Infinity].filter(t=>Number.isFinite(t) && t>=0);
+  if (!times.length) return null;
+  const distance=Math.min(...times);
+  if(distance<=0)return null;
+  return {x:origin.x+dir.x*distance,y:origin.y+dir.y*distance};
+}

@@ -56,3 +56,11 @@ EASプロジェクト作成、クラウドビルド、署名鍵、TestFlight/Pla
 詳細は ISLAND_TOOLS_WEB_RELEASE.md。実装コミットf342b85、Worker shima-craft-amami-life、Version d952b9cf-87f4-40d3-9587-0c5af5abe170。復旧先は直前Version 1281d93a-27ec-431e-84c1-4b8d61ef797f。本人・account/zone・routes・SHIMA_ORIGINを照合済み。元Workerと未公開解析は変更しない。
 
 公開時は `work/shimacraft-release/amami-life` の専用コピーを使用した。開発全体側には未公開admin/analytics/trackerがあるため、そのビルド/Workerを一括で公開してはいけない。地理院タイルと公式空港iframeのCSP許可、SunCalcライセンスを含む。これらをrollback対象と取り違えない。
+
+
+## Web0.3.7の確認項目
+
+- 太陽/月のタブ、地図拡大/縮小、タップで地点変更、中央地点の選択、地域へ戻す。計算座標/時刻/方位が変わること。日付・地域の切替も確認。
+- 台風の実況/予報円と奄美位置、時刻ボタンと予報値、拡大地図、公式リンク、保存情報/未取得/なしの区別。予報円を風の範囲と解釈しない。
+- 実機のピンチとページスクロール、Escape/閉じるとフォーカス復帰、VoiceOver/TalkBack、OS文字拡大、回線遮断/復帰。実機は未確認。
+- 公開は専用cloneのhomepage-only Workerから。開発rootのanalytics router/admin/trackerは未公開のため一括deployしない。対象repo/account/zone/route/serviceを毎回照合。0.3.7前のrollback先は d952b9cf-87f4-40d3-9587-0c5af5abe170。

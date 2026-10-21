@@ -60,3 +60,11 @@ Web0.3.6の方位図は国土地理院の淡色タイルをブラウザで読み
 台風の発表対象リストと実況天気図は気象庁から取得し出典を明示。実況天気図は改変しない。https://www.jma.go.jp/jma/kishou/info/coment.html
 奄美空港のフライトページは公式サイトをiframe表示。転載データや許諾済みAPIとは扱わず、元の表示を維持。
 SunCalc 1.9.0の完全なライセンスを公開素材 `assets/suncalc-LICENSE.txt` として提供。
+
+## Web0.3.7の地図
+
+Leaflet 1.9.4: Copyright (c) 2010-2023, Vladimir Agafonkin; Copyright (c) 2010-2011, CloudMade. BSD-2-Clause。全文を web/assets/leaflet-LICENSE.txt に同梱し公開ページからリンク。CSSと標準画像を含む。
+地理院淡色タイル Z2–8（台風）/Z9–17（方位図）を直接読込・色調加工。国土地理院へのリンクと加工表示を各図に記載。Z2–8の追加出典:
+Shoreline data is derived from: United States. National Imagery and Mapping Agency. "Vector Map Level 0 (VMAP0)." Bethesda, MD: Denver, CO: The Agency; USGS Information Services, 1997.
+https://maps.gsi.go.jp/development/ichiran.html の淡色地図欄に基づく。
+台風 forecast.json/specifications.json は気象庁から取得・加工、出典・発表/取得時刻・予報円の意味を明示。Yahoo!のデータや画像は使用していない。

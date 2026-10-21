@@ -15,3 +15,5 @@ web/usage.js
 .wrangler/
 
 /node_modules
+
+web/sky-map.js

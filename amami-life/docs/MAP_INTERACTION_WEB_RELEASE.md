@@ -33,4 +33,14 @@ iOS Safari/Android Chrome実機、ピンチ/VoiceOver/TalkBack/OS文字拡大・
 
 ## 公開結果
 
-公開前。GitHub shimacraft8/shima-craft.com、Cloudflare shimacraft8@gmail.com / account 42f69e35f08bb21dca5194467e2f59de、Worker shima-craft-amami-life、両ドメインのroute、SHIMA_ORIGIN=shima-craft-com-production を再確認済み。元サービスは更新しない。
+2026-10-21 13:41 JSTに https://shima-craft.com/ へ公開済み。GitHub shimacraft8/shima-craft.com、Cloudflare shimacraft8@gmail.com / account 42f69e35f08bb21dca5194467e2f59de、Worker shima-craft-amami-life、両ドメインのroute、SHIMA_ORIGIN=shima-craft-com-production を再確認済み。元サービスは更新しない。
+
+
+- 実装commit：98f2067（専用ブランチへpush済み）。
+- Worker Version：bb8ad527-408a-424c-9c6e-1701bf053add。直前の復旧先：d952b9cf-87f4-40d3-9587-0c5af5abe170。
+- 公開HP専用109試験/開発全体140試験、両方のビルド・Lint・型検査成功。公開HTTP29項目成功。
+- 本番ブラウザで公式の実進路と予報円、奄美ラベル、24h予報の気圧/風速/円半径、太陽地図の移動後地点選択/時刻方位の再計算を確認。コンソールエラーなし。
+- /studio の既存サービス/実績/料金/相談アンカー、既存8ページ、白赤ロゴ、プライバシー、観測/予報/潮、未対象ID・HEAD・POSTをHTTP検証。元サービスのdeployment一覧が公開前後で同一。
+- 管理者解析/GA計測追加/Nativeは未公開。実機確認・天文計算の独立精度照合・負荷試験は未完了。
+- 証跡：research/map-interaction/。配信元JSONの時点記録：research/typhoon-track/（実際の発表の保存記録であり、アプリにサンプルとして注入しない）。
+- 全体のZIPは npm run package で生成。依存/Git/認証設定を除外しCRC・全収録ファイルのSHA256を検証。ZIPには開発用の未公開解析ソースも含むため、ZIP全体や開発rootのdistをそのまま本番配布しない。

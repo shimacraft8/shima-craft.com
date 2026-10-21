@@ -1,0 +1,16 @@
+{
+  "checkedAt": "2026-10-21T04:41:27.690Z",
+  "github": "shimacraft8/shima-craft.com",
+  "branch": "codex/amami-life-home-20261014",
+  "implementationCommit": "98f2067",
+  "cloudflareEmail": "shimacraft8@gmail.com",
+  "account": "42f69e35f08bb21dca5194467e2f59de",
+  "worker": "shima-craft-amami-life",
+  "version": "bb8ad527-408a-424c-9c6e-1701bf053add",
+  "rollbackVersion": "d952b9cf-87f4-40d3-9587-0c5af5abe170",
+  "originalServiceUnchanged": true,
+  "httpChecks": 29,
+  "developmentTests": 140,
+  "publicTests": 109,
+  "physicalDevices": "not verified"
+}

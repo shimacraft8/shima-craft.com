@@ -6,7 +6,7 @@ export function createSkyMap(element,{origin,events,onPick,onError,view}={}) {
   const map=L.map(element,{zoomControl:false,attributionControl:false,scrollWheelZoom:false,minZoom:9,maxZoom:19,maxBounds:[[27.7,128.8],[28.95,130.2]],maxBoundsViscosity:1,keyboard:true,inertia:false,fadeAnimation:false,zoomAnimation:false,markerZoomAnimation:false});
   element.setAttribute("role","region");
   element.setAttribute("aria-label","出入りの方位を調べる地図。矢印キーで移動し、中央を選ぶボタンで計算地点を指定できます。");
-  map.setView(view?.center ?? [origin.lat,origin.lon],view?.zoom ?? 12,{animate:false});
+  map.setView(view?.center ?? [origin.lat,origin.lon],view?.zoom ?? 10,{animate:false});
   element.setAttribute("aria-busy","true");
   let tileFailed=false;
   const base=L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,minZoom:9,className:"sky-street-tiles",keepBuffer:0,updateWhenIdle:true,updateWhenZooming:false}).addTo(map);
@@ -46,7 +46,7 @@ export function createSkyMap(element,{origin,events,onPick,onError,view}={}) {
     setState(next){state=next;marker.setLatLng([next.origin.lat,next.origin.lon]);draw();},
     zoom(delta){map.setZoom(map.getZoom()+delta,{animate:false});},
     center(){pick(map.getCenter());},
-    reset(point){map.setView([point.lat,point.lon],12,{animate:false});},
+    reset(point){map.setView([point.lat,point.lon],10,{animate:false});},
     setView(view){map.setView(view.center,view.zoom,{animate:false});},
     getView(){return {center:[map.getCenter().lat,map.getCenter().lng],zoom:map.getZoom()};},
     destroy(){dead=true;resize.disconnect();element.removeEventListener("keydown",onKey);map.remove();},

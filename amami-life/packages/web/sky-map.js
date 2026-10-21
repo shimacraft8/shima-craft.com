@@ -55,7 +55,7 @@ export function createSkyMap(element,{origin,events,onPick,onError,view}={}) {
 
 /** Official forecast centers/circles. Text controls provide the same details. */
 export function createCycloneMap(element,{data,stale=false,onSelect,onError}={}) {
- const map=L.map(element,{zoomControl:false,attributionControl:false,scrollWheelZoom:false,minZoom:2,maxZoom:8,maxBounds:[[-10,70],[65,205]],maxBoundsViscosity:1,inertia:false,fadeAnimation:false,zoomAnimation:false,markerZoomAnimation:false});
+ const map=L.map(element,{zoomControl:false,attributionControl:false,scrollWheelZoom:false,minZoom:2,maxZoom:8,zoomSnap:.25,maxBounds:[[-10,70],[65,205]],maxBoundsViscosity:1,inertia:false,fadeAnimation:false,zoomAnimation:false,markerZoomAnimation:false});
  element.setAttribute('role','region');element.setAttribute('aria-label','台風の予報進路と奄美大島の位置。矢印キーで移動できます。詳細は時刻ボタンでも選べます。');
  const base=L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png',{minZoom:2,maxZoom:8,className:'sky-base-tiles',keepBuffer:1,updateWhenIdle:true,updateWhenZooming:false}).addTo(map);
  let failed=false,dead=false;const layers=[];
@@ -72,11 +72,11 @@ export function createCycloneMap(element,{data,stale=false,onSelect,onError}={})
   if(circle)bounds.extend(circle.getBounds());
   const marker=L.circleMarker(center,{radius:p.hours===0 ? 9 : 4.5,color:p.hours===0 ? '#e1b96e' : '#fff5df',weight:2,fillColor:p.hours===0 ? '#e1b96e' : '#242925',fillOpacity:1,interactive:true}).addTo(map);
   const label=p.hours===0 ? `${stale ? '保存' : '現在'} · ${cycloneTime(p.validAt,0,stale).time}` : new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',day:'numeric',hour:'2-digit',hourCycle:'h23'}).format(new Date(p.validAt));
-  marker.bindTooltip(label,{permanent:p.hours===0 || p===data.points.at(-1) || (element.clientWidth>=500 && (p===data.points[2] || p===data.points[4])),direction:p.hours===0 ? 'left' : 'right',className:'cyclone-time-label',offset:[8,0]});
+  marker.bindTooltip(label,{permanent:p.hours===0,direction:p.hours===0 ? 'left' : 'right',className:'cyclone-time-label',offset:[8,0]});
   marker.on('click',()=>onSelect(p.hours));layers.push({p,circle,marker});
  }
  function fit(){if(!dead)map.fitBounds(bounds,{padding:[45,45],animate:false,maxZoom:6});}
  const onKey=event=>{const offset={ArrowLeft:[-80,0],ArrowRight:[80,0],ArrowUp:[0,-80],ArrowDown:[0,80]}[event.key];if(!offset || event.altKey || event.ctrlKey || event.metaKey)return;event.preventDefault();event.stopPropagation();map.panBy(offset,{animate:false});};element.addEventListener('keydown',onKey);
  const resize=new ResizeObserver(()=>{if(!dead)map.invalidateSize({animate:false,pan:false});});resize.observe(element);fit();
- return {select(hours){for(const {p,circle,marker} of layers){const selected=p.hours===hours;circle?.setStyle({color:selected ? '#e1b96e' : '#fff5df',weight:selected ? 3 : 1.5,fillOpacity:selected ? .1 : .025});marker.setRadius(selected ? 9 : p.hours===0 ? 8 : 4.5);if(selected)marker.openTooltip();else if(p.hours!==0 && p!==data.points.at(-1) && (element.clientWidth<500 || (p!==data.points[2] && p!==data.points[4])))marker.closeTooltip();}},zoom(delta){map.setZoom(map.getZoom()+delta,{animate:false});},fit,destroy(){dead=true;resize.disconnect();element.removeEventListener('keydown',onKey);map.remove();}};
+ return {select(hours){for(const {p,circle,marker} of layers){const selected=p.hours===hours;circle?.setStyle({color:selected ? '#e1b96e' : '#fff5df',weight:selected ? 3 : 1.5,fillOpacity:selected ? .1 : .025});marker.setRadius(selected ? 9 : p.hours===0 ? 8 : 4.5);if(selected)marker.openTooltip();else if(p.hours!==0)marker.closeTooltip();}},zoom(delta){map.setZoom(map.getZoom()+delta,{animate:false});},fit,destroy(){dead=true;resize.disconnect();element.removeEventListener('keydown',onKey);map.remove();}};
 }

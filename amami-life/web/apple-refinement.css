@@ -434,7 +434,7 @@ body[data-text="large"] .today-celestial {grid-column:1;grid-row:auto;border-lef
 .cyclone-copy {grid-column:2;grid-row:2;min-width:0;}
 .cyclone-home:not(:has(.cyclone-chart)) {grid-template-columns:1fr;gap:8px;}
 .cyclone-home:not(:has(.cyclone-chart)) .cyclone-copy {grid-column:1;}
-.cyclone-map-frame {height:350px;position:relative;isolation:isolate;z-index:0;overflow:hidden;border:1px solid var(--hair);border-radius:12px;background:#1b211f;}
+.cyclone-map-frame {height:380px;position:relative;isolation:isolate;z-index:0;overflow:hidden;border:1px solid var(--hair);border-radius:12px;background:#1b211f;}
 .cyclone-map-host {position:absolute;inset:0;background:#1b211f;}
 .cyclone-map-host:focus-visible {outline:3px solid var(--accent);outline-offset:-4px;}
 .cyclone-map-host .leaflet-tooltip {background:#222522;border:1px solid #e1b96e;color:#fff5df;box-shadow:none;font-family:var(--body);font-size:12px;line-height:1.4;}
@@ -476,12 +476,12 @@ body[data-text="large"] .today-celestial {grid-column:1;grid-row:auto;border-lef
  .cyclone-home {grid-template-columns:1fr;gap:16px;}
  .cyclone-chart {grid-column:1;grid-row:2;}
  .cyclone-copy {grid-column:1;grid-row:3;}
- .cyclone-map-frame {height:350px;}
+ .cyclone-map-frame {height:380px;}
 }
 @media(max-width:700px) {
  .cyclone-heading h3 {font-size:28px;}
  .cyclone-heading h3 small {font-size:13px;margin-left:10px;}
- .cyclone-map-frame {height:310px;}
+ .cyclone-map-frame {height:340px;}
  .track-times {gap:6px;margin-bottom:20px;}
  .track-times button {min-width:57px;padding:8px;}
  .track-stats dd {font-size:28px;}

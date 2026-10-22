@@ -45,7 +45,9 @@ function minuteInTokyo(): number {
   return (Number(values.hour) % 24) * 60 + Number(values.minute);
 }
 
-export function generateMetadata({ searchParams }: { searchParams?: { date?: string | string[] } }): Metadata {
+export async function generateMetadata({ searchParams: searchParamsPromise }: { searchParams?: Promise<{ date?: string | string[] }> }): Promise<Metadata> {
+  const searchParams = await searchParamsPromise;
+
   const selectedDate = normalizeDateParam(searchParams?.date, 2026);
   const dateLabel = formatJapaneseDate(selectedDate);
   const canonical = "https://shima-craft.com/amami-tide";
@@ -65,7 +67,9 @@ export function generateMetadata({ searchParams }: { searchParams?: { date?: str
   };
 }
 
-export default async function AmamiTidePage({ searchParams }: { searchParams?: { date?: string | string[] } }) {
+export default async function AmamiTidePage({ searchParams: searchParamsPromise }: { searchParams?: Promise<{ date?: string | string[] }> }) {
+  const searchParams = await searchParamsPromise;
+
   const today = getTokyoToday();
   const selectedDate = normalizeDateParam(searchParams?.date, 2026);
   const day = getTideDay(dataset, selectedDate) ?? dataset.days[0];

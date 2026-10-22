@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { readJSON, allowRequest, clientAddress, safeError } from "@/lib/http/security";
 import { isSameOrigin } from "@/lib/http/origin";
 import {
   clearSessionCookieOnStore,
@@ -27,16 +28,17 @@ const REASON_MESSAGE: Record<string, string> = {
  * ログイン: Google ID Token を検証し、招待/既存会員/初期adminを確認して
  * Firebase Session Cookie を発行する。
  */
-export async function POST(request: NextRequest): Promise<NextResponse> {
+export async function POST(request: NextRequest): Promise<Response> {
   if (!isSameOrigin(request)) {
     return NextResponse.json({ ok: false, reason: "BAD_ORIGIN" }, { status: 403 });
   }
 
   let body: { idToken?: unknown; invitationToken?: unknown };
   try {
-    body = await request.json();
-  } catch {
-    return NextResponse.json({ ok: false, reason: "INVALID_JSON" }, { status: 400 });
+    if (!allowRequest("auth-session", clientAddress(request), 20)) return NextResponse.json({ ok: false, reason: "RATE_LIMIT" }, { status: 429, headers: { "Retry-After": "60" } });
+    body = await readJSON(request, 12_288);
+  } catch (error) {
+    return safeError(error);
   }
 
   const idToken = typeof body.idToken === "string" ? body.idToken : "";
@@ -64,7 +66,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   try {
     const cookie = await createSessionCookieFromIdToken(idToken);
-    setSessionCookieOnStore(cookie);
+    await setSessionCookieOnStore(cookie);
   } catch {
     return NextResponse.json({ ok: false, reason: "SESSION_FAILED" }, { status: 500 });
   }
@@ -73,7 +75,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 }
 
 /** ログアウト: Session Cookie削除 + refresh token失効。 */
-export async function DELETE(request: NextRequest): Promise<NextResponse> {
+export async function DELETE(request: NextRequest): Promise<Response> {
   if (!isSameOrigin(request)) {
     return NextResponse.json({ ok: false, reason: "BAD_ORIGIN" }, { status: 403 });
   }
@@ -83,7 +85,7 @@ export async function DELETE(request: NextRequest): Promise<NextResponse> {
       await adminAuth().revokeRefreshTokens(decoded.uid).catch(() => {});
     }
   } finally {
-    clearSessionCookieOnStore();
+    await clearSessionCookieOnStore();
   }
   return NextResponse.json({ ok: true });
 }

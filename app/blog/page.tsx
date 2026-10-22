@@ -30,10 +30,10 @@ export const metadata: Metadata = {
 };
 
 type BlogIndexPageProps = {
-  searchParams?: {
+  searchParams?: Promise<{
     category?: string | string[];
     page?: string | string[];
-  };
+  }>;
 };
 
 const PER_PAGE = 12;
@@ -55,7 +55,9 @@ function pageHref(page: number, category?: string) {
   return query ? `/blog?${query}` : "/blog";
 }
 
-export default async function BlogIndexPage({ searchParams }: BlogIndexPageProps) {
+export default async function BlogIndexPage({ searchParams: searchParamsPromise }: BlogIndexPageProps) {
+  const searchParams = await searchParamsPromise;
+
   const category = first(searchParams?.category);
   const currentPage = toPositiveInteger(first(searchParams?.page));
   const offset = (currentPage - 1) * PER_PAGE;

@@ -29,8 +29,8 @@ const ROLES: UserRole[] = ["admin", "user"];
 const ACCOUNT_STATUSES: AccountStatus[] = ["active", "suspended", "deleted"];
 const CONTRACT_STATUSES: ContractStatus[] = ["active", "payment_pending", "unpaid", "cancelled"];
 
-function auditContext() {
-  const h = headers();
+async function auditContext() {
+  const h = await headers();
   return {
     ipHash: ipHashFromHeaders(h),
     userAgent: (h.get("user-agent") ?? "").slice(0, 512),
@@ -89,7 +89,7 @@ export async function createInvitationAction(
     const inviteUrl = `${siteUrl}/login?invite=${encodeURIComponent(rawToken)}&next=/tools/photo-colorize`;
     const mail = await sendInvitationEmail({ toEmail: email, displayName, inviteUrl });
 
-    const ctx = auditContext();
+    const ctx = await auditContext();
     await writeAuditOnly({
       adminUserId: admin.uid,
       action: "invitation_created",
@@ -142,7 +142,7 @@ export async function resendInvitationAction(
       targetUserId: null,
       afterData: { invitationId, mailSent: mail.ok },
       requestId,
-      ...auditContext(),
+      ...await auditContext(),
     });
 
     if (!mail.ok) {
@@ -173,7 +173,7 @@ export async function revokeInvitationAction(
       targetUserId: null,
       afterData: { invitationId },
       requestId,
-      ...auditContext(),
+      ...await auditContext(),
     });
     revalidatePath("/admin/invitations");
     return { ok: "招待を取り消しました。", requestId };
@@ -218,7 +218,7 @@ export async function updateMemberAction(
       action: "member_updated",
       mutation: { displayName, notes, role, accountStatus, contractStatus },
       requestId,
-      ...auditContext(),
+      ...await auditContext(),
     });
 
     revalidatePath("/admin/users");
@@ -245,7 +245,7 @@ async function changeStatus(
     action,
     mutation: { accountStatus: to },
     requestId,
-    ...auditContext(),
+    ...await auditContext(),
   });
   revalidatePath("/admin/users");
   revalidatePath(`/admin/users/${uid}`);

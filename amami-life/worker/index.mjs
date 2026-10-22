@@ -1,3 +1,4 @@
+import { createPublicLimiter } from "./rate-limit.mjs";
 import { createCycloneTrackProvider } from "../server/cyclone-tracks.mjs";
 import { createCycloneProvider } from "../server/cyclones.mjs";
 import { AREAS, validDate, todayJST, addDays, solarForDate, unknownSource } from "../packages/core/src/index.ts";
@@ -9,12 +10,15 @@ import provenance from "../server/data/tide-provenance.json" with { type: "json"
 const security = {
   "X-Content-Type-Options": "nosniff",
   "Referrer-Policy": "strict-origin-when-cross-origin",
+  "Strict-Transport-Security": "max-age=31536000",
+  "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
   "Cache-Control": "no-store",
 };
 const csp = "default-src 'self'; img-src 'self' data: https://cyberjapandata.gsi.go.jp https://tile.openstreetmap.org; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; font-src 'self'; frame-src https://www.amami-airport.co.jp https://amami-airport.co.jp; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'";
 const sourceErrors={};
 export function createHomeWorker({ cyclones = createCycloneProvider(), weather = createWeatherProvider({onError:error=>{sourceErrors.weather=error;}}), observations = createObservationProvider({onError:error=>{sourceErrors.observations=error;}}), clock = () => new Date() } = {}) {
   const tracks=createCycloneTrackProvider({cyclones,clock});
+  const limitPublic = createPublicLimiter({ clock: () => clock().getTime() });
   return {
     async fetch(request, env) {
       const url = new URL(request.url);
@@ -45,6 +49,12 @@ export function createHomeWorker({ cyclones = createCycloneProvider(), weather =
         return new Response(request.method==="HEAD" ? null : html,{status:response.status,headers:resultHeaders});
       }
       if (url.pathname.startsWith("/amami-life-api/")) {
+        const limited = await limitPublic(request, env);
+        if (limited) {
+          const headers = new Headers(limited.headers);
+          for (const [name,value] of Object.entries(security)) headers.set(name,value);
+          return new Response(request.method === "HEAD" ? null : limited.body, {status:limited.status,headers});
+        }
         const area = AREAS.find(a=>a.id===(url.searchParams.get("area") ?? "naze"));
         const date = url.searchParams.get("date") ?? todayJST(clock());
         const json = (body,status=200) => new Response(request.method==="HEAD" ? null : JSON.stringify(body),{status,headers:{...security,"Content-Type":"application/json; charset=utf-8"}});

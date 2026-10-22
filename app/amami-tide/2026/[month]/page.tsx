@@ -12,7 +12,9 @@ export function generateStaticParams() {
   return Array.from({ length: 12 }, (_, index) => ({ month: String(index + 1).padStart(2, "0") }));
 }
 
-export function generateMetadata({ params }: { params: { month: string } }): Metadata {
+export async function generateMetadata({ params: paramsPromise }: { params: Promise<{ month: string }> }): Promise<Metadata> {
+  const params = await paramsPromise;
+
   const month = Number(params.month);
   if (!Number.isInteger(month) || month < 1 || month > 12) return {};
   return {
@@ -22,7 +24,9 @@ export function generateMetadata({ params }: { params: { month: string } }): Met
   };
 }
 
-export default function MonthlyTidePage({ params }: { params: { month: string } }) {
+export default async function MonthlyTidePage({ params: paramsPromise }: { params: Promise<{ month: string }> }) {
+  const params = await paramsPromise;
+
   const month = Number(params.month);
   if (!Number.isInteger(month) || month < 1 || month > 12) notFound();
   const key = `2026-${params.month}`;

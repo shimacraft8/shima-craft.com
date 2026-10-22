@@ -15,15 +15,17 @@ import {
 } from "@/app/lib/amamiDialect";
 
 type Props = {
-  params: { category: string };
-  searchParams: Record<string, string | string[] | undefined>;
+  params: Promise<{ category: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
 export function generateStaticParams() {
   return wordCategories.map((category) => ({ category: category.slug }));
 }
 
-export function generateMetadata({ params }: Props): Metadata {
+export async function generateMetadata({ params: paramsPromise }: Props): Promise<Metadata> {
+  const params = await paramsPromise;
+
   const category = wordCategories.find((c) => c.slug === params.category);
   if (!category) {
     return {};
@@ -47,7 +49,10 @@ export function generateMetadata({ params }: Props): Metadata {
   };
 }
 
-export default function WordCategoryPage({ params, searchParams }: Props) {
+export default async function WordCategoryPage({ params: paramsPromise, searchParams: searchParamsPromise }: Props) {
+  const params = await paramsPromise;
+  const searchParams = await searchParamsPromise;
+
   const category = wordCategories.find((c) => c.slug === params.category);
   if (!category) {
     notFound();

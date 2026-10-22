@@ -14,10 +14,12 @@ export const metadata: Metadata = {
 };
 
 export default async function LoginPage({
-  searchParams,
+  searchParams: searchParamsPromise,
 }: {
-  searchParams: { next?: string; invite?: string };
+  searchParams: Promise<{ next?: string; invite?: string }>;
 }) {
+  const searchParams = await searchParamsPromise;
+
   const next = sanitizeNextPath(searchParams.next);
   const invite = typeof searchParams.invite === "string" ? searchParams.invite : undefined;
 

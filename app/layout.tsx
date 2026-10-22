@@ -1,35 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { Noto_Serif_JP, Noto_Sans_JP, Outfit } from "next/font/google";
+import "./fonts.css";
 import { site } from "@/app/lib/site";
 import { GoogleAnalytics } from "@/app/components/GoogleAnalytics";
 import "./globals.css";
 import "./system-samples.css";
 
-/* ===== フォント（next/font/google） ===== */
-// 見出し：Noto Serif JP
-const notoSerifJP = Noto_Serif_JP({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  display: "swap",
-  variable: "--font-serif",
-  preload: false,
-});
-// 本文：Noto Sans JP
-const notoSansJP = Noto_Sans_JP({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "700"],
-  display: "swap",
-  variable: "--font-sans",
-  preload: false,
-});
-// 英字アクセント：Outfit
-const outfit = Outfit({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-  variable: "--font-en",
-});
+/* Brand fonts are self-hosted with upstream licenses in public/fonts. */
 
 /* ===== メタデータ / OGP ===== */
 export const metadata: Metadata = {
@@ -155,7 +132,7 @@ export default function RootLayout({
   return (
     <html
       lang="ja"
-      className={`${notoSerifJP.variable} ${notoSansJP.variable} ${outfit.variable}`}
+      className={"brand-fonts"}
     >
       <body>
         {/* Google AdSense サイト確認用（審査・接続用の共通スクリプトのみ。広告ユニットは未追加） */}

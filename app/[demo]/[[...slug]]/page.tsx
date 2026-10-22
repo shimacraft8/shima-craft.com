@@ -15,11 +15,13 @@ export function generateStaticParams() {
   });
 }
 
-export default function DemoPage({
-  params,
+export default async function DemoPage({
+  params: paramsPromise,
 }: {
-  params: { demo: string; slug?: string[] };
+  params: Promise<{ demo: string; slug?: string[] }>;
 }) {
+  const params = await paramsPromise;
+
   const demo = demos.find((item) => item.id === params.demo);
   if (!demo) notFound();
 

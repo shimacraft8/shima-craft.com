@@ -24,8 +24,8 @@ export const revalidate = 60;
 export const dynamicParams = true;
 
 type BlogDetailPageProps = {
-  params: { slug: string };
-  searchParams?: { draftKey?: string | string[] };
+  params: Promise<{ slug: string }>;
+  searchParams?: Promise<{ draftKey?: string | string[] }>;
 };
 
 function first(value?: string | string[]) {
@@ -46,9 +46,12 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({
-  params,
-  searchParams,
+  params: paramsPromise,
+  searchParams: searchParamsPromise,
 }: BlogDetailPageProps): Promise<Metadata> {
+  const params = await paramsPromise;
+  const searchParams = await searchParamsPromise;
+
   const draftKey = first(searchParams?.draftKey);
   const post = await getBlogPostBySlug(params.slug, draftKey);
 
@@ -87,9 +90,12 @@ export async function generateMetadata({
 }
 
 export default async function BlogDetailPage({
-  params,
-  searchParams,
+  params: paramsPromise,
+  searchParams: searchParamsPromise,
 }: BlogDetailPageProps) {
+  const params = await paramsPromise;
+  const searchParams = await searchParamsPromise;
+
   const draftKey = first(searchParams?.draftKey);
   const post = await getBlogPostBySlug(params.slug, draftKey);
   if (!post) notFound();

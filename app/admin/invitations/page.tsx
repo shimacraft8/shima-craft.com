@@ -19,10 +19,12 @@ function statusBadge(v: string): string {
 }
 
 export default async function AdminInvitationsPage({
-  searchParams,
+  searchParams: searchParamsPromise,
 }: {
-  searchParams: { status?: string; cursor?: string };
+  searchParams: Promise<{ status?: string; cursor?: string }>;
 }) {
+  const searchParams = await searchParamsPromise;
+
   const status = ["pending", "claimed", "expired", "revoked", "delivery_failed"].includes(searchParams.status ?? "")
     ? (searchParams.status as never)
     : undefined;

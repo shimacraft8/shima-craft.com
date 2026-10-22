@@ -15,14 +15,16 @@ import {
 } from "@/app/lib/amamiDialect";
 
 type Props = {
-  params: { region: string };
+  params: Promise<{ region: string }>;
 };
 
 export function generateStaticParams() {
   return wordRegions.map((region) => ({ region: region.slug }));
 }
 
-export function generateMetadata({ params }: Props): Metadata {
+export async function generateMetadata({ params: paramsPromise }: Props): Promise<Metadata> {
+  const params = await paramsPromise;
+
   const region = wordRegions.find((r) => r.slug === params.region);
   if (!region) {
     return {};
@@ -56,7 +58,9 @@ export function generateMetadata({ params }: Props): Metadata {
   };
 }
 
-export default function RegionPage({ params }: Props) {
+export default async function RegionPage({ params: paramsPromise }: Props) {
+  const params = await paramsPromise;
+
   const region = wordRegions.find((r) => r.slug === params.region);
   if (!region) {
     notFound();

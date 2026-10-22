@@ -1,9 +1,10 @@
-import { readFile, writeFile, mkdir, copyFile } from "node:fs/promises";
+import { readFile, writeFile, mkdir, copyFile, rm } from "node:fs/promises";
 import { resolve } from "node:path";
 import { build } from "esbuild";
 import { parseTideText } from "../packages/core/src/index.ts";
 const root=resolve(import.meta.dirname,"..");
 const out=resolve(root,"dist/public/amami-life");
+await rm(resolve(root,"dist/public"),{recursive:true,force:true});
 await mkdir(resolve(out,"assets"),{recursive:true});
 await mkdir(resolve(root,"worker"),{recursive:true});
 await writeFile(resolve(root,"worker/tides.json"),JSON.stringify(parseTideText(await readFile(resolve(root,"server/data/O9-2026.txt"),"utf8"))));
@@ -37,3 +38,6 @@ await copyFile(resolve(root,"web/assets/suncalc-LICENSE.txt"),resolve(out,"asset
 await copyFile(resolve(root,"web/assets/leaflet-LICENSE.txt"),resolve(out,"assets/leaflet-LICENSE.txt"));
 await mkdir(resolve(out,"assets/leaflet"),{recursive:true});
 for(const name of ["layers.png","layers-2x.png","marker-icon.png","marker-icon-2x.png","marker-shadow.png"]) await copyFile(resolve(root,"web/assets/leaflet",name),resolve(out,"assets/leaflet",name));
+
+const { prepareRelease } = await import('./release-scope.mjs');
+await prepareRelease(root);

@@ -1,7 +1,8 @@
 "use client";
 
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useState, useEffect, useRef } from "react";
 import styles from "./monitor.module.css";
+import { FormChallenge } from "@/app/components/FormChallenge";
 
 type Step = "input" | "confirm" | "complete";
 
@@ -13,6 +14,7 @@ type FormData = {
   email: string;
   area: string;
   deadline: string;
+  consent: boolean;
 };
 
 const LABELS: [keyof FormData, string][] = [
@@ -28,10 +30,16 @@ const LABELS: [keyof FormData, string][] = [
 export function MonitorForm() {
   const [step, setStep] = useState<Step>("input");
   const [data, setData] = useState<FormData>({
-    name: "", business: "", url: "", issue: "", email: "", area: "", deadline: "",
+    name: "", business: "", url: "", issue: "", email: "", area: "", deadline: "", consent: false,
   });
+  const [token, setToken] = useState("");
+  const [challengeToken, setChallengeToken] = useState("");
+  const [challengeReset, setChallengeReset] = useState(0);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const errorRef = useRef<HTMLParagraphElement>(null);
+  useEffect(() => { if (error) errorRef.current?.focus({ preventScroll: true }); }, [error]);
 
   function handleInput(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -46,23 +54,28 @@ export function MonitorForm() {
       email: get("email"),
       area: get("area"),
       deadline: get("deadline"),
+      consent: (form.elements.namedItem("agree") as HTMLInputElement).checked,
     });
+    setToken(crypto.randomUUID());
     setStep("confirm");
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   }
 
   async function handleSubmit() {
+    if (sending) return;
+    if (!challengeToken) { setError("送信前の安全確認を完了してください。"); return; }
     setSending(true);
     setError(null);
     try {
       const res = await fetch("/api/monitor", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, token, challengeToken }),
       });
-      const json: { ok: boolean } = await res.json();
-      if (!json.ok) {
-        setError("送信に失敗しました。お手数ですが直接メールでご連絡ください。");
+      const json: { ok: boolean; code?: string } = await res.json();
+      if (!res.ok || !json.ok) {
+        setError(json.code === "DELIVERY_UNCERTAIN" ? "送信結果を確認できません。重複を避けるため再送せず、メールで受付状況をお問い合わせください。" : "送信に失敗しました。お手数ですが直接メールでご連絡ください。");
+        setChallengeReset((n) => n + 1);
         setSending(false);
         return;
       }
@@ -74,6 +87,7 @@ export function MonitorForm() {
       setStep("complete");
     } catch {
       setError("送信に失敗しました。お手数ですが直接メールでご連絡ください。");
+      setChallengeReset((n) => n + 1);
       setSending(false);
     }
   }
@@ -103,11 +117,13 @@ export function MonitorForm() {
           )}
         </dl>
         <p className={styles.confirmAgree}>モニター条件（事例掲載・感想・数値確認への協力）と料金55,000円（税込）を確認のうえ送信します。</p>
-        {error && <p className={styles.formError}>{error}</p>}
+        <FormChallenge action="monitor" onToken={setChallengeToken} resetKey={challengeReset} />
+        {error && <p ref={errorRef} tabIndex={-1} role="alert" className={styles.formError}>{error}</p>}
         <div className={styles.confirmActions}>
           <button
             type="button"
             className={`${styles.btn} ${styles.btnOutline}`}
+            disabled={sending}
             onClick={() => { setStep("input"); setError(null); }}
           >
             編集に戻る
@@ -133,21 +149,22 @@ export function MonitorForm() {
     <form className={styles.form} onSubmit={handleInput}>
       <div className={styles.field}>
         <label htmlFor="m-name">お名前（必須）</label>
-        <input id="m-name" name="name" required placeholder="例：山田 太郎" defaultValue={data.name} />
+        <input id="m-name" name="name" autoComplete="name" maxLength={100} required placeholder="例：山田 太郎" defaultValue={data.name} />
       </div>
       <div className={styles.field}>
         <label htmlFor="m-business">店名・事業名（必須）</label>
-        <input id="m-business" name="business" required placeholder="例：○○商店／○○サービス" defaultValue={data.business} />
+        <input id="m-business" name="business" autoComplete="organization" maxLength={150} required placeholder="例：○○商店／○○サービス" defaultValue={data.business} />
       </div>
       <div className={styles.field}>
         <label htmlFor="m-url">Googleマップ・ホームページ・SNSのURL（任意）</label>
-        <input id="m-url" name="url" type="url" placeholder="分かるものを1つ" defaultValue={data.url} />
+        <input id="m-url" name="url" type="url" autoComplete="url" maxLength={2048} placeholder="分かるものを1つ" defaultValue={data.url} />
       </div>
       <div className={styles.field}>
         <label htmlFor="m-issue">希望する内容・現在の課題（必須）</label>
         <textarea
           id="m-issue"
           name="issue"
+          maxLength={4000}
           required
           placeholder="例：Googleマップを整えたい、紹介ページがほしい、問い合わせ先を分かりやすくしたい など"
           defaultValue={data.issue}
@@ -155,20 +172,21 @@ export function MonitorForm() {
       </div>
       <div className={styles.field}>
         <label htmlFor="m-email">返信先メールアドレス（必須）</label>
-        <input id="m-email" name="email" type="email" required placeholder="example@example.com" defaultValue={data.email} />
+        <input id="m-email" name="email" type="email" autoComplete="email" spellCheck={false} maxLength={254} required placeholder="example@example.com" defaultValue={data.email} />
       </div>
       <div className={styles.field}>
         <label htmlFor="m-area">所在地・対応地域（必須）</label>
-        <input id="m-area" name="area" required placeholder="例：鹿児島県奄美市／全国オンライン" defaultValue={data.area} />
+        <input id="m-area" name="area" autoComplete="address-level2" maxLength={150} required placeholder="例：鹿児島県奄美市／全国オンライン" defaultValue={data.area} />
       </div>
       <div className={styles.field}>
         <label htmlFor="m-deadline">希望時期（任意）</label>
-        <input id="m-deadline" name="deadline" placeholder="例：8月中、急ぎではない" defaultValue={data.deadline} />
+        <input id="m-deadline" name="deadline" autoComplete="off" maxLength={200} placeholder="例：8月中、急ぎではない" defaultValue={data.deadline} />
       </div>
       <div className={styles.field}>
         <label>
           <input
             name="agree"
+            defaultChecked={data.consent}
             type="checkbox"
             required
             style={{ width: "auto", marginRight: "8px" }}

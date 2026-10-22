@@ -13,7 +13,7 @@ import {
 } from "@/app/lib/amamiDialect";
 
 type Props = {
-  searchParams: Record<string, string | string[] | undefined>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
 const PAGE_DESC =
@@ -34,7 +34,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function WordsPage({ searchParams }: Props) {
+export default async function WordsPage({ searchParams: searchParamsPromise }: Props) {
+  const searchParams = await searchParamsPromise;
+
   return (
     <>
       <HeaderInner />

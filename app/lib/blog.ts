@@ -1,3 +1,4 @@
+import sanitizeHtml from "sanitize-html";
 import { cache } from "react";
 
 const MICROCMS_API_ORIGIN = "microcms.io";
@@ -112,12 +113,7 @@ async function requestMicroCMS<T>(
   });
 
   if (!response.ok) {
-    const detail = await response.text().catch(() => "");
-    throw new Error(
-      `microCMS API error: ${response.status} ${response.statusText}${
-        detail ? ` / ${detail.slice(0, 200)}` : ""
-      }`,
-    );
+    throw new Error(`microCMS API status ${response.status}`);
   }
 
   return (await response.json()) as T;
@@ -130,8 +126,8 @@ export const getBlogCategories = cache(async (): Promise<BlogCategory[]> => {
       { limit: MICROCMS_MAX_LIMIT, orders: "createdAt" },
     );
     return response?.contents ?? [];
-  } catch (error) {
-    console.error("[blog] categories fetch failed", error);
+  } catch {
+    console.error("[blog] fetch unavailable");
     return [];
   }
 });
@@ -174,8 +170,8 @@ export async function getBlogPosts(
         limit,
       }
     );
-  } catch (error) {
-    console.error("[blog] list fetch failed", error);
+  } catch {
+    console.error("[blog] fetch unavailable");
     return { contents: [], totalCount: 0, offset, limit };
   }
 }
@@ -199,8 +195,8 @@ export async function getBlogPostBySlug(
     );
 
     return response?.contents[0] ?? null;
-  } catch (error) {
-    console.error(`[blog] detail fetch failed: ${slug}`, error);
+  } catch {
+    console.error("[blog] fetch unavailable");
     return null;
   }
 }
@@ -231,8 +227,8 @@ export async function getRelatedBlogPosts(
     return (response?.contents ?? [])
       .filter((item) => item.slug !== post.slug)
       .slice(0, limit);
-  } catch (error) {
-    console.error(`[blog] related fetch failed: ${post.slug}`, error);
+  } catch {
+    console.error("[blog] fetch unavailable");
     return [];
   }
 }
@@ -263,8 +259,8 @@ export async function getAllBlogPostsForSitemap(): Promise<BlogPostSummary[]> {
       totalCount = response.totalCount;
       offset += response.limit;
     } while (offset < totalCount);
-  } catch (error) {
-    console.error("[blog] sitemap fetch failed", error);
+  } catch {
+    console.error("[blog] fetch unavailable");
   }
 
   return all;
@@ -280,7 +276,13 @@ export function formatBlogDate(value: string) {
 }
 
 export function enhanceBlogBodyHtml(html: string) {
-  return html
+  return sanitizeHtml(html, {
+    allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img", "figure", "figcaption"]),
+    allowedAttributes: { ...sanitizeHtml.defaults.allowedAttributes, img: ["src", "alt", "width", "height", "loading", "decoding"], a: ["href", "name", "target", "rel"] },
+    allowedSchemes: ["http", "https", "mailto"],
+    allowProtocolRelative: false,
+    transformTags: { a: sanitizeHtml.simpleTransform("a", { rel: "noopener noreferrer" }) },
+  })
     .replace(/<table(\s[^>]*)?>/gi, '<div class="blog-table-scroll"><table$1>')
     .replace(/<\/table>/gi, "</table></div>")
     .replace(/<img(?![^>]*\bloading=)([^>]*)>/gi, '<img loading="lazy" decoding="async"$1>');

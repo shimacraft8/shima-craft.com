@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
+import { FormChallenge } from "@/app/components/FormChallenge";
 import { trackEvent } from "@/app/components/TrackedLink";
 import {
   AnswerValue,
@@ -27,6 +28,7 @@ interface FormValues {
   url: string;
   consent: boolean;
   honeypot: string;
+  challengeToken: string;
 }
 
 interface FormErrors {
@@ -183,8 +185,11 @@ function FormSection({
     url: "",
     consent: false,
     honeypot: "",
+    challengeToken: "",
   });
   const [errors, setErrors] = useState<FormErrors>({});
+  const [challengeReset, setChallengeReset] = useState(0);
+  const [challengeError, setChallengeError] = useState(false);
   const firstErrorRef = useRef<HTMLInputElement | null>(null);
 
   function validate(): FormErrors {
@@ -219,7 +224,10 @@ function FormSection({
       setTimeout(() => firstErrorRef.current?.focus(), 50);
       return;
     }
+    if (!values.challengeToken) { setChallengeError(true); return; }
+    setChallengeError(false);
     await onSubmit(values);
+    setChallengeReset((n) => n + 1);
   }
 
   const primaryLabel = diagnosis
@@ -296,7 +304,7 @@ function FormSection({
           <label htmlFor="wc-email" className="wc-label">
             メールアドレス <span className="wc-required">必須</span>
           </label>
-          <input
+          <input spellCheck={false}
             id="wc-email"
             type="email"
             className={`wc-input${errors.email ? " error" : ""}`}
@@ -382,7 +390,7 @@ function FormSection({
               aria-describedby={errors.consent ? "wc-consent-err" : undefined}
               aria-invalid={!!errors.consent}
             />
-            <span id="wc-consent-label-text">
+            <label htmlFor="wc-consent" id="wc-consent-label-text">
               <a
                 href="/privacy"
                 className="wc-pp-link"
@@ -392,7 +400,7 @@ function FormSection({
                 プライバシーポリシー
               </a>
               に同意して送信します
-            </span>
+            </label>
           </div>
           {errors.consent && (
             <span
@@ -408,6 +416,8 @@ function FormSection({
           </p>
         </div>
 
+        {challengeError && <p role="alert">送信前の安全確認を完了してください。</p>}
+        <FormChallenge action="web-check" onToken={(challengeToken) => setValues((v) => ({ ...v, challengeToken }))} resetKey={challengeReset} />
         <button
           type="submit"
           className="wc-submit-btn"
@@ -516,6 +526,7 @@ export function WebCheckClient() {
     url: string;
     consent: boolean;
     honeypot: string;
+  challengeToken: string;
   }) {
     if (submitting || submitted) return;
     setSubmitting(true);
@@ -531,6 +542,7 @@ export function WebCheckClient() {
         consent: formValues.consent,
         honeypot: formValues.honeypot,
         token: submitToken,
+        challengeToken: formValues.challengeToken,
         formLoadTime,
       };
 

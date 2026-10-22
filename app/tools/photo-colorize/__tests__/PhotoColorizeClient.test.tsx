@@ -85,7 +85,9 @@ beforeEach(() => {
   vi.stubGlobal("ImageData", FakeImageData);
   vi.spyOn(HTMLCanvasElement.prototype, "getContext").mockReturnValue({
     putImageData: vi.fn(),
+    drawImage: vi.fn(),
   } as unknown as CanvasRenderingContext2D);
+  vi.spyOn(HTMLCanvasElement.prototype, "toDataURL").mockReturnValue("data:image/jpeg;base64,/9j/2Q==");
   Object.defineProperty(HTMLCanvasElement.prototype, "toBlob", {
     configurable: true,
     writable: true,
@@ -137,6 +139,19 @@ describe("PhotoColorizeClient（Firebase会員フロー）", () => {
     expect(
       screen.getByText(/写真の縮小版（最大512px）をSHIMA CRAFTサーバー経由でGroq AI/)
     ).toBeInTheDocument();
+  });
+
+  it("画像を選ぶだけでは外部AIへ送らず、同意と実行許可の後だけ送る", async () => {
+    mocks.colorizeInBrowser.mockResolvedValue(successOutput());
+    await selectFileAndReachReady();
+    expect(fetchMock.mock.calls.filter(([u]) => String(u).includes("/api/colorize/hint"))).toHaveLength(0);
+    await startColorize();
+    await waitFor(() => expect(fetchMock.mock.calls.some(([u]) => String(u).includes("/api/colorize/hint"))).toBe(true));
+    const index = fetchMock.mock.calls.findIndex(([u]) => String(u).includes("/api/colorize/hint"));
+    const auth = fetchMock.mock.calls.findIndex(([u]) => String(u).includes("/api/colorize/executions"));
+    expect(index).toBeGreaterThan(auth);
+    const init = fetchMock.mock.calls[index][1] as RequestInit;
+    expect(JSON.parse(init.body as string)).toMatchObject({ consent: true, consentVersion: "groq-thumbnail-v1" });
   });
 
   it("同意するまで開始ボタンが無効", async () => {
@@ -262,7 +277,8 @@ describe("同じ画像でもう一度試す（回帰テスト）", () => {
         execCounter += 1;
         return Promise.resolve(new Response(JSON.stringify({ ok: true, executionId: `exec-${execCounter}` }), { status: 200 }));
       }
-      // events は永遠に解決しない
+      if (String(url).includes("/api/colorize/hint")) return Promise.resolve(Response.json({ ok: true }));
+      // Only the event logger is slow; the hint API has a separate bounded contract.
       return new Promise(() => {});
     });
     mocks.colorizeInBrowser.mockResolvedValue(successOutput());

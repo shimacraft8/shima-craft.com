@@ -13,14 +13,16 @@ import {
 } from "@/app/lib/amamiDialect";
 
 type Props = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 export function generateStaticParams() {
   return amamiGreetings.map((record) => ({ id: record.id }));
 }
 
-export function generateMetadata({ params }: Props): Metadata {
+export async function generateMetadata({ params: paramsPromise }: Props): Promise<Metadata> {
+  const params = await paramsPromise;
+
   const record = getGreetingById(params.id);
   if (!record) {
     return {};
@@ -48,7 +50,9 @@ export function generateMetadata({ params }: Props): Metadata {
   };
 }
 
-export default function GreetingDetailPage({ params }: Props) {
+export default async function GreetingDetailPage({ params: paramsPromise }: Props) {
+  const params = await paramsPromise;
+
   const record = getGreetingById(params.id);
   if (!record) {
     notFound();

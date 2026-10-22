@@ -13,14 +13,16 @@ import {
 } from "@/app/lib/amamiDialect";
 
 type Props = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 export function generateStaticParams() {
   return amamiProverbs.map((record) => ({ id: record.id }));
 }
 
-export function generateMetadata({ params }: Props): Metadata {
+export async function generateMetadata({ params: paramsPromise }: Props): Promise<Metadata> {
+  const params = await paramsPromise;
+
   const record = getProverbById(params.id);
   if (!record) {
     return {};
@@ -44,7 +46,9 @@ export function generateMetadata({ params }: Props): Metadata {
   };
 }
 
-export default function ProverbDetailPage({ params }: Props) {
+export default async function ProverbDetailPage({ params: paramsPromise }: Props) {
+  const params = await paramsPromise;
+
   const record = getProverbById(params.id);
   if (!record) {
     notFound();

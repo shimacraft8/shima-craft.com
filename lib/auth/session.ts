@@ -38,13 +38,13 @@ export async function getVerifiedSession(): Promise<DecodedIdToken | null> {
   // Firebase未設定の環境（プロジェクト構築前のデプロイ等）では未ログイン扱いにし、
   // 既存ページを500で壊さず「ログインが必要」導線を表示する。
   if (!isAdminConfigured()) return null;
-  const cookie = cookies().get(SESSION_COOKIE_NAME)?.value;
+  const cookie = (await cookies()).get(SESSION_COOKIE_NAME)?.value;
   if (!cookie) return null;
   return verifySessionCookie(cookie);
 }
 
-export function setSessionCookieOnStore(value: string): void {
-  cookies().set(SESSION_COOKIE_NAME, value, {
+export async function setSessionCookieOnStore(value: string): Promise<void> {
+  (await cookies()).set(SESSION_COOKIE_NAME, value, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
@@ -53,8 +53,8 @@ export function setSessionCookieOnStore(value: string): void {
   });
 }
 
-export function clearSessionCookieOnStore(): void {
-  cookies().set(SESSION_COOKIE_NAME, "", {
+export async function clearSessionCookieOnStore(): Promise<void> {
+  (await cookies()).set(SESSION_COOKIE_NAME, "", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",

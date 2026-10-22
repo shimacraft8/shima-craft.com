@@ -4,14 +4,13 @@ import { createHash, randomBytes, randomUUID } from "crypto";
 /**
  * 招待トークンとハッシュのユーティリティ。
  * - raw token はメール送信リンクにのみ載せ、Firestoreには hash だけ保存する。
- * - email/IP も監査・照合用に hash 化して保存する（生値は保存しない）。
+ * - 補助照合用email/IP hashを生成する。会員/招待文書のemail自体は別途保存される。
  */
 
 function secret(): string {
   const base =
     process.env.INVITATION_TOKEN_SECRET ||
     process.env.FIREBASE_PRIVATE_KEY ||
-    process.env.FIREBASE_PROJECT_ID ||
     "";
   if (!base) throw new Error("invitation secret is not configured");
   return createHash("sha256").update(`shimacraft-invite:${base}`).digest("hex");

@@ -134,7 +134,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
   const attemptRef = useRef(0);
   /**
    * Claude Vision から取得した色ヒント（会員向け）。
-   * 画像選択時にバックグラウンドで取得し、カラー化実行時に利用する。
+   * 明示同意と実行許可の確認後に取得し、カラー化実行時に利用する。
    * null = 取得前 or 取得失敗（ヒントなしで動作）。
    */
   const colorHintsRef = useRef<ColorHintPayload | null>(null);
@@ -204,7 +204,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
       fullRgba: Uint8ClampedArray;
       width: number;
       height: number;
-    }): Promise<ColorHintPayload | null> => {
+    }, signal: AbortSignal): Promise<ColorHintPayload | null> => {
       if (isAnonymous) return null;
       try {
         const srcCanvas = document.createElement("canvas");
@@ -236,8 +236,8 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
         const res = await fetch("/api/colorize/hint", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ image: base64, mimeType: detectedMime }),
-          signal: AbortSignal.timeout(20_000),
+          body: JSON.stringify({ image: base64, mimeType: detectedMime, consent: true, consentVersion: "groq-thumbnail-v1" }),
+          signal: AbortSignal.any([signal, AbortSignal.timeout(20_000)]),
         });
         if (!res.ok) return null;
         const data = (await res.json()) as { ok?: boolean; hints?: ColorHintPayload };
@@ -253,6 +253,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
     async (file: File | null | undefined) => {
       if (!file) return;
       setSelectError(null);
+      setConsent(false);
       if (file.type && !ACCEPTED_TYPES.includes(file.type)) {
         setSelectError("JPEG・PNG・WebPの画像を選択してください。");
         return;
@@ -277,28 +278,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
         setPhase("ready");
         trackEvent("colorize_file_select");
 
-        // 会員: 画像選択後すぐにバックグラウンドでヒント取得を開始する。
-        // ユーザーが設定を確認している間（約10〜30秒）に完了するため体感遅延なし。
-        // トークンで世代管理し、古い画像のヒントが新しい画像へ適用されるのを防ぐ。
-        if (!isAnonymous) {
-          const token = hintTokenRef.current;
-          setHintStatus("loading");
-          hintPromiseRef.current = fetchColorHints(result).then((hints) => {
-            if (hintTokenRef.current !== token) return;
-            colorHintsRef.current = hints;
-            setHintStatus(hints ? "success" : "failed");
-          });
-          // 人物パーツ分割（端末内・MediaPipe）も並行で開始する。
-          // 失敗しても null のまま続行（bbox のみで動作）。
-          partsPromiseRef.current = segmentPersonParts(
-            result.fullRgba,
-            result.width,
-            result.height
-          ).then((parts) => {
-            if (hintTokenRef.current !== token) return;
-            personPartsRef.current = parts;
-          });
-        }
+
       } catch (err) {
         setSelectError(
           err instanceof ImageProcessingError
@@ -309,7 +289,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
         setPreparing(false);
       }
     },
-    [prepared, resultUrl, vividResultUrl, isAnonymous, fetchColorHints]
+    [prepared, resultUrl, vividResultUrl]
   );
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -369,7 +349,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
     selectedQuality: ColorizeQuality,
     retryOf: string | null
   ) {
-    if (!prepared || inFlightRef.current) return;
+    if (!prepared || !consent || inFlightRef.current) return;
     inFlightRef.current = true;
     const controller = new AbortController();
     abortRef.current = controller;
@@ -405,6 +385,19 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
     const { executionId, remaining } = execResult;
     if (remaining !== null) setDailyRemaining(remaining);
     lastExecutionIdRef.current = executionId;
+
+    // External processing begins only after consent and execution authorization.
+    if (!isAnonymous && !hintPromiseRef.current) {
+      const token = hintTokenRef.current;
+      setHintStatus("loading");
+      hintPromiseRef.current = fetchColorHints(prepared, controller.signal).then((hints) => {
+        if (hintTokenRef.current !== token) return;
+        colorHintsRef.current = hints;
+        setHintStatus(hints ? "success" : "failed");
+      });
+      partsPromiseRef.current = segmentPersonParts(prepared.fullRgba, prepared.width, prepared.height)
+        .then((parts) => { if (hintTokenRef.current === token) personPartsRef.current = parts; });
+    }
 
     // ヒント取得・パーツ分割が進行中なら完了を待つ（fetch 側の20秒タイムアウトで有界）。
     // 待たないとヒントなしで実行され、品質向上が反映されないことがある。
@@ -724,7 +717,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
           )}
 
           {!isAnonymous && hintStatus !== "idle" && (
-            <p className={`colorize-hint-status colorize-hint-status--${hintStatus}`}>
+            <p aria-live="polite" className={`colorize-hint-status colorize-hint-status--${hintStatus}`}>
               {hintStatus === "loading" && "AIが写真の内容を解析中…"}
               {hintStatus === "success" && "AI解析完了 — より正確な色が適用されます"}
               {hintStatus === "failed" && "AI解析スキップ — 通常品質で処理します"}
@@ -772,7 +765,7 @@ export function PhotoColorizeClient({ contactHref, isAnonymous }: Props) {
           <span className="colorize-spinner" aria-hidden="true" />
           <p>{progressLabel(progress)}</p>
           <p className="colorize-processing-note">
-            すべてお使いの端末内で処理しています。端末の性能により数秒〜1分ほどかかる場合があります。
+            {isAnonymous ? "すべて端末内で処理しています。端末の性能により時間がかかります。" : "画像生成は端末内で処理します。色解析には同意した外部AIを使用します。"}
           </p>
           <button type="button" className="btn btn-ghost colorize-btn-ghost" onClick={handleCancel}>
             キャンセル

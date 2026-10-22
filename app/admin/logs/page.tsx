@@ -23,7 +23,9 @@ type SearchParams = {
   cursor?: string;
 };
 
-export default async function AdminLogsPage({ searchParams }: { searchParams: SearchParams }) {
+export default async function AdminLogsPage({ searchParams: searchParamsPromise }: { searchParams: Promise<SearchParams> }) {
+  const searchParams = await searchParamsPromise;
+
   // ユーザー絞り込み（メール前方一致 → uid解決）
   let userId: string | undefined;
   const userQuery = (searchParams.user ?? "").trim();

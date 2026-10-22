@@ -6,7 +6,6 @@ import type { NextRequest } from "next/server";
  */
 export function isSameOrigin(request: NextRequest): boolean {
   const origin = request.headers.get("origin");
-  const host = request.headers.get("host") ?? "";
   if (!origin) {
     // 一部の同一オリジンGET/フォームではOriginが省略されるが、
     // mutating APIはfetchで送るため通常Originが付く。無い場合は許可しない。
@@ -14,7 +13,8 @@ export function isSameOrigin(request: NextRequest): boolean {
   }
   try {
     const o = new URL(origin);
-    return o.host === host;
+    const expected = new URL(request.url);
+    return !o.username && !o.password && o.origin === expected.origin;
   } catch {
     return false;
   }

@@ -8,7 +8,7 @@ import { SearchExplorer } from "@/app/amami-dialect/_components/SearchExplorer";
 import { AMAMI_DIALECT_PATH, dialectSearchIndex } from "@/app/lib/amamiDialect";
 
 type Props = {
-  searchParams: Record<string, string | string[] | undefined>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
 const PAGE_DESC =
@@ -31,7 +31,9 @@ export const metadata: Metadata = {
 
 const DATASET_LABELS = ["ことわざ", "あいさつ", "語彙"];
 
-export default function DialectSearchPage({ searchParams }: Props) {
+export default async function DialectSearchPage({ searchParams: searchParamsPromise }: Props) {
+  const searchParams = await searchParamsPromise;
+
   return (
     <>
       <HeaderInner />

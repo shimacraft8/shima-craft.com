@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-html-link-for-pages -- Full document navigation is required across the homepage Worker and the legacy Next application. */
 import type { Metadata } from "next";
 import { HeaderInner } from "@/app/components/HeaderInner";
 import { Footer } from "@/app/components/Footer";

@@ -15,7 +15,7 @@ export async function signOutAction(): Promise<void> {
       await adminAuth().revokeRefreshTokens(decoded.uid).catch(() => {});
     }
   } finally {
-    clearSessionCookieOnStore();
+    await clearSessionCookieOnStore();
   }
   redirect("/login");
 }

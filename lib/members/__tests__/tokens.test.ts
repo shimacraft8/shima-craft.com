@@ -54,3 +54,9 @@ describe("logDocId（idempotency key）", () => {
     expect(logDocId("exec1", "colorize_succeeded")).not.toBe(logDocId("exec2", "colorize_succeeded"));
   });
 });
+
+ it("公開project IDだけでは秘密ハッシュを作らず、安全に拒否する", () => {
+   vi.stubEnv("INVITATION_TOKEN_SECRET", ""); vi.stubEnv("FIREBASE_PRIVATE_KEY", "");
+   vi.stubEnv("FIREBASE_PROJECT_ID", "public-test-project");
+   expect(() => hashToken("dummy")).toThrow("not configured");
+ });

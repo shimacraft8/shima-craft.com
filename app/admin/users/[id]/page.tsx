@@ -8,7 +8,9 @@ export const dynamic = "force-dynamic";
 
 const UID_RE = /^[A-Za-z0-9_-]{6,128}$/;
 
-export default async function AdminUserDetailPage({ params }: { params: { id: string } }) {
+export default async function AdminUserDetailPage({ params: paramsPromise }: { params: Promise<{ id: string }> }) {
+  const params = await paramsPromise;
+
   if (!UID_RE.test(params.id)) notFound();
 
   const [member, viewer] = await Promise.all([getMember(params.id), getViewer()]);

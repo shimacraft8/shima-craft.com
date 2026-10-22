@@ -14,10 +14,12 @@ const ACTION_LABELS: Record<string, string> = {
 };
 
 export default async function AdminAuditLogsPage({
-  searchParams,
+  searchParams: searchParamsPromise,
 }: {
-  searchParams: { action?: string; cursor?: string };
+  searchParams: Promise<{ action?: string; cursor?: string }>;
 }) {
+  const searchParams = await searchParamsPromise;
+
   const action = searchParams.action || undefined;
   const { items: logs, nextCursor } = await listAuditLogs({ action, cursor: searchParams.cursor ?? null });
 

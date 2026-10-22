@@ -1,8 +1,18 @@
+import { fileURLToPath } from "node:url";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  outputFileTracingRoot: fileURLToPath(new URL(".", import.meta.url)),
+  webpack(config, { dev }) { if (!dev && process.env.CI) config.cache = false; return config; },
   skipTrailingSlashRedirect: true,
+  experimental: { cpus: 1, webpackBuildWorker: false, webpackMemoryOptimizations: true },
+  async headers() { return [{ source: "/:path*", headers: [
+    { key: "X-Content-Type-Options", value: "nosniff" },
+    { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+    { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+  ] }]; },
   images: {
+    dangerouslyAllowSVG: false,
     remotePatterns: [
       {
         protocol: "https",

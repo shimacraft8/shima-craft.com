@@ -52,3 +52,7 @@ serviceAccount*.json
 
 # amami-road-quest: build-time generated, never commit
 public/amami-road-quest/play/config.js
+
+# Local security tooling
+.cache/
+security-artifacts/

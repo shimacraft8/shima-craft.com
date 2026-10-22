@@ -29,7 +29,9 @@ type SearchParams = {
   cursor?: string;
 };
 
-export default async function AdminUsersPage({ searchParams }: { searchParams: SearchParams }) {
+export default async function AdminUsersPage({ searchParams: searchParamsPromise }: { searchParams: Promise<SearchParams> }) {
+  const searchParams = await searchParamsPromise;
+
   const role = ["admin", "user"].includes(searchParams.role ?? "") ? (searchParams.role as UserRole) : undefined;
   const accountStatus = ["active", "suspended", "deleted"].includes(searchParams.account ?? "")
     ? (searchParams.account as AccountStatus)

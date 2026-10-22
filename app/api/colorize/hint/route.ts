@@ -16,6 +16,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import Groq from "groq-sdk";
+import { readJSON, allowRequest, safeError } from "@/lib/http/security";
 import { isSameOrigin } from "@/lib/http/origin";
 import { getViewer } from "@/lib/auth/access";
 import type { ColorHintPayload, ColorRegionHint, HintCategory } from "@/lib/colorization/colorHints";
@@ -164,7 +165,7 @@ function normalizePayload(payload: ColorHintPayload): ColorHintPayload {
   return { scene: payload.scene, regions };
 }
 
-export async function POST(request: NextRequest): Promise<NextResponse> {
+export async function POST(request: NextRequest): Promise<Response> {
   if (!isSameOrigin(request)) {
     return NextResponse.json({ ok: false, reason: "BAD_ORIGIN" }, { status: 403 });
   }
@@ -185,15 +186,16 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ ok: false, reason: "FORBIDDEN" }, { status: 403 });
   }
 
-  let body: { image?: unknown; mimeType?: unknown };
-  try {
-    const raw = await request.text();
-    if (raw.length > 300_000) {
-      return NextResponse.json({ ok: false, reason: "IMAGE_TOO_LARGE" }, { status: 413 });
-    }
-    body = JSON.parse(raw) as { image?: unknown; mimeType?: unknown };
-  } catch {
-    return NextResponse.json({ ok: false, reason: "INVALID_JSON" }, { status: 400 });
+  let body: Record<string, unknown>;
+  try { body = await readJSON(request, 300_000); }
+  catch (error) { return safeError(error); }
+  if (body.consent !== true || body.consentVersion !== "groq-thumbnail-v1") {
+    return NextResponse.json({ ok: false, reason: "CONSENT_REQUIRED" }, { status: 400 });
+  }
+  if (!allowRequest("hint-minute", viewer.member.uid, 3) ||
+      !allowRequest("hint-day", viewer.member.uid, 60, 86_400_000) ||
+      !allowRequest("hint-total", "all", 100, 86_400_000)) {
+    return NextResponse.json({ ok: false, reason: "RATE_LIMIT" }, { status: 429, headers: { "Retry-After": "60", "Cache-Control": "no-store" } });
   }
 
   const imageData = typeof body.image === "string" ? body.image : null;
@@ -201,12 +203,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     ? (body.mimeType as AllowedMimeType)
     : null;
 
-  if (!imageData || !mimeType) {
+  if (!imageData || !mimeType || !/^[A-Za-z0-9+/]+={0,2}$/.test(imageData)) {
     return NextResponse.json({ ok: false, reason: "MISSING_IMAGE" }, { status: 400 });
   }
 
   try {
-    const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+    const groq = new Groq({ apiKey: process.env.GROQ_API_KEY, timeout: 20_000, maxRetries: 0 });
 
     const response = await groq.chat.completions.create({
       model: "meta-llama/llama-4-scout-17b-16e-instruct",
@@ -236,7 +238,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     const jsonMatch = text.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
-      console.warn("[colorize-hint] no JSON in Groq response:", text.slice(0, 200));
+      console.warn("[colorize-hint] RESPONSE_NOT_JSON");
       return NextResponse.json({ ok: false, reason: "PARSE_FAILED" }, { status: 500 });
     }
 
@@ -244,18 +246,18 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     try {
       hints = JSON.parse(jsonMatch[0]);
     } catch {
-      console.warn("[colorize-hint] JSON parse failed:", jsonMatch[0].slice(0, 200));
+      console.warn("[colorize-hint] RESPONSE_PARSE_FAILED");
       return NextResponse.json({ ok: false, reason: "PARSE_FAILED" }, { status: 500 });
     }
 
     if (!isValidPayload(hints)) {
-      console.warn("[colorize-hint] payload validation failed:", JSON.stringify(hints).slice(0, 300));
+      console.warn("[colorize-hint] RESPONSE_INVALID");
       return NextResponse.json({ ok: false, reason: "INVALID_PAYLOAD" }, { status: 500 });
     }
 
     return NextResponse.json({ ok: true, hints: normalizePayload(hints) });
-  } catch (err) {
-    console.error("[colorize-hint] Groq API error:", String(err));
+  } catch {
+    console.error("[colorize-hint] UPSTREAM_FAILED");
     return NextResponse.json({ ok: false, reason: "API_ERROR" }, { status: 500 });
   }
 }

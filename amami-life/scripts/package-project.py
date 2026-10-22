@@ -9,9 +9,10 @@ import re
 import zipfile
 
 root = Path(__file__).resolve().parents[1]
-stamp = datetime.now(ZoneInfo("Asia/Tokyo")).strftime("%Y%m%d")
+archive_prefix = "amami-life"
+stamp = datetime.now(ZoneInfo("Asia/Tokyo")).strftime("%Y%m%d-%H%M%S-%f")
 target = root.parent / f"amami-life-{stamp}.zip"
-skip_dirs = {"node_modules", ".git", ".expo", ".wrangler", "__pycache__", ".cache"}
+skip_dirs = {"node_modules", ".git", ".expo", ".wrangler", "__pycache__", ".cache", "work", "dist"}
 skip_names = {".DS_Store", ".npmrc", "credentials.json", "google-services.json", "GoogleService-Info.plist"}
 skip_suffixes = {".key", ".pem", ".p8", ".p12", ".jks", ".mobileprovision", ".tsbuildinfo"}
 files = []
@@ -43,17 +44,17 @@ for path in files:
 required = {"README.md", "package-lock.json", "design-system/tokens.json", "docs/DEVICE_QA.md", "docs/PUBLICATION_RUNBOOK.md", "research/all-tests.txt", "server/data/O9-2026.txt"}
 if not required.issubset({entry["path"] for entry in entries}):
     raise SystemExit("Required handoff files missing")
-manifest = {"generatedAt": datetime.now(ZoneInfo("Asia/Tokyo")).isoformat(), "project": "AMAMI LIFE source and public web release", "isInstallableApp": False, "excludedSensitiveFiles": excluded, "dependencyRestore": "npm ci", "files": entries}
+manifest = {"generatedAt": datetime.now(ZoneInfo("Asia/Tokyo")).isoformat(), "project": "AMAMI LIFE source and local work; see docs for publication status", "isInstallableApp": False, "excludedSensitiveFiles": excluded, "dependencyRestore": "npm ci", "files": entries}
 manifest_path = root / "PACKAGE_MANIFEST.json"
 manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
-with zipfile.ZipFile(target, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
+with zipfile.ZipFile(target, "x", compression=zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
     for path in files + [manifest_path]:
-        archive.write(path, root.name + "/" + path.relative_to(root).as_posix())
+        archive.write(path, archive_prefix + "/" + path.relative_to(root).as_posix())
 with zipfile.ZipFile(target) as archive:
     if archive.testzip() is not None:
         raise SystemExit("ZIP integrity failed")
     for entry in entries:
-        name = root.name + "/" + entry["path"]
+        name = archive_prefix + "/" + entry["path"]
         if hashlib.sha256(archive.read(name)).hexdigest() != entry["sha256"]:
             raise SystemExit("ZIP content hash mismatch: " + name)
 digest = hashlib.sha256(target.read_bytes()).hexdigest()

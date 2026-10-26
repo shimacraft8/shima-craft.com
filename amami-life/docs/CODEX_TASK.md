@@ -1,3 +1,5 @@
+> 2026-10-26：承認済みのHPセキュリティ改修を本番反映。Version 39656689-fb45-43ed-b8f8-8ac87a34aedc。公開HTTP40項目成功。旧Next候補・管理者解析・Nativeは未公開。最新記録は [SECURITY_WEB_RELEASE_20261026.md](SECURITY_WEB_RELEASE_20261026.md)。以前の未公開記載は記録当日の状態です。
+
 > Web0.4.0公開済み：現在＋発表時点の表示と、全画面の説明整理。docs/CONCISE_UI_WEB_RELEASE.mdの公開結果参照。
 
 > Web0.3.9公開済み：太陽/月の初期地図を島を見渡す縮尺へ。docs/MAP_DEFAULT_WEB_RELEASE.mdの公開結果参照。

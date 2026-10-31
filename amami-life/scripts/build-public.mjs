@@ -10,7 +10,7 @@ await mkdir(resolve(root,"worker"),{recursive:true});
 await writeFile(resolve(root,"worker/tides.json"),JSON.stringify(parseTideText(await readFile(resolve(root,"server/data/O9-2026.txt"),"utf8"))));
 await build({entryPoints:[resolve(root,"packages/core/src/index.ts")],bundle:true,format:"esm",platform:"browser",outfile:resolve(out,"core.js")});
 await build({entryPoints:[resolve(root,"packages/core/src/usage.ts")],bundle:true,format:"esm",platform:"browser",outfile:resolve(out,"usage.js")});
-for(const name of ["app.js","sky-map.js","leaflet.css","style.css","theme-tokens.css","shimacraft.css","apple-refinement.css","shimacraft.js"]) {
+for(const name of ["app.js","sky-map.js","leaflet.css","style.css","theme-tokens.css","shimacraft.css","apple-refinement.css","review-refinement.css","legacy-bridge.js","legacy-bridge.css","shimacraft.js"]) {
   let text=await readFile(resolve(root,"web",name),"utf8");
   if(name.endsWith(".css")) text=text.replaceAll('url("/assets/','url("/amami-life/assets/');
   await writeFile(resolve(out,name),text);
@@ -24,10 +24,14 @@ html=html.replace('<html lang="ja" data-theme-mode="ink-only">','<html lang="ja"
  .replaceAll('https://shima-craft.com/#','/studio#')
  .replaceAll('（公開中のサイト・別タブ）','（制作サービス・別タブ）')
  .replaceAll('ローカル確認用。サービスのリンクは公開中のSHIMA CRAFTへ移動します。','制作サービス・写真・映像のご相談はSHIMA CRAFTへ。')
- .replace(/(href|src)="\/(leaflet\.css|theme-tokens\.css|style\.css|shimacraft\.css|apple-refinement\.css|app\.js|shimacraft\.js)"/g,'$1="/amami-life/$2"');
-html=html.replaceAll('src="/assets/', 'src="/amami-life/assets/');
+ .replace(/(href|src)="\/(leaflet\.css|theme-tokens\.css|style\.css|shimacraft\.css|apple-refinement\.css|review-refinement\.css|app\.js|shimacraft\.js)"/g,'$1="/amami-life/$2"');
+html=html.replaceAll('src="/assets/', 'src="/amami-life/assets/').replaceAll('href="/assets/', 'href="/amami-life/assets/');
 html=html.replace('<main id="content" tabindex="-1"></main>','<main id="content" tabindex="-1"><noscript><h1>奄美の今日・AMAMI LIFE</h1><p>表示にはJavaScriptが必要です。</p><a href="https://www.jma.go.jp/bosai/">気象庁の公式情報</a><p><a href="/studio">SHIMA CRAFTの制作サービス</a></p></noscript></main>');
+html=html.replace("</head>",`<meta property="og:type" content="website"><meta property="og:locale" content="ja_JP"><meta property="og:title" content="AMAMI LIFE｜奄美の今日を、ひと目で。"><meta property="og:description" content="奄美の天気・潮位予測・太陽と月。交通と防災の公式情報へ。運営：SHIMA CRAFT"><meta property="og:url" content="https://shima-craft.com/"><meta property="og:image" content="https://shima-craft.com/amami-life/assets/social-preview.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="AMAMI LIFEの画面イメージ。掲載されている値は撮影時点のものです。"><meta name="twitter:card" content="summary_large_image"></head>`);
 await writeFile(resolve(out,"index.html"),html);
+await copyFile(resolve(root,"packages/web/legacy-links.mjs"),resolve(out,"legacy-links.js"));
+await copyFile(resolve(root,"web/assets/favicon.svg"),resolve(out,"assets/favicon.svg"));
+await copyFile(resolve(root,"web/assets/social-preview.jpg"),resolve(out,"assets/social-preview.jpg"));
 await copyFile(resolve(root,"web/assets/paper.svg"),resolve(out,"assets/paper.svg"));
 for (const name of ["shimacraft-logo.png", "shimacraft-logo-white.png", "shimacraft-logo-white-red.svg"]) await copyFile(resolve(root,"web/assets",name),resolve(out,"assets",name));
 await copyFile(resolve(root,"web/public-privacy.html"),resolve(out,"privacy.html"));

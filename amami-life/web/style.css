@@ -16,7 +16,7 @@ body {
   background: #e8ded9;
   color: var(--ink);
   font-family: var(--body);
-  font-size: 16px;
+  font-size: 1rem;
   -webkit-font-smoothing: antialiased;
 }
 button,
@@ -89,14 +89,14 @@ button:disabled {
   max-width: 540px;
 }
 .overline {
-  font-size: 11px;
+  font-size: 0.6875rem;
   letter-spacing: 0.23em;
   font-weight: 600;
   color: #625f58;
 }
 .studio h1 {
   font-family: var(--serif);
-  font-size: clamp(36px, 3.65vw, 58px);
+  font-size: clamp(2.25rem, 3.65vw, 3.625rem);
   font-weight: 400;
   line-height: 1.7;
   letter-spacing: 0.04em;
@@ -108,13 +108,13 @@ button:disabled {
 .studio-en {
   font-family: var(--display);
   font-weight: 300;
-  font-size: 42px;
+  font-size: 2.625rem;
   letter-spacing: -0.045em;
   line-height: 1.1;
   margin: 0 0 32px;
 }
 .studio-copy {
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 2.1;
   color: #656159;
 }
@@ -132,17 +132,17 @@ button:disabled {
   border: 0;
   text-decoration: none;
   text-align: left;
-  font-size: 11px;
+  font-size: 0.6875rem;
   min-height: 84px;
 }
 .directions span {
   display: block;
-  font-size: 14px;
+  font-size: 0.875rem;
   margin: 8px 0;
   font-weight: 600;
 }
 .directions small {
-  font-size: 10px;
+  font-size: 0.625rem;
   color: #686158;
   line-height: 1.5;
 }
@@ -152,7 +152,7 @@ button:disabled {
 .studio-bottom {
   display: flex;
   justify-content: space-between;
-  font-size: 10px;
+  font-size: 0.625rem;
   letter-spacing: 0.13em;
   line-height: 1.7;
   color: #71695f;
@@ -194,19 +194,19 @@ button:disabled {
 }
 .wordmark {
   text-decoration: none;
-  font-size: 13px;
+  font-size: 0.8125rem;
   letter-spacing: 0.22em;
   font-weight: 600;
   line-height: 1.4;
 }
 .wordmark span {
   display: block;
-  font-size: 9px;
+  font-size: 0.5625rem;
   letter-spacing: 0.59em;
   margin-top: 3px;
 }
 .location {
-  font-size: 13px;
+  font-size: 0.8125rem;
   border: 0;
   background: transparent;
   min-height: 48px;
@@ -217,7 +217,7 @@ button:disabled {
 }
 .demo-strip {
   text-align: center;
-  font-size: 11px;
+  font-size: 0.6875rem;
   line-height: 1.6;
   letter-spacing: 0.02em;
   color: var(--muted);
@@ -242,7 +242,7 @@ main::-webkit-scrollbar {
   gap: 12px;
 }
 .eyebrow {
-  font-size: 10px;
+  font-size: 0.625rem;
   letter-spacing: 0.2em;
   color: var(--muted);
   line-height: 1.7;
@@ -251,13 +251,13 @@ main::-webkit-scrollbar {
 .page-top h2 {
   font-family: var(--serif);
   font-weight: 400;
-  font-size: 30px;
+  font-size: 1.875rem;
   line-height: 1.45;
   margin: 6px 0 0;
 }
 .page-index {
   font-family: var(--display);
-  font-size: 28px;
+  font-size: 1.75rem;
   font-weight: 300;
   color: var(--muted);
 }
@@ -273,7 +273,7 @@ main::-webkit-scrollbar {
 }
 .quick-links small {
   display: block;
-  font-size: 9px;
+  font-size: 0.5625rem;
   color: var(--muted);
   margin-bottom: 4px;
 }
@@ -282,17 +282,17 @@ main::-webkit-scrollbar {
   min-height: 48px;
   background: none;
   border: 0;
-  font-size: 22px;
+  font-size: 1.375rem;
 }
 .date-label {
   text-align: center;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-variant-numeric: tabular-nums;
   line-height: 1.7;
 }
 .date-label span {
   display: block;
-  font-size: 9px;
+  font-size: 0.5625rem;
   letter-spacing: 0.22em;
   color: var(--muted);
 }
@@ -305,7 +305,7 @@ main::-webkit-scrollbar {
 .temperature {
   font-family: var(--display);
   font-weight: 200;
-  font-size: 90px;
+  font-size: 5.625rem;
   letter-spacing: -0.085em;
   line-height: 1;
   display: flex;
@@ -313,32 +313,32 @@ main::-webkit-scrollbar {
   font-variant-numeric: tabular-nums;
 }
 .temperature .degree {
-  font-size: 38px;
+  font-size: 2.375rem;
   font-weight: 300;
   margin: 5px 0 0 5px;
   letter-spacing: -0.04em;
 }
 .temperature .unit {
   font-family: var(--body);
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 500;
   align-self: flex-end;
   margin: 0 0 12px 4px;
   letter-spacing: 0;
 }
 .weather-caption {
-  font-size: 12px;
+  font-size: 0.75rem;
   line-height: 1.9;
   padding-top: 8px;
   text-align: right;
 }
 .weather-caption .weather-name {
   font-family: var(--serif);
-  font-size: 18px;
+  font-size: 1.125rem;
 }
 .weather-caption small {
   display: block;
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--muted);
 }
 .weather-art {
@@ -359,7 +359,7 @@ main::-webkit-scrollbar {
   right: 0;
   top: 35px;
   writing-mode: vertical-rl;
-  font-size: 9px;
+  font-size: 0.5625rem;
   letter-spacing: 0.5em;
 }
 .place-caption {
@@ -368,13 +368,13 @@ main::-webkit-scrollbar {
 }
 .place-caption strong {
   display: block;
-  font-size: 11px;
+  font-size: 0.6875rem;
   letter-spacing: 0.35em;
   font-weight: 500;
 }
 .place-caption small {
   display: block;
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--muted);
   margin-top: 8px;
 }
@@ -393,26 +393,26 @@ main::-webkit-scrollbar {
   border-left: 1px solid var(--hair);
 }
 .fact-label {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--muted);
   line-height: 1.6;
 }
 .fact-value {
   font-family: var(--display);
   font-weight: 300;
-  font-size: 32px;
+  font-size: 2rem;
   letter-spacing: -0.04em;
   line-height: 1.4;
   font-variant-numeric: tabular-nums;
 }
 .fact-value small {
-  font-size: 12px;
+  font-size: 0.75rem;
   font-family: var(--body);
   margin-left: 6px;
   letter-spacing: 0;
 }
 .fact-note {
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--muted);
   line-height: 1.7;
 }
@@ -424,12 +424,12 @@ main::-webkit-scrollbar {
   margin: 28px 0 12px;
 }
 .section-head h3 {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 500;
   margin: 0;
 }
 .section-head span {
-  font-size: 10px;
+  font-size: 0.625rem;
   letter-spacing: 0.12em;
   color: var(--muted);
 }
@@ -439,13 +439,13 @@ main::-webkit-scrollbar {
   gap: 16px;
 }
 .tide-events p {
-  font-size: 12px;
+  font-size: 0.75rem;
   line-height: 1.8;
   margin: 7px 0;
   font-variant-numeric: tabular-nums;
 }
 .source-note {
-  font-size: 11px;
+  font-size: 0.6875rem;
   line-height: 1.9;
   color: var(--muted);
   margin: 10px 0 0;
@@ -461,7 +461,7 @@ main::-webkit-scrollbar {
   justify-content: space-between;
   text-decoration: none;
   min-height: 52px;
-  font-size: 13px;
+  font-size: 0.8125rem;
   border-bottom: 1px solid var(--hair);
   gap: 12px;
 }
@@ -478,7 +478,7 @@ main::-webkit-scrollbar {
 }
 .row .num {
   font-family: var(--display);
-  font-size: 17px;
+  font-size: 1.0625rem;
   color: var(--muted);
   font-weight: 300;
 }
@@ -488,12 +488,12 @@ main::-webkit-scrollbar {
 }
 .row-main strong {
   display: block;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 500;
   line-height: 1.6;
 }
 .row-main small {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--muted);
   display: block;
   line-height: 1.7;
@@ -512,7 +512,7 @@ main::-webkit-scrollbar {
   border: 1px solid var(--hair);
   width: 48px;
   height: 48px;
-  font-size: 18px;
+  font-size: 1.125rem;
   flex-shrink: 0;
 }
 .row .save[aria-pressed="true"] {
@@ -526,13 +526,13 @@ main::-webkit-scrollbar {
   margin: 20px 0;
 }
 .notice strong {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
   line-height: 1.7;
   display: block;
 }
 .notice p {
-  font-size: 13px;
+  font-size: 0.8125rem;
   line-height: 1.85;
   margin: 7px 0 0;
 }
@@ -540,12 +540,12 @@ main::-webkit-scrollbar {
   margin-bottom: 6px;
 }
 .body-copy {
-  font-size: 15px;
+  font-size: 0.9375rem;
   line-height: 1.9;
   color: var(--muted);
 }
 .body-copy.compact {
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 .state-panel {
   padding: 34px 0 28px;
@@ -553,19 +553,19 @@ main::-webkit-scrollbar {
 }
 .state-mark {
   font-family: var(--display);
-  font-size: 54px;
+  font-size: 3.375rem;
   font-weight: 200;
   color: var(--muted);
   margin-bottom: 18px;
 }
 .state-panel h3 {
-  font-size: 18px;
+  font-size: 1.125rem;
   line-height: 1.6;
   font-weight: 500;
   margin: 0;
 }
 .state-panel p {
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 1.9;
   color: var(--muted);
 }
@@ -575,12 +575,12 @@ main::-webkit-scrollbar {
   border: 0;
   min-height: 48px;
   padding: 12px 20px;
-  font-size: 14px;
+  font-size: 0.875rem;
   margin-top: 12px;
 }
 .search-label {
   display: block;
-  font-size: 12px;
+  font-size: 0.75rem;
   margin: 18px 0 8px;
 }
 .search-input {
@@ -604,7 +604,7 @@ main::-webkit-scrollbar {
   background: none;
   padding: 10px 14px;
   min-height: 48px;
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 .filters button[aria-pressed="true"] {
   color: var(--paper);
@@ -623,12 +623,12 @@ main::-webkit-scrollbar {
 .empty-title {
   text-align: center;
   font-family: var(--serif);
-  font-size: 22px;
+  font-size: 1.375rem;
   font-weight: 400;
 }
 .empty-copy {
   text-align: center;
-  font-size: 13px;
+  font-size: 0.8125rem;
   line-height: 2;
   color: var(--muted);
 }
@@ -644,12 +644,12 @@ main::-webkit-scrollbar {
 }
 .transport-header .big {
   font-family: var(--display);
-  font-size: 64px;
+  font-size: 4rem;
   font-weight: 200;
   letter-spacing: -0.06em;
 }
 .transport-header small {
-  font-size: 11px;
+  font-size: 0.6875rem;
   letter-spacing: 0.12em;
   color: var(--muted);
 }
@@ -674,15 +674,15 @@ main::-webkit-scrollbar {
 }
 .emergency span {
   display: block;
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 .emergency strong {
   font-family: var(--display);
   font-weight: 300;
-  font-size: 38px;
+  font-size: 2.375rem;
 }
 .provenance {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--muted);
   line-height: 1.9;
   margin: 20px 0;
@@ -712,7 +712,7 @@ main::-webkit-scrollbar {
   flex-wrap: wrap;
 }
 .control-row label {
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 .control-row select {
   max-width: 100%;
@@ -720,7 +720,7 @@ main::-webkit-scrollbar {
   border: 1px solid var(--hair);
   min-height: 48px;
   padding: 8px 10px;
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 .control-row input {
   width: 24px;
@@ -728,7 +728,7 @@ main::-webkit-scrollbar {
   accent-color: var(--accent);
 }
 .control-row small {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--muted);
   line-height: 1.8;
 }
@@ -740,26 +740,26 @@ main::-webkit-scrollbar {
   line-height: 1.7;
   min-height: 110px;
   resize: vertical;
-  font-size: 16px;
+  font-size: 1rem;
 }
 .text-button {
   border: 0;
   background: none;
   border-bottom: 1px solid var(--ink);
   min-height: 48px;
-  font-size: 14px;
+  font-size: 0.875rem;
   padding: 10px 0;
 }
 .brand-footer {
   margin: 44px 0 10px;
   font-family: var(--serif);
-  font-size: 30px;
+  font-size: 1.875rem;
   letter-spacing: 0.05em;
 }
 .brand-footer small {
   display: block;
   font-family: var(--body);
-  font-size: 9px;
+  font-size: 0.5625rem;
   letter-spacing: 0.19em;
   margin-top: 14px;
   color: var(--muted);
@@ -785,7 +785,7 @@ main::-webkit-scrollbar {
   align-items: center;
   justify-content: center;
   gap: 7px;
-  font-size: 11px;
+  font-size: 0.6875rem;
   line-height: 1.4;
 }
 .tabbar svg {
@@ -825,7 +825,7 @@ dialog::backdrop {
   gap: 16px;
 }
 .dialog-head h2 {
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 500;
 }
 .dialog-head button {
@@ -833,10 +833,10 @@ dialog::backdrop {
   border: 0;
   min-height: 48px;
   min-width: 48px;
-  font-size: 24px;
+  font-size: 1.5rem;
 }
 dialog p {
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 1.9;
 }
 #area-options button {
@@ -848,10 +848,10 @@ dialog p {
   width: 100%;
   text-align: left;
   min-height: 60px;
-  font-size: 16px;
+  font-size: 1rem;
 }
 #area-options small {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--muted);
   margin-left: 12px;
 }
@@ -863,7 +863,7 @@ dialog p {
   text-align: center;
   text-decoration: none;
   min-height: 52px;
-  font-size: 15px;
+  font-size: 0.9375rem;
 }
 #toast {
   position: fixed;
@@ -872,7 +872,7 @@ dialog p {
   transform: translateX(-50%);
   background: var(--ink);
   color: var(--paper);
-  font-size: 13px;
+  font-size: 0.8125rem;
   line-height: 1.8;
   max-width: calc(100vw - 48px);
   padding: 12px 20px;
@@ -951,10 +951,10 @@ body[data-text="large"] .date-row {
     padding: 40px 32px;
   }
   .studio h1 {
-    font-size: 38px;
+    font-size: 2.375rem;
   }
   .studio-en {
-    font-size: 36px;
+    font-size: 2.25rem;
   }
 }
 @media (max-width: 760px) {
@@ -994,7 +994,7 @@ body[data-text="large"] .date-row {
     height: 210px;
   }
   .temperature {
-    font-size: 92px;
+    font-size: 5.75rem;
   }
 }
 @media (max-width: 380px) {
@@ -1016,7 +1016,7 @@ body[data-text="large"] .date-row {
     margin-bottom: 20px;
   }
   .temperature {
-    font-size: 86px;
+    font-size: 5.375rem;
   }
   .page-top {
     margin-top: 24px;
@@ -1073,7 +1073,7 @@ dialog {
   color: var(--ink);
 }
 body[data-text="large"] main {
-  font-size: 32px;
+  font-size: 2rem;
 }
 body[data-text="large"]
   main
@@ -1135,22 +1135,22 @@ main:focus-visible {
 }
 
 .body-copy {
-  font-size: 17px;
+  font-size: 1.0625rem;
 }
 .body-copy.compact {
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 .notice p {
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 .source-note {
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .provenance {
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 body[data-text="large"]
   main
   :is(.body-copy.compact, .source-note, .notice p, .provenance) {
-  font-size: 32px;
+  font-size: 2rem;
 }

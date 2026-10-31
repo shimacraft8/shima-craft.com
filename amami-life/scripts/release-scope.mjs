@@ -3,7 +3,7 @@ import { resolve, relative } from 'node:path';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { build } from 'esbuild';
-const expectedFiles = new Set(['index.html','privacy.html','core.js','usage.js','app.js','sky-map.js','leaflet.css','style.css','theme-tokens.css','shimacraft.css','apple-refinement.css','shimacraft.js','assets/paper.svg','assets/shimacraft-logo.png','assets/shimacraft-logo-white.png','assets/shimacraft-logo-white-red.svg','assets/suncalc-LICENSE.txt','assets/leaflet-LICENSE.txt',...['layers.png','layers-2x.png','marker-icon.png','marker-icon-2x.png','marker-shadow.png'].map(n=>'assets/leaflet/'+n)]);
+const expectedFiles = new Set(['index.html','privacy.html','core.js','usage.js','app.js','sky-map.js','leaflet.css','style.css','theme-tokens.css','shimacraft.css','apple-refinement.css','shimacraft.js','review-refinement.css','legacy-bridge.js','legacy-bridge.css','legacy-links.js','assets/favicon.svg','assets/social-preview.jpg','assets/paper.svg','assets/shimacraft-logo.png','assets/shimacraft-logo-white.png','assets/shimacraft-logo-white-red.svg','assets/suncalc-LICENSE.txt','assets/leaflet-LICENSE.txt',...['layers.png','layers-2x.png','marker-icon.png','marker-icon-2x.png','marker-shadow.png'].map(n=>'assets/leaflet/'+n)]);
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 export async function inspectAssets(directory) {
  const entries=[];

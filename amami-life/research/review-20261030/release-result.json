@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-31",
+  "site": "https://shima-craft.com/",
+  "version": "0.5.0",
+  "github": {
+    "account": "shimacraft8",
+    "repository": "shimacraft8/shima-craft.com",
+    "branch": "codex/review-improvements-20261031",
+    "pushVerification": "See local git-publication.json after remote ref verification"
+  },
+  "cloudflare": {
+    "email": "shimacraft8@gmail.com",
+    "accountId": "42f69e35f08bb21dca5194467e2f59de",
+    "zoneId": "cdfc2875eb9e0bf217159ec8be376373",
+    "worker": "shima-craft-amami-life",
+    "versionId": "213555b8-dc36-48fd-ae0b-2e62400fcccd",
+    "rollbackVersion": "39656689-fb45-43ed-b8f8-8ac87a34aedc",
+    "originVersionUnchanged": "117ff8f0-149d-4cfb-ae86-8a11aaf20c25",
+    "bindingsAndRouteSemanticsUnchanged": true
+  },
+  "tests": {
+    "public": 117,
+    "development": 146,
+    "domChecks": 9,
+    "publicHTTP": 45,
+    "publicHTTPPassed": true,
+    "lint": "passed",
+    "types": "passed",
+    "build": "passed",
+    "browserPhysicalDevices": false,
+    "actualMailDelivery": false,
+    "baselineHydrationInterference": "fixed; no new React errors on final studio reload"
+  },
+  "artifact": {
+    "archive": "/Users/hiroshikento/Documents/Codex/2026-10-13/start-here-md-docs-codex-task/outputs/security-remediation/homepage-release-20261031-123405-039287.zip",
+    "sha256": "cd57040e066df924a3ad59b0e34a55178cc6b4d6685536ea4e2d761f1318affa",
+    "files": 32,
+    "CRC": "passed",
+    "allFileHashes": "passed",
+    "published": false
+  },
+  "notCompleted": [
+    "Direct contact-mail API; Gmail draft/copy is implemented",
+    "Verified public owner biography and approved customer case studies",
+    "Physical iOS/Android and screen-reader tests"
+  ],
+  "notPublished": [
+    "analytics",
+    "native",
+    "full legacy Next candidate"
+  ]
+}

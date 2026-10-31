@@ -1,0 +1,39 @@
+/* Small compatibility layer; keep the existing business site's visual identity. */
+.shima-review-menu { display:none; }
+.shima-review-dialog { width:min(92vw,520px); max-height:85dvh; padding:24px; border:1px solid #d4d4ce; border-radius:16px; color:#202620; background:#fafaf7; overscroll-behavior:contain; }
+.shima-review-dialog::backdrop { background:rgb(0 0 0 / .6); }
+.shima-review-dialog form { display:flex; justify-content:space-between; align-items:center; gap:16px; }
+.shima-review-dialog h2 { font-size:1.3rem; font-weight:700; }
+.shima-review-dialog :is(button,a) { min-height:48px; }
+.shima-review-dialog button { padding:8px 16px; }
+.shima-review-dialog nav { display:grid; margin-top:16px; }
+.shima-review-dialog nav a { display:flex; align-items:center; justify-content:space-between; padding:14px 0; border-top:1px solid #d4d4ce; font-size:1rem; }
+.shima-review-panel { max-width:760px; margin:32px auto; padding:24px; border:1px solid #cfcfc5; border-radius:12px; background:#f8f8f3; color:#252b25; text-align:left; }
+.shima-review-panel h3 { font-size:1.35rem; font-weight:700; line-height:1.5; text-wrap:balance; }
+.shima-review-panel p { font-size:.9rem; line-height:1.8; margin:12px 0; }
+.shima-review-panel a { display:inline-flex; align-items:center; min-height:48px; text-decoration:underline; text-underline-offset:5px; }
+.shima-review-kicker { font-weight:700; }
+.shima-review-panel form { display:grid; gap:16px; margin:24px 0; }
+.shima-review-panel label { display:grid; gap:8px; font-size:.9rem; font-weight:600; }
+.shima-review-panel :is(input,textarea) { width:100%; min-height:48px; border:1px solid #a3aaa3; border-radius:6px; padding:12px; color:#202620; background:white; font-size:1rem; }
+.shima-review-panel button { min-height:48px; padding:10px 16px; background:#263d32; color:white; border-radius:8px; font-size:.9375rem; }
+.shima-review-panel :is(input,textarea,a,button):focus-visible,.shima-review-menu:focus-visible,.shima-review-dialog :is(button,a):focus-visible { outline:3px solid #a66b14; outline-offset:4px; }
+.shima-life-link { display:inline-flex; align-items:center; min-height:44px; margin:8px 16px; font-size:.8125rem; text-decoration:underline; text-underline-offset:4px; }
+.shima-review-note { font-size:.875rem; line-height:1.8; padding:12px 0; color:#33554b; }
+[id] { scroll-margin-top:100px; }
+@media(max-width:767px){
+ .shima-review-menu { display:block; position:fixed; top:12px; right:16px; z-index:110; min-height:48px; padding:10px 16px; border:1px solid #aab6ab; border-radius:999px; background:#fafaf7; color:#202620; font-size:.9375rem; font-weight:650; }
+ .shima-life-link { display:none; }
+ .shima-review-panel { padding:20px; margin:24px 0; }
+}
+[data-time-ended] { color:#56645e;font-weight:650;padding:6px 10px;border:1px solid #aebfb7;border-radius:6px;background:#f1f5f2; }
+
+body[data-shima-business] :is(.container,.cards,.card,.service-grid) { min-width:0;box-sizing:border-box; }
+body[data-shima-business] .intro-logo { max-width:100%;height:auto; }
+body[data-shima-business] header { box-sizing:border-box; }
+@media(max-width:767px){body[data-shima-business] .shima-review-panel { width:100%;box-sizing:border-box; }body[data-shima-business] .shima-review-panel :is(input,textarea){box-sizing:border-box;}}
+
+.shima-life-footer { display:inline-flex;align-items:center;min-height:48px;padding:12px 20px;text-decoration:underline;text-underline-offset:4px; }
+
+#shima-tide-brand { max-width:1120px;margin:20px auto;padding:12px 24px;font-size:.875rem;color:#33554b; }
+#shima-tide-brand a { display:inline-flex;align-items:center;min-height:44px;text-decoration:underline; }

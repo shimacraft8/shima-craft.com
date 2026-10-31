@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="/leaflet.css" />
     <link rel="stylesheet" href="/shimacraft.css" />
     <link rel="stylesheet" href="/apple-refinement.css" />
+    <link rel="stylesheet" href="/review-refinement.css" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     <script type="module" src="/app.js"></script>
     <script type="module" src="/shimacraft.js"></script>
   </head>
@@ -27,10 +29,11 @@
     <a class="skip" href="#content">本文へ進む</a>
     <header class="craft-header">
       <a class="craft-wordmark" href="#today" aria-label="SHIMA CRAFT 島の今日へ"><img class="craft-logo" src="/assets/shimacraft-logo-white-red.svg" width="480" height="206" alt="SHIMA CRAFT" /></a>
+      <a class="brand-studio-link" href="/studio">制作：SHIMA CRAFT <span aria-hidden="true">→</span></a>
     </header>
     <div class="showroom">
       <div class="island-intro">
-        <div><p class="overline">AMAMI LIFE</p><p class="island-intro-title">島の今日を、ひと目で<span class="red-dot">。</span></p><p class="island-intro-copy">旅する人にも、ここで暮らす人にも。</p></div>
+        <div><p class="overline">AMAMI LIFE</p><p class="island-intro-title">島の今日を、ひと目で<span class="red-dot">。</span></p><p class="island-intro-copy">旅する人にも、島で暮らす人にも。天気・潮・交通と防災の公式情報。</p><p class="brand-context">運営：<a href="/studio">SHIMA CRAFT</a> · 奄美のWeb・写真・映像制作</p></div>
       </div>
       <div class="device">
         <div class="app-shell">
@@ -46,11 +49,11 @@
             </button>
           </header>
           <nav id="tabs" class="tabbar" aria-label="主要画面"></nav>
-          <main id="content" tabindex="-1"></main>
+          <main id="content" tabindex="-1"><section class="initial-summary"><h1>奄美の今日を、ひと目で。</h1><p>気象庁の天気・観測気温、名瀬小湊の潮位予測、太陽と月の出入り。<br>交通・防災は公式情報への案内です。</p><p role="status">今日の情報を読み込み中…</p><noscript><p>数値と地図の表示にはJavaScriptが必要です。</p><a href="https://www.jma.go.jp/bosai/">気象庁の公式情報</a></noscript></section></main>
         </div>
       </div>
     </div>
-    <footer class="craft-page-footer"><p>島の魅力を、伝わるかたちに。<small>SHIMA CRAFT · AMAMI ŌSHIMA</small></p><nav aria-label="SHIMA CRAFTの制作案内"><a href="https://shima-craft.com/#service">ホームページ制作・写真・映像 <span aria-hidden="true">↗</span></a><a href="https://shima-craft.com/#contact">SHIMA CRAFTに相談する <span aria-hidden="true">↗</span></a></nav></footer>
+    <footer class="craft-page-footer"><p>島の魅力を、伝わるかたちに。<small>SHIMA CRAFT · AMAMI ŌSHIMA</small></p><nav aria-label="SHIMA CRAFTの制作案内"><a href="https://shima-craft.com/#service">ホームページ制作・写真・映像 <span aria-hidden="true">→</span></a><a href="https://shima-craft.com/#contact">SHIMA CRAFTに相談する <span aria-hidden="true">→</span></a><a href="/amami-life/privacy.html">利用案内・プライバシー</a></nav></footer>
     <svg class="sky-map-filter" width="0" height="0" aria-hidden="true" focusable="false"><defs><filter id="island-map-tone" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="2 0 -1.6 0 .15 1.8 0 -1.5 0 .22 1.4 0 -1.2 0 .23 0 0 0 1 0"/></filter></defs></svg>
     <dialog id="cyclone-track-dialog" aria-labelledby="cyclone-track-title"></dialog>
     <dialog id="sky-map-dialog" aria-labelledby="sky-large-title"></dialog>

@@ -1,3 +1,4 @@
+import { reviewOriginResponse } from './legacy-review.mjs';
 import { createPublicLimiter } from "./rate-limit.mjs";
 import { createCycloneTrackProvider } from "../server/cyclone-tracks.mjs";
 import { createCycloneProvider } from "../server/cyclones.mjs";
@@ -23,7 +24,7 @@ export function createHomeWorker({ cyclones = createCycloneProvider(), weather =
     async fetch(request, env) {
       const url = new URL(request.url);
       const own = url.pathname === "/" || url.pathname === "/studio" || url.pathname === "/studio/" || url.pathname.startsWith("/amami-life/") || url.pathname.startsWith("/amami-life-api/");
-      if (!own) return env.SHIMA_ORIGIN.fetch(request);
+      if (!own) return reviewOriginResponse(await env.SHIMA_ORIGIN.fetch(request),request);
       if (!["GET", "HEAD"].includes(request.method)) return new Response("Method not allowed", {status:405,headers:{...security,Allow:"GET, HEAD"}});
       if (url.protocol === "http:" && ["shima-craft.com", "www.shima-craft.com"].includes(url.hostname)) {
         url.protocol="https:";
@@ -46,7 +47,7 @@ export function createHomeWorker({ cyclones = createCycloneProvider(), weather =
         const resultHeaders = new Headers(response.headers);
         for (const name of ["content-length","content-encoding","etag"]) resultHeaders.delete(name);
         resultHeaders.set("Cache-Control","no-store");
-        return new Response(request.method==="HEAD" ? null : html,{status:response.status,headers:resultHeaders});
+        return reviewOriginResponse(new Response(request.method==="HEAD" ? null : html,{status:response.status,headers:resultHeaders}),request);
       }
       if (url.pathname.startsWith("/amami-life-api/")) {
         const limited = await limitPublic(request, env);

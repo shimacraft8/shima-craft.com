@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "checks": 9,
+  "tests": [
+    {
+      "name": "summary preserves official weather whitespace and next-day tide",
+      "passed": true
+    },
+    {
+      "name": "failed refresh retains previous temperature, forecast and tide",
+      "passed": true
+    },
+    {
+      "name": "unavailable payload cannot erase a previously successful observation",
+      "passed": true
+    },
+    {
+      "name": "large text uses one persisted root scale",
+      "passed": true
+    },
+    {
+      "name": "zero results includes usable official tourism links",
+      "passed": true
+    },
+    {
+      "name": "unsupported tide location never leaks Naze values and has a recovery action",
+      "passed": true
+    },
+    {
+      "name": "legacy tide page uses the same future event and next-day label",
+      "passed": true
+    },
+    {
+      "name": "studio enhancement waits for the legacy intro to finish before changing React content",
+      "passed": true
+    },
+    {
+      "name": "studio has a real menu, direct anchor landing and honest mail-app-free draft",
+      "passed": true
+    }
+  ],
+  "scope": "JSDOM with mock network and fixed JST clock; no actual mail, credentials or device test"
+}

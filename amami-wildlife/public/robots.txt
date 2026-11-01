@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /wildlife/
+Sitemap: https://shima-craft.com/wildlife/sitemap.xml

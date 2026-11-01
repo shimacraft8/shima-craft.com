@@ -1,0 +1,5 @@
+{
+  "method": "built-in image_gen",
+  "prompt": "Use case: precise-object-edit. This is the edit target: the cute charcoal black Camponotus amamianus ant character. Remove ONLY the artificial U-shaped smiling mouth mark between and below the two eyes. Fill that mark with the same charcoal gouache head texture seamlessly. Preserve everything else exactly: eyes, small brown mandibles (these are anatomical, retain them), all six legs, two antennae, body structure, colors, highlights, imperfect thick charcoal outlines and handmade crayon/gouache grain, original composition and full-body margins. Do not add a nose, smile, lips, mouth line or any new mark. Real transparent alpha background, no colored backdrop, no glow/shadow outside animal silhouette. Preserve transparency.",
+  "output": "assets/animals/cute-camponotus-amamianus-v2.png"
+}

@@ -1,0 +1,47 @@
+[
+  {
+    "file": "cute-amami-ishikawa-frog-v1.png",
+    "width": 1349,
+    "height": 1166,
+    "alpha": true,
+    "alphaMin": 0,
+    "alphaMax": 255,
+    "webBytes": 95222
+  },
+  {
+    "file": "cute-amami-rabbit-v1.png",
+    "width": 1349,
+    "height": 1166,
+    "alpha": true,
+    "alphaMin": 0,
+    "alphaMax": 255,
+    "webBytes": 50096
+  },
+  {
+    "file": "cute-camponotus-amamianus-v1.png",
+    "width": 1536,
+    "height": 1024,
+    "alpha": true,
+    "alphaMin": 0,
+    "alphaMax": 254,
+    "webBytes": 42482
+  },
+  {
+    "file": "cute-green-turtle-v1.png",
+    "width": 1536,
+    "height": 1024,
+    "alpha": true,
+    "alphaMin": 0,
+    "alphaMax": 254,
+    "webBytes": 58686
+  },
+  {
+    "file": "cute-lidths-jay-v1.png",
+    "width": 1349,
+    "height": 1166,
+    "alpha": true,
+    "alphaMin": 0,
+    "alphaMax": 255,
+    "webBytes": 57624
+  }
+]

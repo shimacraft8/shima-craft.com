@@ -1,0 +1,843 @@
+[
+  {
+    "id": "amami-rabbit",
+    "name": "アマミノクロウサギ",
+    "scientific": "Pentalagus furnessi",
+    "rank": "species",
+    "group": "哺乳類",
+    "habitat": "森",
+    "islands": [
+      "奄美大島",
+      "徳之島"
+    ],
+    "lead": "短い耳が特徴の夜行性のウサギ",
+    "fact": "短い耳と丈夫な爪が目印。巣穴を使って暮らします。",
+    "season": "出現期は整理中",
+    "sources": [
+      "awcc"
+    ],
+    "asset": "cute-amami-rabbit-v1",
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "generated-photo-referenced"
+  },
+  {
+    "id": "lidths-jay",
+    "name": "ルリカケス",
+    "scientific": "Garrulus lidthi",
+    "rank": "species",
+    "group": "鳥類",
+    "habitat": "森",
+    "islands": [
+      "奄美大島",
+      "加計呂麻島",
+      "請島"
+    ],
+    "lead": "青と赤茶の羽をもつ奄美の鳥",
+    "fact": "青と赤茶の羽、淡いくちばしが目印。森の木々の間を移動します。",
+    "season": "出現期は整理中",
+    "sources": [
+      "awcc"
+    ],
+    "asset": "cute-lidths-jay-v1",
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "generated-photo-referenced"
+  },
+  {
+    "id": "amami-ishikawa-frog",
+    "name": "アマミイシカワガエル",
+    "scientific": "Odorrana splendida",
+    "rank": "species",
+    "group": "両生類",
+    "habitat": "川・水辺",
+    "islands": [
+      "奄美大島"
+    ],
+    "lead": "緑の体に金色の斑点があるカエル",
+    "fact": "緑の体に金色の斑点。沖縄島の近縁種とは2011年に区別されました。",
+    "season": "出現期は整理中",
+    "sources": [
+      "awcc"
+    ],
+    "asset": "cute-amami-ishikawa-frog-v1",
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "generated-photo-referenced"
+  },
+  {
+    "id": "green-turtle",
+    "name": "アオウミガメ",
+    "scientific": "Chelonia mydas",
+    "rank": "species",
+    "group": "爬虫類",
+    "habitat": "海・海岸",
+    "islands": [],
+    "lead": "海を泳ぐ大きなウミガメ",
+    "fact": "アカウミガメとは頭や甲羅の形が異なります。海で見かけても進路をふさがず、距離をとって観察しましょう。",
+    "season": "出現期は整理中",
+    "sources": [
+      "turtles"
+    ],
+    "asset": "cute-green-turtle-v1",
+    "status": "editorial",
+    "taxonomyNote": "群島の沿岸域。島別の記録は照合中。",
+    "checked": "2026-11-01",
+    "illustrationStatus": "generated-photo-referenced"
+  },
+  {
+    "id": "camponotus-amamianus",
+    "name": "ツヤミカドオオアリ",
+    "scientific": "Camponotus amamianus",
+    "rank": "species",
+    "group": "昆虫",
+    "habitat": "森",
+    "islands": [
+      "奄美大島"
+    ],
+    "lead": "黒くつやのあるオオアリの仲間",
+    "fact": "黒く光る体が印象的なオオアリの仲間。このイラストは働きアリです。",
+    "season": "出現期は整理中",
+    "sources": [
+      "ants"
+    ],
+    "asset": "cute-camponotus-amamianus-v2",
+    "status": "editorial",
+    "taxonomyNote": "「日本最大」の比較は働きアリ・女王等の条件を要するため、ここでは断定していません。",
+    "checked": "2026-11-01",
+    "illustrationStatus": "generated-photo-referenced"
+  },
+  {
+    "id": "amami-spiny-rat",
+    "name": "アマミトゲネズミ",
+    "scientific": "Tokudaia osimensis",
+    "rank": "species",
+    "group": "哺乳類",
+    "habitat": "森",
+    "islands": [
+      "奄美大島"
+    ],
+    "lead": "とげ状の毛をもつ奄美大島固有のネズミ",
+    "fact": "背中にはとげ状の毛。徳之島のトゲネズミとは別の種です。",
+    "season": "出現期は整理中",
+    "sources": [
+      "awcc"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "tokunoshima-spiny-rat",
+    "name": "トクノシマトゲネズミ",
+    "scientific": "Tokudaia tokunoshimensis",
+    "rank": "species",
+    "group": "哺乳類",
+    "habitat": "森",
+    "islands": [
+      "徳之島"
+    ],
+    "lead": "徳之島固有のトゲネズミ",
+    "fact": "2006年に別種として区別された、徳之島固有のネズミです。",
+    "season": "出現期は整理中",
+    "sources": [
+      "awcc"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "long-haired-rat",
+    "name": "ケナガネズミ",
+    "scientific": "Diplothrix legata",
+    "rank": "species",
+    "group": "哺乳類",
+    "habitat": "森",
+    "islands": [
+      "奄美大島",
+      "徳之島"
+    ],
+    "lead": "木登りが得意な大型のネズミ",
+    "fact": "尾の先の白い部分と長い毛が特徴。木登りの得意な夜行性のネズミです。",
+    "season": "出現期は整理中",
+    "sources": [
+      "awcc"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "orii-bat",
+    "name": "オリイコキクガシラコウモリ",
+    "scientific": "Rhinolophus cornutus orii",
+    "rank": "subspecies",
+    "group": "哺乳類",
+    "habitat": "森",
+    "islands": [
+      "奄美大島",
+      "加計呂麻島",
+      "徳之島",
+      "沖永良部島"
+    ],
+    "lead": "夜に昆虫を捕らえるコウモリ",
+    "fact": "洞窟などで休み、夜に昆虫を捕らえます。休息場所に入り込まず、静かに見守りましょう。",
+    "season": "出現期は整理中",
+    "sources": [
+      "awcc"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "orii-shrew",
+    "name": "オリイジネズミ",
+    "scientific": "Crocidura orii",
+    "rank": "species",
+    "group": "哺乳類",
+    "habitat": "森",
+    "islands": [
+      "奄美大島",
+      "加計呂麻島",
+      "徳之島"
+    ],
+    "lead": "生態に不明な点も多い小型の哺乳類",
+    "fact": "生態の分かっていない点も多い小型の哺乳類です。",
+    "season": "出現期は整理中",
+    "sources": [
+      "awcc"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "watase-shrew",
+    "name": "ワタセジネズミ",
+    "scientific": "Crocidura watasei",
+    "rank": "species",
+    "group": "哺乳類",
+    "habitat": "里",
+    "islands": [],
+    "lead": "親子のキャラバン行動が知られるジネズミ",
+    "fact": "子が前の個体につかまるキャラバン行動が知られています。",
+    "season": "出現期は整理中",
+    "sources": [
+      "awcc"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "amami-woodcock",
+    "name": "アマミヤマシギ",
+    "scientific": "Scolopax mira",
+    "rank": "species",
+    "group": "鳥類",
+    "habitat": "森",
+    "islands": [],
+    "lead": "長いくちばしで地面の餌を探す鳥",
+    "fact": "林道にも出ることがあります。夜の運転では小さな生き物にも気を配りましょう。",
+    "season": "出現期は整理中",
+    "sources": [
+      "awcc"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "ryukyu-robin",
+    "name": "アカヒゲ",
+    "scientific": "Larvivora komadori",
+    "rank": "species",
+    "group": "鳥類",
+    "habitat": "森",
+    "islands": [],
+    "lead": "雌雄で顔の色が異なる森の小鳥",
+    "fact": "雄は黒い顔とのど、赤茶色の背が特徴。雌とは顔つきが異なります。",
+    "season": "出現期は整理中",
+    "sources": [
+      "awcc"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "ryukyu-scops-owl",
+    "name": "リュウキュウコノハズク",
+    "scientific": "Otus elegans elegans",
+    "rank": "subspecies",
+    "group": "鳥類",
+    "habitat": "森",
+    "islands": [],
+    "lead": "木の穴を子育てに使う小型のフクロウ",
+    "fact": "樹洞を子育てに使います。木の穴をのぞき込まずに観察しましょう。",
+    "season": "出現期は整理中",
+    "sources": [
+      "awcc"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "black-wood-pigeon",
+    "name": "カラスバト",
+    "scientific": "Columba janthina janthina",
+    "rank": "subspecies",
+    "group": "鳥類",
+    "habitat": "森",
+    "islands": [],
+    "lead": "緑や紫の光沢がある黒いハト",
+    "fact": "光の当たり方で羽に緑や紫のつやが見えます。",
+    "season": "出現期は整理中",
+    "sources": [
+      "awcc"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "green-pigeon",
+    "name": "ズアカアオバト",
+    "scientific": "Treron formosae permagnus",
+    "rank": "subspecies",
+    "group": "鳥類",
+    "habitat": "森",
+    "islands": [],
+    "lead": "木の実を食べる緑色のハト",
+    "fact": "木の実を食べるハトの仲間。名前だけで羽の色は判断できません。",
+    "season": "出現期は整理中",
+    "sources": [
+      "awcc"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "habu",
+    "name": "ハブ",
+    "scientific": "Protobothrops flavoviridis",
+    "rank": "species",
+    "group": "爬虫類",
+    "habitat": "森",
+    "islands": [],
+    "lead": "奄美の森や人里に暮らす有毒のヘビ",
+    "fact": "毒をもつヘビです。近づいたり触ったりせず、足元にも注意しましょう。",
+    "season": "出現期は整理中",
+    "sources": [
+      "awcc"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "himehabu",
+    "name": "ヒメハブ",
+    "scientific": "Ovophis okinavensis",
+    "rank": "species",
+    "group": "爬虫類",
+    "habitat": "川・水辺",
+    "islands": [],
+    "lead": "湿った森に暮らす有毒のヘビ",
+    "fact": "体は太く短め。毒があるため、種類の判別のために近づかないでください。",
+    "season": "出現期は整理中",
+    "sources": [
+      "awcc"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "coral-snake",
+    "name": "ヒャン",
+    "scientific": "Sinomicrurus japonicus",
+    "rank": "species",
+    "group": "爬虫類",
+    "habitat": "森",
+    "islands": [
+      "奄美大島",
+      "加計呂麻島",
+      "請島",
+      "与路島",
+      "徳之島"
+    ],
+    "lead": "鮮やかな模様をもつ有毒のヘビ",
+    "fact": "小型でも毒をもつヘビ。徳之島の個体の分類は2021年の研究で見直されています。",
+    "season": "出現期は整理中",
+    "sources": [
+      "awcc"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "green-snake",
+    "name": "リュウキュウアオヘビ",
+    "scientific": "Cyclophiops semicarinatus",
+    "rank": "species",
+    "group": "爬虫類",
+    "habitat": "森",
+    "islands": [],
+    "lead": "ミミズなどを食べるヘビ",
+    "fact": "体色には個体差があります。無毒でも野生の個体には触れず観察しましょう。",
+    "season": "出現期は整理中",
+    "sources": [
+      "awcc"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "akamata",
+    "name": "アカマタ",
+    "scientific": "Lycodon semicarinatus",
+    "rank": "species",
+    "group": "爬虫類",
+    "habitat": "里",
+    "islands": [],
+    "lead": "赤褐色と黒褐色の横帯があるヘビ",
+    "fact": "さまざまな動物を食べるヘビ。つかもうとすると咬むことがあります。",
+    "season": "出現期は整理中",
+    "sources": [
+      "awcc"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "banded-gecko",
+    "name": "オビトカゲモドキ",
+    "scientific": "Goniurosaurus splendens",
+    "rank": "species",
+    "group": "爬虫類",
+    "habitat": "森",
+    "islands": [
+      "徳之島"
+    ],
+    "lead": "淡い横帯が特徴の徳之島固有種",
+    "fact": "桃色がかった横帯が目印。徳之島だけに生息する種です。",
+    "season": "出現期は整理中",
+    "sources": [
+      "awcc"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "otton-frog",
+    "name": "オットンガエル",
+    "scientific": "Babina subaspera",
+    "rank": "species",
+    "group": "両生類",
+    "habitat": "川・水辺",
+    "islands": [
+      "奄美大島",
+      "加計呂麻島"
+    ],
+    "lead": "渓流や周辺の森に暮らす大型のカエル",
+    "fact": "渓流や周辺の森に暮らす大型のカエルです。",
+    "season": "出現期は整理中",
+    "sources": [
+      "awcc"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "amami-tip-nosed-frog",
+    "name": "アマミハナサキガエル",
+    "scientific": "Odorrana amamiensis",
+    "rank": "species",
+    "group": "両生類",
+    "habitat": "川・水辺",
+    "islands": [
+      "奄美大島",
+      "徳之島"
+    ],
+    "lead": "長い後ろ足で跳ぶ渓流のカエル",
+    "fact": "渓流の近くに暮らします。体の色は褐色から緑色までさまざまです。",
+    "season": "出現期は整理中",
+    "sources": [
+      "awcc"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "amami-crocodile-newt",
+    "name": "アマミイボイモリ",
+    "scientific": "Echinotriton raffaellii",
+    "rank": "species",
+    "group": "両生類",
+    "habitat": "森",
+    "islands": [
+      "奄美大島",
+      "徳之島"
+    ],
+    "lead": "森の落ち葉の下などに暮らすイモリ",
+    "fact": "いぼ状の突起がある陸生のイモリ。水辺と周囲の森の両方が大切です。",
+    "season": "出現期は整理中",
+    "sources": [
+      "awcc"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "grey-faced-buzzard",
+    "name": "サシバ",
+    "scientific": "Butastur indicus",
+    "rank": "species",
+    "group": "鳥類",
+    "habitat": "里",
+    "islands": [],
+    "lead": "渡りの途中や越冬で奄美を訪れるタカ",
+    "fact": "南へ渡る途中で通過する個体と、奄美で冬を過ごす個体がいます。",
+    "season": "冬鳥・旅鳥",
+    "sources": [
+      "awcc"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "pale-thrush",
+    "name": "シロハラ",
+    "scientific": "Turdus pallidus",
+    "rank": "species",
+    "group": "鳥類",
+    "habitat": "森",
+    "islands": [],
+    "lead": "冬に渡来して地面で餌を探す鳥",
+    "fact": "冬に渡ってきて、地面で食べ物を探します。",
+    "season": "冬鳥",
+    "sources": [
+      "awcc"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "ruddy-kingfisher",
+    "name": "リュウキュウアカショウビン",
+    "scientific": "Halcyon coromanda bangsi",
+    "rank": "subspecies",
+    "group": "鳥類",
+    "habitat": "森",
+    "islands": [],
+    "lead": "春から夏に渡来する赤いくちばしの鳥",
+    "fact": "春から夏に渡来する鳥。子育て中の巣には近づかないでください。",
+    "season": "夏鳥",
+    "sources": [
+      "awcc"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "amami-stag",
+    "name": "アマミマルバネクワガタ",
+    "scientific": "Neolucanus protogenetivus protogenetivus",
+    "rank": "subspecies",
+    "group": "昆虫",
+    "habitat": "森",
+    "islands": [
+      "奄美大島",
+      "加計呂麻島",
+      "徳之島"
+    ],
+    "lead": "アマミマルバネクワガタの分布と特徴",
+    "fact": "分布や特徴は環境省の解説で確認できます。採集せず、暮らす環境ごと観察しましょう。",
+    "season": "出現期は整理中",
+    "sources": [
+      "insects"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "uke-stag",
+    "name": "ウケジママルバネクワガタ",
+    "scientific": "Neolucanus protogenetivus hamaii",
+    "rank": "subspecies",
+    "group": "昆虫",
+    "habitat": "森",
+    "islands": [
+      "請島"
+    ],
+    "lead": "ウケジママルバネクワガタの分布と特徴",
+    "fact": "分布や特徴は環境省の解説で確認できます。採集せず、暮らす環境ごと観察しましょう。",
+    "season": "出現期は整理中",
+    "sources": [
+      "insects"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "amami-deer-stag",
+    "name": "アマミシカクワガタ",
+    "scientific": "Rhaetulus recticornis",
+    "rank": "species",
+    "group": "昆虫",
+    "habitat": "森",
+    "islands": [],
+    "lead": "アマミシカクワガタの分布と特徴",
+    "fact": "分布や特徴は環境省の解説で確認できます。採集せず、暮らす環境ごと観察しましょう。",
+    "season": "出現期は整理中",
+    "sources": [
+      "insects"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "amami-mountain-stag",
+    "name": "アマミミヤマクワガタ",
+    "scientific": "Lucanus ferriei",
+    "rank": "species",
+    "group": "昆虫",
+    "habitat": "森",
+    "islands": [
+      "奄美大島"
+    ],
+    "lead": "アマミミヤマクワガタの分布と特徴",
+    "fact": "分布や特徴は環境省の解説で確認できます。採集せず、暮らす環境ごと観察しましょう。",
+    "season": "出現期は整理中",
+    "sources": [
+      "insects"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "broad-grooved-stag",
+    "name": "スジブトヒラタクワガタ",
+    "scientific": "Dorcus metacostatus",
+    "rank": "species",
+    "group": "昆虫",
+    "habitat": "森",
+    "islands": [],
+    "lead": "スジブトヒラタクワガタの分布と特徴",
+    "fact": "分布や特徴は環境省の解説で確認できます。採集せず、暮らす環境ごと観察しましょう。",
+    "season": "出現期は整理中",
+    "sources": [
+      "insects"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "okinawa-peacock",
+    "name": "オキナワカラスアゲハ",
+    "scientific": "Papilio okinawensis",
+    "rank": "species",
+    "group": "昆虫",
+    "habitat": "森",
+    "islands": [],
+    "lead": "オキナワカラスアゲハの分布と特徴",
+    "fact": "分布や特徴は環境省の解説で確認できます。採集せず、暮らす環境ごと観察しましょう。",
+    "season": "出現期は整理中",
+    "sources": [
+      "insects"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "blue-tiger",
+    "name": "リュウキュウアサギマダラ",
+    "scientific": "Ideopsis similis",
+    "rank": "species",
+    "group": "昆虫",
+    "habitat": "森",
+    "islands": [],
+    "lead": "リュウキュウアサギマダラの分布と特徴",
+    "fact": "分布や特徴は環境省の解説で確認できます。採集せず、暮らす環境ごと観察しましょう。",
+    "season": "出現期は整理中",
+    "sources": [
+      "insects"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "amami-dung-beetle",
+    "name": "マルダイコクコガネ",
+    "scientific": "Copris brachypterus",
+    "rank": "species",
+    "group": "昆虫",
+    "habitat": "森",
+    "islands": [
+      "奄美大島",
+      "徳之島"
+    ],
+    "lead": "マルダイコクコガネの分布と特徴",
+    "fact": "分布や特徴は環境省の解説で確認できます。採集せず、暮らす環境ごと観察しましょう。",
+    "season": "出現期は整理中",
+    "sources": [
+      "insects"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "winter-chafer",
+    "name": "ケブカコフキコガネ",
+    "scientific": "Tricholontha papagena",
+    "rank": "species",
+    "group": "昆虫",
+    "habitat": "森",
+    "islands": [
+      "奄美大島",
+      "喜界島",
+      "徳之島"
+    ],
+    "lead": "ケブカコフキコガネの分布と特徴",
+    "fact": "分布や特徴は環境省の解説で確認できます。採集せず、暮らす環境ごと観察しましょう。",
+    "season": "出現期は整理中",
+    "sources": [
+      "insects"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "white-striped-chafer",
+    "name": "オキナワシロスジコガネ",
+    "scientific": "Polyphylla schoenfeldti",
+    "rank": "species",
+    "group": "昆虫",
+    "habitat": "森",
+    "islands": [],
+    "lead": "オキナワシロスジコガネの分布と特徴",
+    "fact": "分布や特徴は環境省の解説で確認できます。採集せず、暮らす環境ごと観察しましょう。",
+    "season": "出現期は整理中",
+    "sources": [
+      "insects"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  },
+  {
+    "id": "ferrie-longhorn",
+    "name": "フェリエベニボシカミキリ",
+    "scientific": "Rosalia ferriei",
+    "rank": "species",
+    "group": "昆虫",
+    "habitat": "森",
+    "islands": [
+      "奄美大島"
+    ],
+    "lead": "フェリエベニボシカミキリの分布と特徴",
+    "fact": "分布や特徴は環境省の解説で確認できます。採集せず、暮らす環境ごと観察しましょう。",
+    "season": "出現期は整理中",
+    "sources": [
+      "insects"
+    ],
+    "asset": null,
+    "status": "editorial",
+    "taxonomyNote": "",
+    "checked": "2026-11-01",
+    "illustrationStatus": "pending"
+  }
+]

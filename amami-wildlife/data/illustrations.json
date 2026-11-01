@@ -1,0 +1,68 @@
+{
+  "cute-lidths-jay-v1": {
+    "master": "assets/animals/cute-lidths-jay-v1.png",
+    "web": "public/wildlife/assets/animals/cute-lidths-jay-v1.webp",
+    "width": 640,
+    "height": 553,
+    "alpha": true,
+    "photoReference": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/animal/rurikakesu.jpg",
+    "photoReviewed": true,
+    "illustrationExpertReviewed": false,
+    "generation": "built-in image_gen",
+    "style": "user-requested loose cute gouache",
+    "sha256": "dabe80a35f3ae4524f87dd476b3d5a72878fd6aa122ff96b64170387436280f4"
+  },
+  "cute-amami-rabbit-v1": {
+    "master": "assets/animals/cute-amami-rabbit-v1.png",
+    "web": "public/wildlife/assets/animals/cute-amami-rabbit-v1.webp",
+    "width": 640,
+    "height": 553,
+    "alpha": true,
+    "photoReference": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/animal/amaminokurousagi.jpg",
+    "photoReviewed": true,
+    "illustrationExpertReviewed": false,
+    "generation": "built-in image_gen",
+    "style": "user-requested loose cute gouache",
+    "sha256": "3ca3d25c12ddf8a7b478b1b6e0b8f937f97950d34956103b882cda1db9637943"
+  },
+  "cute-amami-ishikawa-frog-v1": {
+    "master": "assets/animals/cute-amami-ishikawa-frog-v1.png",
+    "web": "public/wildlife/assets/animals/cute-amami-ishikawa-frog-v1.webp",
+    "width": 640,
+    "height": 553,
+    "alpha": true,
+    "photoReference": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/animal/isikawa.jpg",
+    "photoReviewed": true,
+    "illustrationExpertReviewed": false,
+    "generation": "built-in image_gen",
+    "style": "user-requested loose cute gouache",
+    "sha256": "638ed8e716843d02385e0b3f360b6bac9a200d5c321416cc370ceb3738f349fb"
+  },
+  "cute-green-turtle-v1": {
+    "master": "assets/animals/cute-green-turtle-v1.png",
+    "web": "public/wildlife/assets/animals/cute-green-turtle-v1.webp",
+    "width": 640,
+    "height": 427,
+    "alpha": true,
+    "photoReference": "https://biodiversity.okinawa/video_pages/reference/aoumigame.html",
+    "photoReviewed": true,
+    "illustrationExpertReviewed": false,
+    "generation": "built-in image_gen",
+    "style": "user-requested loose cute gouache",
+    "sha256": "50c999d2e83a63f5f7d9ff87c13461b968731ded08be4d07fa9ccd1c9ba17adc"
+  },
+  "cute-camponotus-amamianus-v2": {
+    "master": "assets/animals/cute-camponotus-amamianus-v2.png",
+    "web": "public/wildlife/assets/animals/cute-camponotus-amamianus-v2.webp",
+    "width": 640,
+    "height": 427,
+    "alpha": true,
+    "photoReference": "https://blog.livedoor.jp/antroom/archives/51415424.html",
+    "photoReviewed": true,
+    "illustrationExpertReviewed": false,
+    "generation": "built-in image_gen",
+    "style": "user-requested loose cute gouache",
+    "sha256": "4a535fda102daaf5e6886720f16c72e4a2faa4b0e2525b573b8179a47b50ea9f",
+    "revision": "User requested removing artificial smiling mouth"
+  }
+}

@@ -1,0 +1,37 @@
+[
+  {
+    "id": "dragonflies",
+    "url": "https://www.vill.yamato.lg.jp/kikaku/kurashi/kankyo/shizentaiken/documents/amamigunntou-tonnbo.pdf",
+    "bytes": 1697434,
+    "sha256": "5f611e87bd6a7622a112121395c2af4180ccc096a84af63f75dc66bd81653eb7",
+    "download": "ok"
+  },
+  {
+    "id": "frogs",
+    "url": "https://www.vill.yamato.lg.jp/kikaku/kurashi/kankyo/shizentaiken/documents/kaerukaitei.pdf",
+    "bytes": 2801040,
+    "sha256": "f19f7ae1448fdc92d2966110495032efc489618419b45a2b47368eb06d3a8034",
+    "download": "ok"
+  },
+  {
+    "id": "reptiles",
+    "url": "https://www.vill.yamato.lg.jp/kikaku/kurashi/kankyo/shizentaiken/documents/wakyaamai17.pdf",
+    "bytes": 7541173,
+    "sha256": "25438394dd1f4089bdcee0b89965687ebb1b9113f68104b36032616dec7e0088",
+    "download": "ok"
+  },
+  {
+    "id": "tokunoshima-fishes",
+    "url": "https://www.museum.kagoshima-u.ac.jp/staff/motomura/2018_09_TokunoshimaFishes_lowres.pdf",
+    "bytes": 1744854,
+    "sha256": "55883f33a50676d2db8563bb85a89dd085f2b94a4b4d00f6227ef087779b7483",
+    "download": "ok"
+  },
+  {
+    "id": "okinoerabu-fishes",
+    "url": "https://www.museum.kagoshima-u.ac.jp/staff/motomura/2020_03_Okinoerabu_Fishes_lowres.pdf",
+    "bytes": 2836738,
+    "sha256": "71926e8c9c4f001c490287dca14a5c01bb8db93dfac51b19ce81c92d1dd7f883",
+    "download": "ok"
+  }
+]

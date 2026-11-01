@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: editorial entries have unique slugs, sources, pages and no invented images
+ok 1 - editorial entries have unique slugs, sources, pages and no invented images
+  ---
+  duration_ms: 7.95932
+  type: 'test'
+  ...
+# Subtest: document records remain explicitly unreviewed, traceable and separate from species count
+ok 2 - document records remain explicitly unreviewed, traceable and separate from species count
+  ---
+  duration_ms: 2.131211
+  type: 'test'
+  ...
+# Subtest: all internal links and images resolve; headings, language and alt attributes exist
+ok 3 - all internal links and images resolve; headings, language and alt attributes exist
+  ---
+  duration_ms: 41.537802
+  type: 'test'
+  ...
+# Subtest: worker serves every editorial detail and applies security headers
+ok 4 - worker serves every editorial detail and applies security headers
+  ---
+  duration_ms: 143.83013
+  type: 'test'
+  ...
+# Subtest: worker canonicalizes directory paths and retains filter query
+ok 5 - worker canonicalizes directory paths and retains filter query
+  ---
+  duration_ms: 2.207681
+  type: 'test'
+  ...
+# Subtest: worker rejects mutations, unknown paths and encoded slash; no catch-all site route
+ok 6 - worker rejects mutations, unknown paths and encoded slash; no catch-all site route
+  ---
+  duration_ms: 3.566737
+  type: 'test'
+  ...
+# Subtest: HEAD and missing pages preserve correct behavior
+ok 7 - HEAD and missing pages preserve correct behavior
+  ---
+  duration_ms: 4.479747
+  type: 'test'
+  ...
+# Subtest: no credentials, trackers or remote scripts in public payload
+ok 8 - no credentials, trackers or remote scripts in public payload
+  ---
+  duration_ms: 3.319742
+  type: 'test'
+  ...
+# Subtest: real photographs have reusable licenses, attribution, reviewed identities and local assets
+ok 9 - real photographs have reusable licenses, attribution, reviewed identities and local assets
+  ---
+  duration_ms: 21.6317
+  type: 'test'
+  ...
+# Subtest: latest requested white background, text-only brand, factual headings and ant revision are retained
+ok 10 - latest requested white background, text-only brand, factual headings and ant revision are retained
+  ---
+  duration_ms: 1.98581
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 520.349603

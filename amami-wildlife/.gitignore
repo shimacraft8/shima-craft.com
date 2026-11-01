@@ -1,0 +1,8 @@
+.wrangler/
+node_modules/
+research/*.jpg
+research/*.png
+research/*.pdf
+research/*.txt
+.DS_Store
+*.zip

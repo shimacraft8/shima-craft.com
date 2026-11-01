@@ -124,5 +124,5 @@ ROOT.joinpath('data/species.json').write_text(json.dumps(entries,ensure_ascii=Fa
 ROOT.joinpath('data/sources.json').write_text(json.dumps(SOURCES,ensure_ascii=False,indent=2)+'\n')
 ROOT.joinpath('data/checklist-records.json').write_text(json.dumps(records,ensure_ascii=False,indent=2)+'\n')
 with (ROOT/'data/checklist-records.csv').open('w',newline='') as f:
- keys=['name','scientificAsPrinted','japaneseRomanizedAsPrinted','island','source','pdfPage','sourceNumber','review','note'];w=csv.DictWriter(f,keys);w.writeheader();w.writerows(records)
+ keys=['name','scientificAsPrinted','japaneseRomanizedAsPrinted','island','source','pdfPage','sourceNumber','review','note'];w=csv.DictWriter(f,keys,lineterminator='\n');w.writeheader();w.writerows(records)
 print(json.dumps({'editorialEntries':len(entries),'documentRecords':len(records),'dragonflyItems':len(found),'fishRecords':len(records)-len(found),'coverage':'incomplete'},ensure_ascii=False))

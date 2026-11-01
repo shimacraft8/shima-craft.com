@@ -6,3 +6,6 @@ research/*.pdf
 research/*.txt
 .DS_Store
 *.zip
+
+__pycache__/
+*.pyc

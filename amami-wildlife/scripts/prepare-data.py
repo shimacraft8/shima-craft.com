@@ -17,6 +17,7 @@ SOURCES={
  'yamato':{'title':'大和村｜わきゃあまみ 資料一覧','url':'https://www.vill.yamato.lg.jp/kikaku/kurashi/kankyo/shizentaiken/wakyamami.html','scope':'カニ・海の生き物・クジラ・イルカ等の追加照合資料'}
 }
 entries=[]
+SOURCES['amagi-blue-tiger']={'title':'天城町 文化遺産データベース｜リュウキュウアサギマダラ','url':'https://jmapps.ne.jp/amagi/det.html?data_id=5728','scope':'前脚の退化と形態の解説'}
 def add(id,name,scientific,group,habitat,islands,lead,fact,season='出現期は整理中',source='awcc',asset=None,rank='species',note=''):
  entries.append(dict(id=id,name=name,scientific=scientific,rank=rank,group=group,habitat=habitat,islands=islands.split('・') if islands else [],lead=lead,fact=fact,season=season,sources=[source],asset=asset,status='editorial',taxonomyNote=note,checked='2026-11-01',illustrationStatus='generated-photo-referenced' if asset else 'pending'))
 add('amami-rabbit','アマミノクロウサギ','Pentalagus furnessi','哺乳類','森','奄美大島・徳之島','短い耳で、夜の森をとことこ。','短い耳と丈夫な爪が目印。巣穴を使って暮らします。',asset='cute-amami-rabbit-v1')
@@ -106,6 +107,14 @@ for entry in entries:
   entry['illustrationStatus']='generated-photo-referenced'
  if entry['id']=='lidths-jay':
   entry['fact']='カラス科の鳥です。青と赤茶の羽、黒い目元、淡いくちばしが目印。森の木々の間を移動します。'
+
+notes_path=ROOT/'data/editorial-notes.json'
+notes=json.loads(notes_path.read_text()) if notes_path.exists() else {}
+for entry in entries:
+ extra=notes.get(entry['id'],{})
+ for key in ['fact','season','features']:
+  if key in extra:entry[key]=extra[key]
+ entry['sources']+=extra.get('additionalSources',[])
 
 # These are source records, NOT a verified current distribution checklist.
 records=[]

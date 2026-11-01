@@ -1,49 +1,42 @@
-# 検証記録 2026-11-01
+# 検証記録 0.2.0 / 2026-11-02
 
 ## 自動検証
 
-Node標準テスト12項目成功（`test-results.tap`）。39詳細ページの配信、全HTML内の内部リンク/画像の存在、出典、画像寸法とalt、未照合文献の分離、全56トンボ項目、写真30点のライセンス/撮影者/配信ファイル、白背景/マークなし/新タイトル/アリv2を確認。
+Node標準テスト15項目成功（test-results.tap）。全39詳細ページ、内部リンク/画像、出典、透過素材選択、写真39件のライセンス/クレジット、ユーザー指定名称台帳、白背景/ロゴなし/タイトル、修正済みの爬虫類・アリ・ルリカケス、横展示の操作/静的フォールバック、資産URLの内容ハッシュを検査。画像の形態を自動的に証明するテストではない。
 
-WorkerはGET/HEADのみ。範囲外404、未知の図鑑URL404＋noindex、末尾スラッシュ308、CSP/フレーム禁止/Content-Type保護をモックで確認。JSとWorkerの構文チェック成功。Wrangler dry-run成功。実際のCloudflare配信確認は公開結果ファイルに分けて記録。
+WorkerのGET/HEAD、範囲外404、未知URL404＋noindex、308、CSP/フレーム禁止/Content-Type保護を検査。公開HTTPと既存サイトの不変確認はproduction-http.json / cloudflare-verification.jsonに実結果を記録。
 
-## 実ブラウザー（デスクトップ内のIAB）
+## ブラウザでの確認
 
-- PC1280/1440px、スマートフォン相当390px、320pxで確認。
-- 320pxで太陽の装飾が横にはみ出す問題を発見し、装飾自体を削除。修正後scrollWidth＝320px。
-- 風景の5動物に名前とリンク。ルリカケスをクリックして詳細へ遷移。
-- ひらがな「るりかけす」検索で1項目。冬鳥でサシバ・シロハラの2項目。
-- 空の検索結果とリセット、39項目までの追加表示を確認。未実行の入力タイマーが残らないよう操作時に解除。
-- 文献検索「Anguilla」で3記録。出典とPDFページ番号を表示。
-- 動き停止でanimation-play-state: paused。夜の色切り替えでaria-pressedとクラス更新。
-- ルリカケス詳細の2枚目で実写・撮影者・ライセンスが表示。URLはview=photo。左矢印キーで1枚目に戻り、タブのaria-selectedとフォーカスが連動。
-- 初版の生成素材5点と背景、写真30点を目視。追加34項目は一覧で確認し、ハブ/ヒメハブ/オビトカゲモドキを描き直して個別確認。アリの人工的な笑顔マーク削除済み。
-- 紙テクスチャ/左上の葉マークを削除し、白背景・新タイトルを確認。
+- IAB、PC1440×1000。森→川→海、ボタンとキーボード矢印、aria-current/フォーカスを確認。スクロール中に横移動し各すみかのリンクが利用できる。自動送りやホイール横取りなし。
+- 小画面390×844、320×740。横はみ出しなし。横移動を解除し3すみかを縦に表示。最初の画面でイラストが見えるよう導入部を短縮。
+- 動きを止める操作で浮遊とポインター奥行きを停止。ルートにも停止クラスを反映しsmooth scrollも止める。
+- 図鑑の一覧へ飛ぶ深いアンカーを確認。chapterが残っていても#catalogを優先。レイアウト強化後に一覧位置を復元。
+- 昆虫フィルター12結果、写真タブ、政府掲載写真の出典表記と小さい画像の表示制限を確認。写真は計39件。標本/飼育/亜種未確認はラベル表示。
+- 本番相当のWorkerローカル配信（Wrangler4.156.0）でCSP、画像表示、操作を確認。確認範囲のconsole error/warnは0件。
+- ブラウザに旧スクリプト等が残る問題を発見し、CSS/JS/写真/イラストURLへ内容ハッシュを追加して再確認。
+- 39点の採用画像を分類群別一覧で目視。昆虫12点は左右3本ずつの脚と触角を区別して再生成・確認。蝶の前脚の縮小は資料に照合。
 
-## Web Interface Guidelinesレビュー
+## デザイン・アクセシビリティレビュー
 
-参照: https://raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md （2026-11-01取得）。ui-ux-pro-maxを設計時に使用。
+ui-ux-pro-maxを適用。最新Web Interface Guidelinesを取得してコードレビュー（https://raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md 、2026-11-02）。
 
-修正した指摘:
+修正記録（ファイルと該当実装）:
 
-- `public/wildlife/assets/style.css` - 320pxで装飾が横にはみ出し → 削除。
-- `scripts/build.py` - 生成画像のwidth/heightを正方形で固定していた → 素材台帳の実寸比へ変更。
-- `public/wildlife/assets/app.js` - 文献検索のURL状態がなかった → record-qを反映。
-- `public/wildlife/assets/app.js` - 非同期読込エラーに読み上げ通知がなかった → role=alert。
+- public/wildlife/assets/journey.js: 非表示のPC章はinert/aria-hidden。小画面では全章を読める通常文書へ戻す。
+- public/wildlife/assets/journey.css: PC横演出は高さ650px以上のみ。小画面/低い画面/prefers-reduced-motionは縦表示。transform/opacity主体。画面外で連続浮遊を止める。
+- scripts/journey.py: すみか操作に名前、順序、aria-controls、状態通知、一覧へのスキップ、通常リンク。
+- public/wildlife/assets/app.js: 停止状態をhtmlとbodyで統一。
+- scripts/build.py: 画像の実寸比/alt/遅延読込、写真の撮影者と掲載元を区別。
 
-見出し階層、ラベル、スキップリンク、フォーカス、結果通知、空状態、透過画像、検索のURL状態、タブのキーボード操作、動きの停止とprefers-reduced-motionを実装。長い文献一覧は50件ずつ表示し、図鑑は18件ずつ表示。
+## 未確認・限界
 
-## 検証していないもの
-
-iPhone Safari/Android Chrome実機、VoiceOver/TalkBack、端末での文字最大拡大、OSの動きを減らす設定での実機動作、全図鑑項目の専門家による同定・形態監修、全群島の全種網羅。CSSのreduced-motion分岐はコード確認であり、OS設定を切り替えた実機試験ではない。
+iPhone Safari / Android Chrome実機、VoiceOver/TalkBack、実端末の最大文字拡大とOSの動きを減らす設定は未確認。reduced-motionは分岐のコード確認に留まる。全種の同定・形態の専門監修、全群島の全種網羅は未達成。参考動画の賞級品質やWebGL/3Dモデルを実現したという主張はしない。
 
 ## 実機確認手順
 
-1. 公開URLをSafari/Chromeで開き、横向き・縦向き・文字拡大で横スクロールが生じないか確認。
-2. 各動物をタップ。1/2枚目の切り替え、写真のクレジット、出典、戻る動作を確認。
-3. 名前・島・すみか・渡り鳥で絞り込み、空の結果から戻る。URLを共有して同じ条件が開くか確認。
-4. OSの動きを減らすを有効にして再読込。停止状態で風景が動かないことを確認。
-5. VoiceOver/TalkBackでタブ、検索、結果件数、詳細へのリンクを順に確認。
-
-## ローカル0.1.1の追加検証
-
-39項目すべてに透過イラストを反映。ハブv2/ヒメハブv2/オビトカゲモドキv3をスマホ390幅とPC1440幅で確認。320幅でも画像読込と横はみ出しなし。実写タブ切替を確認。console error/warnは確認範囲で0件。解剖学的正しさの専門監修は未実施。公開中0.1.0とローカル0.1.1は区別する。公開HTTP91件の内訳はCONTINUATION_20261101.mdを参照。
+1. 公開URLをSafari/Chromeで開き、縦横向きと文字拡大で表示を確認。
+2. 森/川/海を閲覧し、生き物をタップ、2枚目の実写・クレジットを確認。
+3. 検索/島/すみか/渡りで絞り込み、空結果から復帰、URL共有とブラウザバックを確認。
+4. OSの動きを減らす設定で再読込し、縦表示と静止を確認。
+5. VoiceOver/TalkBackで見出し/検索/結果件数/タブ/詳細リンクを確認。

@@ -10,7 +10,8 @@ const sharp=createRequire(path.resolve(runtime))('sharp');
 const reviews=JSON.parse(fs.readFileSync(path.join(root,'docs/illustration-review.json')));
 const metadata=JSON.parse(fs.readFileSync(path.join(root,'data/illustrations.json')));
 const choices=fs.existsSync(path.join(root,'data/illustration-choices.json'))?JSON.parse(fs.readFileSync(path.join(root,'data/illustration-choices.json'))):{};
-for(const review of reviews){
+const latest=new Map(reviews.filter(r=>r.visualReviewed&&r.accepted).map(r=>[r.id,r]));
+for(const review of latest.values()){
  if(!review.visualReviewed||!review.accepted)continue;
  const input=path.join(root,review.master);
  const stats=await sharp(input).stats();const alpha=stats.channels[3];

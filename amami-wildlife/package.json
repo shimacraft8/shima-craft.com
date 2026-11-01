@@ -1,1 +1,14 @@
-{"name":"amami-wildlife","private":true,"version":"0.1.0","type":"module","scripts":{"build":"python3 scripts/build.py","test":"node --test tests/*.test.mjs","preview":"python3 -m http.server 4926 --bind 127.0.0.1 --directory public"},"engines":{"node":">=22.23.4"}}
+{
+  "name": "amami-wildlife",
+  "private": true,
+  "version": "0.2.0",
+  "type": "module",
+  "scripts": {
+    "build": "python3 scripts/build.py",
+    "test": "node --test tests/*.test.mjs",
+    "preview": "python3 -m http.server 4926 --bind 127.0.0.1 --directory public"
+  },
+  "engines": {
+    "node": ">=22.23.4"
+  }
+}

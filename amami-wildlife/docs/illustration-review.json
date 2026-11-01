@@ -278,5 +278,101 @@
     "visualReviewed": true,
     "accepted": true,
     "note": "真上からの構図に変更。独立した前脚2本・後脚2本、尾1本を目視確認。v1/v2は不採用。"
+  },
+  {
+    "id": "camponotus-amamianus",
+    "master": "assets/animals/cute-camponotus-amamianus-v3.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:Camponotus_amamianus_in_Japan_563493536.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "真上の構図で左右3本ずつ計6本の脚と2本の触角を確認。比較用の実写真を確認。専門家の監修ではない。"
+  },
+  {
+    "id": "amami-stag",
+    "master": "assets/animals/cute-amami-stag-v2.png",
+    "photoReference": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/insect/resize/marubane.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "真上の構図で左右3本ずつ計6本の脚と2本の触角を確認。比較用の実写真を確認。専門家の監修ではない。"
+  },
+  {
+    "id": "uke-stag",
+    "master": "assets/animals/cute-uke-stag-v2.png",
+    "photoReference": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/insect/resize/ukejimamarubanekuwagata.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "真上の構図で左右3本ずつ計6本の脚と2本の触角を確認。比較用の実写真を確認。専門家の監修ではない。"
+  },
+  {
+    "id": "amami-deer-stag",
+    "master": "assets/animals/cute-amami-deer-stag-v2.png",
+    "photoReference": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/insect/resize/sikaku.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "真上の構図で左右3本ずつ計6本の脚と2本の触角を確認。比較用の実写真を確認。専門家の監修ではない。"
+  },
+  {
+    "id": "amami-mountain-stag",
+    "master": "assets/animals/cute-amami-mountain-stag-v2.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:%E3%82%A2%E3%83%9E%E3%83%9F%E3%83%9F%E3%83%A4%E3%83%9E%E3%82%AF%E3%83%AF%E3%82%AC%E3%82%BF%E2%99%82%E5%A5%84%E7%BE%8E%E5%A4%A7%E5%B3%B6P8115130.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "真上の構図で左右3本ずつ計6本の脚と2本の触角を確認。比較用の実写真を確認。専門家の監修ではない。"
+  },
+  {
+    "id": "broad-grooved-stag",
+    "master": "assets/animals/cute-broad-grooved-stag-v2.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:%E3%82%B9%E3%82%B8%E3%83%96%E3%83%88%E3%83%92%E3%83%A9%E3%82%BF%E3%82%AF%E3%83%AF%E3%82%AC%E3%82%BF_Dorcus_metacostatus_%E2%99%82_%E5%A5%84%E7%BE%8E%E5%A4%A7%E5%B3%B6%E5%AE%87%E6%A4%9C%E6%9D%91.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "真上の構図で左右3本ずつ計6本の脚と2本の触角を確認。比較用の実写真を確認。専門家の監修ではない。"
+  },
+  {
+    "id": "okinawa-peacock",
+    "master": "assets/animals/cute-okinawa-peacock-v2.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:%E3%82%AA%E3%82%AD%E3%83%8A%E3%83%AF%E3%82%AB%E3%83%A9%E3%82%B9%E3%82%A2%E3%82%B2%E3%83%8F.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "真上の構図で左右3本ずつ計6本の脚と2本の触角を確認。比較用の実写真を確認。専門家の監修ではない。"
+  },
+  {
+    "id": "blue-tiger",
+    "master": "assets/animals/cute-blue-tiger-v2.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:Ideopsis_similis.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "真上の構図で左右3本ずつ計6本の脚と2本の触角を確認。前脚2本は小さく表現し歩行脚4本と区別。比較用の実写真を確認。専門家の監修ではない。"
+  },
+  {
+    "id": "amami-dung-beetle",
+    "master": "assets/animals/cute-amami-dung-beetle-v2.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:%E3%83%9E%E3%83%AB%E3%83%80%E3%82%A4%E3%82%B3%E3%82%AF%E3%82%B3%E3%82%AC%E3%83%8DCopris_brachypterus_20241202%E5%A5%84%E7%BE%8E%E5%A4%A7%E5%B3%B6.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "真上の構図で左右3本ずつ計6本の脚と2本の触角を確認。比較用の実写真を確認。専門家の監修ではない。"
+  },
+  {
+    "id": "winter-chafer",
+    "master": "assets/animals/cute-winter-chafer-v2.png",
+    "photoReference": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/insect/resize/kebuka.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "真上の構図で左右3本ずつ計6本の脚と2本の触角を確認。比較用の実写真を確認。専門家の監修ではない。"
+  },
+  {
+    "id": "white-striped-chafer",
+    "master": "assets/animals/cute-white-striped-chafer-v2.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:Polyphylla-schoenfeldti-2025-06-13-3.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "真上の構図で左右3本ずつ計6本の脚と2本の触角を確認。比較用の実写真を確認。専門家の監修ではない。"
+  },
+  {
+    "id": "ferrie-longhorn",
+    "master": "assets/animals/cute-ferrie-longhorn-v2.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:%E3%83%95%E3%82%A7%E3%83%AA%E3%82%A8%E3%83%99%E3%83%8B%E3%83%9C%E3%82%B7%E3%82%AB%E3%83%9F%E3%82%AD%E3%83%AARosalia_ferriei_%E5%AE%87%E6%A4%9C%E6%9D%91_%E5%A5%84%E7%BE%8E%E5%A4%A7%E5%B3%B6.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "真上の構図で左右3本ずつ計6本の脚と2本の触角を確認。比較用の実写真を確認。専門家の監修ではない。"
   }
 ]

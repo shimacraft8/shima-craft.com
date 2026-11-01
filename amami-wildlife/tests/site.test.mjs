@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import worker from '../worker.mjs';
 const root=path.resolve(import.meta.dirname,'..');const publicRoot=path.join(root,'public');
 const species=JSON.parse(fs.readFileSync(path.join(root,'data/species.json')));
@@ -45,11 +46,11 @@ test('no credentials, trackers or remote scripts in public payload',()=>{
  const js=fs.readFileSync(path.join(publicRoot,'wildlife/assets/app.js'),'utf8');assert.doesNotMatch(js,/innerHTML|eval\(|gtag\(|googletagmanager|G-[A-Z0-9]{6,}|AIza|oauth_token|PRIVATE KEY/);const html=fs.readFileSync(path.join(publicRoot,'wildlife/index.html'),'utf8');assert.doesNotMatch(html,/<script[^>]+src="https?:/);assert.match(html,/SHIMA CRAFTへ/);assert.match(html,/イラスト追加/);
 });
 test('real photographs have reusable licenses, attribution, reviewed identities and local assets',()=>{
- const photos=JSON.parse(fs.readFileSync(path.join(root,'data/photos.json')));assert.equal(Object.keys(photos).length,30);
- for(const[id,p]of Object.entries(photos)){assert.ok(species.find(s=>s.id===id));assert.ok(p.visualReviewed);assert.match(p.license,/^(CC BY|CC0|Public domain)/);assert.match(p.licenseUrl,/^https:\/\//);assert.match(p.sourcePage,/^https:\/\/commons.wikimedia.org\//);assert.ok(p.author);assert.ok(fs.existsSync(path.join(publicRoot,p.src)));const html=fs.readFileSync(path.join(publicRoot,'wildlife/species',id,'index.html'),'utf8');assert.ok(html.includes(p.src));assert.match(html,/role="tablist"/);assert.match(html,/2 実際の写真/);assert.match(html,/写真の出典/);}
+ const photos=JSON.parse(fs.readFileSync(path.join(root,'data/photos.json')));assert.equal(Object.keys(photos).length,species.length);
+ for(const[id,p]of Object.entries(photos)){assert.ok(species.find(s=>s.id===id));assert.ok(p.visualReviewed);assert.match(p.license,/^(CC BY|CC0|Public domain|政府標準利用規約)/);assert.match(p.licenseUrl,/^https:\/\//);assert.match(p.sourcePage,/^https:\/\/(commons.wikimedia.org|www.inaturalist.org|kyushu.env.go.jp)\//);assert.ok(p.author);assert.ok(fs.existsSync(path.join(publicRoot,p.src)));const html=fs.readFileSync(path.join(publicRoot,'wildlife/species',id,'index.html'),'utf8');assert.ok(html.includes(p.src));assert.match(html,/role="tablist"/);assert.match(html,/2 実際の写真/);assert.match(html,/写真の出典/);}
 });
 test('latest requested white background, text-only brand, factual headings and ant revision are retained',()=>{
- const html=fs.readFileSync(path.join(publicRoot,'wildlife/index.html'),'utf8');const css=fs.readFileSync(path.join(publicRoot,'wildlife/assets/style.css'),'utf8');assert.match(html,/奄美大島の生き物大全/);assert.doesNotMatch(html,/brand-mark|だれがいる|みーつけた/);assert.match(css,/--paper:#ffffff/);assert.doesNotMatch(css,/background-image:url/);assert.equal(species.find(s=>s.id==='camponotus-amamianus').asset,'cute-camponotus-amamianus-v2');
+ const html=fs.readFileSync(path.join(publicRoot,'wildlife/index.html'),'utf8');const css=fs.readFileSync(path.join(publicRoot,'wildlife/assets/style.css'),'utf8');assert.match(html,/奄美大島の生き物大全/);assert.doesNotMatch(html,/brand-mark|だれがいる|みーつけた/);assert.match(css,/--paper:#ffffff/);assert.doesNotMatch(css,/background-image:url/);assert.equal(species.find(s=>s.id==='camponotus-amamianus').asset,'cute-camponotus-amamianus-v3');
 });
 test('rejected anatomy variants cannot be selected and revised art has a visual review record',()=>{
  const reviews=JSON.parse(fs.readFileSync(path.join(root,'docs/illustration-review.json')));
@@ -68,4 +69,30 @@ test('requested inventory preserves whales and distinguishes unverified candidat
  for(const name of ['ザトウクジラ','マッコウクジラ','ハイ','セアカゴケグモ'])assert.ok(candidates.some(r=>r.name===name));
  for(const c of candidates){if(c.status==='editorial-entry-exists')assert.ok(species.some(s=>s.id===c.entryId&&s.name===c.name));else assert.equal(c.status,'source-verification-pending');}
  assert.ok(candidates.find(c=>c.name==='ハイ').note.includes('重複'));
+});
+
+test('all featured creatures remain native links; horizontal exhibition has accessible navigation and static content',()=>{
+ const html=fs.readFileSync(path.join(publicRoot,'wildlife/index.html'),'utf8');
+ for(const chapter of ['forest','river','ocean'])assert.match(html,new RegExp('id="habitat-'+chapter+'"'));
+ assert.match(html,/data-journey-prev/);assert.match(html,/data-journey-next/);assert.match(html,/id="motion-toggle"/);
+ assert.doesNotMatch(html,/class="landscape"/);
+ const js=fs.readFileSync(path.join(publicRoot,'wildlife/assets/journey.js'),'utf8');assert.doesNotMatch(js,/addEventListener\(['"](?:wheel|touchmove)['"]/);assert.doesNotMatch(js,/setInterval/);
+ assert.match(js,/prefers-reduced-motion/);assert.match(js,/aria-hidden/);assert.match(js,/panel.inert/);
+});
+test('new photos preserve source class and disclose specimens or uncertain subspecies',()=>{
+ const photos=JSON.parse(fs.readFileSync(path.join(root,'data/photos.json')));
+ for(const id of ['tokunoshima-spiny-rat','amami-stag','uke-stag']){assert.equal(photos[id].provenance,'government-site-terms');assert.equal(photos[id].creditLabel,'出典');assert.equal(photos[id].licenseUrl,'https://kyushu.env.go.jp/help.html');}
+ assert.match(photos['amami-deer-stag'].caption,/標本/);
+ for(const id of ['black-wood-pigeon','ryukyu-scops-owl']){assert.ok(photos[id].subspeciesUnconfirmed);assert.match(photos[id].caption,/亜種.*未確認/);}
+});
+test('public asset URLs match current content hashes so cached old scripts and photos are not reused',()=>{
+ const html=fs.readFileSync(path.join(publicRoot,'wildlife/index.html'),'utf8');
+ let count=0;
+ for(const match of html.matchAll(/(?:href|src)="(\/wildlife\/assets\/[^\"]+)"/g)){
+  const url=new URL(match[1],'https://shima-craft.com');
+  const file=path.join(publicRoot,url.pathname);
+  const expected=crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex').slice(0,12);
+  assert.equal(url.searchParams.get('v'),expected);count++;
+ }
+ assert.ok(count>=10);
 });

@@ -99,16 +99,21 @@
       "奄美大島"
     ],
     "lead": "黒くつやのあるオオアリの仲間",
-    "fact": "黒く光る体が印象的なオオアリの仲間。このイラストは働きアリです。",
+    "fact": "黒くつやのある体が特徴のオオアリの仲間です。イラストは働きアリで、6本の脚と2本の触角を描き分けています。",
     "season": "出現期は整理中",
     "sources": [
       "ants"
     ],
-    "asset": "cute-camponotus-amamianus-v2",
+    "asset": "cute-camponotus-amamianus-v3",
     "status": "editorial",
     "taxonomyNote": "「日本最大」の比較は働きアリ・女王等の条件を要するため、ここでは断定していません。",
     "checked": "2026-11-01",
-    "illustrationStatus": "generated-photo-referenced"
+    "illustrationStatus": "generated-photo-referenced",
+    "features": [
+      "脚は胸部から左右3本ずつ伸びます",
+      "頭部の触角と大あごは脚とは別の器官です",
+      "女王と働きアリでは体の大きさや形が異なります"
+    ]
   },
   {
     "id": "amami-spiny-rat",
@@ -275,7 +280,7 @@
     "habitat": "森",
     "islands": [],
     "lead": "雌雄で顔の色が異なる森の小鳥",
-    "fact": "雄は黒い顔とのど、赤茶色の背が特徴。雌とは顔つきが異なります。",
+    "fact": "雄は黒い顔とのど、赤茶色の背が特徴で、雌とは顔つきが異なります。このイラストと実写は雌を参考にしています。",
     "season": "出現期は整理中",
     "sources": [
       "awcc"
@@ -616,16 +621,21 @@
       "徳之島"
     ],
     "lead": "アマミマルバネクワガタの分布と特徴",
-    "fact": "分布や特徴は環境省の解説で確認できます。採集せず、暮らす環境ごと観察しましょう。",
-    "season": "出現期は整理中",
+    "fact": "大きな木の洞などを利用するクワガタムシです。成虫は8月下旬頃から現れます。イラストはオスです。",
+    "season": "成虫は8月下旬頃から（環境省資料）",
     "sources": [
       "insects"
     ],
-    "asset": "cute-amami-stag-v1",
+    "asset": "cute-amami-stag-v2",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "generated-photo-referenced"
+    "illustrationStatus": "generated-photo-referenced",
+    "features": [
+      "黒褐色の丸みのある体",
+      "大きな木や枯れ木を含む森の環境が大切です",
+      "採集せず距離をとって観察しましょう"
+    ]
   },
   {
     "id": "uke-stag",
@@ -638,16 +648,21 @@
       "請島"
     ],
     "lead": "ウケジママルバネクワガタの分布と特徴",
-    "fact": "分布や特徴は環境省の解説で確認できます。採集せず、暮らす環境ごと観察しましょう。",
+    "fact": "請島に分布するアマミマルバネクワガタの亜種です。イラストはメスを参考にしているため、オスのような大きなあごはありません。",
     "season": "出現期は整理中",
     "sources": [
       "insects"
     ],
-    "asset": "cute-uke-stag-v1",
+    "asset": "cute-uke-stag-v2",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "generated-photo-referenced"
+    "illustrationStatus": "generated-photo-referenced",
+    "features": [
+      "請島固有の亜種として環境省が紹介しています",
+      "オスとメスであごの大きさが違います",
+      "希少な生き物の詳しい生息地点は公開しないでください"
+    ]
   },
   {
     "id": "amami-deer-stag",
@@ -658,16 +673,21 @@
     "habitat": "森",
     "islands": [],
     "lead": "アマミシカクワガタの分布と特徴",
-    "fact": "分布や特徴は環境省の解説で確認できます。採集せず、暮らす環境ごと観察しましょう。",
+    "fact": "大きなオスのあごが鹿の角のように曲がるクワガタムシです。環境省資料では奄美大島から徳之島に分布するとされています。",
     "season": "出現期は整理中",
     "sources": [
       "insects"
     ],
-    "asset": "cute-amami-deer-stag-v1",
+    "asset": "cute-amami-deer-stag-v2",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "generated-photo-referenced"
+    "illustrationStatus": "generated-photo-referenced",
+    "features": [
+      "大型のオスでは立体的に曲がるあごが目印です",
+      "イラストはオスを参考にしています",
+      "実写には体の形が分かる標本写真を掲載しています"
+    ]
   },
   {
     "id": "amami-mountain-stag",
@@ -680,16 +700,21 @@
       "奄美大島"
     ],
     "lead": "アマミミヤマクワガタの分布と特徴",
-    "fact": "分布や特徴は環境省の解説で確認できます。採集せず、暮らす環境ごと観察しましょう。",
-    "season": "出現期は整理中",
+    "fact": "奄美大島に分布する小型のミヤマクワガタです。環境省資料では成虫は8月に現れ、大きなオスでも50mm未満とされています。",
+    "season": "成虫は8月頃（環境省資料）",
     "sources": [
       "insects"
     ],
-    "asset": "cute-amami-mountain-stag-v1",
+    "asset": "cute-amami-mountain-stag-v2",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "generated-photo-referenced"
+    "illustrationStatus": "generated-photo-referenced",
+    "features": [
+      "赤褐色の体と枝分かれしたあご",
+      "イラストはオスを参考にしています",
+      "高い木の上で姿が見られることもあります"
+    ]
   },
   {
     "id": "broad-grooved-stag",
@@ -700,16 +725,21 @@
     "habitat": "森",
     "islands": [],
     "lead": "スジブトヒラタクワガタの分布と特徴",
-    "fact": "分布や特徴は環境省の解説で確認できます。採集せず、暮らす環境ごと観察しましょう。",
+    "fact": "背中に並ぶ太いすじが特徴のクワガタムシです。奄美大島から徳之島に分布します。",
     "season": "出現期は整理中",
     "sources": [
       "insects"
     ],
-    "asset": "cute-broad-grooved-stag-v1",
+    "asset": "cute-broad-grooved-stag-v2",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "generated-photo-referenced"
+    "illustrationStatus": "generated-photo-referenced",
+    "features": [
+      "上ばねに深いすじが並んでいます",
+      "イラストはオスを参考にしています",
+      "触角2本と脚6本を描き分けています"
+    ]
   },
   {
     "id": "okinawa-peacock",
@@ -720,16 +750,21 @@
     "habitat": "森",
     "islands": [],
     "lead": "オキナワカラスアゲハの分布と特徴",
-    "fact": "分布や特徴は環境省の解説で確認できます。採集せず、暮らす環境ごと観察しましょう。",
-    "season": "出現期は整理中",
+    "fact": "黒い翅に青や緑の光沢があるアゲハチョウの仲間です。奄美亜種は奄美大島から徳之島に分布し、幼虫はカラスザンショウやハマセンダンの葉を食べます。",
+    "season": "成虫は3〜10月頃（奄美大島・環境省資料）",
     "sources": [
       "insects"
     ],
-    "asset": "cute-okinawa-peacock-v1",
+    "asset": "cute-okinawa-peacock-v2",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "generated-photo-referenced"
+    "illustrationStatus": "generated-photo-referenced",
+    "features": [
+      "翅の色は光の当たり方で見え方が変わります",
+      "オスは水たまり付近で吸水することがあります",
+      "脚6本と先端がふくらむ触角2本は別の器官です"
+    ]
   },
   {
     "id": "blue-tiger",
@@ -740,16 +775,22 @@
     "habitat": "森",
     "islands": [],
     "lead": "リュウキュウアサギマダラの分布と特徴",
-    "fact": "分布や特徴は環境省の解説で確認できます。採集せず、暮らす環境ごと観察しましょう。",
+    "fact": "淡い青緑色の模様があるタテハチョウの仲間です。前脚2本が小さく、歩くための脚が4本に見えることがあります。冬には枝などに集まって過ごす姿も知られています。",
     "season": "出現期は整理中",
     "sources": [
-      "insects"
+      "insects",
+      "amagi-blue-tiger"
     ],
-    "asset": "cute-blue-tiger-v1",
+    "asset": "cute-blue-tiger-v2",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "generated-photo-referenced"
+    "illustrationStatus": "generated-photo-referenced",
+    "features": [
+      "長い歩行脚4本と小さな前脚2本を描き分けています",
+      "4本しか見えない写真でも、脚が欠けているとは限りません",
+      "冬に集まっている個体を揺すったり散らしたりしないでください"
+    ]
   },
   {
     "id": "amami-dung-beetle",
@@ -763,16 +804,21 @@
       "徳之島"
     ],
     "lead": "マルダイコクコガネの分布と特徴",
-    "fact": "分布や特徴は環境省の解説で確認できます。採集せず、暮らす環境ごと観察しましょう。",
+    "fact": "アマミノクロウサギやリュウキュウイノシシなどの糞を食べる甲虫です。翅が退化していて飛ぶことができません。",
     "season": "出現期は整理中",
     "sources": [
       "insects"
     ],
-    "asset": "cute-amami-dung-beetle-v1",
+    "asset": "cute-amami-dung-beetle-v2",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "generated-photo-referenced"
+    "illustrationStatus": "generated-photo-referenced",
+    "features": [
+      "イラストは角のあるオスを参考にしています",
+      "前脚には土を掘るための幅広い部分があります",
+      "奄美大島と徳之島の記録を区別して整理しています"
+    ]
   },
   {
     "id": "winter-chafer",
@@ -787,16 +833,21 @@
       "徳之島"
     ],
     "lead": "ケブカコフキコガネの分布と特徴",
-    "fact": "分布や特徴は環境省の解説で確認できます。採集せず、暮らす環境ごと観察しましょう。",
-    "season": "出現期は整理中",
+    "fact": "冬に成虫が現れるコガネムシの仲間です。環境省資料では奄美大島・喜界島・徳之島で知られ、2月頃の暖かい夜に活動するとされています。",
+    "season": "冬・2月頃の暖かい夜（奄美群島・環境省資料）",
     "sources": [
       "insects"
     ],
-    "asset": "cute-winter-chafer-v1",
+    "asset": "cute-winter-chafer-v2",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "generated-photo-referenced"
+    "illustrationStatus": "generated-photo-referenced",
+    "features": [
+      "オスの触角は扇のように開きます",
+      "成虫が冬に発生することが特徴です",
+      "実写は同種の参考写真で、奄美亜種の確認は未実施です"
+    ]
   },
   {
     "id": "white-striped-chafer",
@@ -807,16 +858,21 @@
     "habitat": "森",
     "islands": [],
     "lead": "オキナワシロスジコガネの分布と特徴",
-    "fact": "分布や特徴は環境省の解説で確認できます。採集せず、暮らす環境ごと観察しましょう。",
-    "season": "出現期は整理中",
+    "fact": "赤褐色の上ばねに白いすじが並ぶコガネムシの仲間です。環境省資料では梅雨の前後に成虫が現れ、オスもメスも光に集まるとされています。",
+    "season": "梅雨の前後（環境省資料）",
     "sources": [
       "insects"
     ],
-    "asset": "cute-white-striped-chafer-v1",
+    "asset": "cute-white-striped-chafer-v2",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "generated-photo-referenced"
+    "illustrationStatus": "generated-photo-referenced",
+    "features": [
+      "白い縦じまが目印です",
+      "触角の扇状の部分は脚とは異なります",
+      "灯りに集まった個体も捕まえず観察しましょう"
+    ]
   },
   {
     "id": "ferrie-longhorn",
@@ -829,15 +885,20 @@
       "奄美大島"
     ],
     "lead": "フェリエベニボシカミキリの分布と特徴",
-    "fact": "分布や特徴は環境省の解説で確認できます。採集せず、暮らす環境ごと観察しましょう。",
+    "fact": "奄美大島に分布する、赤橙色の体に黒い斑点があるカミキリムシです。頭から伸びる長い触角と胸部から伸びる6本の脚を描き分けています。",
     "season": "出現期は整理中",
     "sources": [
       "insects"
     ],
-    "asset": "cute-ferrie-longhorn-v1",
+    "asset": "cute-ferrie-longhorn-v2",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "generated-photo-referenced"
+    "illustrationStatus": "generated-photo-referenced",
+    "features": [
+      "長く節のある触角が2本あります",
+      "赤橙色の体に黒い斑点があります",
+      "イラストの模様は簡略化しており個体差をすべて示すものではありません"
+    ]
   }
 ]

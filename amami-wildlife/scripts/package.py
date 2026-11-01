@@ -6,10 +6,11 @@ target=ROOT.parent/'amami-wildlife-project.zip'
 files=set()
 for directory in ['scripts','tests','data','design-system','docs','public']:
  files.update(p for p in (ROOT/directory).rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.suffix not in ['.pyc','.zip'])
-for name in ['README.md','.gitignore','wrangler.jsonc','worker.mjs']:
+for name in ['README.md','.gitignore','wrangler.jsonc','worker.mjs','package.json']:
  files.add(ROOT/name)
-for meta in json.loads((ROOT/'data/illustrations.json').read_text()).values():
- files.add(ROOT/meta['master'])
+illustrations=json.loads((ROOT/'data/illustrations.json').read_text())
+for entry in json.loads((ROOT/'data/species.json').read_text()):
+ if entry['asset']:files.add(ROOT/illustrations[entry['asset']]['master'])
 files.add(ROOT/'assets/cute-habitat-v1.png')
 with zipfile.ZipFile(target,'w',zipfile.ZIP_DEFLATED) as z:
  for p in sorted(files):

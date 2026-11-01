@@ -8,7 +8,7 @@
  const reduce=matchMedia('(prefers-reduced-motion: reduce)');
  const motion=$('#motion-toggle');
  let paused=storage.get('amami-wildlife-motion')==='paused'||reduce.matches;
- function updateMotion(){document.body.classList.toggle('motion-paused',paused);if(motion){motion.textContent=paused?'動きを再開する':'動きを止める';motion.setAttribute('aria-pressed',String(paused));}}
+ function updateMotion(){document.body.classList.toggle('motion-paused',paused);document.documentElement.classList.toggle('motion-paused',paused);if(motion){motion.textContent=paused?'動きを再開する':'動きを止める';motion.setAttribute('aria-pressed',String(paused));}}
  updateMotion();
  motion?.addEventListener('click',()=>{paused=!paused;storage.set('amami-wildlife-motion',paused?'paused':'playing');updateMotion()});
  reduce.addEventListener('change',e=>{if(e.matches){paused=true;updateMotion()}});

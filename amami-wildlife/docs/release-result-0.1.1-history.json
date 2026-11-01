@@ -1,0 +1,16 @@
+{
+  "publicVersion": "0.1.0",
+  "publicWorkerVersion": "55128f9c-6a0a-4296-ac0b-26f4c7b80b25",
+  "publicUrl": "https://shima-craft.com/wildlife/",
+  "localVersion": "0.1.1",
+  "localIllustrations": 39,
+  "publicIllustrations": 5,
+  "photos": 30,
+  "requestedNames": 248,
+  "requestedNamesNotYetEdited": 210,
+  "testsPassed": 12,
+  "gitPushedCommit": "940535af5b3ba5ff594ea3bc64ed7354f7e02f50",
+  "additionalPush": false,
+  "additionalDeploy": false,
+  "blocker": "Automatic approval review failed due usage limit during additional production verification; action was not executed. Not an unsafe determination. No bypass."
+}

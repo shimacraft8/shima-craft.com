@@ -1,0 +1,29 @@
+{
+  "tool": "built-in image_gen",
+  "transparent_background": true,
+  "repairs": [
+    {
+      "id": "banded-gecko",
+      "subject": "オビトカゲモドキ Goniurosaurus splendens",
+      "anatomy": "A dorsal three-quarter view, head left and one banded tail right. Exactly FOUR limbs, two front legs and two rear legs, each attached to its own correct shoulder or hip. Each limb extends outward away from torso and all other legs, with transparent gaps clearly separating ALL four feet. No joined hands or crossed limbs. Slender dark brown body with pale pink transverse bands, golden eyes with vertical pupils.",
+      "style": "Loose cute hand drawn gouache/crayon, thick imperfect black contour, matte paper grain inside silhouette. Actual animal photo for morphology; cute jay for style. Real alpha, no shadow/glow/props/text.",
+      "selectedVersion": 3
+    },
+    {
+      "id": "himehabu",
+      "subject": "ヒメハブ Ovophis okinavensis",
+      "anatomy": "One stout short snake laid out as ONE simple open shallow S, head left, single tapering tail at right. Entire continuous body visible without crossing, coils, overlaps, junctions or body contacts. Brown triangular pitviper head, dark brown saddle blotches. Exactly ONE head and ONE tail. No detached pieces or loops.",
+      "style": "Loose cute hand drawn gouache/crayon, thick imperfect black contour, matte paper grain inside silhouette. Actual animal photo for morphology; cute jay for style. Real alpha, no shadow/glow/props/text.",
+      "selectedVersion": 2
+    },
+    {
+      "id": "habu",
+      "subject": "ハブ Protobothrops flavoviridis",
+      "anatomy": "One elongated slender pitviper laid out as ONE open shallow S from head left to tail right, entire body visible without crossing, coiling, overlaps or junctions. Yellow tan ground color and dark brown chain-like diamond pattern. Exactly ONE head and ONE narrowing tail. Absolutely no fork, second tail, duplicate tip or disconnected piece.",
+      "style": "Loose cute hand drawn gouache/crayon, thick imperfect black contour, matte paper grain inside silhouette. Actual animal photo for morphology; cute jay for style. Real alpha, no shadow/glow/props/text.",
+      "selectedVersion": 2
+    }
+  ],
+  "geckoFinal": "STRICT DIRECT OVERHEAD DORSAL VIEW. Head 12 o'clock, torso vertical. Exactly four independent splayed legs at 10/2/8/4 o'clock, each attached to own shoulder/hip. Clear transparent gaps separating all four feet. One banded tail down. Dark brown and pale pink bands, golden slit eyes. Cute flat gouache with thick imperfect contours. Transparent alpha. No shadow/glow.",
+  "jay": "Use case: precise-object-edit. Image 1 is the existing cute gouache Lidth's jay illustration to revise. Image 2 is an actual adult Garrulus lidthi photo showing a SLENDER long-tailed CORVID. Keep Image 1's charming loose thick charcoal outlines, flat cobalt and chestnut gouache, subtle crayon texture, small dot eye, black periocular mask and ivory bill. Change its silhouette to recognizable adult jay proportions based on Image 2: substantially less round belly and chest, a narrower elongated sloping torso, visibly longer and slightly slimmer neck, slightly smaller head relative to body, LONG tapering tail (about equal to torso length rather than short robin-like tail), natural moderately long legs. Friendly and simplified but NOT a squat sparrow or plump robin. Preserve black lores/eye region, chestnut mantle and lower belly, blue head throat wings and tail, modest white tail tip. Full body in a gently alert standing pose facing right, no branch, no scenery, no text, no cast shadow or glow. TRUE transparent background alpha. Keep all appendages within frame with margin."
+}

@@ -18,13 +18,14 @@
     "webBytes": 50096
   },
   {
-    "file": "cute-camponotus-amamianus-v1.png",
+    "file": "cute-camponotus-amamianus-v2.png",
     "width": 1536,
     "height": 1024,
     "alpha": true,
     "alphaMin": 0,
     "alphaMax": 254,
-    "webBytes": 42482
+    "webBytes": 42482,
+    "revision": "Artificial smiling mouth removed"
   },
   {
     "file": "cute-green-turtle-v1.png",

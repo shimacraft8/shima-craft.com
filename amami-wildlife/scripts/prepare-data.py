@@ -97,6 +97,16 @@ LEADS={
 for entry in entries:
  entry['lead']=LEADS.get(entry['id'],entry['name']+'の分布と特徴')
 
+# Adopt only explicit reviewed choices; a newly generated file is not approval.
+overrides_path=ROOT/'data/illustration-choices.json'
+choices=json.loads(overrides_path.read_text()) if overrides_path.exists() else {}
+for entry in entries:
+ if entry['id'] in choices:
+  entry['asset']=choices[entry['id']]
+  entry['illustrationStatus']='generated-photo-referenced'
+ if entry['id']=='lidths-jay':
+  entry['fact']='カラス科の鳥です。青と赤茶の羽、黒い目元、淡いくちばしが目印。森の木々の間を移動します。'
+
 # These are source records, NOT a verified current distribution checklist.
 records=[]
 for source,island in [('tokunoshima-fishes','徳之島'),('okinoerabu-fishes','沖永良部島')]:

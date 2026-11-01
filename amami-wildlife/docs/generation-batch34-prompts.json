@@ -1,0 +1,308 @@
+[
+  {
+    "id": "amami-spiny-rat",
+    "name": "アマミトゲネズミ",
+    "scientific": "Tokudaia osimensis",
+    "reference": "licensed-photos/amami-spiny-rat.jpg",
+    "asset": "cute-amami-spiny-rat-v1",
+    "source": "https://commons.wikimedia.org/wiki/File:Tokudaia_osimensis_2.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: アマミトゲネズミ (Tokudaia osimensis). A round small brown spiny mouse, tiny rounded ears, pointed short muzzle, short tail, a few stylized pointed hair tufts on back. Live natural seated pose, not taxidermy. Do not copy display stand."
+  },
+  {
+    "id": "tokunoshima-spiny-rat",
+    "name": "トクノシマトゲネズミ",
+    "scientific": "Tokudaia tokunoshimensis",
+    "reference": "official-references/tokunoshima-spiny-rat.jpg",
+    "asset": "cute-tokunoshima-spiny-rat-v1",
+    "source": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/animal/tokunosimatogenezumi.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: トクノシマトゲネズミ (Tokudaia tokunoshimensis). Round brown spiny rat, little pink ears, brown gray back with fine spiny hairs, pale cream belly, short legs and a slender modest tail, photographed species rather than common mouse."
+  },
+  {
+    "id": "long-haired-rat",
+    "name": "ケナガネズミ",
+    "scientific": "Diplothrix legata",
+    "reference": "licensed-photos/long-haired-rat.jpg",
+    "asset": "cute-long-haired-rat-v1",
+    "source": "https://commons.wikimedia.org/wiki/File:%E3%82%B1%E3%83%8A%E3%82%AC%E3%83%8D%E3%82%BA%E3%83%9F_%E5%A5%84%E7%BE%8E%E5%A4%A7%E5%B3%B6%E5%A5%84%E7%BE%8E%E5%B8%82.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: ケナガネズミ (Diplothrix legata). Large gray brown long-haired rat, noticeably long thick tail with WHITE distal half, coarse long guard hairs indicated by a few strokes, round ears and little pink feet."
+  },
+  {
+    "id": "orii-bat",
+    "name": "オリイコキクガシラコウモリ",
+    "scientific": "Rhinolophus cornutus orii",
+    "reference": "licensed-photos/orii-bat.jpg",
+    "asset": "cute-orii-bat-v1",
+    "source": "https://commons.wikimedia.org/wiki/File:%E3%82%AA%E3%83%AA%E3%82%A4%E3%82%B3%E3%82%AD%E3%82%AF%E3%82%AC%E3%82%B7%E3%83%A9%E3%82%B3%E3%82%A6%E3%83%A2%E3%83%AA_Rhinolophus_cornutus_orii%EF%BC%8E%E5%A5%84%E7%BE%8E%E5%A4%A7%E5%B3%B6.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: オリイコキクガシラコウモリ (Rhinolophus cornutus orii). Small horseshoe bat with a simplified leaf-shaped nose, tiny eyes and pointed ears, short brown fur, natural dark brown wing membranes. Wings partly open, arms and fingers anatomically plausible. Cheerful but no human smile."
+  },
+  {
+    "id": "orii-shrew",
+    "name": "オリイジネズミ",
+    "scientific": "Crocidura orii",
+    "reference": "licensed-photos/orii-shrew.jpg",
+    "asset": "cute-orii-shrew-v1",
+    "source": "https://commons.wikimedia.org/wiki/File:Crocidura_orii_Amami.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: オリイジネズミ (Crocidura orii). Tiny brown gray shrew, long pointed snout, tiny eyes, tiny ears, long whiskers, short legs and tapering tail. Natural living pose rather than stuffed mount or printed display background."
+  },
+  {
+    "id": "watase-shrew",
+    "name": "ワタセジネズミ",
+    "scientific": "Crocidura watasei",
+    "reference": "licensed-photos/watase-shrew.jpg",
+    "asset": "cute-watase-shrew-v1",
+    "source": "https://commons.wikimedia.org/wiki/File:Crocidura_watasei_Amami.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: ワタセジネズミ (Crocidura watasei). Small brown shrew, long slender pointed snout, tiny eyes and small ears, pale underparts, modest tapering tail. Living standing pose, not a mouse with big rounded ears."
+  },
+  {
+    "id": "amami-woodcock",
+    "name": "アマミヤマシギ",
+    "scientific": "Scolopax mira",
+    "reference": "licensed-photos/amami-woodcock.jpg",
+    "asset": "cute-amami-woodcock-v1",
+    "source": "https://commons.wikimedia.org/wiki/File:Amami_Woodcock_imported_from_iNaturalist_photo_387708832_on_13_June_2024.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: アマミヤマシギ (Scolopax mira). Plump mottled brown Amami woodcock with short legs and a LONG straight slim bill, fine simplified tan/black mottling and large eyes, wings folded."
+  },
+  {
+    "id": "ryukyu-robin",
+    "name": "アカヒゲ",
+    "scientific": "Larvivora komadori",
+    "reference": "licensed-photos/ryukyu-robin.jpg",
+    "asset": "cute-ryukyu-robin-v1",
+    "source": "https://commons.wikimedia.org/wiki/File:Luscinia_komadori_female_2.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: アカヒゲ (Larvivora komadori). FEMALE Ryukyu robin matching the photo: warm chestnut head/back/wings/tail, pale gray-white face throat and belly, no black male bib. Small round robin shape."
+  },
+  {
+    "id": "ryukyu-scops-owl",
+    "name": "リュウキュウコノハズク",
+    "scientific": "Otus elegans elegans",
+    "reference": "official-references/ryukyu-scops-owl.jpg",
+    "asset": "cute-ryukyu-scops-owl-v1",
+    "source": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/animal/konohaduku.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: リュウキュウコノハズク (Otus elegans elegans). Tiny gray brown Ryukyu scops owl, little raised ear tufts, warm yellow iris with black pupil, subtle streaks, round squat body and small grasping feet. Do not turn into barn owl."
+  },
+  {
+    "id": "black-wood-pigeon",
+    "name": "カラスバト",
+    "scientific": "Columba janthina janthina",
+    "reference": "official-references/black-wood-pigeon.jpg",
+    "asset": "cute-black-wood-pigeon-v1",
+    "source": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/animal/karasubato.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: カラスバト (Columba janthina janthina). Blackish wood pigeon with subtle dark green and purple neck sheen, dark blue gray breast, small gray pale bill, pinkish feet. Rounded pigeon proportions."
+  },
+  {
+    "id": "green-pigeon",
+    "name": "ズアカアオバト",
+    "scientific": "Treron formosae permagnus",
+    "reference": "official-references/green-pigeon.jpg",
+    "asset": "cute-green-pigeon-v1",
+    "source": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/animal/zuaka.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: ズアカアオバト (Treron formosae permagnus). Ryukyu form green pigeon: olive green head/body, NO red crown, gray blue bill with pale tip, olive and dark wing feathers with pale yellow margins, small rose red feet."
+  },
+  {
+    "id": "habu",
+    "name": "ハブ",
+    "scientific": "Protobothrops flavoviridis",
+    "reference": "licensed-photos/habu.jpg",
+    "asset": "cute-habu-v1",
+    "source": "https://commons.wikimedia.org/wiki/File:Protobothrops_flavoviridis_285176627.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: ハブ (Protobothrops flavoviridis). Habu pit viper, light olive yellow-brown body with dark irregular diamond blotches, distinct triangular head and vertical pupils. One continuous gently coiled snake body, one head one tail, closed natural mouth. No eyelashes or human smile."
+  },
+  {
+    "id": "himehabu",
+    "name": "ヒメハブ",
+    "scientific": "Ovophis okinavensis",
+    "reference": "licensed-photos/himehabu.jpg",
+    "asset": "cute-himehabu-v1",
+    "source": "https://commons.wikimedia.org/wiki/File:Ovophis_okinavensis_100247421.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: ヒメハブ (Ovophis okinavensis). Short stout brown Okinawa pit viper, darker brown triangular bands, squat triangular head, vertical pupils, one gently coiled continuous body, one head and one tapering tail, closed mouth."
+  },
+  {
+    "id": "coral-snake",
+    "name": "ヒャン",
+    "scientific": "Sinomicrurus japonicus",
+    "reference": "licensed-photos/coral-snake.jpg",
+    "asset": "cute-coral-snake-v1",
+    "source": "https://commons.wikimedia.org/wiki/File:%E3%83%92%E3%83%A3%E3%83%B3_Sinomicrurus_japonicus._%E5%A5%84%E7%BE%8E%E5%B8%82%E5%90%8D%E7%80%AC%E5%8B%9D.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: ヒャン (Sinomicrurus japonicus). Japanese coral snake with thin orange/red body and black transverse bands as photo, small unobtrusive head, one continuous lightly looping body, one head one tail, closed mouth, no human face."
+  },
+  {
+    "id": "green-snake",
+    "name": "リュウキュウアオヘビ",
+    "scientific": "Cyclophiops semicarinatus",
+    "reference": "official-references/green-snake.jpg",
+    "asset": "cute-green-snake-v1",
+    "source": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/animal/aohebi.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: リュウキュウアオヘビ (Cyclophiops semicarinatus). Slender olive-green snake with plain unbanded green body and pale yellow belly, small narrow rounded head, round dark pupils. One continuous loosely coiled body, one head one tail."
+  },
+  {
+    "id": "akamata",
+    "name": "アカマタ",
+    "scientific": "Lycodon semicarinatus",
+    "reference": "licensed-photos/akamata.jpg",
+    "asset": "cute-akamata-v1",
+    "source": "https://commons.wikimedia.org/wiki/File:Lycodon_semicarinatus_by_OpenCage.JPG",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: アカマタ (Lycodon semicarinatus). Ryukyu odd-tooth snake with rust red/cream ground and dark broad transverse bands matching photo. Slender large snake, one head, one long continuous coiled body, one tail, closed mouth, no smile."
+  },
+  {
+    "id": "banded-gecko",
+    "name": "オビトカゲモドキ",
+    "scientific": "Goniurosaurus splendens",
+    "reference": "licensed-photos/banded-gecko.jpg",
+    "asset": "cute-banded-gecko-v1",
+    "source": "https://commons.wikimedia.org/wiki/File:%E3%82%AA%E3%83%93%E3%83%88%E3%82%AB%E3%82%B2%E3%83%A2%E3%83%89%E3%82%AD_%E5%BE%B3%E4%B9%8B%E5%B3%B6.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: オビトカゲモドキ (Goniurosaurus splendens). Tokunoshima banded ground gecko with dark purple brown body, four pale pinkish transverse bands across neck and trunk, ringed long tapering tail, large golden orange eyes with dark slit pupil, four legs."
+  },
+  {
+    "id": "otton-frog",
+    "name": "オットンガエル",
+    "scientific": "Babina subaspera",
+    "reference": "licensed-photos/otton-frog.jpg",
+    "asset": "cute-otton-frog-v1",
+    "source": "https://commons.wikimedia.org/wiki/File:%E3%82%AA%E3%83%83%E3%83%88%E3%83%B3%E3%82%AC%E3%82%A8%E3%83%AB.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: オットンガエル (Babina subaspera). Large robust dark brown Otton frog with folded long hind legs, small tubercles, modest eyes, short forelegs. Natural round frog silhouette, subtle smile only. Four limbs. Do not invent suction discs."
+  },
+  {
+    "id": "amami-tip-nosed-frog",
+    "name": "アマミハナサキガエル",
+    "scientific": "Odorrana amamiensis",
+    "reference": "licensed-photos/amami-tip-nosed-frog.jpg",
+    "asset": "cute-amami-tip-nosed-frog-v1",
+    "source": "https://commons.wikimedia.org/wiki/File:%E3%82%A2%E3%83%9E%E3%83%9F%E3%83%8F%E3%83%8A%E3%82%B5%E3%82%AD%E3%82%AC%E3%82%A8%E3%83%AB.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: アマミハナサキガエル (Odorrana amamiensis). Amami tip-nosed frog, green and brown mottled back, pale cream underparts, long folded rear legs, pointed snout. Four legs, dark stripe near face per photograph."
+  },
+  {
+    "id": "amami-crocodile-newt",
+    "name": "アマミイボイモリ",
+    "scientific": "Echinotriton raffaellii",
+    "reference": "licensed-photos/amami-crocodile-newt.jpg",
+    "asset": "cute-amami-crocodile-newt-v1",
+    "source": "https://commons.wikimedia.org/wiki/File:%E3%82%A2%E3%83%9E%E3%83%9F%E3%82%A4%E3%83%9C%E3%82%A4%E3%83%A2%E3%83%AA%E5%A5%84%E7%BE%8E%E5%B8%82.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: アマミイボイモリ (Echinotriton raffaellii). Amami crocodile newt: dark chocolate brown, broad flattened triangular head, squat stout body, bumpy ridges along sides and back, long flat tapering tail, four short limbs. No orange decorative belly or invented bright colors."
+  },
+  {
+    "id": "grey-faced-buzzard",
+    "name": "サシバ",
+    "scientific": "Butastur indicus",
+    "reference": "licensed-photos/grey-faced-buzzard.jpg",
+    "asset": "cute-grey-faced-buzzard-v1",
+    "source": "https://commons.wikimedia.org/wiki/File:Butastur_indicus.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: サシバ (Butastur indicus). Gray-faced buzzard perched upright, gray-brown head/back, pale throat, brown barred belly, yellow cere and feet, curved raptor bill, folded wings, long banded tail. Tiny friendly eye, natural raptor beak."
+  },
+  {
+    "id": "pale-thrush",
+    "name": "シロハラ",
+    "scientific": "Turdus pallidus",
+    "reference": "licensed-photos/pale-thrush.jpg",
+    "asset": "cute-pale-thrush-v1",
+    "source": "https://commons.wikimedia.org/wiki/File:Turdus_pallidus.JPG",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: シロハラ (Turdus pallidus). Pale thrush with gray brown head/back, pale cream-gray throat and belly, modest yellowish bill, pink-brown legs, dark wings, thrush proportions."
+  },
+  {
+    "id": "ruddy-kingfisher",
+    "name": "リュウキュウアカショウビン",
+    "scientific": "Halcyon coromanda bangsi",
+    "reference": "official-references/ruddy-kingfisher.jpg",
+    "asset": "cute-ruddy-kingfisher-v1",
+    "source": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/animal/akashoubin.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: リュウキュウアカショウビン (Halcyon coromanda bangsi). Adult Ryukyu ruddy kingfisher with very large red-orange pointed bill, chestnut red-purple head/back/wings and warm orange underparts, tiny red feet. Short tail, round chunky body. No blue kingfisher markings."
+  },
+  {
+    "id": "amami-stag",
+    "name": "アマミマルバネクワガタ",
+    "scientific": "Neolucanus protogenetivus protogenetivus",
+    "reference": "official-references/amami-stag.jpg",
+    "asset": "cute-amami-stag-v1",
+    "source": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/insect/resize/marubane.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: アマミマルバネクワガタ (Neolucanus protogenetivus protogenetivus). MALE Neolucanus protogenetivus protogenetivus. Broad shiny black round-oval stag beetle with moderately sized curved toothed mandibles matching reference. Six legs, two antennae. No giant deer antlers. No smiling mouth."
+  },
+  {
+    "id": "uke-stag",
+    "name": "ウケジママルバネクワガタ",
+    "scientific": "Neolucanus protogenetivus hamaii",
+    "reference": "official-references/uke-stag.jpg",
+    "asset": "cute-uke-stag-v1",
+    "source": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/insect/resize/ukejimamarubanekuwagata.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: ウケジママルバネクワガタ (Neolucanus protogenetivus hamaii). FEMALE Neolucanus protogenetivus hamaii, matching female photo: shiny deep black broad oval body, tiny short natural mandibles rather than huge male jaws, six legs and two antennae."
+  },
+  {
+    "id": "amami-deer-stag",
+    "name": "アマミシカクワガタ",
+    "scientific": "Rhaetulus recticornis",
+    "reference": "official-references/amami-deer-stag.jpg",
+    "asset": "cute-amami-deer-stag-v1",
+    "source": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/insect/resize/sikaku.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: アマミシカクワガタ (Rhaetulus recticornis). MALE Rhaetulus recticornis, matte black oval body with distinctive long curved deer-antler-like mandibles and few teeth, six legs two antennae. Keep characteristic jaw curves from photo, no smiling face."
+  },
+  {
+    "id": "amami-mountain-stag",
+    "name": "アマミミヤマクワガタ",
+    "scientific": "Lucanus ferriei",
+    "reference": "licensed-photos/amami-mountain-stag.jpg",
+    "asset": "cute-amami-mountain-stag-v1",
+    "source": "https://commons.wikimedia.org/wiki/File:%E3%82%A2%E3%83%9E%E3%83%9F%E3%83%9F%E3%83%A4%E3%83%9E%E3%82%AF%E3%83%AF%E3%82%AC%E3%82%BF%E2%99%82%E5%A5%84%E7%BE%8E%E5%A4%A7%E5%B3%B6P8115130.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: アマミミヤマクワガタ (Lucanus ferriei). MALE Lucanus ferriei stag beetle, reddish dark brown shiny wing covers and dark chest, natural branching broad curved mandibles and flared sides of pronotum matching photo. Six legs two antennae, no cartoon face smile."
+  },
+  {
+    "id": "broad-grooved-stag",
+    "name": "スジブトヒラタクワガタ",
+    "scientific": "Dorcus metacostatus",
+    "reference": "licensed-photos/broad-grooved-stag.jpg",
+    "asset": "cute-broad-grooved-stag-v1",
+    "source": "https://commons.wikimedia.org/wiki/File:%E3%82%B9%E3%82%B8%E3%83%96%E3%83%88%E3%83%92%E3%83%A9%E3%82%BF%E3%82%AF%E3%83%AF%E3%82%AC%E3%82%BF_Dorcus_metacostatus_%E2%99%82_%E5%A5%84%E7%BE%8E%E5%A4%A7%E5%B3%B6%E5%AE%87%E6%A4%9C%E6%9D%91.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: スジブトヒラタクワガタ (Dorcus metacostatus). MALE Dorcus metacostatus, shiny black broad flattened beetle with stout moderate mandibles, strongly longitudinal grooved elytra shown as a few black curved lines, six legs two antennae."
+  },
+  {
+    "id": "okinawa-peacock",
+    "name": "オキナワカラスアゲハ",
+    "scientific": "Papilio okinawensis",
+    "reference": "licensed-photos/okinawa-peacock.jpg",
+    "asset": "cute-okinawa-peacock-v1",
+    "source": "https://commons.wikimedia.org/wiki/File:%E3%82%AA%E3%82%AD%E3%83%8A%E3%83%AF%E3%82%AB%E3%83%A9%E3%82%B9%E3%82%A2%E3%82%B2%E3%83%8F.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: オキナワカラスアゲハ (Papilio okinawensis). Female Okinawa peacock butterfly as photo: dark charcoal wings with iridescent blue-green speckled sheen, pale bluish band on hindwing and reddish marginal spots. Four wings, 6 delicate legs, 2 antennae. Open wings clear dorsal view."
+  },
+  {
+    "id": "blue-tiger",
+    "name": "リュウキュウアサギマダラ",
+    "scientific": "Ideopsis similis",
+    "reference": "licensed-photos/blue-tiger.jpg",
+    "asset": "cute-blue-tiger-v1",
+    "source": "https://commons.wikimedia.org/wiki/File:Ideopsis_similis.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: リュウキュウアサギマダラ (Ideopsis similis). Ryukyu blue tiger butterfly, charcoal-black wing veins and borders with many pale blue mint translucent patches. Four wings spread, dark slender body, six small legs and two antennae. No human smile."
+  },
+  {
+    "id": "amami-dung-beetle",
+    "name": "マルダイコクコガネ",
+    "scientific": "Copris brachypterus",
+    "reference": "licensed-photos/amami-dung-beetle.jpg",
+    "asset": "cute-amami-dung-beetle-v1",
+    "source": "https://commons.wikimedia.org/wiki/File:%E3%83%9E%E3%83%AB%E3%83%80%E3%82%A4%E3%82%B3%E3%82%AF%E3%82%B3%E3%82%AC%E3%83%8DCopris_brachypterus_20241202%E5%A5%84%E7%BE%8E%E5%A4%A7%E5%B3%B6.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: マルダイコクコガネ (Copris brachypterus). Male Copris brachypterus round chunky glossy black dung beetle with a short upright horn on head, simplified grooves on wing covers and strong digging forelegs. Six legs, two small antennae, no smiling mouth."
+  },
+  {
+    "id": "winter-chafer",
+    "name": "ケブカコフキコガネ",
+    "scientific": "Tricholontha papagena",
+    "reference": "official-references/winter-chafer.jpg",
+    "asset": "cute-winter-chafer-v1",
+    "source": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/insect/resize/kebuka.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: ケブカコフキコガネ (Tricholontha papagena). Tricholontha papagena chafer: chestnut brown elongated oval wing covers with fine pale grooves, very hairy fuzzy golden brown thorax/head, fanlike antennae matching real photo, six brown legs. Cute fuzzy but still beetle not mammal."
+  },
+  {
+    "id": "white-striped-chafer",
+    "name": "オキナワシロスジコガネ",
+    "scientific": "Polyphylla schoenfeldti",
+    "reference": "licensed-photos/white-striped-chafer.jpg",
+    "asset": "cute-white-striped-chafer-v1",
+    "source": "https://commons.wikimedia.org/wiki/File:Polyphylla-schoenfeldti-2025-06-13-3.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: オキナワシロスジコガネ (Polyphylla schoenfeldti). Polyphylla schoenfeldti, oval dark brown chafer with cream longitudinal stripes on wing covers and pronotum, large fanlike antennae, six brown spiny legs. No smile."
+  },
+  {
+    "id": "ferrie-longhorn",
+    "name": "フェリエベニボシカミキリ",
+    "scientific": "Rosalia ferriei",
+    "reference": "licensed-photos/ferrie-longhorn.jpg",
+    "asset": "cute-ferrie-longhorn-v1",
+    "source": "https://commons.wikimedia.org/wiki/File:%E3%83%95%E3%82%A7%E3%83%AA%E3%82%A8%E3%83%99%E3%83%8B%E3%83%9C%E3%82%B7%E3%82%AB%E3%83%9F%E3%82%AD%E3%83%AARosalia_ferriei_%E5%AE%87%E6%A4%9C%E6%9D%91_%E5%A5%84%E7%BE%8E%E5%A4%A7%E5%B3%B6.jpg",
+    "prompt": "Use case: scientific-educational illustration. Produce ONE full-body transparent wildlife character for a Japanese Amami fauna encyclopedia. Image 1 is a genuine real photograph of the named taxon, use for anatomy, exact color patterns and distinctive morphology ONLY. Image 2 defines the approved STYLE: friendly rounded cute proportions, tiny dot eyes, loose thick hand-drawn black charcoal outlines, matte gouache/crayon color blocks and soft pigment grain within the silhouette. New natural pose, do not reproduce photo composition. No realism or detailed shading, no 3D, no polished vector, no costumes, no words, no background or opaque paper rectangle, no ground, no cast shadow/glow beyond animal. Real transparent alpha. Entire animal and appendages visible with margin. Avoid human mouth marks on insects/reptiles. Taxon: フェリエベニボシカミキリ (Rosalia ferriei). Rosalia ferriei longhorn beetle: orange-red body/elytra with distinct round BLACK spots, long slender dark antennae and six slim legs. Correct warm orange rather than blue Rosalia alpina. No smile."
+  }
+]

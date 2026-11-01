@@ -35,12 +35,12 @@
       "請島"
     ],
     "lead": "青と赤茶の羽をもつ奄美の鳥",
-    "fact": "青と赤茶の羽、淡いくちばしが目印。森の木々の間を移動します。",
+    "fact": "カラス科の鳥です。青と赤茶の羽、黒い目元、淡いくちばしが目印。森の木々の間を移動します。",
     "season": "出現期は整理中",
     "sources": [
       "awcc"
     ],
-    "asset": "cute-lidths-jay-v1",
+    "asset": "cute-lidths-jay-v2",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
@@ -126,11 +126,11 @@
     "sources": [
       "awcc"
     ],
-    "asset": null,
+    "asset": "cute-amami-spiny-rat-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "tokunoshima-spiny-rat",
@@ -148,11 +148,11 @@
     "sources": [
       "awcc"
     ],
-    "asset": null,
+    "asset": "cute-tokunoshima-spiny-rat-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "long-haired-rat",
@@ -171,11 +171,11 @@
     "sources": [
       "awcc"
     ],
-    "asset": null,
+    "asset": "cute-long-haired-rat-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "orii-bat",
@@ -196,11 +196,11 @@
     "sources": [
       "awcc"
     ],
-    "asset": null,
+    "asset": "cute-orii-bat-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "orii-shrew",
@@ -220,11 +220,11 @@
     "sources": [
       "awcc"
     ],
-    "asset": null,
+    "asset": "cute-orii-shrew-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "watase-shrew",
@@ -240,11 +240,11 @@
     "sources": [
       "awcc"
     ],
-    "asset": null,
+    "asset": "cute-watase-shrew-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "amami-woodcock",
@@ -260,11 +260,11 @@
     "sources": [
       "awcc"
     ],
-    "asset": null,
+    "asset": "cute-amami-woodcock-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "ryukyu-robin",
@@ -280,11 +280,11 @@
     "sources": [
       "awcc"
     ],
-    "asset": null,
+    "asset": "cute-ryukyu-robin-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "ryukyu-scops-owl",
@@ -300,11 +300,11 @@
     "sources": [
       "awcc"
     ],
-    "asset": null,
+    "asset": "cute-ryukyu-scops-owl-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "black-wood-pigeon",
@@ -320,11 +320,11 @@
     "sources": [
       "awcc"
     ],
-    "asset": null,
+    "asset": "cute-black-wood-pigeon-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "green-pigeon",
@@ -340,11 +340,11 @@
     "sources": [
       "awcc"
     ],
-    "asset": null,
+    "asset": "cute-green-pigeon-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "habu",
@@ -360,11 +360,11 @@
     "sources": [
       "awcc"
     ],
-    "asset": null,
+    "asset": "cute-habu-v2",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "himehabu",
@@ -380,11 +380,11 @@
     "sources": [
       "awcc"
     ],
-    "asset": null,
+    "asset": "cute-himehabu-v2",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "coral-snake",
@@ -406,11 +406,11 @@
     "sources": [
       "awcc"
     ],
-    "asset": null,
+    "asset": "cute-coral-snake-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "green-snake",
@@ -426,11 +426,11 @@
     "sources": [
       "awcc"
     ],
-    "asset": null,
+    "asset": "cute-green-snake-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "akamata",
@@ -446,11 +446,11 @@
     "sources": [
       "awcc"
     ],
-    "asset": null,
+    "asset": "cute-akamata-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "banded-gecko",
@@ -468,11 +468,11 @@
     "sources": [
       "awcc"
     ],
-    "asset": null,
+    "asset": "cute-banded-gecko-v3",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "otton-frog",
@@ -491,11 +491,11 @@
     "sources": [
       "awcc"
     ],
-    "asset": null,
+    "asset": "cute-otton-frog-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "amami-tip-nosed-frog",
@@ -514,11 +514,11 @@
     "sources": [
       "awcc"
     ],
-    "asset": null,
+    "asset": "cute-amami-tip-nosed-frog-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "amami-crocodile-newt",
@@ -537,11 +537,11 @@
     "sources": [
       "awcc"
     ],
-    "asset": null,
+    "asset": "cute-amami-crocodile-newt-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "grey-faced-buzzard",
@@ -557,11 +557,11 @@
     "sources": [
       "awcc"
     ],
-    "asset": null,
+    "asset": "cute-grey-faced-buzzard-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "pale-thrush",
@@ -577,11 +577,11 @@
     "sources": [
       "awcc"
     ],
-    "asset": null,
+    "asset": "cute-pale-thrush-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "ruddy-kingfisher",
@@ -597,11 +597,11 @@
     "sources": [
       "awcc"
     ],
-    "asset": null,
+    "asset": "cute-ruddy-kingfisher-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "amami-stag",
@@ -621,11 +621,11 @@
     "sources": [
       "insects"
     ],
-    "asset": null,
+    "asset": "cute-amami-stag-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "uke-stag",
@@ -643,11 +643,11 @@
     "sources": [
       "insects"
     ],
-    "asset": null,
+    "asset": "cute-uke-stag-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "amami-deer-stag",
@@ -663,11 +663,11 @@
     "sources": [
       "insects"
     ],
-    "asset": null,
+    "asset": "cute-amami-deer-stag-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "amami-mountain-stag",
@@ -685,11 +685,11 @@
     "sources": [
       "insects"
     ],
-    "asset": null,
+    "asset": "cute-amami-mountain-stag-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "broad-grooved-stag",
@@ -705,11 +705,11 @@
     "sources": [
       "insects"
     ],
-    "asset": null,
+    "asset": "cute-broad-grooved-stag-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "okinawa-peacock",
@@ -725,11 +725,11 @@
     "sources": [
       "insects"
     ],
-    "asset": null,
+    "asset": "cute-okinawa-peacock-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "blue-tiger",
@@ -745,11 +745,11 @@
     "sources": [
       "insects"
     ],
-    "asset": null,
+    "asset": "cute-blue-tiger-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "amami-dung-beetle",
@@ -768,11 +768,11 @@
     "sources": [
       "insects"
     ],
-    "asset": null,
+    "asset": "cute-amami-dung-beetle-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "winter-chafer",
@@ -792,11 +792,11 @@
     "sources": [
       "insects"
     ],
-    "asset": null,
+    "asset": "cute-winter-chafer-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "white-striped-chafer",
@@ -812,11 +812,11 @@
     "sources": [
       "insects"
     ],
-    "asset": null,
+    "asset": "cute-white-striped-chafer-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   },
   {
     "id": "ferrie-longhorn",
@@ -834,10 +834,10 @@
     "sources": [
       "insects"
     ],
-    "asset": null,
+    "asset": "cute-ferrie-longhorn-v1",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
-    "illustrationStatus": "pending"
+    "illustrationStatus": "generated-photo-referenced"
   }
 ]

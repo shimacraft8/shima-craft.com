@@ -1,0 +1,2234 @@
+[
+  {
+    "name": "アマミノクロウサギ",
+    "group": "哺乳類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "amami-rabbit",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アマミトゲネズミ",
+    "group": "哺乳類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "amami-spiny-rat",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "トクノシマトゲネズミ",
+    "group": "哺乳類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "tokunoshima-spiny-rat",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ケナガネズミ",
+    "group": "哺乳類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "long-haired-rat",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オリイジネズミ",
+    "group": "哺乳類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "orii-shrew",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ワタセジネズミ",
+    "group": "哺乳類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "watase-shrew",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "リュウキュウイノシシ",
+    "group": "哺乳類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "リュウキュウテングコウモリ",
+    "group": "哺乳類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "リュウキュウユビナガコウモリ",
+    "group": "哺乳類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オリイコキクガシラコウモリ",
+    "group": "哺乳類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "orii-bat",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ヤンバルホオヒゲコウモリ",
+    "group": "哺乳類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ザトウクジラ",
+    "group": "哺乳類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "マッコウクジラ",
+    "group": "哺乳類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ルリカケス",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "lidths-jay",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アマミヤマシギ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "amami-woodcock",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オオトラツグミ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "日本鳥類目録第8版のミナミトラツグミとの種・亜種関係を一次資料で照合。"
+  },
+  {
+    "name": "アカヒゲ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "ryukyu-robin",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オーストンオオアカゲラ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "カラスバト",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "black-wood-pigeon",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ズアカアオバト",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "green-pigeon",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "リュウキュウアカショウビン",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "ruddy-kingfisher",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "リュウキュウコノハズク",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "ryukyu-scops-owl",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "リュウキュウアオバズク",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "リュウキュウサンコウチョウ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "リュウキュウサンショウクイ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "リュウキュウキビタキ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "リュウキュウメジロ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アマミヤマガラ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "コゲラ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "カワセミ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "サシバ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "grey-faced-buzzard",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ツミ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ハヤブサ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ミサゴ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "トラツグミ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "シロハラ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "pale-thrush",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ウグイス",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ヒヨドリ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "イソヒヨドリ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "リュウキュウツバメ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ハクセキレイ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "キビタキ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "サンショウクイ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ヤマシギ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アオサギ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "クロサギ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ダイサギ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "チュウサギ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ゴイサギ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ミゾゴイ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ヒクイナ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "シロハラクイナ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "バン",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "タシギ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ムナグロ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "シロチドリ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "クロツラヘラサギ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "スズガモ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オナガガモ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オオミズナギドリ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "シラオネッタイチョウ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "コシジロウミツバメ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ウミネコ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "エリグロアジサシ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ベニアジサシ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "コアジサシ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "サカツラガン",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "メジロガモ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ホシバシペリカン",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "奄美野鳥の会の訂正情報を照合。旧モモイロペリカン表記と二重計上しない。"
+  },
+  {
+    "name": "チョウセンウグイス",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オニカッコウ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オオジシギ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ロクショウヒタキ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ナンキンオシ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オオカラモズ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "コキアシシギ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "カンムリカッコウ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "カラフトムジセッカ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "カナダヅル",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "チョウセンメジロ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "コシギ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "チゴモズ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ヨーロッパムナグロ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "チャガシラカモメ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "イナバヒタキ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "セグロサバクヒタキ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ハチジョウツグミ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ノドアカツグミ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ニシイワツバメ",
+    "group": "鳥類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ハブ",
+    "group": "爬虫類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "habu",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ヒメハブ",
+    "group": "爬虫類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "himehabu",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ヒャン",
+    "group": "爬虫類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "coral-snake",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ハイ",
+    "group": "爬虫類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "徳之島の旧ハイとヒャンの分類変更を照合。独立した奄美記録として重複計上しない。"
+  },
+  {
+    "name": "アカマタ",
+    "group": "爬虫類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "akamata",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ガラスヒバァ",
+    "group": "爬虫類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "リュウキュウアオヘビ",
+    "group": "爬虫類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "green-snake",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アマミタカチホヘビ",
+    "group": "爬虫類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オビトカゲモドキ",
+    "group": "爬虫類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "banded-gecko",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アマミヤモリ",
+    "group": "爬虫類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ホオグロヤモリ",
+    "group": "爬虫類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オキナワキノボリトカゲ",
+    "group": "爬虫類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "バーバートカゲ",
+    "group": "爬虫類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オオシマトカゲ",
+    "group": "爬虫類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アオカナヘビ",
+    "group": "爬虫類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アカウミガメ",
+    "group": "爬虫類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アオウミガメ",
+    "group": "爬虫類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "green-turtle",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "タイマイ",
+    "group": "爬虫類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オサガメ",
+    "group": "爬虫類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "エラブウミヘビ",
+    "group": "爬虫類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ヒロオウミヘビ",
+    "group": "爬虫類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アマミイシカワガエル",
+    "group": "両生類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "amami-ishikawa-frog",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オットンガエル",
+    "group": "両生類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "otton-frog",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アマミハナサキガエル",
+    "group": "両生類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "amami-tip-nosed-frog",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アマミアカガエル",
+    "group": "両生類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アマミアオガエル",
+    "group": "両生類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ハロウエルアマガエル",
+    "group": "両生類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "標準和名ハロウェルアマガエルとの表記を照合。"
+  },
+  {
+    "name": "ヒメアマガエル",
+    "group": "両生類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ヌマガエル",
+    "group": "両生類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "リュウキュウカジカガエル",
+    "group": "両生類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アマミイボイモリ",
+    "group": "両生類",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "amami-crocodile-newt",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アマミシリケンイモリ",
+    "group": "両生類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "シロアゴガエル",
+    "group": "両生類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "外来種として指定。島別の確認記録・定着状況を照合。"
+  },
+  {
+    "name": "アマミマルバネクワガタ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "amami-stag",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ウケジママルバネクワガタ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "uke-stag",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アマミシカクワガタ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "amami-deer-stag",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アマミミヤマクワガタ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "amami-mountain-stag",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "スジブトヒラタクワガタ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "broad-grooved-stag",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "マルダイコクコガネ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "amami-dung-beetle",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ケブカコフキコガネ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "winter-chafer",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オキナワシロスジコガネ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "white-striped-chafer",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アマミナガゴミムシ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "フェリエベニボシカミキリ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "ferrie-longhorn",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ヨツオビハレギカミキリ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アマミキンモンフタオタマムシ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ヒメフチトリゲンゴロウ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "フチトリゲンゴロウ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オキナワスジゲンゴロウ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "リュウキュウヒメミズスマシ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "エグリタマミズムシ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アマミサナエ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アマミトゲオトンボ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ハネナガチョウトンボ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "リュウキュウハグロトンボ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "カラスヤンマ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オキナワカラスアゲハ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "okinawa-peacock",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "リュウキュウアサギマダラ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "editorial-entry-exists",
+    "entryId": "blue-tiger",
+    "illustrationStatus": "generated-photo-referenced",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アカボシゴマダラ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オオゴマダラ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "コブナナフシ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オオシマゼミ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "リュウキュウアブラゼミ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アオスジコシブトハナバチ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "キマダラマツムシ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "リュウキュウサワマツムシ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "クスサン",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ハグルマヤママユ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ヤママユ",
+    "group": "昆虫",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "ユーザー指定は沖縄亜種。亜種名と奄美群島の記録を照合。"
+  },
+  {
+    "name": "リュウキュウアユ",
+    "group": "川・池・汽水域の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "現在の分布と過去の記録、徳之島の地域絶滅を区別する。"
+  },
+  {
+    "name": "オオウナギ",
+    "group": "川・池・汽水域の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ウナギ",
+    "group": "川・池・汽水域の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "キバラヨシノボリ",
+    "group": "川・池・汽水域の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アカボウズハゼ",
+    "group": "川・池・汽水域の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ヨロイボウズハゼ",
+    "group": "川・池・汽水域の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ルリボウズハゼ",
+    "group": "川・池・汽水域の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "コンテリボウズハゼ",
+    "group": "川・池・汽水域の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ヒノコロモボウズハゼ",
+    "group": "川・池・汽水域の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ナンヨウボウズハゼ",
+    "group": "川・池・汽水域の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ツバサハゼ",
+    "group": "川・池・汽水域の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "タナゴモドキ",
+    "group": "川・池・汽水域の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "タメトモハゼ",
+    "group": "川・池・汽水域の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ミミズハゼ",
+    "group": "川・池・汽水域の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ギンブナ",
+    "group": "川・池・汽水域の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "コイ",
+    "group": "川・池・汽水域の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "移入個体群を含む指定。在来・移入を島別に照合。"
+  },
+  {
+    "name": "ミナミメダカ",
+    "group": "川・池・汽水域の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ドジョウ",
+    "group": "川・池・汽水域の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "カダヤシ",
+    "group": "川・池・汽水域の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "外来種として指定。島別の確認記録・定着状況を照合。"
+  },
+  {
+    "name": "アオダイ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ハマダイ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "キビレアカレンコ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ウケグチイットウダイ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アオヤガラ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ニライカサゴ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "メギス",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "リュウキュウヤライイシモチ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ヤライイシモチ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "キンセンイシモチ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "コバンアジ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ヨスジフエダイ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ヒメフエダイ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ミナミクロサギ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ヒトスジタマガシラ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ヨメヒメジ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "モンツキアカヒメジ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アカヒメジ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ホウライヒメジ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オジサン",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "トゲチョウチョウウオ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "フウライチョウチョウウオ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "チョウハン",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ハタタテダイ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ツノダシ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ツバメウオ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ウメイロモドキ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "モンガラカワハギ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ユカタハタ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "キンメモドキ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オヤビッチャ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ナンヨウハギ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "セグロチョウチョウウオ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "コロダイ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "フエヤッコダイ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ニシキブダイ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ミヤコテングハギ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "キホシスズメダイ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "クマノミ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ヤマブキベラ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ケラマハナダイ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ノコギリダイ",
+    "group": "海の魚類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ヤシガニ",
+    "group": "甲殻類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オカヤドカリ",
+    "group": "甲殻類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ムラサキオカヤドカリ",
+    "group": "甲殻類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ナキオカヤドカリ",
+    "group": "甲殻類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "リュウキュウサワガニ",
+    "group": "甲殻類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アマミミナミサワガニ",
+    "group": "甲殻類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "サカモトサワガニ",
+    "group": "甲殻類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ベンケイガニ",
+    "group": "甲殻類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オカガニ",
+    "group": "甲殻類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "カクレイワガニ",
+    "group": "甲殻類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "リュウキュウシオマネキ",
+    "group": "甲殻類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ヤエヤマシオマネキ",
+    "group": "甲殻類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ルリマダラシオマネキ",
+    "group": "甲殻類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ベニシオマネキ",
+    "group": "甲殻類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アシハラガニ",
+    "group": "甲殻類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オサガニ",
+    "group": "甲殻類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "チゴイワガニ",
+    "group": "甲殻類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ツノメチゴガニ",
+    "group": "甲殻類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ヒメヒライソモドキ",
+    "group": "甲殻類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "コウナガカワスナガニ",
+    "group": "甲殻類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ヨウナシカワスナガニ",
+    "group": "甲殻類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ムツアシガニ",
+    "group": "甲殻類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オオヨコナガピンノ",
+    "group": "甲殻類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "コブシアナジャコ",
+    "group": "甲殻類",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "アマミサソリモドキ",
+    "group": "クモ・多足類など",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オオハシリグモ",
+    "group": "クモ・多足類など",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ギンボシザトウムシ",
+    "group": "クモ・多足類など",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "オオゲジ",
+    "group": "クモ・多足類など",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
+  },
+  {
+    "name": "ハイイロゴケグモ",
+    "group": "クモ・多足類など",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "外来種として指定。島別の確認記録・定着状況を照合。"
+  },
+  {
+    "name": "セアカゴケグモ",
+    "group": "クモ・多足類など",
+    "origin": "user-request-2026-11-01",
+    "status": "source-verification-pending",
+    "entryId": "",
+    "illustrationStatus": "pending",
+    "note": "外来種として指定。島別の確認記録・定着状況を照合。"
+  }
+]

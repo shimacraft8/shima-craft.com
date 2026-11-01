@@ -1,0 +1,282 @@
+[
+  {
+    "id": "akamata",
+    "master": "assets/animals/cute-akamata-v1.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:Lycodon_semicarinatus_by_OpenCage.JPG",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "amami-crocodile-newt",
+    "master": "assets/animals/cute-amami-crocodile-newt-v1.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:%E3%82%A2%E3%83%9E%E3%83%9F%E3%82%A4%E3%83%9C%E3%82%A4%E3%83%A2%E3%83%AA%E5%A5%84%E7%BE%8E%E5%B8%82.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "amami-deer-stag",
+    "master": "assets/animals/cute-amami-deer-stag-v1.png",
+    "photoReference": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/insect/resize/sikaku.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "amami-dung-beetle",
+    "master": "assets/animals/cute-amami-dung-beetle-v1.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:%E3%83%9E%E3%83%AB%E3%83%80%E3%82%A4%E3%82%B3%E3%82%AF%E3%82%B3%E3%82%AC%E3%83%8DCopris_brachypterus_20241202%E5%A5%84%E7%BE%8E%E5%A4%A7%E5%B3%B6.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "amami-mountain-stag",
+    "master": "assets/animals/cute-amami-mountain-stag-v1.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:%E3%82%A2%E3%83%9E%E3%83%9F%E3%83%9F%E3%83%A4%E3%83%9E%E3%82%AF%E3%83%AF%E3%82%AC%E3%82%BF%E2%99%82%E5%A5%84%E7%BE%8E%E5%A4%A7%E5%B3%B6P8115130.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "amami-spiny-rat",
+    "master": "assets/animals/cute-amami-spiny-rat-v1.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:Tokudaia_osimensis_2.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "amami-stag",
+    "master": "assets/animals/cute-amami-stag-v1.png",
+    "photoReference": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/insect/resize/marubane.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "amami-tip-nosed-frog",
+    "master": "assets/animals/cute-amami-tip-nosed-frog-v1.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:%E3%82%A2%E3%83%9E%E3%83%9F%E3%83%8F%E3%83%8A%E3%82%B5%E3%82%AD%E3%82%AC%E3%82%A8%E3%83%AB.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "amami-woodcock",
+    "master": "assets/animals/cute-amami-woodcock-v1.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:Amami_Woodcock_imported_from_iNaturalist_photo_387708832_on_13_June_2024.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "black-wood-pigeon",
+    "master": "assets/animals/cute-black-wood-pigeon-v1.png",
+    "photoReference": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/animal/karasubato.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "blue-tiger",
+    "master": "assets/animals/cute-blue-tiger-v1.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:Ideopsis_similis.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "broad-grooved-stag",
+    "master": "assets/animals/cute-broad-grooved-stag-v1.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:%E3%82%B9%E3%82%B8%E3%83%96%E3%83%88%E3%83%92%E3%83%A9%E3%82%BF%E3%82%AF%E3%83%AF%E3%82%AC%E3%82%BF_Dorcus_metacostatus_%E2%99%82_%E5%A5%84%E7%BE%8E%E5%A4%A7%E5%B3%B6%E5%AE%87%E6%A4%9C%E6%9D%91.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "coral-snake",
+    "master": "assets/animals/cute-coral-snake-v1.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:%E3%83%92%E3%83%A3%E3%83%B3_Sinomicrurus_japonicus._%E5%A5%84%E7%BE%8E%E5%B8%82%E5%90%8D%E7%80%AC%E5%8B%9D.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "ferrie-longhorn",
+    "master": "assets/animals/cute-ferrie-longhorn-v1.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:%E3%83%95%E3%82%A7%E3%83%AA%E3%82%A8%E3%83%99%E3%83%8B%E3%83%9C%E3%82%B7%E3%82%AB%E3%83%9F%E3%82%AD%E3%83%AARosalia_ferriei_%E5%AE%87%E6%A4%9C%E6%9D%91_%E5%A5%84%E7%BE%8E%E5%A4%A7%E5%B3%B6.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "green-pigeon",
+    "master": "assets/animals/cute-green-pigeon-v1.png",
+    "photoReference": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/animal/zuaka.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "green-snake",
+    "master": "assets/animals/cute-green-snake-v1.png",
+    "photoReference": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/animal/aohebi.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "grey-faced-buzzard",
+    "master": "assets/animals/cute-grey-faced-buzzard-v1.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:Butastur_indicus.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "long-haired-rat",
+    "master": "assets/animals/cute-long-haired-rat-v1.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:%E3%82%B1%E3%83%8A%E3%82%AC%E3%83%8D%E3%82%BA%E3%83%9F_%E5%A5%84%E7%BE%8E%E5%A4%A7%E5%B3%B6%E5%A5%84%E7%BE%8E%E5%B8%82.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "okinawa-peacock",
+    "master": "assets/animals/cute-okinawa-peacock-v1.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:%E3%82%AA%E3%82%AD%E3%83%8A%E3%83%AF%E3%82%AB%E3%83%A9%E3%82%B9%E3%82%A2%E3%82%B2%E3%83%8F.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "orii-bat",
+    "master": "assets/animals/cute-orii-bat-v1.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:%E3%82%AA%E3%83%AA%E3%82%A4%E3%82%B3%E3%82%AD%E3%82%AF%E3%82%AC%E3%82%B7%E3%83%A9%E3%82%B3%E3%82%A6%E3%83%A2%E3%83%AA_Rhinolophus_cornutus_orii%EF%BC%8E%E5%A5%84%E7%BE%8E%E5%A4%A7%E5%B3%B6.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "orii-shrew",
+    "master": "assets/animals/cute-orii-shrew-v1.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:Crocidura_orii_Amami.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "otton-frog",
+    "master": "assets/animals/cute-otton-frog-v1.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:%E3%82%AA%E3%83%83%E3%83%88%E3%83%B3%E3%82%AC%E3%82%A8%E3%83%AB.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "pale-thrush",
+    "master": "assets/animals/cute-pale-thrush-v1.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:Turdus_pallidus.JPG",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "ruddy-kingfisher",
+    "master": "assets/animals/cute-ruddy-kingfisher-v1.png",
+    "photoReference": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/animal/akashoubin.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "ryukyu-robin",
+    "master": "assets/animals/cute-ryukyu-robin-v1.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:Luscinia_komadori_female_2.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "ryukyu-scops-owl",
+    "master": "assets/animals/cute-ryukyu-scops-owl-v1.png",
+    "photoReference": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/animal/konohaduku.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "tokunoshima-spiny-rat",
+    "master": "assets/animals/cute-tokunoshima-spiny-rat-v1.png",
+    "photoReference": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/animal/tokunosimatogenezumi.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "uke-stag",
+    "master": "assets/animals/cute-uke-stag-v1.png",
+    "photoReference": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/insect/resize/ukejimamarubanekuwagata.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "watase-shrew",
+    "master": "assets/animals/cute-watase-shrew-v1.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:Crocidura_watasei_Amami.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "white-striped-chafer",
+    "master": "assets/animals/cute-white-striped-chafer-v1.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:Polyphylla-schoenfeldti-2025-06-13-3.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "winter-chafer",
+    "master": "assets/animals/cute-winter-chafer-v1.png",
+    "photoReference": "https://kyushu.env.go.jp/okinawa/awcc/images/amami/insect/resize/kebuka.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "白背景の一覧で種の特徴と明らかな形状破綻を確認。専門監修は未実施。"
+  },
+  {
+    "id": "habu",
+    "master": "assets/animals/cute-habu-v2.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:Protobothrops_flavoviridis_285176627.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "体を重ねない姿勢。頭1つ、尾1本を確認。"
+  },
+  {
+    "id": "himehabu",
+    "master": "assets/animals/cute-himehabu-v2.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:Ovophis_okinavensis_100247421.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "体を重ねない姿勢。胴体の交差・融合なし、尾1本を確認。"
+  },
+  {
+    "id": "lidths-jay",
+    "master": "assets/animals/cute-lidths-jay-v2.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:Garrulus_lidthi_387742719.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "カラス科らしく胴を細くし首と尾を伸ばした。黒い目元を維持。"
+  },
+  {
+    "id": "banded-gecko",
+    "master": "assets/animals/cute-banded-gecko-v3.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:%E3%82%AA%E3%83%93%E3%83%88%E3%82%AB%E3%82%B2%E3%83%A2%E3%83%89%E3%82%AD_%E5%BE%B3%E4%B9%8B%E5%B3%B6.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "真上からの構図に変更。独立した前脚2本・後脚2本、尾1本を目視確認。v1/v2は不採用。"
+  }
+]

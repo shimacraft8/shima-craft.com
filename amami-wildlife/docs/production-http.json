@@ -1,0 +1,735 @@
+{
+  "time": "2026-11-01T01:20:39.317653+00:00",
+  "checks": 91,
+  "passed": 48,
+  "results": [
+    {
+      "path": "/wildlife/about/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/about/",
+      "title": "この図鑑について｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-amami-ishikawa-frog-v1.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/animals/cute-amami-ishikawa-frog-v1.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-amami-rabbit-v1.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/animals/cute-amami-rabbit-v1.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-camponotus-amamianus-v2.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/animals/cute-camponotus-amamianus-v2.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-green-turtle-v1.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/animals/cute-green-turtle-v1.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-lidths-jay-v1.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/animals/cute-lidths-jay-v1.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/app.js",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/app.js",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/habitat.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/habitat.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/akamata.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/akamata.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/amami-crocodile-newt.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/amami-crocodile-newt.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/amami-dung-beetle.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/amami-dung-beetle.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/amami-ishikawa-frog.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/amami-ishikawa-frog.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/amami-mountain-stag.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/amami-mountain-stag.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/amami-rabbit.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/amami-rabbit.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/amami-spiny-rat.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/amami-spiny-rat.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/amami-tip-nosed-frog.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/amami-tip-nosed-frog.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/amami-woodcock.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/amami-woodcock.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/banded-gecko.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/banded-gecko.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/blue-tiger.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/blue-tiger.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/broad-grooved-stag.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/broad-grooved-stag.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/camponotus-amamianus.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/camponotus-amamianus.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/coral-snake.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/coral-snake.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/ferrie-longhorn.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/ferrie-longhorn.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/green-turtle.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/green-turtle.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/grey-faced-buzzard.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/grey-faced-buzzard.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/habu.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/habu.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/himehabu.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/himehabu.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/lidths-jay.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/lidths-jay.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/long-haired-rat.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/long-haired-rat.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/okinawa-peacock.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/okinawa-peacock.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/orii-bat.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/orii-bat.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/orii-shrew.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/orii-shrew.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/otton-frog.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/otton-frog.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/pale-thrush.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/pale-thrush.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/ruddy-kingfisher.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/ruddy-kingfisher.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/ryukyu-robin.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/ryukyu-robin.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/watase-shrew.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/watase-shrew.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/photos/white-striped-chafer.webp",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/photos/white-striped-chafer.webp",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/assets/style.css",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/assets/style.css",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/data/checklist-records.csv",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/data/checklist-records.csv",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/data/checklist-records.json",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/data/checklist-records.json",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/data/photos.json",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/data/photos.json",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/data/sources.json",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/data/sources.json",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/data/species.json",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/data/species.json",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/",
+      "title": "奄美大島の生き物大全｜SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/research/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/research/",
+      "title": "収録状況・出典｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/sitemap.xml",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/sitemap.xml",
+      "title": null,
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/wildlife/species/akamata/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/akamata/",
+      "title": "アカマタ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/amami-crocodile-newt/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/amami-crocodile-newt/",
+      "title": "アマミイボイモリ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/amami-deer-stag/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/amami-deer-stag/",
+      "title": "アマミシカクワガタ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/amami-dung-beetle/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/amami-dung-beetle/",
+      "title": "マルダイコクコガネ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/amami-ishikawa-frog/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/amami-ishikawa-frog/",
+      "title": "アマミイシカワガエル｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/amami-mountain-stag/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/amami-mountain-stag/",
+      "title": "アマミミヤマクワガタ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/amami-rabbit/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/amami-rabbit/",
+      "title": "アマミノクロウサギ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/amami-spiny-rat/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/amami-spiny-rat/",
+      "title": "アマミトゲネズミ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/amami-stag/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/amami-stag/",
+      "title": "アマミマルバネクワガタ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/amami-tip-nosed-frog/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/amami-tip-nosed-frog/",
+      "title": "アマミハナサキガエル｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/amami-woodcock/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/amami-woodcock/",
+      "title": "アマミヤマシギ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/banded-gecko/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/banded-gecko/",
+      "title": "オビトカゲモドキ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/black-wood-pigeon/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/black-wood-pigeon/",
+      "title": "カラスバト｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/blue-tiger/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/blue-tiger/",
+      "title": "リュウキュウアサギマダラ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/broad-grooved-stag/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/broad-grooved-stag/",
+      "title": "スジブトヒラタクワガタ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/camponotus-amamianus/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/camponotus-amamianus/",
+      "title": "ツヤミカドオオアリ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/coral-snake/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/coral-snake/",
+      "title": "ヒャン｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/ferrie-longhorn/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/ferrie-longhorn/",
+      "title": "フェリエベニボシカミキリ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/green-pigeon/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/green-pigeon/",
+      "title": "ズアカアオバト｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/green-snake/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/green-snake/",
+      "title": "リュウキュウアオヘビ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/green-turtle/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/green-turtle/",
+      "title": "アオウミガメ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/grey-faced-buzzard/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/grey-faced-buzzard/",
+      "title": "サシバ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/habu/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/habu/",
+      "title": "ハブ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/himehabu/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/himehabu/",
+      "title": "ヒメハブ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/lidths-jay/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/lidths-jay/",
+      "title": "ルリカケス｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/long-haired-rat/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/long-haired-rat/",
+      "title": "ケナガネズミ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/okinawa-peacock/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/okinawa-peacock/",
+      "title": "オキナワカラスアゲハ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/orii-bat/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/orii-bat/",
+      "title": "オリイコキクガシラコウモリ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/orii-shrew/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/orii-shrew/",
+      "title": "オリイジネズミ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/otton-frog/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/otton-frog/",
+      "title": "オットンガエル｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/pale-thrush/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/pale-thrush/",
+      "title": "シロハラ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/ruddy-kingfisher/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/ruddy-kingfisher/",
+      "title": "リュウキュウアカショウビン｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/ryukyu-robin/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/ryukyu-robin/",
+      "title": "アカヒゲ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/ryukyu-scops-owl/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/ryukyu-scops-owl/",
+      "title": "リュウキュウコノハズク｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/tokunoshima-spiny-rat/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/tokunoshima-spiny-rat/",
+      "title": "トクノシマトゲネズミ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/uke-stag/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/uke-stag/",
+      "title": "ウケジママルバネクワガタ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/watase-shrew/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/watase-shrew/",
+      "title": "ワタセジネズミ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/white-striped-chafer/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/white-striped-chafer/",
+      "title": "オキナワシロスジコガネ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/species/winter-chafer/",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/species/winter-chafer/",
+      "title": "ケブカコフキコガネ｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife",
+      "status": 200,
+      "final": "https://shima-craft.com/wildlife/",
+      "title": "奄美大島の生き物大全｜SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": false
+    },
+    {
+      "path": "/wildlife/not-a-species/",
+      "status": 404,
+      "final": "https://shima-craft.com/wildlife/not-a-species/",
+      "title": "ページが見つかりません｜奄美大島の生き物大全・SHIMA CRAFT",
+      "release": "0.1.0",
+      "pass": true
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "final": "https://shima-craft.com/",
+      "title": "AMAMI LIFE｜奄美の今日・天気・潮汐・交通｜SHIMA CRAFT",
+      "release": null,
+      "pass": true
+    },
+    {
+      "path": "/studio",
+      "status": 200,
+      "final": "https://shima-craft.com/studio",
+      "title": "SHIMA CRAFT｜奄美発・全国対応のホームページ制作",
+      "release": null,
+      "pass": true
+    },
+    {
+      "path": "/privacy",
+      "status": 200,
+      "final": "https://shima-craft.com/privacy",
+      "title": "プライバシーポリシー｜SHIMA CRAFT",
+      "release": null,
+      "pass": true
+    }
+  ]
+}

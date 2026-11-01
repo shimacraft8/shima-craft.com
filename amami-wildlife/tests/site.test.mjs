@@ -51,3 +51,21 @@ test('real photographs have reusable licenses, attribution, reviewed identities 
 test('latest requested white background, text-only brand, factual headings and ant revision are retained',()=>{
  const html=fs.readFileSync(path.join(publicRoot,'wildlife/index.html'),'utf8');const css=fs.readFileSync(path.join(publicRoot,'wildlife/assets/style.css'),'utf8');assert.match(html,/奄美大島の生き物大全/);assert.doesNotMatch(html,/brand-mark|だれがいる|みーつけた/);assert.match(css,/--paper:#ffffff/);assert.doesNotMatch(css,/background-image:url/);assert.equal(species.find(s=>s.id==='camponotus-amamianus').asset,'cute-camponotus-amamianus-v2');
 });
+test('rejected anatomy variants cannot be selected and revised art has a visual review record',()=>{
+ const reviews=JSON.parse(fs.readFileSync(path.join(root,'docs/illustration-review.json')));
+ const art=JSON.parse(fs.readFileSync(path.join(root,'data/illustrations.json')));
+ for(const [id,asset] of Object.entries({'banded-gecko':'cute-banded-gecko-v3',habu:'cute-habu-v2',himehabu:'cute-himehabu-v2','lidths-jay':'cute-lidths-jay-v2'})){
+  assert.equal(species.find(s=>s.id===id).asset,asset);
+  assert.ok(reviews.some(r=>r.id===id&&r.master===art[asset].master&&r.visualReviewed&&r.accepted));
+  assert.ok(art[asset].alpha);assert.ok(art[asset].width>0&&art[asset].height>0);
+ }
+ assert.ok(species.every(s=>s.asset),'All current editorial entries should have an illustration');
+ assert.match(species.find(s=>s.id==='lidths-jay').fact,/カラス科/);
+});
+test('requested inventory preserves whales and distinguishes unverified candidates from editorial entries',()=>{
+ const candidates=JSON.parse(fs.readFileSync(path.join(root,'data/requested-taxa.json')));
+ assert.equal(new Set(candidates.map(r=>r.name)).size,candidates.length);
+ for(const name of ['ザトウクジラ','マッコウクジラ','ハイ','セアカゴケグモ'])assert.ok(candidates.some(r=>r.name===name));
+ for(const c of candidates){if(c.status==='editorial-entry-exists')assert.ok(species.some(s=>s.id===c.entryId&&s.name===c.name));else assert.equal(c.status,'source-verification-pending');}
+ assert.ok(candidates.find(c=>c.name==='ハイ').note.includes('重複'));
+});

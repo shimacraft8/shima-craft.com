@@ -1,0 +1,26 @@
+{
+  "url": "https://shima-craft.com/wildlife/",
+  "zoom": {
+    "fov": "65",
+    "zoom": "1"
+  },
+  "photo": {
+    "naturalWidth": 960,
+    "photoLoaded": true,
+    "src": "/wildlife/assets/photos/lidths-jay.webp?v=ab3329693e85",
+    "title": "ルリカケス"
+  },
+  "metrics": {
+    "animalsReady": "40",
+    "dpr": "1.6",
+    "drawCalls": "62",
+    "fov": "64",
+    "heading": "340",
+    "pitch": "-5",
+    "ready": "true",
+    "spot": "hego",
+    "triangles": "484710",
+    "zoom": "0"
+  },
+  "console": []
+}

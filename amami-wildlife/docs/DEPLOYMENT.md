@@ -19,7 +19,7 @@
 ## 再公開
 
 1. 対象アカウントとドメイン、既存Workerのバージョン・ルートを再確認して保存。
-2. `python3 scripts/build.py` → `node --test tests/*.test.mjs` → ブラウザーでPC/小画面/画像切り替えを確認。
+2. `npm ci` → `npm run build` → `npm test`（Node 22.23.4以上） → ブラウザーでPC/小画面/画像切り替えを確認。
 3. 公開ディレクトリに認証情報・第三者の未許諾資料がないことを確認。
 4. 専用認証を環境変数で選び、`wrangler deploy --dry-run --config wrangler.jsonc`。
 5. `wrangler deploy --config wrangler.jsonc`。対象Worker名/Accountを再確認。
@@ -40,3 +40,12 @@
 2026-11-02公開0.2.1: `03457d7e-0e36-4e6d-a2e6-1e8ce2429c5c`。直前0.2.0: `7bcfb932-ac30-4058-8015-3ab32a9e5aed`（自動beacon挿入あり）。初版0.1.0: `55128f9c-6a0a-4296-ac0b-26f4c7b80b25`。巻き戻しは図鑑Workerだけを対象にし、既存の2Workerには実行しない。初版へ戻すと追加画像や新演出は表示されない。
 
 2026-11-02追補: 最新0.3.0のWorkerはe830c077-80a1-4cd3-a4b3-e6d1151040bc。直前0.2.1の03457d7e-0e36-4e6d-a2e6-1e8ce2429c5cへ戻すと、新しい図版/分類別一覧/アカウミガメは表示されない。対象は図鑑Workerのみ。
+
+
+## 0.4.0 / 360度の森
+
+公開Worker: `5461041d-601a-4c99-9235-74a45af46242`。公開前0.3.0の復旧先は `e830c077-80a1-4cd3-a4b3-e6d1151040bc`。専用認証を選び、図鑑のconfigで `wrangler rollback e830c077-80a1-4cd3-a4b3-e6d1151040bc --name shima-craft-amami-wildlife` を使用する。トップや制作サイトのWorkerへ実行しない。
+
+デプロイ時は専用GitHub認証のshimacraft8とCloudflareのshimacraft8@gmail.comを確認。mainを変更せず図鑑専用ブランチをpushし、図鑑Workerだけをデプロイ。`--keep-vars`で既存変数を維持。公開後に145 HTTPチェック、全アセット内容、実ブラウザの描画/ズーム/参考写真、既存2 Worker/ルート不変を照合。
+
+事前の直接API照合は一度403となった。Wranglerで公開は正常完了し、直後のwhoamiで同じメール/Account IDを確認、その後のAPI照合も成功した。資格情報の再入力や権限の拡張は行っていない。OAuthの値はログ/ソース/ZIPに出していない。

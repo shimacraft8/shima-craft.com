@@ -1,7 +1,7 @@
 {
   "date": "2026-11-02",
   "version": "0.4.0",
-  "phase": "local validation complete, production release pending",
+  "phase": "published and verified",
   "build": {
     "node": "22.23.4",
     "pages": 43,
@@ -39,5 +39,15 @@
     "real context loss",
     "expert taxonomy/anatomy review",
     "complete fauna coverage"
-  ]
+  ],
+  "productionChanged": true,
+  "githubPushed": true,
+  "publicUrl": "https://shima-craft.com/wildlife/",
+  "workerVersion": "5461041d-601a-4c99-9235-74a45af46242",
+  "productionHttp": {
+    "checked": 145,
+    "passed": 145
+  },
+  "existingSiteWorkersUnchanged": true,
+  "routeMappingsUnchanged": true
 }

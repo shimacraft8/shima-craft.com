@@ -44,3 +44,9 @@ iPhone Safari / Android Chrome実機、VoiceOver/TalkBack、実端末の最大�
 ## 公開後に見つかった差分
 
 初回HTTP照合は136件中93件成功、43件のHTML本文だけ不一致。全HTTPステータス/バージョン/CSPは期待通り。差分を取得するとCloudflareの自動Web Analytics beacon追加だけだった。公式FAQ（https://developers.cloudflare.com/web-analytics/faq/ ）に従い、図鑑WorkerのCache-Controlにno-transformを指定する0.2.1を追加。ドメイン全体の解析設定や既存サイトの設定は変更していない。修正後の最終結果はproduction-http.json。
+
+## 最終公開確認（2026-11-02）
+
+0.2.1: HTTP136/136件成功。42ページと公開資産・既存トップ/制作/プライバシー・404・正規化を確認。図鑑の全200応答はローカル生成ファイルのSHA256と一致し、公開バージョン/CSPも一致。不要な外部スクリプトなしをDOMで確認。PC本番の川への切り替えとルリカケス詳細→実写、本番390pxで横はみ出しなしを確認。既存2Workerのバージョンと全ルートの対応は不変。cloudflare-verification.json参照。
+
+採用素材を含むZIPを別ディレクトリに展開し、buildと15テストを実行して成功。認証情報・依存・Git・研究用原資料・参考動画は収録しない。

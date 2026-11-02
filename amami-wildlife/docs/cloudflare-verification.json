@@ -1,18 +1,11 @@
 {
-  "checkedAt": "2026-11-02T00:02:29.194431+00:00",
+  "time": "2026-11-02T00:59:25.921162+00:00",
   "accountVerified": true,
   "zone": "shima-craft.com",
-  "routeMappingsUnchanged": true,
-  "wildlifeRoutes": [
-    "www.shima-craft.com/wildlife",
-    "www.shima-craft.com/wildlife/*",
-    "shima-craft.com/wildlife",
-    "shima-craft.com/wildlife/*"
-  ],
   "versions": {
     "shima-craft-amami-wildlife": [
       {
-        "version_id": "03457d7e-0e36-4e6d-a2e6-1e8ce2429c5c",
+        "version_id": "e830c077-80a1-4cd3-a4b3-e6d1151040bc",
         "percentage": 100
       }
     ],
@@ -29,25 +22,32 @@
       }
     ]
   },
-  "previousVersions": {
-    "shima-craft-amami-wildlife": [
-      {
-        "version_id": "55128f9c-6a0a-4296-ac0b-26f4c7b80b25",
-        "percentage": 100
-      }
+  "routes": [
+    [
+      "shima-craft.com/*",
+      "shima-craft-amami-life"
     ],
-    "shima-craft-amami-life": [
-      {
-        "version_id": "213555b8-dc36-48fd-ae0b-2e62400fcccd",
-        "percentage": 100
-      }
+    [
+      "shima-craft.com/wildlife",
+      "shima-craft-amami-wildlife"
     ],
-    "shima-craft-com-production": [
-      {
-        "version_id": "117ff8f0-149d-4cfb-ae86-8a11aaf20c25",
-        "percentage": 100
-      }
+    [
+      "shima-craft.com/wildlife/*",
+      "shima-craft-amami-wildlife"
+    ],
+    [
+      "www.shima-craft.com/*",
+      "shima-craft-amami-life"
+    ],
+    [
+      "www.shima-craft.com/wildlife",
+      "shima-craft-amami-wildlife"
+    ],
+    [
+      "www.shima-craft.com/wildlife/*",
+      "shima-craft-amami-wildlife"
     ]
-  },
-  "existingSiteWorkersUnchanged": true
+  ],
+  "existingSiteWorkersUnchanged": true,
+  "routeMappingsUnchanged": true
 }

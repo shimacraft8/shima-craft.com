@@ -1,18 +1,19 @@
 {
-  "releasedAt": "2026-11-02T09:03:55.774457+09:00",
-  "publicVersion": "0.2.1",
-  "publicWorkerVersion": "03457d7e-0e36-4e6d-a2e6-1e8ce2429c5c",
+  "releasedAt": "2026-11-02T10:02:21.740430+09:00",
+  "publicVersion": "0.3.0",
+  "publicWorkerVersion": "e830c077-80a1-4cd3-a4b3-e6d1151040bc",
   "publicUrl": "https://shima-craft.com/wildlife/",
-  "localVersion": "0.2.1",
-  "publicIllustrations": 39,
-  "photos": 39,
-  "insectRedraws": 12,
+  "localVersion": "0.3.0",
+  "publicIllustrations": 40,
+  "photos": 40,
+  "illustrationsRevisedOrAdded": 9,
+  "snakeIllustrationsGuidedAndReviewed": 5,
   "requestedNames": 248,
-  "requestedNamesNotYetEdited": 210,
-  "testsPassed": 15,
-  "httpChecks": 136,
-  "httpPassed": 136,
-  "gitPushedCommit": "532279def394e5ed993579f92537e396f4b5dff2",
+  "requestedNamesNotYetEdited": 209,
+  "testsPassed": 18,
+  "httpChecks": 139,
+  "httpPassed": 139,
+  "gitPushedCommit": "97aa69285a1991f9abfad088ebccc3fc47dac710",
   "gitBranch": "codex/amami-wildlife-20261101",
   "additionalPush": true,
   "additionalDeploy": true,
@@ -25,5 +26,5 @@
     "expert anatomy and taxonomy review",
     "complete fauna coverage"
   ],
-  "photoLimitations": "Includes 4 specimen photos, captive reference, uncertain subspecies and 3 low-resolution government images; each disclosed."
+  "artReviewLimitation": "Post-generation visual topology checks and source references; no expert certification or automated anatomical proof. Subjective design quality remains iterative."
 }

@@ -66,3 +66,5 @@ ZIP: `python3 scripts/package.py`。原画・ソース・データ・公開フ�
 0.2.1は図鑑の配信にno-transformを追加し、Cloudflareの自動スクリプト挿入とCSPの不整合を防ぐ修正。既存サイトの解析設定は変更しない。
 
 公開確認済み: 0.2.1、本番HTTP136/136、Nodeテスト15/15。公開したソースはGitHubの専用ブランチへpush済み。既存ホーム/制作サイトのWorkerとルートは不変。公開確認の記録は `docs/release-result.json`。
+
+0.3.0公開確認: 自動18試験、本番HTTP139件成功。図版40点/実写40点。全動物の網羅と専門監修・実機確認は未達成。最新公開記録はdocs/QUALITY_REVISION_20261102.md。

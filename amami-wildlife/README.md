@@ -1,3 +1,32 @@
+# 0.4.0 — 360度の森から海へ
+
+奄美の森・川・滝・海をつないだ立体空間で、生き物を探せる図鑑です。現在掲載中の40項目はすべて選択でき、実写写真・解説・出典へ進めます。全動物の網羅は調査継続中です。公開状態は `docs/release-result.json` に記録しています。
+
+- ドラッグ・矢印ボタン・キーボードで360度見渡す。
+- 背景クリックで少し寄る/戻る。＋/−で2段階の画角調整。
+- 生き物クリックで実写と解説。選択欄から、その生き物がいる位置へ移動。
+- 「森を出る」で白い図鑑へ。「森に入る」で再開。
+- 森と地形は創作、生き物は透過イラストの切り抜きです。動物の3Dモデルではありません。
+
+```sh
+npm ci
+npm run build
+npm test
+npm run preview
+```
+
+Node 22.23.4以降・Python 3を使用。ビルド済みの閲覧だけなら `python3 -m http.server 4926 --bind 127.0.0.1 --directory public`。
+ローカルURL: http://127.0.0.1:4926/wildlife/
+2D図鑑: http://127.0.0.1:4926/wildlife/?mode=2d#catalog
+公開URL: https://shima-craft.com/wildlife/
+
+現行の設計/参考資料/未検証事項は [360度の森の実装報告](docs/FOREST_360_20261102.md)。試験の詳細は `docs/forest360-validation.json`、実操作記録は `docs/forest360-browser.json`。以前の `PAPER_MUSEUM_20261102.md` などは途中案の履歴です。
+ZIP生成: `python3 scripts/package.py`。ソース、データ、採用素材、公開ファイル、テスト、設計・検証・復旧記録を収録し、認証情報と研究用の第三者資料を除外します。
+
+---
+
+以下は0.3.0までの実装・公開記録です。
+
 > 最新改修0.3.0: 掲載40項目にイラスト/実写各40、アカウミガメ追加、図版の画風とヘビ5種の構造を見直し、分類群別一覧へ。検証/公開状態はdocs/QUALITY_REVISION_20261102.mdとdocs/release-result.jsonを参照。以下は過去版の履歴を含む。
 
 # 奄美大島の生き物大全 / SHIMA CRAFT

@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-02",
+  "desktop": {
+    "metrics": {
+      "dpr": "1",
+      "drawCalls": "13",
+      "triangles": "471320"
+    },
+    "motion": "動きを止める",
+    "overflow": false,
+    "ready": "ready",
+    "scrollY": 0,
+    "viewport": [
+      1280,
+      800
+    ]
+  },
+  "mobile": {
+    "viewport": [
+      390,
+      844
+    ],
+    "horizontalOverflow": false,
+    "pausedDrawCalls": 19,
+    "pausedTriangles": 419998
+  },
+  "checks": {
+    "strictCspForestRendering": true,
+    "strictCspErrorsOrWarnings": 0,
+    "keyboardMarkerOpensLidthsJay": true,
+    "actualPhotoLoaded": true,
+    "tabLoopBothDirections": true,
+    "escapeFocusReturn": true,
+    "toggle2dReleasesCanvas": true,
+    "nativeStartClickKeepsScrollY": 0
+  },
+  "note": "IAB viewport tests; no actual iOS/Android hardware test. Earlier small-island entrance was rejected and replaced."
+}

@@ -1,0 +1,154 @@
+TAP version 13
+# Subtest: all editorial records are reachable in exactly one dynamically generated museum room
+ok 1 - all editorial records are reachable in exactly one dynamically generated museum room
+  ---
+  duration_ms: 2.609146
+  type: 'test'
+  ...
+# Subtest: exhibit pagination includes the final partial page without missing or duplicate records
+ok 2 - exhibit pagination includes the final partial page without missing or duplicate records
+  ---
+  duration_ms: 0.46587
+  type: 'test'
+  ...
+# Subtest: camera easing has stationary endpoints and monotonic progress; invalid URL room is safe
+ok 3 - camera easing has stationary endpoints and monotonic progress; invalid URL room is safe
+  ---
+  duration_ms: 0.437309
+  type: 'test'
+  ...
+# Subtest: museum payload retains source values and local licensed photo provenance
+ok 4 - museum payload retains source values and local licensed photo provenance
+  ---
+  duration_ms: 3.404447
+  type: 'test'
+  ...
+# Subtest: rendering code is self-hosted and failures do not replace static catalogue
+ok 5 - rendering code is self-hosted and failures do not replace static catalogue
+  ---
+  duration_ms: 3.507954
+  type: 'test'
+  ...
+# Subtest: distributed renderer includes the complete Three.js MIT notice
+ok 6 - distributed renderer includes the complete Three.js MIT notice
+  ---
+  duration_ms: 0.65139
+  type: 'test'
+  ...
+# Subtest: editorial entries have unique slugs, sources, pages and no invented images
+ok 7 - editorial entries have unique slugs, sources, pages and no invented images
+  ---
+  duration_ms: 5.462291
+  type: 'test'
+  ...
+# Subtest: document records remain explicitly unreviewed, traceable and separate from species count
+ok 8 - document records remain explicitly unreviewed, traceable and separate from species count
+  ---
+  duration_ms: 1.864074
+  type: 'test'
+  ...
+# Subtest: all internal links and images resolve; headings, language and alt attributes exist
+ok 9 - all internal links and images resolve; headings, language and alt attributes exist
+  ---
+  duration_ms: 28.600008
+  type: 'test'
+  ...
+# Subtest: worker serves every editorial detail and applies security headers
+ok 10 - worker serves every editorial detail and applies security headers
+  ---
+  duration_ms: 58.034728
+  type: 'test'
+  ...
+# Subtest: worker canonicalizes directory paths and retains filter query
+ok 11 - worker canonicalizes directory paths and retains filter query
+  ---
+  duration_ms: 0.663185
+  type: 'test'
+  ...
+# Subtest: worker rejects mutations, unknown paths and encoded slash; no catch-all site route
+ok 12 - worker rejects mutations, unknown paths and encoded slash; no catch-all site route
+  ---
+  duration_ms: 1.19209
+  type: 'test'
+  ...
+# Subtest: HEAD and missing pages preserve correct behavior
+ok 13 - HEAD and missing pages preserve correct behavior
+  ---
+  duration_ms: 0.947447
+  type: 'test'
+  ...
+# Subtest: no credentials, trackers or remote scripts in public payload
+ok 14 - no credentials, trackers or remote scripts in public payload
+  ---
+  duration_ms: 0.954996
+  type: 'test'
+  ...
+# Subtest: real photographs have reusable licenses, attribution, reviewed identities and local assets
+ok 15 - real photographs have reusable licenses, attribution, reviewed identities and local assets
+  ---
+  duration_ms: 7.140134
+  type: 'test'
+  ...
+# Subtest: latest requested white background, text-only brand, factual headings and ant revision are retained
+ok 16 - latest requested white background, text-only brand, factual headings and ant revision are retained
+  ---
+  duration_ms: 0.93099
+  type: 'test'
+  ...
+# Subtest: rejected anatomy variants cannot be selected and revised art has a visual review record
+ok 17 - rejected anatomy variants cannot be selected and revised art has a visual review record
+  ---
+  duration_ms: 1.127164
+  type: 'test'
+  ...
+# Subtest: requested inventory preserves whales and distinguishes unverified candidates from editorial entries
+ok 18 - requested inventory preserves whales and distinguishes unverified candidates from editorial entries
+  ---
+  duration_ms: 1.304432
+  type: 'test'
+  ...
+# Subtest: museum preserves native catalogue links, pause, 2D navigation and static fallback
+ok 19 - museum preserves native catalogue links, pause, 2D navigation and static fallback
+  ---
+  duration_ms: 0.72417
+  type: 'test'
+  ...
+# Subtest: new photos preserve source class and disclose specimens or uncertain subspecies
+ok 20 - new photos preserve source class and disclose specimens or uncertain subspecies
+  ---
+  duration_ms: 0.500815
+  type: 'test'
+  ...
+# Subtest: public asset URLs match current content hashes so cached old scripts and photos are not reused
+ok 21 - public asset URLs match current content hashes so cached old scripts and photos are not reused
+  ---
+  duration_ms: 19.783291
+  type: 'test'
+  ...
+# Subtest: catalogue keeps every taxon in its own labelled section without mixed groups
+ok 22 - catalogue keeps every taxon in its own labelled section without mixed groups
+  ---
+  duration_ms: 1.791841
+  type: 'test'
+  ...
+# Subtest: both sea turtles have distinct sourced entries, local art and actual photo tabs
+ok 23 - both sea turtles have distinct sourced entries, local art and actual photo tabs
+  ---
+  duration_ms: 1.103361
+  type: 'test'
+  ...
+# Subtest: snake selections require structural underdrawing and explicit post-generation topology review
+ok 24 - snake selections require structural underdrawing and explicit post-generation topology review
+  ---
+  duration_ms: 1.052607
+  type: 'test'
+  ...
+1..24
+# tests 24
+# suites 0
+# pass 24
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 357.64936

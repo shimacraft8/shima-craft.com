@@ -1,0 +1,233 @@
+[
+  {
+    "id": "lidths-jay",
+    "correctName": true,
+    "correctLink": true
+  },
+  {
+    "id": "amami-woodcock",
+    "correctName": true,
+    "correctLink": true
+  },
+  {
+    "id": "ryukyu-robin",
+    "correctName": true,
+    "correctLink": true
+  },
+  {
+    "id": "ryukyu-scops-owl",
+    "correctName": true,
+    "correctLink": true
+  },
+  {
+    "id": "black-wood-pigeon",
+    "correctName": true,
+    "correctLink": true
+  },
+  {
+    "id": "green-pigeon",
+    "correctName": true,
+    "correctLink": true
+  },
+  {
+    "id": "grey-faced-buzzard",
+    "correctName": true,
+    "correctLink": true
+  },
+  {
+    "id": "pale-thrush",
+    "correctName": true,
+    "correctLink": true
+  },
+  {
+    "id": "ruddy-kingfisher",
+    "correctName": true,
+    "correctLink": true
+  },
+  {
+    "id": "amami-rabbit",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "amami-spiny-rat",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "tokunoshima-spiny-rat",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "long-haired-rat",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "orii-bat",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "orii-shrew",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "watase-shrew",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "amami-ishikawa-frog",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "otton-frog",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "amami-tip-nosed-frog",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "amami-crocodile-newt",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "green-turtle",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "loggerhead-turtle",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "habu",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "himehabu",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "coral-snake",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "green-snake",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "akamata",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "banded-gecko",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "camponotus-amamianus",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "amami-stag",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "uke-stag",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "amami-deer-stag",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "amami-mountain-stag",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "broad-grooved-stag",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "okinawa-peacock",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "blue-tiger",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "amami-dung-beetle",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "winter-chafer",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "white-striped-chafer",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  },
+  {
+    "id": "ferrie-longhorn",
+    "correctName": true,
+    "correctLink": true,
+    "localPhoto": true
+  }
+]

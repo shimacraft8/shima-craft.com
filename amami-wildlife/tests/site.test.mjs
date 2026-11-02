@@ -71,13 +71,12 @@ test('requested inventory preserves whales and distinguishes unverified candidat
  assert.ok(candidates.find(c=>c.name==='ハイ').note.includes('重複'));
 });
 
-test('all featured creatures remain native links; horizontal exhibition has accessible navigation and static content',()=>{
+test('museum preserves native catalogue links, pause, 2D navigation and static fallback',()=>{
  const html=fs.readFileSync(path.join(publicRoot,'wildlife/index.html'),'utf8');
- for(const chapter of ['forest','river','ocean'])assert.match(html,new RegExp('id="habitat-'+chapter+'"'));
- assert.match(html,/data-journey-prev/);assert.match(html,/data-journey-next/);assert.match(html,/id="motion-toggle"/);
- assert.doesNotMatch(html,/class="landscape"/);
- const js=fs.readFileSync(path.join(publicRoot,'wildlife/assets/journey.js'),'utf8');assert.doesNotMatch(js,/addEventListener\(['"](?:wheel|touchmove)['"]/);assert.doesNotMatch(js,/setInterval/);
- assert.match(js,/prefers-reduced-motion/);assert.match(js,/aria-hidden/);assert.match(js,/panel.inert/);
+ for(const entry of species)assert.ok(html.includes(`/wildlife/species/${entry.id}/`));
+ for(const id of ['museum-canvas','museum-mode','forest-enter','forest-place','forest-zoom-in','motion-toggle','museum-dialog'])assert.ok(html.includes(`id="${id}"`));
+ assert.match(html,/<noscript>/);assert.match(html,/森を出る/);assert.match(html,/森に入る/);assert.match(html,/<dialog/);
+ assert.doesNotMatch(html,/assets\/journey.js/);
 });
 test('new photos preserve source class and disclose specimens or uncertain subspecies',()=>{
  const photos=JSON.parse(fs.readFileSync(path.join(root,'data/photos.json')));

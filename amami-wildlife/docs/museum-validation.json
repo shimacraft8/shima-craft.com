@@ -1,0 +1,159 @@
+{
+  "date": "2026-11-02",
+  "version": "0.4.0-local-candidate",
+  "productionChanged": false,
+  "githubPushed": false,
+  "reference": {
+    "clone": "work/reference/aimee-papercraft",
+    "commit": "794d011da7c7b05d5abee09f06097581794d5b3e",
+    "installed": true,
+    "localStarted": true,
+    "liveBrowserChecked": true,
+    "localBrowserChecked": true,
+    "blenderEditorOpened": false,
+    "thirdPartyArtReused": false
+  },
+  "build": {
+    "node": "22.23.4",
+    "python": "3.11",
+    "success": true,
+    "pages": 43,
+    "publicFiles": 142
+  },
+  "tests": {
+    "passed": 24,
+    "failed": 0,
+    "log": "museum-tests.log"
+  },
+  "http": {
+    "tested": 141,
+    "failed": 0,
+    "runtime": "wrangler 4.156.0 local Worker, 127.0.0.1:4933"
+  },
+  "dataUnchanged": true,
+  "editorialEntries": 40,
+  "photoEntries": 40,
+  "rooms": {
+    "哺乳類": 7,
+    "鳥類": 9,
+    "両生類": 4,
+    "爬虫類": 8,
+    "昆虫": 12
+  },
+  "browser": {
+    "desktop": {
+      "width": 1440,
+      "height": 900
+    },
+    "phoneViewport": {
+      "width": 390,
+      "height": 844
+    },
+    "all40PanelNamesAndLinks": true,
+    "directWebGLPhotoPicking": true,
+    "explicitTabLoop": true,
+    "escapeAndFocusReturn": true,
+    "mode2dDisposesCanvas": true,
+    "mode3dRestoresExhibitPage": true,
+    "wheelRoomNavigation": true,
+    "keyboardRoomNavigation": true,
+    "motionPauseButton": true,
+    "strictCspRendering": true,
+    "lastWorkerErrorsOrWarnings": 0,
+    "intentionalRenderer503Fallback": true,
+    "searchDuringFallback": "ルリカケス = 1項目",
+    "additionalViewports": [
+      {
+        "width": 375,
+        "height": 812,
+        "overflow": false,
+        "mode": "3d"
+      },
+      {
+        "width": 844,
+        "height": 390,
+        "overflow": false,
+        "mode": "2d"
+      }
+    ],
+    "catalogueHashAfterModeChange": true
+  },
+  "renderingSample": {
+    "scene": "continuous eye-level forest entrance",
+    "viewport": [
+      1280,
+      800
+    ],
+    "drawCalls": 13,
+    "triangles": 471320,
+    "observedDpr": 1.0,
+    "context": "moving scene in local in-app browser; cached static shadows, not actual device FPS benchmark"
+  },
+  "bundles": [
+    {
+      "file": "index.js",
+      "bytes": 12203,
+      "gzipBytes": 4792
+    },
+    {
+      "file": "chunk-OTOH4HBK.js",
+      "bytes": 488,
+      "gzipBytes": 313
+    },
+    {
+      "file": "renderer-CLASWZD4.js",
+      "bytes": 619935,
+      "gzipBytes": 159506
+    }
+  ],
+  "unverified": [
+    "iPhone Safari hardware",
+    "Android hardware",
+    "physical touch swipe",
+    "low-performance GPUs",
+    "OS reduced-motion enabled",
+    "VoiceOver/TalkBack",
+    "browser text enlargement",
+    "real WebGL context loss",
+    "expert identification of every photograph"
+  ],
+  "localGitBranch": "codex/wildlife-paper-museum-20261102",
+  "forestRevision": {
+    "date": "2026-11-02",
+    "desktop": {
+      "metrics": {
+        "dpr": "1",
+        "drawCalls": "13",
+        "triangles": "471320"
+      },
+      "motion": "動きを止める",
+      "overflow": false,
+      "ready": "ready",
+      "scrollY": 0,
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    "mobile": {
+      "viewport": [
+        390,
+        844
+      ],
+      "horizontalOverflow": false,
+      "pausedDrawCalls": 19,
+      "pausedTriangles": 419998
+    },
+    "checks": {
+      "strictCspForestRendering": true,
+      "strictCspErrorsOrWarnings": 0,
+      "keyboardMarkerOpensLidthsJay": true,
+      "actualPhotoLoaded": true,
+      "tabLoopBothDirections": true,
+      "escapeFocusReturn": true,
+      "toggle2dReleasesCanvas": true,
+      "nativeStartClickKeepsScrollY": 0
+    },
+    "note": "IAB viewport tests; no actual iOS/Android hardware test. Earlier small-island entrance was rejected and replaced."
+  }
+}

@@ -1,0 +1,178 @@
+TAP version 13
+# Subtest: every editorial animal has exactly one finite placement in the continuous landscape
+ok 1 - every editorial animal has exactly one finite placement in the continuous landscape
+  ---
+  duration_ms: 5.027608
+  type: 'test'
+  ...
+# Subtest: all viewpoints are on dry land and their links resolve
+ok 2 - all viewpoints are on dry land and their links resolve
+  ---
+  duration_ms: 1.55008
+  type: 'test'
+  ...
+# Subtest: ground, river and sea triangles face upward, with finite vertices and valid indices
+ok 3 - ground, river and sea triangles face upward, with finite vertices and valid indices
+  ---
+  duration_ms: 214.489957
+  type: 'test'
+  ...
+# Subtest: free-look wraps across north using the shortest turn and old animal links still resolve
+ok 4 - free-look wraps across north using the shortest turn and old animal links still resolve
+  ---
+  duration_ms: 1.553541
+  type: 'test'
+  ...
+# Subtest: all editorial records are reachable in exactly one dynamically generated museum room
+ok 5 - all editorial records are reachable in exactly one dynamically generated museum room
+  ---
+  duration_ms: 4.038812
+  type: 'test'
+  ...
+# Subtest: exhibit pagination includes the final partial page without missing or duplicate records
+ok 6 - exhibit pagination includes the final partial page without missing or duplicate records
+  ---
+  duration_ms: 1.001133
+  type: 'test'
+  ...
+# Subtest: camera easing has stationary endpoints and monotonic progress; invalid URL room is safe
+ok 7 - camera easing has stationary endpoints and monotonic progress; invalid URL room is safe
+  ---
+  duration_ms: 0.82295
+  type: 'test'
+  ...
+# Subtest: museum payload retains source values and local licensed photo provenance
+ok 8 - museum payload retains source values and local licensed photo provenance
+  ---
+  duration_ms: 4.974441
+  type: 'test'
+  ...
+# Subtest: rendering code is self-hosted and failures do not replace static catalogue
+ok 9 - rendering code is self-hosted and failures do not replace static catalogue
+  ---
+  duration_ms: 1.92864
+  type: 'test'
+  ...
+# Subtest: distributed renderer includes the complete Three.js MIT notice
+ok 10 - distributed renderer includes the complete Three.js MIT notice
+  ---
+  duration_ms: 1.075462
+  type: 'test'
+  ...
+# Subtest: editorial entries have unique slugs, sources, pages and no invented images
+ok 11 - editorial entries have unique slugs, sources, pages and no invented images
+  ---
+  duration_ms: 6.923092
+  type: 'test'
+  ...
+# Subtest: document records remain explicitly unreviewed, traceable and separate from species count
+ok 12 - document records remain explicitly unreviewed, traceable and separate from species count
+  ---
+  duration_ms: 3.39799
+  type: 'test'
+  ...
+# Subtest: all internal links and images resolve; headings, language and alt attributes exist
+ok 13 - all internal links and images resolve; headings, language and alt attributes exist
+  ---
+  duration_ms: 74.832822
+  type: 'test'
+  ...
+# Subtest: worker serves every editorial detail and applies security headers
+ok 14 - worker serves every editorial detail and applies security headers
+  ---
+  duration_ms: 109.317996
+  type: 'test'
+  ...
+# Subtest: worker canonicalizes directory paths and retains filter query
+ok 15 - worker canonicalizes directory paths and retains filter query
+  ---
+  duration_ms: 1.181695
+  type: 'test'
+  ...
+# Subtest: worker rejects mutations, unknown paths and encoded slash; no catch-all site route
+ok 16 - worker rejects mutations, unknown paths and encoded slash; no catch-all site route
+  ---
+  duration_ms: 2.076994
+  type: 'test'
+  ...
+# Subtest: HEAD and missing pages preserve correct behavior
+ok 17 - HEAD and missing pages preserve correct behavior
+  ---
+  duration_ms: 3.339273
+  type: 'test'
+  ...
+# Subtest: no credentials, trackers or remote scripts in public payload
+ok 18 - no credentials, trackers or remote scripts in public payload
+  ---
+  duration_ms: 1.326558
+  type: 'test'
+  ...
+# Subtest: real photographs have reusable licenses, attribution, reviewed identities and local assets
+ok 19 - real photographs have reusable licenses, attribution, reviewed identities and local assets
+  ---
+  duration_ms: 11.914918
+  type: 'test'
+  ...
+# Subtest: latest requested white background, text-only brand, factual headings and ant revision are retained
+ok 20 - latest requested white background, text-only brand, factual headings and ant revision are retained
+  ---
+  duration_ms: 1.881426
+  type: 'test'
+  ...
+# Subtest: rejected anatomy variants cannot be selected and revised art has a visual review record
+ok 21 - rejected anatomy variants cannot be selected and revised art has a visual review record
+  ---
+  duration_ms: 2.151377
+  type: 'test'
+  ...
+# Subtest: requested inventory preserves whales and distinguishes unverified candidates from editorial entries
+ok 22 - requested inventory preserves whales and distinguishes unverified candidates from editorial entries
+  ---
+  duration_ms: 2.325979
+  type: 'test'
+  ...
+# Subtest: museum preserves native catalogue links, pause, 2D navigation and static fallback
+ok 23 - museum preserves native catalogue links, pause, 2D navigation and static fallback
+  ---
+  duration_ms: 1.168788
+  type: 'test'
+  ...
+# Subtest: new photos preserve source class and disclose specimens or uncertain subspecies
+ok 24 - new photos preserve source class and disclose specimens or uncertain subspecies
+  ---
+  duration_ms: 0.700565
+  type: 'test'
+  ...
+# Subtest: public asset URLs match current content hashes so cached old scripts and photos are not reused
+ok 25 - public asset URLs match current content hashes so cached old scripts and photos are not reused
+  ---
+  duration_ms: 25.50994
+  type: 'test'
+  ...
+# Subtest: catalogue keeps every taxon in its own labelled section without mixed groups
+ok 26 - catalogue keeps every taxon in its own labelled section without mixed groups
+  ---
+  duration_ms: 3.358902
+  type: 'test'
+  ...
+# Subtest: both sea turtles have distinct sourced entries, local art and actual photo tabs
+ok 27 - both sea turtles have distinct sourced entries, local art and actual photo tabs
+  ---
+  duration_ms: 1.329619
+  type: 'test'
+  ...
+# Subtest: snake selections require structural underdrawing and explicit post-generation topology review
+ok 28 - snake selections require structural underdrawing and explicit post-generation topology review
+  ---
+  duration_ms: 1.366277
+  type: 'test'
+  ...
+1..28
+# tests 28
+# suites 0
+# pass 28
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 638.546074

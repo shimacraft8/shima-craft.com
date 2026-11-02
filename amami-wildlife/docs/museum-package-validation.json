@@ -1,0 +1,18 @@
+{
+  "date": "2026-11-02",
+  "archive": "outputs/amami-wildlife-project.zip",
+  "offlineNpmCi": true,
+  "node": "22.23.4",
+  "buildSucceeded": true,
+  "testsPassed": 24,
+  "testsFailed": 0,
+  "rebuiltPublicFilesMatchCanonical": 142,
+  "excluded": [
+    "credentials",
+    "node_modules",
+    ".git",
+    ".wrangler",
+    "reference project materials"
+  ],
+  "note": "Verified by extracting the source/art archive into an independent local folder. Final archive regenerated only to include this verification record."
+}

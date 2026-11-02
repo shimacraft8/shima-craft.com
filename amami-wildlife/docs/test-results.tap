@@ -2,91 +2,91 @@ TAP version 13
 # Subtest: editorial entries have unique slugs, sources, pages and no invented images
 ok 1 - editorial entries have unique slugs, sources, pages and no invented images
   ---
-  duration_ms: 4.743192
+  duration_ms: 11.138539
   type: 'test'
   ...
 # Subtest: document records remain explicitly unreviewed, traceable and separate from species count
 ok 2 - document records remain explicitly unreviewed, traceable and separate from species count
   ---
-  duration_ms: 2.030219
+  duration_ms: 2.17778
   type: 'test'
   ...
 # Subtest: all internal links and images resolve; headings, language and alt attributes exist
 ok 3 - all internal links and images resolve; headings, language and alt attributes exist
   ---
-  duration_ms: 25.530822
+  duration_ms: 49.095658
   type: 'test'
   ...
 # Subtest: worker serves every editorial detail and applies security headers
 ok 4 - worker serves every editorial detail and applies security headers
   ---
-  duration_ms: 57.826257
+  duration_ms: 90.132639
   type: 'test'
   ...
 # Subtest: worker canonicalizes directory paths and retains filter query
 ok 5 - worker canonicalizes directory paths and retains filter query
   ---
-  duration_ms: 0.763451
+  duration_ms: 1.015927
   type: 'test'
   ...
 # Subtest: worker rejects mutations, unknown paths and encoded slash; no catch-all site route
 ok 6 - worker rejects mutations, unknown paths and encoded slash; no catch-all site route
   ---
-  duration_ms: 1.360605
+  duration_ms: 2.106172
   type: 'test'
   ...
 # Subtest: HEAD and missing pages preserve correct behavior
 ok 7 - HEAD and missing pages preserve correct behavior
   ---
-  duration_ms: 1.187174
+  duration_ms: 1.631048
   type: 'test'
   ...
 # Subtest: no credentials, trackers or remote scripts in public payload
 ok 8 - no credentials, trackers or remote scripts in public payload
   ---
-  duration_ms: 0.721475
+  duration_ms: 1.346977
   type: 'test'
   ...
 # Subtest: real photographs have reusable licenses, attribution, reviewed identities and local assets
 ok 9 - real photographs have reusable licenses, attribution, reviewed identities and local assets
   ---
-  duration_ms: 6.564688
+  duration_ms: 6.844822
   type: 'test'
   ...
 # Subtest: latest requested white background, text-only brand, factual headings and ant revision are retained
 ok 10 - latest requested white background, text-only brand, factual headings and ant revision are retained
   ---
-  duration_ms: 1.05498
+  duration_ms: 2.394386
   type: 'test'
   ...
 # Subtest: rejected anatomy variants cannot be selected and revised art has a visual review record
 ok 11 - rejected anatomy variants cannot be selected and revised art has a visual review record
   ---
-  duration_ms: 1.147828
+  duration_ms: 2.27966
   type: 'test'
   ...
 # Subtest: requested inventory preserves whales and distinguishes unverified candidates from editorial entries
 ok 12 - requested inventory preserves whales and distinguishes unverified candidates from editorial entries
   ---
-  duration_ms: 1.284166
+  duration_ms: 2.315797
   type: 'test'
   ...
 # Subtest: all featured creatures remain native links; horizontal exhibition has accessible navigation and static content
 ok 13 - all featured creatures remain native links; horizontal exhibition has accessible navigation and static content
   ---
-  duration_ms: 0.639799
+  duration_ms: 1.613025
   type: 'test'
   ...
 # Subtest: new photos preserve source class and disclose specimens or uncertain subspecies
 ok 14 - new photos preserve source class and disclose specimens or uncertain subspecies
   ---
-  duration_ms: 0.571783
+  duration_ms: 0.730999
   type: 'test'
   ...
 # Subtest: public asset URLs match current content hashes so cached old scripts and photos are not reused
 ok 15 - public asset URLs match current content hashes so cached old scripts and photos are not reused
   ---
-  duration_ms: 24.905318
+  duration_ms: 48.384457
   type: 'test'
   ...
 1..15
@@ -97,4 +97,4 @@ ok 15 - public asset URLs match current content hashes so cached old scripts and
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 329.813531
+# duration_ms 461.38977

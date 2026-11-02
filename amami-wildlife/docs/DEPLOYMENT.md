@@ -30,3 +30,7 @@
 新しく追加した`shima-craft-amami-wildlife`宛の4ルートだけを削除する。既存の`shima-craft.com/*`と`www.shima-craft.com/*`、既存Workerのバージョンには触れない。図鑑URLは既存サイト側の処理へ戻る。後続更新は図鑑Workerだけを既知のバージョンに戻す。`wrangler delete`等を他Workerへ実行しない。
 
 公開前の既存Worker: homepage `213555b8-dc36-48fd-ae0b-2e62400fcccd`、legacy `117ff8f0-149d-4cfb-ae86-8a11aaf20c25`。公開後の結果は`release-result.json`を参照。
+
+## 0.2.1の配信整合性
+
+/wildlife/の応答にCache-Control: no-transformを付与。Cloudflareの自動beacon挿入をこの配信だけで抑止する。公式仕様: https://developers.cloudflare.com/web-analytics/faq/ 。CSPの許可範囲を広げない。既存ホームのWeb Analytics等のドメイン設定を変更しない。

@@ -27,7 +27,7 @@ test('all internal links and images resolve; headings, language and alt attribut
  }
 });
 test('worker serves every editorial detail and applies security headers',async()=>{
- for(const s of species){const r=await request('/wildlife/species/'+s.id+'/');assert.equal(r.status,200);assert.match(await r.text(),new RegExp(s.name));assert.match(r.headers.get('Content-Security-Policy'),/frame-ancestors 'none'/);assert.equal(r.headers.get('X-Content-Type-Options'),'nosniff');}
+ for(const s of species){const r=await request('/wildlife/species/'+s.id+'/');assert.equal(r.status,200);assert.match(await r.text(),new RegExp(s.name));assert.match(r.headers.get('Content-Security-Policy'),/frame-ancestors 'none'/);assert.equal(r.headers.get('X-Content-Type-Options'),'nosniff');assert.match(r.headers.get('Cache-Control'),/no-transform/);}
 });
 test('worker canonicalizes directory paths and retains filter query',async()=>{
  let r=await request('/wildlife?q=カエル');assert.equal(r.status,308);assert.equal(new URL(r.headers.get('Location'),'https://shima-craft.com').searchParams.get('q'),'カエル');r=await request('/wildlife/species/lidths-jay');assert.equal(r.status,308);assert.equal(r.headers.get('Location'),'/wildlife/species/lidths-jay/');

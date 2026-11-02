@@ -1,4 +1,4 @@
-# 検証記録 0.2.0 / 2026-11-02
+# 検証記録 0.2.1 / 2026-11-02
 
 ## 自動検証
 
@@ -40,3 +40,7 @@ iPhone Safari / Android Chrome実機、VoiceOver/TalkBack、実端末の最大�
 3. 検索/島/すみか/渡りで絞り込み、空結果から復帰、URL共有とブラウザバックを確認。
 4. OSの動きを減らす設定で再読込し、縦表示と静止を確認。
 5. VoiceOver/TalkBackで見出し/検索/結果件数/タブ/詳細リンクを確認。
+
+## 公開後に見つかった差分
+
+初回HTTP照合は136件中93件成功、43件のHTML本文だけ不一致。全HTTPステータス/バージョン/CSPは期待通り。差分を取得するとCloudflareの自動Web Analytics beacon追加だけだった。公式FAQ（https://developers.cloudflare.com/web-analytics/faq/ ）に従い、図鑑WorkerのCache-Controlにno-transformを指定する0.2.1を追加。ドメイン全体の解析設定や既存サイトの設定は変更していない。修正後の最終結果はproduction-http.json。

@@ -92,3 +92,41 @@
 }
 @media(prefers-reduced-motion:reduce){.hero-species,.habitat-word,.orbit-one,.journey-ready .chapter-copy,.journey-ready .chapter-copy h2{transform:none!important}}
 .motion-paused .hero-species,.motion-paused .habitat-word,.motion-paused .orbit-one,.motion-paused .chapter-copy,.motion-paused .chapter-copy h2{transform:none!important}
+
+/* Classification is a first-class way into the catalogue. */
+.taxon-jumps{display:flex;gap:8px 28px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding:8px 0 20px;margin-bottom:48px}
+.taxon-jumps a{display:inline-flex;align-items:center;gap:12px;min-height:44px;text-decoration:none;font-size:.9rem;font-weight:700}
+.taxon-jumps a span{font:400 .72rem/1.4 Georgia,serif;color:var(--muted)}
+.taxon-jumps a:hover{color:var(--rust)}
+.taxon-section{scroll-margin-top:28px;margin-block:0 76px}
+.taxon-heading{display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--ink);padding-bottom:16px}
+.taxon-heading>div{display:flex;align-items:baseline;gap:20px}.taxon-heading>div>span{font:italic 1.1rem Georgia,serif;color:var(--muted)}
+.taxon-heading h3{font-size:clamp(1.65rem,3vw,2.3rem);margin:0;letter-spacing:.08em}.group-count{font-size:.76rem;color:var(--muted);margin:0}
+.grouped-catalog .species-grid{margin-top:16px}
+.species-card a{border:0;border-radius:0!important;background:#fff;overflow:visible}
+.species-card a:hover{background:#fff;transform:none}
+.species-card .card-art,.species-card:nth-child(n) .card-art{background:#f6f7f3;border-radius:4px;overflow:hidden;transition:background-color .25s}
+.species-card a:hover .card-art{background:#edf0e7}.card-animal{transition:transform .35s cubic-bezier(.2,.7,.2,1)}.species-card a:hover .card-animal{transform:scale(1.045)}
+.card-copy{padding:18px 2px 20px}.card-copy :is(h3,h4){font-size:1.08rem;line-height:1.65;margin:6px 28px 6px 0}.card-copy .eyebrow{font-size:.6rem}.card-copy p{font-size:.76rem}.card-arrow{right:2px;top:20px}
+@media(max-width:700px){.taxon-jumps{gap:4px 18px;margin-bottom:30px;padding-bottom:14px}.taxon-jumps a{font-size:.8rem;gap:8px}.taxon-section{margin-bottom:42px}.taxon-heading{padding-bottom:10px}.taxon-heading>div{gap:12px}.card-copy :is(h3,h4){font-size:.9rem;margin-right:16px}.card-copy{padding:12px 0}.card-arrow{font-size:1rem;top:14px}}
+@media(prefers-reduced-motion:reduce){.card-animal{transition:none}.species-card a:hover .card-animal{transform:none}}
+/* Editorial composition: ink, illustration and fine habitat drawings on white. */
+.journey-intro{padding-block:34px 28px}.journey-intro h1{font-size:clamp(2rem,3.8vw,3.5rem);letter-spacing:-.035em;line-height:1.4;font-weight:750}.journey-intro .eyebrow{font-size:.65rem;letter-spacing:.16em}.journey-intro-copy{font-size:.8rem;line-height:1.8}
+.chapter-navigation{gap:30px}.chapter-navigation button{border-radius:0;background:none!important;color:var(--muted)!important;padding:8px 0;border-bottom:2px solid transparent}.chapter-navigation button[aria-current="step"]{color:var(--ink)!important;border-bottom-color:var(--ink)}.chapter-navigation button span{font-family:Georgia,serif;font-size:.7rem;margin-right:10px}
+.chapter-copy h2{font-family:'Hiragino Mincho ProN','Yu Mincho',serif;font-weight:600;letter-spacing:-.05em;font-size:clamp(7rem,12vw,12rem);line-height:1}
+.chapter-copy h2>span{font-family:inherit;font-size:clamp(1.5rem,2.8vw,2.5rem);letter-spacing:.13em;font-weight:500;margin-top:18px}
+.chapter-index{font-size:.9rem;color:var(--ink)}.chapter-copy{align-self:center}.chapter-description{font-size:.8rem;letter-spacing:.03em}.chapter-catalog{gap:20px;border-bottom:1px solid var(--line);font-size:.73rem}
+.chapter-photo{border-top:1px solid var(--line);padding-top:18px;gap:12px;margin-top:28px;font-size:.72rem}.chapter-photo img{border-radius:3px;width:76px;height:54px}.chapter-photo strong{font-weight:500}
+.habitat-word{top:-2%;left:8%;font-size:clamp(5rem,12vw,12rem);font-style:normal;letter-spacing:-.045em;color:#f0f1ec;z-index:-2}
+.habitat-drawing{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1;overflow:visible;transform:translate3d(calc(var(--chapter-offset,0) * -45px),0,-40px)}.habitat-drawing path{stroke:#a3b29c;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;opacity:.43}
+.chapter-river .habitat-drawing path{stroke:#9bbeb2}.chapter-ocean .habitat-drawing path{stroke:#8cb5be}
+.hero-species .animal-name{background:#fff;font-size:.74rem;font-weight:500;border-bottom:1px solid var(--line);padding:7px 1px;gap:16px}.hero-species:hover .animal-name{border-color:var(--ink)}
+.chapter-forest .hero-species--1{width:61%;right:0;top:0;height:61%}.chapter-forest .hero-species--2{width:47%;left:-10%;bottom:3%;height:46%}.chapter-forest .hero-species--3{width:23%;right:3%;bottom:4%;height:28%}
+.chapter-ocean .hero-species--1{width:76%;height:70%;right:-1%;top:-1%}.chapter-ocean .hero-species--2{width:38%;height:55%;left:-7%;bottom:0}.chapter-ocean .journey-animal{max-height:100%;animation-duration:9s}.chapter-ocean .hero-species--2 .journey-animal{animation-delay:-4s}
+.night .habitat-word{color:#e7eae9}.night .habitat-drawing path{stroke:#567787}
+@media(min-width:1050px) and (min-height:650px){.journey-ready .chapter-copy h2{font-size:clamp(6rem,11vw,10rem);margin-bottom:28px}.journey-ready .journey-chapter{grid-template-columns:29% 71%;padding-inline:6vw 5vw}.journey-ready .chapter-copy{padding-right:20px}.journey-ready .chapter-gallery{height:95%}}
+@media(max-width:700px){.journey-intro{padding-block:22px}.journey-intro h1{font-size:1.9rem}.journey-intro-copy{margin-top:12px;font-size:.72rem}.chapter-navigation{gap:26px}.chapter-navigation button{padding-inline:0}.chapter-copy h2{display:flex;gap:12px;font-size:4rem;line-height:1.25}.chapter-copy h2>span{font-size:1.2rem;margin:0}.chapter-gallery{height:350px;margin-top:4px}.habitat-word{font-size:5.8rem;left:15%;top:1%}.habitat-drawing{inset:0}.chapter-forest .hero-species--1{width:62%;right:0;top:0}.chapter-forest .hero-species--2{width:48%;left:0;height:44%}.chapter-forest .hero-species--3{width:26%;right:0;height:27%}.chapter-ocean .hero-species--1{width:76%;height:70%;right:0}.chapter-ocean .hero-species--2{width:38%;height:52%;left:0}.hero-species .animal-name{font-size:.65rem;gap:6px}.chapter-photo{display:none}}
+@media(prefers-reduced-motion:reduce){.habitat-drawing{transform:none!important}}.motion-paused .habitat-drawing{transform:none!important}
+/* Keep the caption next to the painted silhouette, not an empty fixed-height box. */
+.hero-species{height:auto!important;gap:8px}.hero-species .journey-animal{height:auto;max-height:none;width:100%;object-fit:contain}.hero-species .animal-name{margin-top:0}
+@media(max-width:700px){.chapter-gallery{height:365px}.chapter-ocean .hero-species--1{top:0}.chapter-ocean .hero-species--2{bottom:4%}.hero-species .animal-name{padding-block:5px}}

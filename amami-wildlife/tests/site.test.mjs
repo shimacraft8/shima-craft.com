@@ -55,7 +55,7 @@ test('latest requested white background, text-only brand, factual headings and a
 test('rejected anatomy variants cannot be selected and revised art has a visual review record',()=>{
  const reviews=JSON.parse(fs.readFileSync(path.join(root,'docs/illustration-review.json')));
  const art=JSON.parse(fs.readFileSync(path.join(root,'data/illustrations.json')));
- for(const [id,asset] of Object.entries({'banded-gecko':'cute-banded-gecko-v3',habu:'cute-habu-v2',himehabu:'cute-himehabu-v2','lidths-jay':'cute-lidths-jay-v2'})){
+ for(const [id,asset] of Object.entries({'banded-gecko':'cute-banded-gecko-v3',habu:'cute-habu-v4',himehabu:'cute-himehabu-v4','lidths-jay':'cute-lidths-jay-v2'})){
   assert.equal(species.find(s=>s.id===id).asset,asset);
   assert.ok(reviews.some(r=>r.id===id&&r.master===art[asset].master&&r.visualReviewed&&r.accepted));
   assert.ok(art[asset].alpha);assert.ok(art[asset].width>0&&art[asset].height>0);
@@ -95,4 +95,24 @@ test('public asset URLs match current content hashes so cached old scripts and p
   assert.equal(url.searchParams.get('v'),expected);count++;
  }
  assert.ok(count>=10);
+});
+
+test('catalogue keeps every taxon in its own labelled section without mixed groups',()=>{
+ const html=fs.readFileSync(path.join(publicRoot,'wildlife/index.html'),'utf8');
+ const sections=[...html.matchAll(/<section class="taxon-section"[^>]*data-group="([^"]+)"[^>]*>([\s\S]*?)<\/section>/g)];
+ assert.deepEqual(sections.map(m=>m[1]),['哺乳類','鳥類','爬虫類','両生類','昆虫']);
+ const ids=[];
+ for(const match of sections){const entries=[...match[2].matchAll(/data-id="([^"]+)"/g)].map(m=>m[1]);for(const id of entries)assert.equal(species.find(s=>s.id===id)?.group,match[1]);ids.push(...entries);assert.match(match[2],/<h3/);assert.match(match[2],/<h4/);}
+ assert.equal(ids.length,species.length);assert.equal(new Set(ids).size,species.length);
+});
+test('both sea turtles have distinct sourced entries, local art and actual photo tabs',()=>{
+ for(const id of ['green-turtle','loggerhead-turtle']){const s=species.find(s=>s.id===id);assert.equal(s.group,'爬虫類');assert.equal(s.habitat,'海・海岸');const html=fs.readFileSync(path.join(publicRoot,'wildlife/species',id,'index.html'),'utf8');assert.match(html,/2 実際の写真/);assert.ok(html.includes(s.scientific));}
+ assert.equal(species.find(s=>s.id==='loggerhead-turtle').scientific,'Caretta caretta');
+ assert.ok(species.find(s=>s.id==='loggerhead-turtle').sources.includes('amami-turtles-atlas'));
+});
+
+test('snake selections require structural underdrawing and explicit post-generation topology review',()=>{
+ const reviews=JSON.parse(fs.readFileSync(path.join(root,'docs/illustration-review.json')));
+ const choices=JSON.parse(fs.readFileSync(path.join(root,'data/illustration-choices.json')));
+ for(const id of ['habu','himehabu','akamata','green-snake','coral-snake']){const entry=species.find(s=>s.id===id);assert.equal(entry.asset,choices[id]);const review=reviews.findLast(r=>r.id===id&&r.accepted);assert.ok(fs.existsSync(path.join(root,review.structureGuide)));for(const value of Object.values(review.reviewChecks))assert.equal(value,true);}
 });

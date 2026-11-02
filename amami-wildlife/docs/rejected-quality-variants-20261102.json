@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-02",
+  "status": "not-adopted",
+  "reason": "ユーザー指摘: とぐろのつながりが不自然。下絵方式へ変更。",
+  "variants": {
+    "habu": "exec-7f7209c6-3dee-4a75-a398-1c8ae7818d2b.png",
+    "himehabu": "exec-75fb179e-df64-48d1-b12a-08adb36a7f37.png",
+    "akamata": "exec-d1faeea0-e24e-4395-a035-65a5845a7fe8.png",
+    "green-snake": "exec-7565b0c0-48a7-40f5-8cec-83723dcd9e7a.png",
+    "coral-snake": "exec-279d9edd-6139-464b-8e37-a6d38162178d.png"
+  },
+  "loggerheadRejected": [
+    "initial side view: flipper attachments unclear",
+    "top down: user wants horizontal side view"
+  ],
+  "finalLoggerhead": "cute-loggerhead-turtle-v3"
+}

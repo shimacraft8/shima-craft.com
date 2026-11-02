@@ -62,5 +62,6 @@
  const requested=new URLSearchParams(location.search).get('chapter');const index=panels.findIndex(p=>p.id==='habitat-'+requested);
  if(index>=0&&(!location.hash||location.hash==='#explore'))requestAnimationFrame(()=>go(index,false,false));
  // Apply an explicit catalog anchor after the exhibition changes document height.
- if(location.hash==='#catalog')requestAnimationFrame(()=>document.getElementById('catalog')?.scrollIntoView({behavior:'instant',block:'start'}));
+ const anchor=location.hash.slice(1);
+ if(anchor==='catalog'||anchor.startsWith('group-'))requestAnimationFrame(()=>document.getElementById(anchor)?.scrollIntoView({behavior:'instant',block:'start'}));
 })();

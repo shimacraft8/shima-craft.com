@@ -1,5 +1,5 @@
 {
-  "akamata": "cute-akamata-v1",
+  "akamata": "cute-akamata-v4",
   "amami-crocodile-newt": "cute-amami-crocodile-newt-v1",
   "amami-deer-stag": "cute-amami-deer-stag-v2",
   "amami-dung-beetle": "cute-amami-dung-beetle-v2",
@@ -11,10 +11,10 @@
   "black-wood-pigeon": "cute-black-wood-pigeon-v1",
   "blue-tiger": "cute-blue-tiger-v2",
   "broad-grooved-stag": "cute-broad-grooved-stag-v2",
-  "coral-snake": "cute-coral-snake-v1",
+  "coral-snake": "cute-coral-snake-v3",
   "ferrie-longhorn": "cute-ferrie-longhorn-v2",
   "green-pigeon": "cute-green-pigeon-v1",
-  "green-snake": "cute-green-snake-v1",
+  "green-snake": "cute-green-snake-v3",
   "grey-faced-buzzard": "cute-grey-faced-buzzard-v1",
   "long-haired-rat": "cute-long-haired-rat-v1",
   "okinawa-peacock": "cute-okinawa-peacock-v2",
@@ -30,9 +30,13 @@
   "watase-shrew": "cute-watase-shrew-v1",
   "white-striped-chafer": "cute-white-striped-chafer-v2",
   "winter-chafer": "cute-winter-chafer-v2",
-  "habu": "cute-habu-v2",
-  "himehabu": "cute-himehabu-v2",
+  "habu": "cute-habu-v4",
+  "himehabu": "cute-himehabu-v4",
   "lidths-jay": "cute-lidths-jay-v2",
   "banded-gecko": "cute-banded-gecko-v3",
-  "camponotus-amamianus": "cute-camponotus-amamianus-v3"
+  "camponotus-amamianus": "cute-camponotus-amamianus-v3",
+  "amami-ishikawa-frog": "cute-amami-ishikawa-frog-v2",
+  "green-turtle": "cute-green-turtle-v2",
+  "amami-rabbit": "cute-amami-rabbit-v2",
+  "loggerhead-turtle": "cute-loggerhead-turtle-v3"
 }

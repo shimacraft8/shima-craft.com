@@ -23,26 +23,34 @@
  }
  const filters=$('#filters');
  if(filters){
-  const cards=[...document.querySelectorAll('#species-grid > li')];const keys=['q','group','island','habitat','season'];let data;let shown=18;let debounce;
+  const cards=[...document.querySelectorAll('#species-grid .species-card')];const keys=['q','group','island','habitat','season'];let data;let shown=6;let debounce;
   const more=$('#show-more');
   function state(){return Object.fromEntries(keys.map(k=>[k,filters.elements.namedItem(k).value]));}
-  function restore(){const params=new URLSearchParams(location.search);for(const k of keys){const input=filters.elements.namedItem(k);input.value=params.get(k)||'';}shown=18;}
+  function restore(){const params=new URLSearchParams(location.search);for(const k of keys){const input=filters.elements.namedItem(k);input.value=params.get(k)||'';}shown=params.get('all')==='1'?Number.MAX_SAFE_INTEGER:6;}
   function apply(sync=true){
    if(!data)return;const v=state(),query=normalize(v.q.trim());
    const matching=data.filter(s=>(!query||normalize([s.name,s.scientific,s.lead].join(' ')).includes(query))&&(!v.group||s.group===v.group)&&(!v.island||s.islands.includes(v.island))&&(!v.habitat||s.habitat===v.habitat)&&(!v.season||s.season.includes(v.season)));
-   const ids=new Set(matching.slice(0,shown).map(s=>s.id));for(const c of cards)c.hidden=!ids.has(c.dataset.id);
-   $('#result-count').textContent=`${matching.length.toLocaleString('ja-JP')}項目${matching.length>shown?` / ${shown}項目を表示`:''}`;
-   $('#empty').hidden=matching.length>0;$('#island-note').hidden=!v.island;$('#reset-filters').hidden=!keys.some(k=>v[k]);more.hidden=matching.length<=shown;
-   if(sync){const u=new URL(location.href);for(const k of keys){v[k]?u.searchParams.set(k,v[k]):u.searchParams.delete(k);}history.replaceState(null,'',u);}
+   const matchingIds=new Set(matching.map(s=>s.id));let visible=0,hasMore=false;
+   for(const section of document.querySelectorAll('.taxon-section')){
+    const sectionCards=[...section.querySelectorAll('.species-card')];let count=0,total=0;
+    for(const c of sectionCards){const matches=matchingIds.has(c.dataset.id);if(matches)total++;c.hidden=!(matches&&count<shown);if(!c.hidden){count++;visible++;}}
+    section.hidden=total===0;section.querySelector('.group-count').textContent=total>count?`${count} / ${total}項目`:`${total}項目`;
+    if(total>count)hasMore=true;
+    const jump=[...document.querySelectorAll('[data-group-jump]')].find(a=>a.dataset.groupJump===section.dataset.group);
+    if(jump){jump.hidden=total===0;jump.querySelector('span').textContent=String(total);}
+   }
+   $('#result-count').textContent=`${matching.length.toLocaleString('ja-JP')}項目${matching.length>visible?` / ${visible}項目を表示`:''}`;
+   $('#empty').hidden=matching.length>0;$('#island-note').hidden=!v.island;$('#reset-filters').hidden=!keys.some(k=>v[k]);more.hidden=!hasMore;
+   if(sync){const u=new URL(location.href);for(const k of keys){v[k]?u.searchParams.set(k,v[k]):u.searchParams.delete(k);}shown>6?u.searchParams.set('all','1'):u.searchParams.delete('all');history.replaceState(null,'',u);}
   }
   restore();
   fetch(base+'data/species.json').then(r=>{if(!r.ok)throw Error('data');return r.json()}).then(d=>{data=d;apply(false)}).catch(()=>{
    const p=document.createElement('p');p.className='notice';p.setAttribute('role','alert');p.textContent='絞り込みデータを読み込めませんでした。通信を確認して再読み込みしてください。一覧から各ページは開けます。';filters.after(p);for(const el of filters.elements)el.disabled=true;
   });
-  filters.addEventListener('submit',e=>{e.preventDefault();clearTimeout(debounce);shown=18;apply()});
-  filters.addEventListener('input',e=>{clearTimeout(debounce);debounce=setTimeout(()=>{shown=18;apply()},e.target.type==='search'?160:0)});
-  $('#reset-filters').addEventListener('click',()=>{clearTimeout(debounce);filters.reset();shown=18;apply();$('#q').focus()});
-  more.addEventListener('click',()=>{clearTimeout(debounce);const hidden=cards.filter(c=>c.hidden);shown+=18;apply(false);const next=hidden.find(c=>!c.hidden);next?.querySelector('a').focus();});
+  filters.addEventListener('submit',e=>{e.preventDefault();clearTimeout(debounce);shown=6;apply()});
+  filters.addEventListener('input',e=>{clearTimeout(debounce);debounce=setTimeout(()=>{shown=6;apply()},e.target.type==='search'?160:0)});
+  $('#reset-filters').addEventListener('click',()=>{clearTimeout(debounce);filters.reset();shown=6;apply();$('#q').focus()});
+  more.addEventListener('click',()=>{clearTimeout(debounce);const hidden=cards.filter(c=>c.hidden);shown=Number.MAX_SAFE_INTEGER;apply();const next=hidden.find(c=>!c.hidden);next?.querySelector('a').focus();});
   window.addEventListener('popstate',()=>{restore();apply(false)});
  }
  const recordForm=$('#record-filter');

@@ -571,5 +571,20 @@
     "expertIdentificationReviewed": false,
     "provenance": "government-site-terms",
     "rightsBasis": "掲載元の一般利用条件と当該画像の個別表示を確認。第三者の撮影者表示や独自の利用制限は当該画像周辺に見当たらない。掲載元を撮影者と扱わない。"
+  },
+  "loggerhead-turtle": {
+    "src": "/wildlife/assets/photos/loggerhead-turtle.webp",
+    "title": "Caretta caretta 060417w2.jpg",
+    "author": "Strobilomyces",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Caretta_caretta_060417w2.jpg",
+    "width": 960,
+    "height": 640,
+    "caption": "フランスの水族館Océanopolisで撮影された飼育個体の参考写真です。奄美群島の野生個体の写真ではありません。",
+    "modification": "サイズ・形式を変更（トリミングなし）",
+    "visualReviewed": true,
+    "expertIdentificationReviewed": false,
+    "captive": true
   }
 }

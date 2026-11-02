@@ -374,5 +374,122 @@
     "visualReviewed": true,
     "accepted": true,
     "note": "真上の構図で左右3本ずつ計6本の脚と2本の触角を確認。比較用の実写真を確認。専門家の監修ではない。"
+  },
+  {
+    "id": "amami-ishikawa-frog",
+    "master": "assets/animals/cute-amami-ishikawa-frog-v2.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:%E3%82%A2%E3%83%9E%E3%83%9F%E3%82%A4%E3%82%B7%E3%82%AB%E3%83%AF%E3%82%AC%E3%82%A8%E3%83%AB.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "2026-11-02: 既存オットンガエルの筆致を基準に自然な目と閉じた口、体つき・塗りを統一。イシカワは4肢を分離。ウミガメは2前肢/2後肢と小さな尾、クロウサギは短い耳・4肢。専門監修は未実施。"
+  },
+  {
+    "id": "green-turtle",
+    "master": "assets/animals/cute-green-turtle-v2.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:Hawaii_turtle_2.JPG",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "2026-11-02: 既存オットンガエルの筆致を基準に自然な目と閉じた口、体つき・塗りを統一。イシカワは4肢を分離。ウミガメは2前肢/2後肢と小さな尾、クロウサギは短い耳・4肢。専門監修は未実施。"
+  },
+  {
+    "id": "amami-rabbit",
+    "master": "assets/animals/cute-amami-rabbit-v2.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:%E3%82%A2%E3%83%9E%E3%83%9F%E3%83%8E%E3%82%AF%E3%83%AD%E3%82%A6%E3%82%B5%E3%82%AE_Pentalagus_furnessi_Amami-Oshima,_Japan.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "2026-11-02: 既存オットンガエルの筆致を基準に自然な目と閉じた口、体つき・塗りを統一。イシカワは4肢を分離。ウミガメは2前肢/2後肢と小さな尾、クロウサギは短い耳・4肢。専門監修は未実施。"
+  },
+  {
+    "id": "loggerhead-turtle",
+    "master": "assets/animals/cute-loggerhead-turtle-v3.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:Caretta_caretta_060417w2.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "note": "2026-11-02: 横向きのアオウミガメを構図ガイドにして再生成。頭後方に2枚の長い前ひれ、甲羅後方に2枚の短い後ひれと小さい尾がつながる配置を目視。大きい頭/赤褐色の甲羅。側甲板の枚数は専門監修未実施。初回の接続位置が不自然な案と、ユーザーが希望しない真上案は不採用。"
+  },
+  {
+    "id": "habu",
+    "master": "assets/animals/cute-habu-v4.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:Protobothrops_flavoviridis_285176627.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "structureGuide": "assets/guides/snake-structure-guide-v3.svg",
+    "reviewChecks": {
+      "singleHead": true,
+      "singleTail": true,
+      "continuousTrunk": true,
+      "neckInFrontOfBackLoop": true,
+      "noBranchOrFusedJunction": true,
+      "tailTapers": true
+    },
+    "note": "2026-11-02: ユーザーが直接生成のとぐろ5案を不自然と指摘したため不採用。一本の中心線から作った下絵で先に頭→首→手前の曲線→左の一周→奥の弧→右の尾の順序を固定し、その後に彩色。生成後に下絵と照合し、交差は首が奥の弧より前、分岐・二重尾なしを目視確認。専門監修は未実施。"
+  },
+  {
+    "id": "himehabu",
+    "master": "assets/animals/cute-himehabu-v4.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:Ovophis_okinavensis_100247421.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "structureGuide": "assets/guides/snake-structure-guide-v3.svg",
+    "reviewChecks": {
+      "singleHead": true,
+      "singleTail": true,
+      "continuousTrunk": true,
+      "neckInFrontOfBackLoop": true,
+      "noBranchOrFusedJunction": true,
+      "tailTapers": true
+    },
+    "note": "2026-11-02: ユーザーが直接生成のとぐろ5案を不自然と指摘したため不採用。一本の中心線から作った下絵で先に頭→首→手前の曲線→左の一周→奥の弧→右の尾の順序を固定し、その後に彩色。生成後に下絵と照合し、交差は首が奥の弧より前、分岐・二重尾なしを目視確認。専門監修は未実施。"
+  },
+  {
+    "id": "akamata",
+    "master": "assets/animals/cute-akamata-v4.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:Lycodon_semicarinatus_by_OpenCage.JPG",
+    "visualReviewed": true,
+    "accepted": true,
+    "structureGuide": "assets/guides/snake-structure-guide-v3.svg",
+    "reviewChecks": {
+      "singleHead": true,
+      "singleTail": true,
+      "continuousTrunk": true,
+      "neckInFrontOfBackLoop": true,
+      "noBranchOrFusedJunction": true,
+      "tailTapers": true
+    },
+    "note": "2026-11-02: ユーザーが直接生成のとぐろ5案を不自然と指摘したため不採用。一本の中心線から作った下絵で先に頭→首→手前の曲線→左の一周→奥の弧→右の尾の順序を固定し、その後に彩色。生成後に下絵と照合し、交差は首が奥の弧より前、分岐・二重尾なしを目視確認。専門監修は未実施。"
+  },
+  {
+    "id": "green-snake",
+    "master": "assets/animals/cute-green-snake-v3.png",
+    "photoReference": "https://www.inaturalist.org/observations/392033621",
+    "visualReviewed": true,
+    "accepted": true,
+    "structureGuide": "assets/guides/snake-structure-guide-v3.svg",
+    "reviewChecks": {
+      "singleHead": true,
+      "singleTail": true,
+      "continuousTrunk": true,
+      "neckInFrontOfBackLoop": true,
+      "noBranchOrFusedJunction": true,
+      "tailTapers": true
+    },
+    "note": "2026-11-02: ユーザーが直接生成のとぐろ5案を不自然と指摘したため不採用。一本の中心線から作った下絵で先に頭→首→手前の曲線→左の一周→奥の弧→右の尾の順序を固定し、その後に彩色。生成後に下絵と照合し、交差は首が奥の弧より前、分岐・二重尾なしを目視確認。専門監修は未実施。"
+  },
+  {
+    "id": "coral-snake",
+    "master": "assets/animals/cute-coral-snake-v3.png",
+    "photoReference": "https://commons.wikimedia.org/wiki/File:%E3%83%92%E3%83%A3%E3%83%B3_Sinomicrurus_japonicus._%E5%A5%84%E7%BE%8E%E5%B8%82%E5%90%8D%E7%80%AC%E5%8B%9D.jpg",
+    "visualReviewed": true,
+    "accepted": true,
+    "structureGuide": "assets/guides/snake-structure-guide-v3.svg",
+    "reviewChecks": {
+      "singleHead": true,
+      "singleTail": true,
+      "continuousTrunk": true,
+      "neckInFrontOfBackLoop": true,
+      "noBranchOrFusedJunction": true,
+      "tailTapers": true
+    },
+    "note": "2026-11-02: ユーザーが直接生成のとぐろ5案を不自然と指摘したため不採用。一本の中心線から作った下絵で先に頭→首→手前の曲線→左の一周→奥の弧→右の尾の順序を固定し、その後に彩色。生成後に下絵と照合し、交差は首が奥の弧より前、分岐・二重尾なしを目視確認。専門監修は未実施。"
   }
 ]

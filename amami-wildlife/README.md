@@ -1,3 +1,5 @@
+> 最新改修0.3.0: 掲載40項目にイラスト/実写各40、アカウミガメ追加、図版の画風とヘビ5種の構造を見直し、分類群別一覧へ。検証/公開状態はdocs/QUALITY_REVISION_20261102.mdとdocs/release-result.jsonを参照。以下は過去版の履歴を含む。
+
 # 奄美大島の生き物大全 / SHIMA CRAFT
 
 公開先: https://shima-craft.com/wildlife/

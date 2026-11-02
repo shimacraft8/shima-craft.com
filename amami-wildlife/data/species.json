@@ -16,7 +16,7 @@
     "sources": [
       "awcc"
     ],
-    "asset": "cute-amami-rabbit-v1",
+    "asset": "cute-amami-rabbit-v2",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
@@ -62,7 +62,7 @@
     "sources": [
       "awcc"
     ],
-    "asset": "cute-amami-ishikawa-frog-v1",
+    "asset": "cute-amami-ishikawa-frog-v2",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
@@ -82,11 +82,37 @@
     "sources": [
       "turtles"
     ],
-    "asset": "cute-green-turtle-v1",
+    "asset": "cute-green-turtle-v2",
     "status": "editorial",
     "taxonomyNote": "群島の沿岸域。島別の記録は照合中。",
     "checked": "2026-11-01",
     "illustrationStatus": "generated-photo-referenced"
+  },
+  {
+    "id": "loggerhead-turtle",
+    "name": "アカウミガメ",
+    "scientific": "Caretta caretta",
+    "rank": "species",
+    "group": "爬虫類",
+    "habitat": "海・海岸",
+    "islands": [],
+    "lead": "大きな頭と赤褐色の甲羅をもつウミガメ",
+    "fact": "奄美群島で産卵が確認されるウミガメです。アオウミガメより頭が大きく、甲羅は赤褐色で後ろがすぼまる形をしています。",
+    "season": "出現期は整理中",
+    "sources": [
+      "amami-turtles-atlas",
+      "churaumi-loggerhead"
+    ],
+    "asset": "cute-loggerhead-turtle-v3",
+    "status": "editorial",
+    "taxonomyNote": "群島内の産卵記録。島別の現在分布や観察地点を保証しない。",
+    "checked": "2026-11-02",
+    "illustrationStatus": "generated-photo-referenced",
+    "features": [
+      "アオウミガメと比べて頭が大きく、強いあごをもちます。",
+      "甲羅は赤褐色で、輪郭はハート形に近くなります。",
+      "砂浜では上陸する個体の進路をふさがず、産卵や子ガメを照らさずに見守ってください。"
+    ]
   },
   {
     "id": "camponotus-amamianus",
@@ -365,7 +391,7 @@
     "sources": [
       "awcc"
     ],
-    "asset": "cute-habu-v2",
+    "asset": "cute-habu-v4",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
@@ -385,7 +411,7 @@
     "sources": [
       "awcc"
     ],
-    "asset": "cute-himehabu-v2",
+    "asset": "cute-himehabu-v4",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
@@ -411,7 +437,7 @@
     "sources": [
       "awcc"
     ],
-    "asset": "cute-coral-snake-v1",
+    "asset": "cute-coral-snake-v3",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
@@ -431,7 +457,7 @@
     "sources": [
       "awcc"
     ],
-    "asset": "cute-green-snake-v1",
+    "asset": "cute-green-snake-v3",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",
@@ -451,7 +477,7 @@
     "sources": [
       "awcc"
     ],
-    "asset": "cute-akamata-v1",
+    "asset": "cute-akamata-v4",
     "status": "editorial",
     "taxonomyNote": "",
     "checked": "2026-11-01",

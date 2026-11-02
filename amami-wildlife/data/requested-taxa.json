@@ -939,9 +939,9 @@
     "name": "アカウミガメ",
     "group": "爬虫類",
     "origin": "user-request-2026-11-01",
-    "status": "source-verification-pending",
-    "entryId": "",
-    "illustrationStatus": "pending",
+    "status": "editorial-entry-exists",
+    "entryId": "loggerhead-turtle",
+    "illustrationStatus": "generated-photo-referenced",
     "note": "島別の記録・分類・生息時期を照合。依頼リストだけでは生息確認としない。"
   },
   {

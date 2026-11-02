@@ -12,6 +12,7 @@ illustrations=json.loads((ROOT/'data/illustrations.json').read_text())
 for entry in json.loads((ROOT/'data/species.json').read_text()):
  if entry['asset']:files.add(ROOT/illustrations[entry['asset']]['master'])
 files.add(ROOT/'assets/cute-habitat-v1.png')
+files.update(p for p in (ROOT/'assets/guides').glob('*') if p.is_file())
 with zipfile.ZipFile(target,'w',zipfile.ZIP_DEFLATED) as z:
  for p in sorted(files):
   relative=p.relative_to(ROOT)

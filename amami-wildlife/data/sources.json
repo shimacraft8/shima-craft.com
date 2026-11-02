@@ -59,6 +59,16 @@
     "url": "https://www.vill.yamato.lg.jp/kikaku/kurashi/kankyo/shizentaiken/wakyamami.html",
     "scope": "カニ・海の生き物・クジラ・イルカ等の追加照合資料"
   },
+  "amami-turtles-atlas": {
+    "title": "環境省｜奄美群島の環境文化 Map21 ウミガメ・クジラ",
+    "url": "https://www.env.go.jp/park/amami/data/pdf/atlas24.pdf",
+    "scope": "群島でのアオウミガメ・アカウミガメの産卵記録。島別現在分布の全目録ではない"
+  },
+  "churaumi-loggerhead": {
+    "title": "沖縄美ら海水族館｜アカウミガメ",
+    "url": "https://churaumi.okinawa/fishbook/00000673/",
+    "scope": "アカウミガメの学名・頭と甲羅の特徴"
+  },
   "amagi-blue-tiger": {
     "title": "天城町 文化遺産データベース｜リュウキュウアサギマダラ",
     "url": "https://jmapps.ne.jp/amagi/det.html?data_id=5728",

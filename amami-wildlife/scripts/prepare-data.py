@@ -16,6 +16,8 @@ SOURCES={
  'fish-index':{'title':'鹿児島大学総合研究博物館｜魚類の出版物','url':'https://www.museum.kagoshima-u.ac.jp/staff/motomura/dl.html','scope':'喜界島・与論島・群島全域などの照合資料'},
  'yamato':{'title':'大和村｜わきゃあまみ 資料一覧','url':'https://www.vill.yamato.lg.jp/kikaku/kurashi/kankyo/shizentaiken/wakyamami.html','scope':'カニ・海の生き物・クジラ・イルカ等の追加照合資料'}
 }
+SOURCES['amami-turtles-atlas']={'title':'環境省｜奄美群島の環境文化 Map21 ウミガメ・クジラ','url':'https://www.env.go.jp/park/amami/data/pdf/atlas24.pdf','scope':'群島でのアオウミガメ・アカウミガメの産卵記録。島別現在分布の全目録ではない'}
+SOURCES['churaumi-loggerhead']={'title':'沖縄美ら海水族館｜アカウミガメ','url':'https://churaumi.okinawa/fishbook/00000673/','scope':'アカウミガメの学名・頭と甲羅の特徴'}
 entries=[]
 SOURCES['amagi-blue-tiger']={'title':'天城町 文化遺産データベース｜リュウキュウアサギマダラ','url':'https://jmapps.ne.jp/amagi/det.html?data_id=5728','scope':'前脚の退化と形態の解説'}
 def add(id,name,scientific,group,habitat,islands,lead,fact,season='出現期は整理中',source='awcc',asset=None,rank='species',note=''):
@@ -24,6 +26,7 @@ add('amami-rabbit','アマミノクロウサギ','Pentalagus furnessi','哺乳�
 add('lidths-jay','ルリカケス','Garrulus lidthi','鳥類','森','奄美大島・加計呂麻島・請島','るり色の羽に、黒い目元。','青と赤茶の羽、淡いくちばしが目印。森の木々の間を移動します。',asset='cute-lidths-jay-v1')
 add('amami-ishikawa-frog','アマミイシカワガエル','Odorrana splendida','両生類','川・水辺','奄美大島','緑と金色、渓流のかくれんぼ。','緑の体に金色の斑点。沖縄島の近縁種とは2011年に区別されました。',asset='cute-amami-ishikawa-frog-v1')
 add('green-turtle','アオウミガメ','Chelonia mydas','爬虫類','海・海岸','','海の中を、ゆったりひと泳ぎ。','アカウミガメとは頭や甲羅の形が異なります。海で見かけても進路をふさがず、距離をとって観察しましょう。',source='turtles',asset='cute-green-turtle-v1',note='群島の沿岸域。島別の記録は照合中。')
+add('loggerhead-turtle','アカウミガメ','Caretta caretta','爬虫類','海・海岸','','大きな頭と赤褐色の甲羅をもつウミガメ','奄美群島で産卵が確認されるウミガメです。アオウミガメより頭が大きく、甲羅は赤褐色で後ろがすぼまる形をしています。',source='amami-turtles-atlas',asset='cute-loggerhead-turtle-v3',note='群島内の産卵記録。島別の現在分布や観察地点を保証しない。')
 add('camponotus-amamianus','ツヤミカドオオアリ','Camponotus amamianus','昆虫','森','奄美大島','つやつやの体を、よく見てみよう。','黒く光る体が印象的なオオアリの仲間。このイラストは働きアリです。',source='ants',asset='cute-camponotus-amamianus-v2',note='「日本最大」の比較は働きアリ・女王等の条件を要するため、ここでは断定していません。')
 for row in [
  ('amami-spiny-rat','アマミトゲネズミ','Tokudaia osimensis','哺乳類','森','奄美大島','森に暮らす、とげのあるネズミ。','背中にはとげ状の毛。徳之島のトゲネズミとは別の種です。'),
@@ -95,7 +98,9 @@ LEADS={
  'pale-thrush':'冬に渡来して地面で餌を探す鳥',
  'ruddy-kingfisher':'春から夏に渡来する赤いくちばしの鳥'
 }
+LEADS['loggerhead-turtle']='大きな頭と赤褐色の甲羅をもつウミガメ'
 for entry in entries:
+ if entry['id']=='loggerhead-turtle':entry['checked']='2026-11-02'
  entry['lead']=LEADS.get(entry['id'],entry['name']+'の分布と特徴')
 
 # Adopt only explicit reviewed choices; a newly generated file is not approval.

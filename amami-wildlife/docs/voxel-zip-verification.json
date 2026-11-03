@@ -1,0 +1,12 @@
+{
+  "atUtc": "2026-11-03T06:03:24.092806+00:00",
+  "node": "22.23.4",
+  "npmCi": "offline cache / successful",
+  "testsPassed": 44,
+  "publicFiles": 142,
+  "rebuildMatchesAllPublicFiles": true,
+  "characterPreviewBuild": true,
+  "credentialsExcluded": true,
+  "zipIntegrity": true,
+  "sourcePath": "work/wildlife-release/voxel-20261103/zip-verify-81lxl34i/amami-wildlife"
+}

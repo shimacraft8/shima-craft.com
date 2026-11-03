@@ -49,3 +49,13 @@
 デプロイ時は専用GitHub認証のshimacraft8とCloudflareのshimacraft8@gmail.comを確認。mainを変更せず図鑑専用ブランチをpushし、図鑑Workerだけをデプロイ。`--keep-vars`で既存変数を維持。公開後に145 HTTPチェック、全アセット内容、実ブラウザの描画/ズーム/参考写真、既存2 Worker/ルート不変を照合。
 
 事前の直接API照合は一度403となった。Wranglerで公開は正常完了し、直後のwhoamiで同じメール/Account IDを確認、その後のAPI照合も成功した。資格情報の再入力や権限の拡張は行っていない。OAuthの値はログ/ソース/ZIPに出していない。
+
+## 0.5.0 / 歩けるブロックの森と40種の立体モデル
+
+公開Worker: `a1b72706-84fd-4e45-a126-608445e35bf7`。実装のGitHub記録は`356260eb09935a8a4d280c5c439a2c4977324683`（後続docsコミットあり）。既存2 Worker/全ルート不変をAPI照合、本番145 HTTPチェック成功。40種描画・本体クリック・写真・390px幅を本番ブラウザー確認。
+
+復旧先は直前0.4.0の`5461041d-601a-4c99-9235-74a45af46242`。専用認証と図鑑configで`wrangler rollback 5461041d-601a-4c99-9235-74a45af46242 --name shima-craft-amami-wildlife`。図鑑以外のWorkerへ実行しない。
+
+API照合で403になった後、通常のWrangler whoamiによる既存OAuth更新を行い、同じメール/Accountとバージョン/ルートの照合が成功。再ログインや権限の拡張は実施していません。
+
+ZIPはscripts/package.pyで再生成。ソース/資料/許諾写真/選択した素材/プロトタイプを含み、認証情報/node_modules/研究用第三者メディアを除外。抽出後、Node22.23.4と既存npmキャッシュのみでnpm ci・ビルド・44テスト・モデル確認画面ビルドに成功。公開142ファイルが全件一致（voxel-zip-verification.json）。最終ZIPのSHA-256はZIPと同じoutputsフォルダの.sha256ファイルを参照。

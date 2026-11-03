@@ -57,6 +57,6 @@ iPhone/Android実機、実際の同時タッチ、低性能GPU、VoiceOver/TalkB
 
 ## 公開と復旧
 
-GitHubはshimacraft8/shima-craft.comの図鑑専用ブランチ、Cloudflareはshimacraft8@gmail.comの図鑑専用Workerと4つの/wildlifeルートのみ。既存トップ/制作サイトは変更対象外。公開後の実際の版IDと照合結果をrelease-result.jsonへ記録します。
+GitHubはshimacraft8/shima-craft.comの図鑑専用ブランチ、Cloudflareはshimacraft8@gmail.comの図鑑専用Workerと4つの/wildlifeルートのみ。既存トップ/制作サイトは変更対象外。公開済み0.5.0のWorkerは`a1b72706-84fd-4e45-a126-608445e35bf7`。本番145 HTTPチェック、40種準備・本体クリック・実写・390px表示を確認し、既存2 Workerとルートの不変をAPI照合しました。実際の記録はrelease-result.json。ZIP抽出後のオフライン再ビルドでも142公開ファイルが全件一致しました。
 
 直前0.4.0の復旧先は5461041d-601a-4c99-9235-74a45af46242。専用認証・図鑑configでこのWorkerだけをrollback。認証情報・node_modules・未許諾の研究用写真はプロジェクトZIPに含めません。

@@ -1,0 +1,36 @@
+{
+  "ready": {
+    "animalsReady": "40",
+    "dpr": "1.6",
+    "drawCalls": "74",
+    "fov": "68",
+    "heading": "355",
+    "obstacles": "366",
+    "pitch": "-5",
+    "ready": "true",
+    "spot": "hego",
+    "triangles": "239786",
+    "walking": "false",
+    "x": "16.900",
+    "z": "22.000",
+    "zoom": "0"
+  },
+  "hitTarget": "CANVAS",
+  "meshClick": {
+    "open": true,
+    "photo": true,
+    "title": "アマミノクロウサギ"
+  },
+  "turtles": {
+    "label": "アオウミガメ",
+    "selected": "green-turtle"
+  },
+  "mobile": {
+    "height": 844,
+    "models": "40",
+    "outside": 0,
+    "overflow": false,
+    "width": 390
+  },
+  "consoleErrors": []
+}

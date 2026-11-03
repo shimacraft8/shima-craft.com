@@ -1,0 +1,242 @@
+[
+  {
+    "id": "amami-rabbit",
+    "label": "アマミノクロウサギ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "amami-spiny-rat",
+    "label": "アマミトゲネズミ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "tokunoshima-spiny-rat",
+    "label": "トクノシマトゲネズミ徳之島",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "long-haired-rat",
+    "label": "ケナガネズミ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "orii-bat",
+    "label": "オリイコキクガシラコウモリ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "orii-shrew",
+    "label": "オリイジネズミ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "watase-shrew",
+    "label": "ワタセジネズミ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "lidths-jay",
+    "label": "ルリカケス",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "amami-woodcock",
+    "label": "アマミヤマシギ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "ryukyu-robin",
+    "label": "アカヒゲ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "ryukyu-scops-owl",
+    "label": "リュウキュウコノハズク",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "black-wood-pigeon",
+    "label": "カラスバト",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "green-pigeon",
+    "label": "ズアカアオバト",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "grey-faced-buzzard",
+    "label": "サシバ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "pale-thrush",
+    "label": "シロハラ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "ruddy-kingfisher",
+    "label": "リュウキュウアカショウビン",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "amami-ishikawa-frog",
+    "label": "アマミイシカワガエル",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "otton-frog",
+    "label": "オットンガエル",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "amami-tip-nosed-frog",
+    "label": "アマミハナサキガエル",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "amami-crocodile-newt",
+    "label": "アマミイボイモリ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "amami-rabbit",
+    "label": "アマミノクロウサギ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "amami-spiny-rat",
+    "label": "アマミトゲネズミ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "tokunoshima-spiny-rat",
+    "label": "トクノシマトゲネズミ徳之島",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "long-haired-rat",
+    "label": "ケナガネズミ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "orii-bat",
+    "label": "オリイコキクガシラコウモリ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "orii-shrew",
+    "label": "オリイジネズミ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "watase-shrew",
+    "label": "ワタセジネズミ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "lidths-jay",
+    "label": "ルリカケス",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "amami-woodcock",
+    "label": "アマミヤマシギ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "ryukyu-robin",
+    "label": "アカヒゲ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "ryukyu-scops-owl",
+    "label": "リュウキュウコノハズク",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "black-wood-pigeon",
+    "label": "カラスバト",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "green-pigeon",
+    "label": "ズアカアオバト",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "grey-faced-buzzard",
+    "label": "サシバ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "pale-thrush",
+    "label": "シロハラ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "ruddy-kingfisher",
+    "label": "リュウキュウアカショウビン",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "amami-ishikawa-frog",
+    "label": "アマミイシカワガエル",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "otton-frog",
+    "label": "オットンガエル",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "amami-tip-nosed-frog",
+    "label": "アマミハナサキガエル",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "amami-crocodile-newt",
+    "label": "アマミイボイモリ",
+    "selected": true,
+    "visible": true
+  }
+]

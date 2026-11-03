@@ -4,7 +4,7 @@ import json,zipfile,hashlib
 ROOT=Path(__file__).resolve().parents[1]
 target=ROOT.parent/'amami-wildlife-project.zip'
 files=set()
-for directory in ['scripts','tests','data','design-system','docs','public','src']:
+for directory in ['scripts','tests','data','design-system','docs','public','src','prototypes']:
  files.update(p for p in (ROOT/directory).rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.suffix not in ['.pyc','.zip'])
 for name in ['README.md','.gitignore','wrangler.jsonc','worker.mjs','package.json','package-lock.json']:
  files.add(ROOT/name)

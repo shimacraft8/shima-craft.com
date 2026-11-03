@@ -1,0 +1,181 @@
+{
+  "before": {
+    "animalsReady": "40",
+    "dpr": "1",
+    "drawCalls": "73",
+    "fov": "68",
+    "heading": "355",
+    "obstacles": "366",
+    "pitch": "-5",
+    "ready": "true",
+    "spot": "hego",
+    "triangles": "235150",
+    "walking": "false",
+    "x": "16.900",
+    "z": "22.000",
+    "zoom": "0"
+  },
+  "afterWalk": {
+    "animalsReady": "40",
+    "dpr": "1",
+    "drawCalls": "73",
+    "fov": "68",
+    "heading": "355",
+    "obstacles": "366",
+    "pitch": "-5",
+    "ready": "true",
+    "spot": "hego",
+    "triangles": "235150",
+    "walking": "true",
+    "x": "16.660",
+    "z": "19.262",
+    "zoom": "0"
+  },
+  "afterLook": {
+    "animalsReady": "40",
+    "dpr": "1",
+    "drawCalls": "73",
+    "fov": "68",
+    "heading": "6",
+    "obstacles": "366",
+    "pitch": "-5",
+    "ready": "true",
+    "spot": "hego",
+    "triangles": "235150",
+    "walking": "false",
+    "x": "16.900",
+    "z": "22.000",
+    "zoom": "0"
+  },
+  "mobile": {
+    "controls": [
+      {
+        "height": 44,
+        "label": "森を出る ↗",
+        "visible": true,
+        "width": 97.3359375
+      },
+      {
+        "height": 44,
+        "label": "前へ歩く（長押しで移動）",
+        "visible": true,
+        "width": 44
+      },
+      {
+        "height": 44,
+        "label": "左へ歩く（長押しで移動）",
+        "visible": true,
+        "width": 44
+      },
+      {
+        "height": 44,
+        "label": "後ろへ歩く（長押しで移動）",
+        "visible": true,
+        "width": 44
+      },
+      {
+        "height": 44,
+        "label": "右へ歩く（長押しで移動）",
+        "visible": true,
+        "width": 44
+      },
+      {
+        "height": 49,
+        "label": "少し拡大する",
+        "visible": true,
+        "width": 44
+      },
+      {
+        "height": 49,
+        "label": "表示を引く",
+        "visible": true,
+        "width": 44
+      },
+      {
+        "height": 44,
+        "label": "左を向く",
+        "visible": true,
+        "width": 44
+      },
+      {
+        "height": 44,
+        "label": "上を向く",
+        "visible": true,
+        "width": 44
+      },
+      {
+        "height": 44,
+        "label": "下を向く",
+        "visible": true,
+        "width": 44
+      },
+      {
+        "height": 44,
+        "label": "右を向く",
+        "visible": true,
+        "width": 44
+      },
+      {
+        "height": 44,
+        "label": "入口へ戻る",
+        "visible": true,
+        "width": 61
+      },
+      {
+        "height": 44,
+        "label": "森について",
+        "visible": true,
+        "width": 54.5625
+      }
+    ],
+    "height": 844,
+    "overflow": false,
+    "width": 390
+  },
+  "mobileWalk": {
+    "before": {
+      "animalsReady": "40",
+      "dpr": "1",
+      "drawCalls": "56",
+      "fov": "76",
+      "heading": "355",
+      "obstacles": "366",
+      "pitch": "-5",
+      "ready": "true",
+      "spot": "hego",
+      "triangles": "186610",
+      "walking": "false",
+      "x": "16.900",
+      "z": "22.000",
+      "zoom": "0"
+    },
+    "after": {
+      "animalsReady": "40",
+      "dpr": "1",
+      "drawCalls": "54",
+      "fov": "76",
+      "heading": "355",
+      "obstacles": "366",
+      "pitch": "-5",
+      "ready": "true",
+      "spot": "hego",
+      "triangles": "184592",
+      "walking": "true",
+      "x": "16.580",
+      "z": "18.343",
+      "zoom": "0"
+    }
+  },
+  "landscape": {
+    "height": 390,
+    "outside": [],
+    "overflow": false,
+    "width": 844
+  },
+  "legacy2d": {
+    "modal": true,
+    "mode": true,
+    "photo": true,
+    "title": "アオウミガメ"
+  }
+}

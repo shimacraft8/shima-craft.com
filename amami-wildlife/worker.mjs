@@ -19,7 +19,7 @@ export default {
   const res=await env.ASSETS.fetch(new Request(assetUrl,{method:request.method}));
   const headers=new Headers(res.headers);for(const [k,v] of Object.entries(security))headers.set(k,v);
   headers.set('Cache-Control',assetUrl.pathname.includes('/assets/')?'public, max-age=3600, must-revalidate, no-transform':'public, max-age=0, must-revalidate, no-transform');
-  headers.set('X-Wildlife-Release','0.4.0');
+  headers.set('X-Wildlife-Release','0.5.0');
   if(res.status===404){
    const notFound=new URL(PREFIX+'/404.html',url);const page=await env.ASSETS.fetch(new Request(notFound,{method:request.method}));
    headers.set('Content-Type','text/html; charset=utf-8');headers.set('Cache-Control','no-store, no-transform');headers.set('X-Robots-Tag','noindex');

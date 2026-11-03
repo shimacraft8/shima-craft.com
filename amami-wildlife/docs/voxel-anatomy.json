@@ -1,0 +1,1110 @@
+[
+  {
+    "id": "amami-rabbit",
+    "kind": "rabbit",
+    "photoReference": "/wildlife/assets/photos/amami-rabbit.webp",
+    "counts": {
+      "legs": 4,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 2,
+      "tails": 1,
+      "wings": 0,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head",
+      "fore-leg--1",
+      "hind-leg--1",
+      "ear--1",
+      "fore-leg-1",
+      "hind-leg-1",
+      "ear-1",
+      "tail"
+    ],
+    "blocks": 361,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "amami-spiny-rat",
+    "kind": "rodent",
+    "photoReference": "/wildlife/assets/photos/amami-spiny-rat.webp",
+    "counts": {
+      "legs": 4,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 2,
+      "tails": 1,
+      "wings": 0,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head",
+      "fore-leg--1",
+      "hind-leg--1",
+      "fore-leg-1",
+      "hind-leg-1",
+      "ear--1",
+      "ear-1",
+      "tail"
+    ],
+    "blocks": 205,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "tokunoshima-spiny-rat",
+    "kind": "rodent",
+    "photoReference": "/wildlife/assets/photos/tokunoshima-spiny-rat.webp",
+    "counts": {
+      "legs": 4,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 2,
+      "tails": 1,
+      "wings": 0,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head",
+      "fore-leg--1",
+      "hind-leg--1",
+      "fore-leg-1",
+      "hind-leg-1",
+      "ear--1",
+      "ear-1",
+      "tail"
+    ],
+    "blocks": 205,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "long-haired-rat",
+    "kind": "rodent",
+    "photoReference": "/wildlife/assets/photos/long-haired-rat.webp",
+    "counts": {
+      "legs": 4,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 2,
+      "tails": 1,
+      "wings": 0,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head",
+      "fore-leg--1",
+      "hind-leg--1",
+      "fore-leg-1",
+      "hind-leg-1",
+      "ear--1",
+      "ear-1",
+      "tail"
+    ],
+    "blocks": 193,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "orii-shrew",
+    "kind": "shrew",
+    "photoReference": "/wildlife/assets/photos/orii-shrew.webp",
+    "counts": {
+      "legs": 4,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 2,
+      "tails": 1,
+      "wings": 0,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head",
+      "fore-leg--1",
+      "hind-leg--1",
+      "fore-leg-1",
+      "hind-leg-1",
+      "ear--1",
+      "ear-1",
+      "tail"
+    ],
+    "blocks": 193,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "watase-shrew",
+    "kind": "shrew",
+    "photoReference": "/wildlife/assets/photos/watase-shrew.webp",
+    "counts": {
+      "legs": 4,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 2,
+      "tails": 1,
+      "wings": 0,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head",
+      "fore-leg--1",
+      "hind-leg--1",
+      "fore-leg-1",
+      "hind-leg-1",
+      "ear--1",
+      "ear-1",
+      "tail"
+    ],
+    "blocks": 193,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "orii-bat",
+    "kind": "bat",
+    "photoReference": "/wildlife/assets/photos/orii-bat.webp",
+    "counts": {
+      "legs": 2,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 2,
+      "tails": 1,
+      "wings": 2,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head",
+      "ear--1",
+      "hind-leg--1",
+      "ear-1",
+      "hind-leg-1",
+      "tail",
+      "wing--1",
+      "wing-1"
+    ],
+    "blocks": 173,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "lidths-jay",
+    "kind": "bird",
+    "photoReference": "/wildlife/assets/photos/lidths-jay.webp",
+    "counts": {
+      "legs": 2,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 1,
+      "wings": 2,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head",
+      "wing--1",
+      "leg--1",
+      "wing-1",
+      "leg-1",
+      "tail"
+    ],
+    "blocks": 168,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "amami-woodcock",
+    "kind": "bird",
+    "photoReference": "/wildlife/assets/photos/amami-woodcock.webp",
+    "counts": {
+      "legs": 2,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 1,
+      "wings": 2,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head",
+      "wing--1",
+      "leg--1",
+      "wing-1",
+      "leg-1",
+      "tail"
+    ],
+    "blocks": 206,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "ryukyu-robin",
+    "kind": "bird",
+    "photoReference": "/wildlife/assets/photos/ryukyu-robin.webp",
+    "counts": {
+      "legs": 2,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 1,
+      "wings": 2,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head",
+      "wing--1",
+      "leg--1",
+      "wing-1",
+      "leg-1",
+      "tail"
+    ],
+    "blocks": 169,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "ryukyu-scops-owl",
+    "kind": "bird",
+    "photoReference": "/wildlife/assets/photos/ryukyu-scops-owl.webp",
+    "counts": {
+      "legs": 2,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 1,
+      "wings": 2,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head",
+      "wing--1",
+      "leg--1",
+      "wing-1",
+      "leg-1",
+      "tail"
+    ],
+    "blocks": 246,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "black-wood-pigeon",
+    "kind": "bird",
+    "photoReference": "/wildlife/assets/photos/black-wood-pigeon.webp",
+    "counts": {
+      "legs": 2,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 1,
+      "wings": 2,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head",
+      "wing--1",
+      "leg--1",
+      "wing-1",
+      "leg-1",
+      "tail"
+    ],
+    "blocks": 166,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "green-pigeon",
+    "kind": "bird",
+    "photoReference": "/wildlife/assets/photos/green-pigeon.webp",
+    "counts": {
+      "legs": 2,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 1,
+      "wings": 2,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head",
+      "wing--1",
+      "leg--1",
+      "wing-1",
+      "leg-1",
+      "tail"
+    ],
+    "blocks": 167,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "grey-faced-buzzard",
+    "kind": "bird",
+    "photoReference": "/wildlife/assets/photos/grey-faced-buzzard.webp",
+    "counts": {
+      "legs": 2,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 1,
+      "wings": 2,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head",
+      "wing--1",
+      "leg--1",
+      "wing-1",
+      "leg-1",
+      "tail"
+    ],
+    "blocks": 172,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "pale-thrush",
+    "kind": "bird",
+    "photoReference": "/wildlife/assets/photos/pale-thrush.webp",
+    "counts": {
+      "legs": 2,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 1,
+      "wings": 2,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head",
+      "wing--1",
+      "leg--1",
+      "wing-1",
+      "leg-1",
+      "tail"
+    ],
+    "blocks": 166,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "ruddy-kingfisher",
+    "kind": "bird",
+    "photoReference": "/wildlife/assets/photos/ruddy-kingfisher.webp",
+    "counts": {
+      "legs": 2,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 1,
+      "wings": 2,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head",
+      "wing--1",
+      "leg--1",
+      "wing-1",
+      "leg-1",
+      "tail"
+    ],
+    "blocks": 166,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "green-turtle",
+    "kind": "turtle",
+    "photoReference": "/wildlife/assets/photos/green-turtle.webp",
+    "counts": {
+      "legs": 0,
+      "frontFlippers": 2,
+      "rearFlippers": 2,
+      "ears": 0,
+      "tails": 1,
+      "wings": 0,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head",
+      "tail",
+      "front-flipper-left",
+      "rear-flipper-left",
+      "front-flipper-right",
+      "rear-flipper-right"
+    ],
+    "blocks": 358,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "loggerhead-turtle",
+    "kind": "turtle",
+    "photoReference": "/wildlife/assets/photos/loggerhead-turtle.webp",
+    "counts": {
+      "legs": 0,
+      "frontFlippers": 2,
+      "rearFlippers": 2,
+      "ears": 0,
+      "tails": 1,
+      "wings": 0,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head",
+      "tail",
+      "front-flipper-left",
+      "rear-flipper-left",
+      "front-flipper-right",
+      "rear-flipper-right"
+    ],
+    "blocks": 382,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "habu",
+    "kind": "snake",
+    "photoReference": "/wildlife/assets/photos/habu.webp",
+    "counts": {
+      "legs": 0,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 1,
+      "wings": 0,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head"
+    ],
+    "blocks": 137,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "himehabu",
+    "kind": "snake",
+    "photoReference": "/wildlife/assets/photos/himehabu.webp",
+    "counts": {
+      "legs": 0,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 1,
+      "wings": 0,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head"
+    ],
+    "blocks": 166,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "coral-snake",
+    "kind": "snake",
+    "photoReference": "/wildlife/assets/photos/coral-snake.webp",
+    "counts": {
+      "legs": 0,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 1,
+      "wings": 0,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head"
+    ],
+    "blocks": 71,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "green-snake",
+    "kind": "snake",
+    "photoReference": "/wildlife/assets/photos/green-snake.webp",
+    "counts": {
+      "legs": 0,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 1,
+      "wings": 0,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head"
+    ],
+    "blocks": 71,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "akamata",
+    "kind": "snake",
+    "photoReference": "/wildlife/assets/photos/akamata.webp",
+    "counts": {
+      "legs": 0,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 1,
+      "wings": 0,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head"
+    ],
+    "blocks": 105,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "banded-gecko",
+    "kind": "gecko",
+    "photoReference": "/wildlife/assets/photos/banded-gecko.webp",
+    "counts": {
+      "legs": 4,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 1,
+      "wings": 0,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head",
+      "fore-leg--1",
+      "hind-leg--1",
+      "fore-leg-1",
+      "hind-leg-1",
+      "tail"
+    ],
+    "blocks": 239,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "amami-ishikawa-frog",
+    "kind": "frog",
+    "photoReference": "/wildlife/assets/photos/amami-ishikawa-frog.webp",
+    "counts": {
+      "legs": 4,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 0,
+      "wings": 0,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head",
+      "fore-leg--1",
+      "hind-leg--1",
+      "fore-leg-1",
+      "hind-leg-1"
+    ],
+    "blocks": 357,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "otton-frog",
+    "kind": "frog",
+    "photoReference": "/wildlife/assets/photos/otton-frog.webp",
+    "counts": {
+      "legs": 4,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 0,
+      "wings": 0,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head",
+      "fore-leg--1",
+      "hind-leg--1",
+      "fore-leg-1",
+      "hind-leg-1"
+    ],
+    "blocks": 359,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "amami-tip-nosed-frog",
+    "kind": "frog",
+    "photoReference": "/wildlife/assets/photos/amami-tip-nosed-frog.webp",
+    "counts": {
+      "legs": 4,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 0,
+      "wings": 0,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head",
+      "fore-leg--1",
+      "hind-leg--1",
+      "fore-leg-1",
+      "hind-leg-1"
+    ],
+    "blocks": 321,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "amami-crocodile-newt",
+    "kind": "newt",
+    "photoReference": "/wildlife/assets/photos/amami-crocodile-newt.webp",
+    "counts": {
+      "legs": 4,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 1,
+      "wings": 0,
+      "antennae": 0,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "head",
+      "fore-leg--1",
+      "hind-leg--1",
+      "fore-leg-1",
+      "hind-leg-1",
+      "tail"
+    ],
+    "blocks": 253,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "camponotus-amamianus",
+    "kind": "ant",
+    "photoReference": "/wildlife/assets/photos/camponotus-amamianus.webp",
+    "counts": {
+      "legs": 6,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 0,
+      "wings": 0,
+      "antennae": 2,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "leg--1-0",
+      "leg--1-1",
+      "leg--1-2",
+      "leg-1-0",
+      "leg-1-1",
+      "leg-1-2",
+      "antenna--1",
+      "antenna-1"
+    ],
+    "blocks": 243,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "amami-stag",
+    "kind": "beetle",
+    "photoReference": "/wildlife/assets/photos/amami-stag.webp",
+    "counts": {
+      "legs": 6,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 0,
+      "wings": 0,
+      "antennae": 2,
+      "mandibles": 2
+    },
+    "parts": [
+      "body",
+      "leg--1-0",
+      "leg--1-1",
+      "leg--1-2",
+      "leg-1-0",
+      "leg-1-1",
+      "leg-1-2",
+      "antenna--1",
+      "mandible--1",
+      "antenna-1",
+      "mandible-1"
+    ],
+    "blocks": 291,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "uke-stag",
+    "kind": "beetle",
+    "photoReference": "/wildlife/assets/photos/uke-stag.webp",
+    "counts": {
+      "legs": 6,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 0,
+      "wings": 0,
+      "antennae": 2,
+      "mandibles": 2
+    },
+    "parts": [
+      "body",
+      "leg--1-0",
+      "leg--1-1",
+      "leg--1-2",
+      "leg-1-0",
+      "leg-1-1",
+      "leg-1-2",
+      "antenna--1",
+      "mandible--1",
+      "antenna-1",
+      "mandible-1"
+    ],
+    "blocks": 291,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "amami-deer-stag",
+    "kind": "beetle",
+    "photoReference": "/wildlife/assets/photos/amami-deer-stag.webp",
+    "counts": {
+      "legs": 6,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 0,
+      "wings": 0,
+      "antennae": 2,
+      "mandibles": 2
+    },
+    "parts": [
+      "body",
+      "leg--1-0",
+      "leg--1-1",
+      "leg--1-2",
+      "leg-1-0",
+      "leg-1-1",
+      "leg-1-2",
+      "antenna--1",
+      "mandible--1",
+      "antenna-1",
+      "mandible-1"
+    ],
+    "blocks": 271,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "amami-mountain-stag",
+    "kind": "beetle",
+    "photoReference": "/wildlife/assets/photos/amami-mountain-stag.webp",
+    "counts": {
+      "legs": 6,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 0,
+      "wings": 0,
+      "antennae": 2,
+      "mandibles": 2
+    },
+    "parts": [
+      "body",
+      "leg--1-0",
+      "leg--1-1",
+      "leg--1-2",
+      "leg-1-0",
+      "leg-1-1",
+      "leg-1-2",
+      "antenna--1",
+      "mandible--1",
+      "antenna-1",
+      "mandible-1"
+    ],
+    "blocks": 259,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "broad-grooved-stag",
+    "kind": "beetle",
+    "photoReference": "/wildlife/assets/photos/broad-grooved-stag.webp",
+    "counts": {
+      "legs": 6,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 0,
+      "wings": 0,
+      "antennae": 2,
+      "mandibles": 2
+    },
+    "parts": [
+      "body",
+      "leg--1-0",
+      "leg--1-1",
+      "leg--1-2",
+      "leg-1-0",
+      "leg-1-1",
+      "leg-1-2",
+      "antenna--1",
+      "mandible--1",
+      "antenna-1",
+      "mandible-1"
+    ],
+    "blocks": 267,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "okinawa-peacock",
+    "kind": "butterfly",
+    "photoReference": "/wildlife/assets/photos/okinawa-peacock.webp",
+    "counts": {
+      "legs": 6,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 0,
+      "wings": 4,
+      "antennae": 2,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "leg--1-0",
+      "leg--1-1",
+      "leg--1-2",
+      "leg-1-0",
+      "leg-1-1",
+      "leg-1-2",
+      "antenna--1",
+      "antenna-1",
+      "fore-wing--1",
+      "hind-wing--1",
+      "fore-wing-1",
+      "hind-wing-1"
+    ],
+    "blocks": 406,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "blue-tiger",
+    "kind": "butterfly",
+    "photoReference": "/wildlife/assets/photos/blue-tiger.webp",
+    "counts": {
+      "legs": 6,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 0,
+      "wings": 4,
+      "antennae": 2,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "leg--1-0",
+      "leg--1-1",
+      "leg--1-2",
+      "leg-1-0",
+      "leg-1-1",
+      "leg-1-2",
+      "antenna--1",
+      "antenna-1",
+      "fore-wing--1",
+      "hind-wing--1",
+      "fore-wing-1",
+      "hind-wing-1"
+    ],
+    "blocks": 436,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "amami-dung-beetle",
+    "kind": "beetle",
+    "photoReference": "/wildlife/assets/photos/amami-dung-beetle.webp",
+    "counts": {
+      "legs": 6,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 0,
+      "wings": 0,
+      "antennae": 2,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "leg--1-0",
+      "leg--1-1",
+      "leg--1-2",
+      "leg-1-0",
+      "leg-1-1",
+      "leg-1-2",
+      "antenna--1",
+      "antenna-1"
+    ],
+    "blocks": 300,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "winter-chafer",
+    "kind": "beetle",
+    "photoReference": "/wildlife/assets/photos/winter-chafer.webp",
+    "counts": {
+      "legs": 6,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 0,
+      "wings": 0,
+      "antennae": 2,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "leg--1-0",
+      "leg--1-1",
+      "leg--1-2",
+      "leg-1-0",
+      "leg-1-1",
+      "leg-1-2",
+      "antenna--1",
+      "antenna-1"
+    ],
+    "blocks": 271,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "white-striped-chafer",
+    "kind": "beetle",
+    "photoReference": "/wildlife/assets/photos/white-striped-chafer.webp",
+    "counts": {
+      "legs": 6,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 0,
+      "wings": 0,
+      "antennae": 2,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "leg--1-0",
+      "leg--1-1",
+      "leg--1-2",
+      "leg-1-0",
+      "leg-1-1",
+      "leg-1-2",
+      "antenna--1",
+      "antenna-1"
+    ],
+    "blocks": 253,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  },
+  {
+    "id": "ferrie-longhorn",
+    "kind": "beetle",
+    "photoReference": "/wildlife/assets/photos/ferrie-longhorn.webp",
+    "counts": {
+      "legs": 6,
+      "frontFlippers": 0,
+      "rearFlippers": 0,
+      "ears": 0,
+      "tails": 0,
+      "wings": 0,
+      "antennae": 2,
+      "mandibles": 0
+    },
+    "parts": [
+      "body",
+      "leg--1-0",
+      "leg--1-1",
+      "leg--1-2",
+      "leg-1-0",
+      "leg-1-1",
+      "leg-1-2",
+      "antenna--1",
+      "antenna-1"
+    ],
+    "blocks": 255,
+    "nativeGeometry": true,
+    "expertReviewed": false
+  }
+]

@@ -1,0 +1,242 @@
+[
+  {
+    "id": "amami-rabbit",
+    "label": "アマミノクロウサギ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "amami-spiny-rat",
+    "label": "アマミトゲネズミ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "tokunoshima-spiny-rat",
+    "label": "トクノシマトゲネズミ徳之島",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "long-haired-rat",
+    "label": "ケナガネズミ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "orii-bat",
+    "label": "オリイコキクガシラコウモリ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "orii-shrew",
+    "label": "オリイジネズミ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "watase-shrew",
+    "label": "ワタセジネズミ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "lidths-jay",
+    "label": "ルリカケス",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "amami-woodcock",
+    "label": "アマミヤマシギ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "ryukyu-robin",
+    "label": "アカヒゲ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "ryukyu-scops-owl",
+    "label": "リュウキュウコノハズク",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "black-wood-pigeon",
+    "label": "カラスバト",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "green-pigeon",
+    "label": "ズアカアオバト",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "grey-faced-buzzard",
+    "label": "サシバ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "pale-thrush",
+    "label": "シロハラ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "ruddy-kingfisher",
+    "label": "リュウキュウアカショウビン",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "amami-ishikawa-frog",
+    "label": "アマミイシカワガエル",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "otton-frog",
+    "label": "オットンガエル",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "amami-tip-nosed-frog",
+    "label": "アマミハナサキガエル",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "amami-crocodile-newt",
+    "label": "アマミイボイモリ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "green-turtle",
+    "label": "アオウミガメ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "loggerhead-turtle",
+    "label": "アカウミガメ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "habu",
+    "label": "ハブ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "himehabu",
+    "label": "ヒメハブ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "coral-snake",
+    "label": "ヒャン",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "green-snake",
+    "label": "リュウキュウアオヘビ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "akamata",
+    "label": "アカマタ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "banded-gecko",
+    "label": "オビトカゲモドキ徳之島",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "camponotus-amamianus",
+    "label": "ツヤミカドオオアリ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "amami-stag",
+    "label": "アマミマルバネクワガタ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "uke-stag",
+    "label": "ウケジママルバネクワガタ請島",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "amami-deer-stag",
+    "label": "アマミシカクワガタ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "amami-mountain-stag",
+    "label": "アマミミヤマクワガタ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "broad-grooved-stag",
+    "label": "スジブトヒラタクワガタ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "okinawa-peacock",
+    "label": "オキナワカラスアゲハ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "blue-tiger",
+    "label": "リュウキュウアサギマダラ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "amami-dung-beetle",
+    "label": "マルダイコクコガネ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "winter-chafer",
+    "label": "ケブカコフキコガネ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "white-striped-chafer",
+    "label": "オキナワシロスジコガネ",
+    "selected": true,
+    "visible": true
+  },
+  {
+    "id": "ferrie-longhorn",
+    "label": "フェリエベニボシカミキリ",
+    "selected": true,
+    "visible": true
+  }
+]

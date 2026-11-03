@@ -111,3 +111,45 @@
 .museum button.museum-mark{font-size:13px;line-height:1.45;font-weight:600}.museum-mark{width:max-content;max-width:200px}@media(max-width:760px){.museum button.museum-mark{font-size:12px}.museum-mark{max-width:200px}}
 
 @media(max-height:520px){.museum.is-live .museum-stage{min-height:0}}
+
+/* 0.5: hold-to-walk controls. Clear separation between walking and looking. */
+.forest-bottom{grid-template-columns:1fr auto;gap:12px 24px}
+.forest-location{grid-column:1 / -1;max-width:360px}
+.forest-walk{grid-column:1;grid-row:2;display:grid;grid-template-columns:repeat(3,46px);grid-template-rows:20px 46px 46px;gap:4px;width:max-content;user-select:none;-webkit-user-select:none}
+.forest-walk>span{grid-column:1 / -1;grid-row:1;font-size:12px;text-align:center}
+.forest-walk button{width:46px;min-height:46px;padding:0;border:1px solid #e2ead0b8;border-radius:12px;background:#193d2ee8;color:#fff;font-size:24px;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;box-shadow:0 3px 0 #0d281c55}
+.forest-walk button[data-walk="forward"]{grid-column:2;grid-row:2}
+.forest-walk button[data-walk="left"]{grid-column:1;grid-row:3}
+.forest-walk button[data-walk="back"]{grid-column:2;grid-row:3}
+.forest-walk button[data-walk="right"]{grid-column:3;grid-row:3}
+.forest-walk button.is-held,.forest-walk button:active{background:#668444;box-shadow:inset 0 2px 3px #10291c55;transform:translateY(2px)}
+.forest-look{grid-column:2;grid-row:2;display:grid;grid-template-columns:repeat(2,46px);grid-template-rows:20px 46px 46px;gap:4px}
+.forest-look>span{grid-column:1 / -1;font-size:12px;text-align:center}
+.forest-look button{width:46px;border-radius:12px}
+.forest-meta{grid-row:3;grid-column:1 / -1;justify-content:flex-end}
+.forest-hint{position:absolute;left:180px;bottom:58px;max-width:calc(100% - 310px);line-height:1.8}
+.forest-zoom{bottom:172px}
+@media(max-width:760px){
+ .forest-bottom{gap:8px;bottom:calc(12px + env(safe-area-inset-bottom))}
+ .forest-location{max-width:none}.forest-walk,.forest-look{grid-template-columns:repeat(3,44px);grid-template-rows:18px 44px 44px;gap:3px}
+ .forest-look{grid-template-columns:repeat(2,44px)}.forest-walk button,.forest-look button{width:44px;min-height:44px}
+ .forest-meta{justify-content:space-between;font-size:11px;gap:7px}.forest-meta>button,.forest-info summary{font-size:11px}
+ .forest-zoom{bottom:192px}.forest-info>div{bottom:48px}.forest-hint{display:none}
+}
+@media(max-height:520px) and (min-width:600px){
+ .forest-bottom{bottom:8px;gap:4px}.forest-location{position:absolute;right:0;bottom:160px;max-width:250px}.forest-location label{display:none}
+ .forest-meta{gap:18px}.forest-search{top:84px}.forest-zoom{right:0;bottom:218px;flex-direction:row}.forest-walk,.forest-look{grid-row:2;grid-template-rows:16px 44px 44px}.forest-walk button,.forest-look button{min-height:44px}
+}
+
+#museum-canvas canvas,#museum-canvas canvas:active{cursor:crosshair}
+.forest-look button{touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}.forest-look button.is-held{background:#668444;box-shadow:inset 0 2px 3px #10291c55}
+.forest-zoom{bottom:242px}
+@media(max-width:760px){.forest-zoom{bottom:260px}}
+@media(max-height:520px) and (min-width:600px){.forest-zoom{bottom:214px;right:0}}
+
+.museum-range-note{display:block;font-size:10px;line-height:1.4;color:#527052;margin-top:2px}.museum button,.museum summary{-webkit-tap-highlight-color:#e9b55233}
+
+/* Keep the title and controls readable over the bright sea as well as the forest. */
+.museum.is-live .museum-stage::before,.museum.is-live .museum-stage::after{content:"";position:absolute;left:0;right:0;pointer-events:none;z-index:1}
+.museum.is-live .museum-stage::before{top:0;height:170px;background:linear-gradient(180deg,#10231eaa,transparent)}
+.museum.is-live .museum-stage::after{bottom:0;height:190px;background:linear-gradient(0deg,#10231e99,transparent)}

@@ -1,18 +1,18 @@
 {
   "public/wildlife/assets/museum/index.js": {
-    "bytes": 8255,
+    "bytes": 9979,
     "entryPoint": "src/museum/index.js"
   },
-  "public/wildlife/assets/museum/renderer-PQ5RBVPJ.js.LEGAL.txt": {
+  "public/wildlife/assets/museum/renderer-2J36HZLS.js.LEGAL.txt": {
     "bytes": 1270,
     "entryPoint": null
   },
-  "public/wildlife/assets/museum/renderer-PQ5RBVPJ.js": {
-    "bytes": 594215,
+  "public/wildlife/assets/museum/renderer-2J36HZLS.js": {
+    "bytes": 591227,
     "entryPoint": "src/museum/renderer.js"
   },
-  "public/wildlife/assets/museum/chunk-KUGFPMBI.js": {
-    "bytes": 9869,
+  "public/wildlife/assets/museum/chunk-67SXAYRL.js": {
+    "bytes": 7459,
     "entryPoint": null
   }
 }

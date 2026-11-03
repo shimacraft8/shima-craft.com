@@ -1,0 +1,109 @@
+{
+  "controls": [
+    {
+      "height": 48.796875,
+      "name": "museum-mode",
+      "width": 125.328125,
+      "x": 694.671875,
+      "y": 22
+    },
+    {
+      "height": 44,
+      "name": "forest-place",
+      "width": 184,
+      "x": 636,
+      "y": 178
+    },
+    {
+      "height": 44,
+      "name": "前へ歩く（長押しで移動）",
+      "width": 46,
+      "x": 74,
+      "y": 242
+    },
+    {
+      "height": 44,
+      "name": "左へ歩く（長押しで移動）",
+      "width": 46,
+      "x": 24,
+      "y": 290
+    },
+    {
+      "height": 44,
+      "name": "後ろへ歩く（長押しで移動）",
+      "width": 46,
+      "x": 74,
+      "y": 290
+    },
+    {
+      "height": 44,
+      "name": "右へ歩く（長押しで移動）",
+      "width": 46,
+      "x": 124,
+      "y": 290
+    },
+    {
+      "height": 49,
+      "name": "少し拡大する",
+      "width": 44,
+      "x": 726,
+      "y": 119
+    },
+    {
+      "height": 49,
+      "name": "表示を引く",
+      "width": 44,
+      "x": 776,
+      "y": 119
+    },
+    {
+      "height": 44,
+      "name": "左を向く",
+      "width": 46,
+      "x": 724,
+      "y": 242
+    },
+    {
+      "height": 44,
+      "name": "上を向く",
+      "width": 46,
+      "x": 774,
+      "y": 242
+    },
+    {
+      "height": 44,
+      "name": "下を向く",
+      "width": 46,
+      "x": 724,
+      "y": 290
+    },
+    {
+      "height": 44,
+      "name": "右を向く",
+      "width": 46,
+      "x": 774,
+      "y": 290
+    }
+  ],
+  "metrics": {
+    "animalsReady": "19",
+    "dpr": "1",
+    "drawCalls": "24",
+    "fov": "68",
+    "heading": "4",
+    "obstacles": "365",
+    "pitch": "-5",
+    "ready": "true",
+    "spot": "shore",
+    "triangles": "140482",
+    "walking": "false",
+    "x": "14.000",
+    "z": "-32.000",
+    "zoom": "0"
+  },
+  "overflow": false,
+  "viewport": [
+    844,
+    390
+  ]
+}

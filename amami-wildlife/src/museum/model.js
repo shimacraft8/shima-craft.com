@@ -222,7 +222,7 @@ export function buildSea({rings=34,sectors=96,radius=1500}={}){
  * real spot in the one height field above; the eye height is added to the ground there.
  */
 export const VIEWPOINTS=[
- {id:'hego',name:'ヒカゲヘゴの林',sub:'谷を見おろす斜面',x:16.9,z:22,eye:1.62,yaw:rad(-20),links:['floor','falls']},
+ {id:'hego',name:'ヒカゲヘゴの林',sub:'谷を見おろす斜面',x:16.9,z:22,eye:1.62,yaw:rad(-5),links:['floor','falls']},
  {id:'floor',name:'林床の木かげ',sub:'大木の板根と落ち葉',x:1.4,z:34,eye:1.58,yaw:rad(170),links:['hego','falls']},
  {id:'falls',name:'滝の下の岩場',sub:'しぶきと濡れた岩',x:15,z:-5,eye:1.6,yaw:rad(-130),links:['hego','stream','floor']},
  {id:'stream',name:'渓流のほとり',sub:'浅瀬と倒木',x:7.1,z:-8,eye:1.56,yaw:rad(-168),links:['falls','estuary']},
@@ -253,14 +253,14 @@ export function nearestLandmark(x,z,yaw){
 export const PLACEMENT={
  /* 斜面の照葉樹林とヒカゲヘゴ */
  'amami-rabbit':{spot:'hego',perch:'ground',az:24,dist:5.2,size:.9},
- 'lidths-jay':{spot:'hego',perch:'branch',az:-34,dist:7.5,size:.62},
+ 'lidths-jay':{spot:'hego',perch:'branch',az:-20,dist:6.5,size:.62},
  'amami-stag':{spot:'hego',perch:'trunk',az:-82,dist:4.6,size:.5},
  'okinawa-peacock':{spot:'hego',perch:'leaf',az:66,dist:3.4,size:.42},
- 'green-snake':{spot:'hego',perch:'branch',az:140,dist:6.2,size:1.1},
+ 'green-snake':{spot:'hego',perch:'ground',az:-110,dist:4.8,size:1.1},
  'orii-shrew':{spot:'hego',perch:'ground',az:-150,dist:4.2,size:.4},
  /* 暗い林床 */
  'amami-spiny-rat':{spot:'floor',perch:'ground',az:150,dist:4,size:.5},
- 'tokunoshima-spiny-rat':{spot:'floor',perch:'ground',az:-168,dist:5.6,size:.5},
+ 'tokunoshima-spiny-rat':{spot:'hego',perch:'ground',az:146,dist:6.2,size:.5},
  'amami-woodcock':{spot:'floor',perch:'ground',az:120,dist:6.4,size:.6},
  'amami-dung-beetle':{spot:'floor',perch:'ground',az:-126,dist:3,size:.34},
  'broad-grooved-stag':{spot:'floor',perch:'trunk',az:-40,dist:4.4,size:.46},
@@ -275,32 +275,32 @@ export const PLACEMENT={
  /* 渓流 */
  'otton-frog':{spot:'stream',perch:'water',az:-150,dist:4.6,size:.56},
  habu:{spot:'stream',perch:'rock',az:-40,dist:5.4,size:1.6},
- 'banded-gecko':{spot:'stream',perch:'trunk',az:30,dist:3.6,size:.5},
+ 'banded-gecko':{spot:'floor',perch:'ground',az:-65,dist:3.8,size:.5},
  'uke-stag':{spot:'stream',perch:'trunk',az:96,dist:4.2,size:.46},
  'ryukyu-robin':{spot:'stream',perch:'ground',az:150,dist:4,size:.42},
  'blue-tiger':{spot:'stream',perch:'leaf',az:-92,dist:3.2,size:.44},
  /* 河口 */
  akamata:{spot:'estuary',perch:'ground',az:96,dist:5,size:1.5},
  'grey-faced-buzzard':{spot:'estuary',perch:'branch',az:150,dist:9,size:.84},
- 'pale-thrush':{spot:'estuary',perch:'ground',az:56,dist:4.4,size:.46},
- 'long-haired-rat':{spot:'estuary',perch:'ground',az:-46,dist:4,size:.56},
- 'camponotus-amamianus':{spot:'estuary',perch:'ground',az:-112,dist:2.8,size:.3},
- 'winter-chafer':{spot:'estuary',perch:'leaf',az:-170,dist:3.4,size:.36},
+ 'pale-thrush':{spot:'floor',perch:'ground',az:82,dist:5.6,size:.46},
+ 'long-haired-rat':{spot:'floor',perch:'branch',az:-72,dist:6.2,size:.56},
+ 'camponotus-amamianus':{spot:'floor',perch:'ground',az:25,dist:3.4,size:.3},
+ 'winter-chafer':{spot:'hego',perch:'leaf',az:112,dist:5.8,size:.36},
  /* 海に迫る森 */
  'green-pigeon':{spot:'cape',perch:'canopy',az:120,dist:8,size:.56},
  'black-wood-pigeon':{spot:'cape',perch:'canopy',az:170,dist:9.5,size:.62},
- 'orii-bat':{spot:'cape',perch:'branch',az:-120,dist:5.5,size:.46},
+ 'orii-bat':{spot:'floor',perch:'cave-air',az:170,dist:8,size:.46},
  'coral-snake':{spot:'cape',perch:'ground',az:60,dist:4.2,size:1},
  'amami-deer-stag':{spot:'cape',perch:'trunk',az:-84,dist:4,size:.46},
  /* 砂浜 */
- 'green-turtle':{spot:'shore',perch:'sand',az:-28,dist:6.5,size:1.3},
- 'loggerhead-turtle':{spot:'shore',perch:'sand',az:22,dist:8.5,size:1.25},
- 'watase-shrew':{spot:'shore',perch:'ground',az:128,dist:4,size:.4},
- 'ferrie-longhorn':{spot:'shore',perch:'trunk',az:160,dist:4.6,size:.42},
- 'white-striped-chafer':{spot:'shore',perch:'leaf',az:96,dist:3.2,size:.36}
+ 'green-turtle':{spot:'shore',perch:'sea',az:-30,dist:13,size:1.6},
+ 'loggerhead-turtle':{spot:'shore',perch:'sea',az:18,dist:17,size:1.5},
+ 'watase-shrew':{spot:'cape',perch:'ground',az:50,dist:4.8,size:.4},
+ 'ferrie-longhorn':{spot:'floor',perch:'deadwood',az:-135,dist:6.5,size:.42},
+ 'white-striped-chafer':{spot:'cape',perch:'leaf',az:80,dist:5.3,size:.36}
 };
 /** Height above its support at which each kind of animal is stood. */
-export const PERCH_HEIGHT={ground:0,sand:0,rock:0,water:0,leaf:.95,trunk:1.35,branch:4.4,canopy:9.4};
+export const PERCH_HEIGHT={ground:0,sand:0,rock:0,water:0,sea:-1.2,'cave-air':2.2,deadwood:1.35,leaf:.95,trunk:1.35,branch:4.4,canopy:9.4};
 export function planAnimals(species){
  const plan=[];
  for(const entry of species){
@@ -310,7 +310,7 @@ export function planAnimals(species){
   if(index<0)continue;
   const spot=VIEWPOINTS[index],az=rad(seat.az);
   plan.push({id:entry.id,name:entry.name,group:entry.group,asset:entry.asset,
-   spot:seat.spot,spotIndex:index,perch:seat.perch,size:seat.size,az,dist:seat.dist,
+   islands:[...(entry.islands??[])],spot:seat.spot,spotIndex:index,perch:seat.perch,size:seat.size,az,dist:seat.dist,
    x:spot.x+Math.sin(az)*seat.dist,z:spot.z-Math.cos(az)*seat.dist,
    lift:PERCH_HEIGHT[seat.perch]??0});
  }

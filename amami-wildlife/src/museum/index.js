@@ -16,7 +16,7 @@ async function initialize(){
  function drawLabels(points){
   const active=new Set(points.map(p=>p.id));for(const [id,button] of pool)if(!active.has(id))button.hidden=true;
   for(const point of points){let button=pool.get(point.id);
-   if(!button){button=document.createElement('button');button.type='button';button.className='museum-mark';button.textContent=point.name;button.dataset.id=point.id;button.setAttribute('aria-label',point.name+'の解説をひらく');button.addEventListener('click',()=>openExhibit(point.id,button));pool.set(point.id,button);labels.append(button);}
+   if(!button){button=document.createElement('button');button.type='button';button.className='museum-mark';button.textContent=point.name;if(point.range){const note=document.createElement('small');note.className='museum-range-note';note.textContent=point.range;button.append(note);}button.dataset.id=point.id;button.setAttribute('aria-label',point.name+'の解説をひらく');button.addEventListener('click',()=>openExhibit(point.id,button));pool.set(point.id,button);labels.append(button);}
    button.hidden=false;button.classList.toggle('is-selected',Boolean(point.selected));button.style.transform=`translate(${Math.round(point.x)}px,${Math.round(point.y)}px) translate(-50%,-100%)`;
   }
  }
@@ -95,7 +95,7 @@ async function initialize(){
     if(mode2d)return;
     const requestedSpot=spot;renderer=new MuseumRenderer(host,{species:data.species,paused:paused(),onSelect:id=>openExhibit(id,pool.get(id)),onLabels:drawLabels,
      onReady:()=>{$('museum-loading').hidden=true;},onZoom:level=>{$('forest-zoom-in').disabled=level===2;$('forest-zoom-out').disabled=level===0;},onStatus:message=>{text($('museum-status'),message);},onFailure:failure,
-     onPlace:p=>{spot=p.id;text($('forest-place-name'),p.name);$('forest-place').value=p.id;syncUrl();}});
+     onPlace:p=>{spot=p.id;text($('forest-place-name'),p.name);text($('museum-status'),'現在地 '+p.name);$('forest-place').value=p.id;syncUrl();}});
     renderer.goToSpot(requestedSpot);
    }catch{renderer?.dispose();renderer=null;host.replaceChildren();failure('3Dを表示できませんでした。下の図鑑からすべての項目を開けます。');}
    finally{clearTimeout(timer);}
@@ -104,18 +104,32 @@ async function initialize(){
  $('museum-mode').addEventListener('click',()=>exitForest());
  $('forest-enter').addEventListener('click',async()=>{await load3d();syncUrl();host.querySelector('canvas')?.focus({preventScroll:true});});
  $('forest-place').addEventListener('change',e=>renderer?.goToSpot(e.target.value));
- for(const button of section.querySelectorAll('[data-turn]'))button.addEventListener('click',()=>{
-  const directions={left:[-Math.PI/6,0],right:[Math.PI/6,0],up:[0,.2],down:[0,-.2]};renderer?.turn(...directions[button.dataset.turn]);
- });
+ for(const button of section.querySelectorAll('[data-turn]')){
+  let pointer=null;
+  const end=e=>{if(e?.pointerId!==undefined&&pointer!==e.pointerId)return;if(pointer!==null)renderer?.setTurning(button.dataset.turn,false);pointer=null;button.classList.remove('is-held');};
+  button.addEventListener('pointerdown',e=>{if(e.button!==0||pointer!==null)return;e.preventDefault();host.querySelector('canvas')?.focus({preventScroll:true});pointer=e.pointerId;button.setPointerCapture(e.pointerId);button.classList.add('is-held');renderer?.setTurning(button.dataset.turn,true);});
+  for(const event of ['pointerup','pointercancel','lostpointercapture'])button.addEventListener(event,end);
+  button.addEventListener('click',e=>{if(e.detail!==0)return;const directions={left:[-Math.PI/6,0],right:[Math.PI/6,0],up:[0,.2],down:[0,-.2]};renderer?.turn(...directions[button.dataset.turn]);});
+  addEventListener('blur',end);document.addEventListener('visibilitychange',end);
+ }
+ // Hold to walk. A keyboard/assistive click takes one step; pointer capture supports two-thumb play.
+ for(const button of section.querySelectorAll('[data-walk]')){
+  let pointer=null;
+  const end=e=>{if(e?.pointerId!==undefined&&pointer!==e.pointerId)return;if(pointer!==null)renderer?.setMovement(button.dataset.walk,false);pointer=null;button.classList.remove('is-held');};
+  button.addEventListener('pointerdown',e=>{if(e.button!==0||pointer!==null)return;e.preventDefault();host.querySelector('canvas')?.focus({preventScroll:true});pointer=e.pointerId;button.setPointerCapture(e.pointerId);button.classList.add('is-held');renderer?.setMovement(button.dataset.walk,true);});
+  for(const event of ['pointerup','pointercancel','lostpointercapture'])button.addEventListener(event,end);
+  button.addEventListener('click',e=>{if(e.detail!==0)return;renderer?.stepMovement(button.dataset.walk);});
+  addEventListener('blur',end);dialog.addEventListener('close',end);document.addEventListener('visibilitychange',end);
+ }
  $('forest-zoom-in').addEventListener('click',()=>renderer?.zoom(1));
  $('forest-zoom-out').addEventListener('click',()=>renderer?.zoom(-1));
- $('forest-reset').addEventListener('click',()=>renderer?.goToSpot(spot));
+ $('forest-reset').addEventListener('click',()=>{renderer?.goToSpot('hego');host.querySelector('canvas')?.focus({preventScroll:true});});
  $('museum-species').addEventListener('change',e=>{renderer?.focusSpecies(e.target.value);});
  $('museum-find').addEventListener('click',()=>{renderer?.focusSpecies($('museum-species').value);$('forest-search').open=false;});
  $('museum-open').addEventListener('click',e=>openExhibit($('museum-species').value,e.currentTarget));
  const motion=new MutationObserver(()=>renderer?.setPaused(paused()));motion.observe(document.body,{attributes:true,attributeFilter:['class']});
  reduce.addEventListener('change',()=>renderer?.setPaused(paused()));
- document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!dialog.open&&!mode2d){exitForest();}});
+ document.addEventListener('keydown',e=>{if(e.key!=='Escape'||dialog.open||mode2d||e.defaultPrevented)return;if(e.target.tagName==='SELECT')return;const open=section.querySelector('details[open]');if(open){open.open=false;open.querySelector('summary')?.focus();e.preventDefault();return;}exitForest();});
  for(const a of document.querySelectorAll('a[href$="#catalog"],a[href="#main"],a[href$="#explore"]'))a.addEventListener('click',e=>{
   if(e.metaKey||e.ctrlKey||e.shiftKey||e.button)return;
   const target=a.getAttribute('href');
@@ -130,8 +144,8 @@ async function initialize(){
   const params=new URLSearchParams(location.search),legacy=resolveLegacyTarget(params,data.species);
   const requested=params.get('spot');if(VIEWPOINTS.some(p=>p.id===requested))spot=requested;
   const catalogHash=location.hash==='#catalog'||location.hash.startsWith('#group-');
-  if(params.get('mode')==='2d'||catalogHash)exitForest(false);else await load3d();
-  if(legacy){$('museum-species').value=legacy.species.id;renderer?.focusSpecies(legacy.species.id);if(legacy.open)openExhibit(legacy.species.id,null);}
+  if(params.get('mode')==='2d'||catalogHash||reduce.matches||navigator.connection?.saveData)exitForest(false);else await load3d();
+  if(legacy){$('museum-species').value=legacy.species.id;renderer?.focusSpecies(legacy.species.id);if(legacy.open||mode2d)openExhibit(legacy.species.id,null);}
   if(catalogHash){const target=$(location.hash.slice(1));requestAnimationFrame(()=>target?.scrollIntoView({block:'start',behavior:'instant'}));}
  }catch{failure('森のデータを読み込めませんでした。下の図鑑から各ページを開けます。');}
  addEventListener('pagehide',()=>{renderer?.dispose();renderer=null;});

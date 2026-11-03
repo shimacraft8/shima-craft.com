@@ -177,5 +177,10 @@
     "mode": true,
     "photo": true,
     "title": "アオウミガメ"
+  },
+  "nativeMeshPick": {
+    "open": true,
+    "photo": true,
+    "title": "アマミノクロウサギ"
   }
 }

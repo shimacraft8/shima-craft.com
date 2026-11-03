@@ -153,3 +153,6 @@
 .museum.is-live .museum-stage::before,.museum.is-live .museum-stage::after{content:"";position:absolute;left:0;right:0;pointer-events:none;z-index:1}
 .museum.is-live .museum-stage::before{top:0;height:170px;background:linear-gradient(180deg,#10231eaa,transparent)}
 .museum.is-live .museum-stage::after{bottom:0;height:190px;background:linear-gradient(0deg,#10231e99,transparent)}
+/* Empty HUD space must never intercept clicks on a visible animal. */
+.forest-bottom{pointer-events:none}
+.forest-bottom button,.forest-bottom select,.forest-bottom summary,.forest-bottom a,.forest-bottom label,.forest-info[open]>div{pointer-events:auto}

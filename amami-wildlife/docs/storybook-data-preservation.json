@@ -1,0 +1,9 @@
+{
+  "data/species.json": true,
+  "data/photos.json": true,
+  "data/sources.json": true,
+  "data/illustrations.json": true,
+  "data/illustration-choices.json": true,
+  "data/requested-taxa.json": true,
+  "data/checklist-records.json": true
+}

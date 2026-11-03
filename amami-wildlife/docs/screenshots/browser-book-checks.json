@@ -1,0 +1,285 @@
+{
+  "at": "2026-11-03T08:40:29.075Z",
+  "checks": [
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/amami-rabbit.webp?v=8f0de3e5420c",
+      "source": true,
+      "title": "アマミノクロウサギ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/amami-spiny-rat.webp?v=64e031e6004a",
+      "source": true,
+      "title": "アマミトゲネズミ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/tokunoshima-spiny-rat.webp?v=b98e5b7220ff",
+      "source": true,
+      "title": "トクノシマトゲネズミ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/long-haired-rat.webp?v=645ce639f567",
+      "source": true,
+      "title": "ケナガネズミ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/orii-bat.webp?v=44019be0da5c",
+      "source": true,
+      "title": "オリイコキクガシラコウモリ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/orii-shrew.webp?v=b664372368f3",
+      "source": true,
+      "title": "オリイジネズミ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/watase-shrew.webp?v=cbd9333ced4f",
+      "source": true,
+      "title": "ワタセジネズミ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/lidths-jay.webp?v=ab3329693e85",
+      "source": true,
+      "title": "ルリカケス"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/amami-woodcock.webp?v=7ace5f6843cd",
+      "source": true,
+      "title": "アマミヤマシギ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/ryukyu-robin.webp?v=664b34cd84d2",
+      "source": true,
+      "title": "アカヒゲ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/ryukyu-scops-owl.webp?v=fb578820ddc9",
+      "source": true,
+      "title": "リュウキュウコノハズク"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/black-wood-pigeon.webp?v=aab7188b99da",
+      "source": true,
+      "title": "カラスバト"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/green-pigeon.webp?v=d836668b1b2a",
+      "source": true,
+      "title": "ズアカアオバト"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/grey-faced-buzzard.webp?v=308d4accb73d",
+      "source": true,
+      "title": "サシバ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/pale-thrush.webp?v=affede4f6698",
+      "source": true,
+      "title": "シロハラ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/ruddy-kingfisher.webp?v=7584e52d32b7",
+      "source": true,
+      "title": "リュウキュウアカショウビン"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/green-turtle.webp?v=b01ccdec715c",
+      "source": true,
+      "title": "アオウミガメ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/loggerhead-turtle.webp?v=447e5425ddc8",
+      "source": true,
+      "title": "アカウミガメ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/habu.webp?v=3f019c06e7b6",
+      "source": true,
+      "title": "ハブ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/himehabu.webp?v=378f008455a8",
+      "source": true,
+      "title": "ヒメハブ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/coral-snake.webp?v=d98827b99a71",
+      "source": true,
+      "title": "ヒャン"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/green-snake.webp?v=b4f81a965f72",
+      "source": true,
+      "title": "リュウキュウアオヘビ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/akamata.webp?v=e04e0bad2254",
+      "source": true,
+      "title": "アカマタ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/banded-gecko.webp?v=ccda2bfa9bfd",
+      "source": true,
+      "title": "オビトカゲモドキ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/amami-ishikawa-frog.webp?v=e8b8091bbdb9",
+      "source": true,
+      "title": "アマミイシカワガエル"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/otton-frog.webp?v=1e8be04d9043",
+      "source": true,
+      "title": "オットンガエル"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/amami-tip-nosed-frog.webp?v=09ce663b2707",
+      "source": true,
+      "title": "アマミハナサキガエル"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/amami-crocodile-newt.webp?v=b610263734a1",
+      "source": true,
+      "title": "アマミイボイモリ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/camponotus-amamianus.webp?v=963c3a759b54",
+      "source": true,
+      "title": "ツヤミカドオオアリ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/amami-stag.webp?v=8be269c0f968",
+      "source": true,
+      "title": "アマミマルバネクワガタ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/uke-stag.webp?v=0f20e4f97371",
+      "source": true,
+      "title": "ウケジママルバネクワガタ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/amami-deer-stag.webp?v=4db22e8ba378",
+      "source": true,
+      "title": "アマミシカクワガタ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/amami-mountain-stag.webp?v=71390e28a689",
+      "source": true,
+      "title": "アマミミヤマクワガタ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/broad-grooved-stag.webp?v=89879127c0c1",
+      "source": true,
+      "title": "スジブトヒラタクワガタ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/okinawa-peacock.webp?v=0f4c3c35dffc",
+      "source": true,
+      "title": "オキナワカラスアゲハ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/blue-tiger.webp?v=dd3965b31afb",
+      "source": true,
+      "title": "リュウキュウアサギマダラ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/amami-dung-beetle.webp?v=634af48e806c",
+      "source": true,
+      "title": "マルダイコクコガネ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/winter-chafer.webp?v=dfac18c5af87",
+      "source": true,
+      "title": "ケブカコフキコガネ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/white-striped-chafer.webp?v=d677c1bc88f9",
+      "source": true,
+      "title": "オキナワシロスジコガネ"
+    },
+    {
+      "loaded": true,
+      "open": true,
+      "photo": "http://127.0.0.1:4926/wildlife/assets/photos/ferrie-longhorn.webp?v=f9c77935173b",
+      "source": true,
+      "title": "フェリエベニボシカミキリ"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-:root{--paper:#ffffff;--ink:#283e35;--muted:#58665b;--green:#365c42;--yellow:#f1ce66;--rust:#a6422b;--line:#c8ccba;--white:#fffdf5;--round:26px;color-scheme:light;font-family:"Hiragino Maru Gothic ProN","Yu Gothic",Meiryo,system-ui,sans-serif;color:var(--ink);background:var(--paper);font-synthesis:none}
+:root{--paper:#ffffff;--ink:#283e35;--muted:#58665b;--green:#365c42;--yellow:#f1ce66;--rust:#a6422b;--line:#c8ccba;--white:#fffdf5;--round:26px;color-scheme:light;font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,system-ui,sans-serif;color:var(--ink);background:var(--paper);font-synthesis:none}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:24px}
 body{margin:0;background-image:none;font-size:16px;line-height:1.8}

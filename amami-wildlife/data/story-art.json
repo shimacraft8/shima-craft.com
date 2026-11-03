@@ -1,0 +1,38 @@
+{
+  "forest": {
+    "master": "assets/storybook/forest-v1.png",
+    "public": "public/wildlife/assets/storybook/forest.webp",
+    "width": 1536,
+    "height": 1024,
+    "tool": "built-in image_gen",
+    "kind": "original AI-generated creative habitat illustration",
+    "visualReviewed": true,
+    "bytes": 665644,
+    "responsivePublic": "public/wildlife/assets/storybook/forest-768.webp",
+    "responsiveBytes": 175898
+  },
+  "river": {
+    "master": "assets/storybook/river-v1.png",
+    "public": "public/wildlife/assets/storybook/river.webp",
+    "width": 1536,
+    "height": 1024,
+    "tool": "built-in image_gen",
+    "kind": "original AI-generated creative habitat illustration",
+    "visualReviewed": true,
+    "bytes": 622158,
+    "responsivePublic": "public/wildlife/assets/storybook/river-768.webp",
+    "responsiveBytes": 162636
+  },
+  "sea": {
+    "master": "assets/storybook/sea-v1.png",
+    "public": "public/wildlife/assets/storybook/sea.webp",
+    "width": 1536,
+    "height": 1024,
+    "tool": "built-in image_gen",
+    "kind": "original AI-generated creative habitat illustration",
+    "visualReviewed": true,
+    "bytes": 403848,
+    "responsivePublic": "public/wildlife/assets/storybook/sea-768.webp",
+    "responsiveBytes": 103236
+  }
+}

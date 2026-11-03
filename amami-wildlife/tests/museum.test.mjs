@@ -29,16 +29,10 @@ test('museum payload retains source values and local licensed photo provenance',
  const photos=JSON.parse(fs.readFileSync(path.join(root,'data/photos.json')));
  for(const s of species){const p=payload.photos[s.id];assert.equal(p.caption,photos[s.id].caption);assert.equal(p.author,photos[s.id].author);assert.equal(p.licenseUrl,photos[s.id].licenseUrl);assert.equal(p.sourcePage,photos[s.id].sourcePage);assert.ok(p.src.startsWith(photos[s.id].src+'?v='));}
 });
-test('rendering code is self-hosted and failures do not replace static catalogue',()=>{
- const entry=fs.readFileSync(path.join(root,'src/museum/index.js'),'utf8');const render=fs.readFileSync(path.join(root,'src/museum/renderer.js'),'utf8');
- assert.match(entry,/import\('\.\/renderer.js'\)/);assert.match(entry,/catch\{/);assert.match(render,/webglcontextlost/);assert.match(render,/IntersectionObserver/);assert.match(render,/dispose\(/);
- assert.doesNotMatch(entry,/innerHTML|eval\(|document\.write/);
- const files=fs.readdirSync(path.join(root,'public/wildlife/assets/museum'));
- assert.ok(files.some(p=>p.startsWith('renderer-')&&p.endsWith('.js')));
- const detail=fs.readFileSync(path.join(root,'public/wildlife/species/amami-rabbit/index.html'),'utf8');assert.doesNotMatch(detail,/museum\/index.js/);
-});
-test('distributed renderer includes the complete Three.js MIT notice',()=>{
- const dir=path.join(root,'public/wildlife/assets/museum');
- const notice=fs.readdirSync(dir).filter(n=>n.endsWith('.LEGAL.txt')).map(n=>fs.readFileSync(path.join(dir,n),'utf8')).join('\n');
- assert.match(notice,/Copyright.*2010-2026/);assert.match(notice,/Permission is hereby granted, free of charge/);assert.match(notice,/The above copyright notice and this permission notice/);assert.match(notice,/THE SOFTWARE IS PROVIDED/);
+test('picturebook runtime is self-hosted, preserves fallback links and never loads Three.js',()=>{
+ const entry=fs.readFileSync(path.join(root,'src/storybook/index.js'),'utf8');
+ assert.doesNotMatch(entry,/innerHTML|eval\(|document\.write|THREE|WebGLRenderer/);
+ const bundle=fs.readFileSync(path.join(root,'public/wildlife/assets/storybook/index.js'),'utf8');assert.ok(Buffer.byteLength(bundle)<20000);assert.doesNotMatch(bundle,/WebGLRenderer|createShader/);
+ const html=fs.readFileSync(path.join(root,'public/wildlife/index.html'),'utf8');assert.match(html,/assets\/storybook\/index.js/);assert.doesNotMatch(html,/assets\/museum\/index.js|<canvas/);
+ const detail=fs.readFileSync(path.join(root,'public/wildlife/species/amami-rabbit/index.html'),'utf8');assert.doesNotMatch(detail,/storybook\/index.js/);
 });

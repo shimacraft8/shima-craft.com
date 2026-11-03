@@ -1,10 +1,10 @@
 {
   "name": "amami-wildlife",
   "private": true,
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "scripts": {
-    "build": "node scripts/build-museum.mjs && python3 scripts/build.py",
+    "build": "node scripts/build-storybook.mjs && python3 scripts/build.py",
     "test": "node --test tests/*.test.mjs",
     "preview": "python3 -m http.server 4926 --bind 127.0.0.1 --directory public",
     "build:characters": "node scripts/build-character-preview.mjs",

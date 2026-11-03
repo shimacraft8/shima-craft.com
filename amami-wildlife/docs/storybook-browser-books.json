@@ -1,0 +1,287 @@
+{
+  "at": "2026-11-03T11:13:59.462Z",
+  "origin": "http://127.0.0.1:4935",
+  "count": 40,
+  "checks": [
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "アマミノクロウサギ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "アマミトゲネズミ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "トクノシマトゲネズミ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "ケナガネズミ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "オリイコキクガシラコウモリ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "オリイジネズミ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "ワタセジネズミ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "ルリカケス"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "アマミヤマシギ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "アカヒゲ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "リュウキュウコノハズク"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "カラスバト"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "ズアカアオバト"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "サシバ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "シロハラ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "リュウキュウアカショウビン"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "アオウミガメ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "アカウミガメ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "ハブ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "ヒメハブ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "ヒャン"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "リュウキュウアオヘビ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "アカマタ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "オビトカゲモドキ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "アマミイシカワガエル"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "オットンガエル"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "アマミハナサキガエル"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "アマミイボイモリ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "ツヤミカドオオアリ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "アマミマルバネクワガタ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "ウケジママルバネクワガタ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "アマミシカクワガタ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "アマミミヤマクワガタ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "スジブトヒラタクワガタ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "オキナワカラスアゲハ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "リュウキュウアサギマダラ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "マルダイコクコガネ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "ケブカコフキコガネ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "オキナワシロスジコガネ"
+    },
+    {
+      "artLoaded": true,
+      "open": true,
+      "photoLoaded": true,
+      "source": true,
+      "title": "フェリエベニボシカミキリ"
+    }
+  ]
+}

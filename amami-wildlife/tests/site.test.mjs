@@ -71,11 +71,11 @@ test('requested inventory preserves whales and distinguishes unverified candidat
  assert.ok(candidates.find(c=>c.name==='ハイ').note.includes('重複'));
 });
 
-test('museum preserves native catalogue links, pause, 2D navigation and static fallback',()=>{
+test('picturebook preserves native catalogue links, pause, three chapters and static fallback',()=>{
  const html=fs.readFileSync(path.join(publicRoot,'wildlife/index.html'),'utf8');
  for(const entry of species)assert.ok(html.includes(`/wildlife/species/${entry.id}/`));
- for(const id of ['museum-canvas','museum-mode','forest-enter','forest-place','forest-zoom-in','motion-toggle','museum-dialog'])assert.ok(html.includes(`id="${id}"`));
- assert.match(html,/<noscript>/);assert.match(html,/森を出る/);assert.match(html,/森に入る/);assert.match(html,/<dialog/);
+ for(const id of ['forest','river','sea','motion-toggle','nature-book','book-tab-0','book-tab-1','book-tab-2'])assert.ok(html.includes(`id="${id}"`));
+ assert.match(html,/<noscript>/);assert.match(html,/本をひらく/);assert.match(html,/2 実際の写真/);assert.match(html,/<dialog/);
  assert.doesNotMatch(html,/assets\/journey.js/);
 });
 test('new photos preserve source class and disclose specimens or uncertain subspecies',()=>{

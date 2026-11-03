@@ -1,0 +1,5 @@
+[
+ {"id":"forest","number":"01","label":"森","english":"IN THE FOREST","title":["森の奥に","目をこらす"],"intro":"重なり合う葉の奥に\n小さな気配を見つけよう","main":"amami-rabbit","related":["lidths-jay","amami-stag"],"background":"forest","backgroundAlt":"ヒカゲヘゴと照葉樹が重なる奄美の森を描いた創作画","accent":"#355b3f"},
+ {"id":"river","number":"02","label":"渓流","english":"ALONG THE STREAM","title":["水の音を","たどっていく"],"intro":"苔むす岩と澄んだ水\n渓流のほとりに暮らす生き物たち","main":"amami-ishikawa-frog","related":["otton-frog","amami-tip-nosed-frog"],"background":"river","backgroundAlt":"照葉樹に囲まれた小さな滝と苔むす渓流を描いた創作画","accent":"#276866"},
+ {"id":"sea","number":"03","label":"海","english":"BENEATH THE SURFACE","title":["青の向こうに","会いにいこう"],"intro":"光がゆらめく水の中\n大きなひれで泳ぐウミガメに出会う","main":"green-turtle","related":["loggerhead-turtle"],"background":"sea","backgroundAlt":"光が差し込む奄美の浅いサンゴ礁の海を描いた創作画","accent":"#235c78"}
+]

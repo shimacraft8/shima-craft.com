@@ -1,0 +1,1024 @@
+{
+  "atUtc": "2026-11-03T11:12:25.973144+00:00",
+  "origin": "http://127.0.0.1:4935",
+  "count": 145,
+  "passed": 145,
+  "failed": [],
+  "results": [
+    {
+      "path": "/wildlife/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/404.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/sitemap.xml",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/research/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/about/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/amami-tip-nosed-frog/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/habu/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/himehabu/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/otton-frog/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/blue-tiger/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/green-turtle/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/uke-stag/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/grey-faced-buzzard/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/green-pigeon/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/orii-shrew/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/black-wood-pigeon/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/okinawa-peacock/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/green-snake/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/amami-rabbit/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/amami-dung-beetle/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/ruddy-kingfisher/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/amami-ishikawa-frog/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/amami-spiny-rat/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/winter-chafer/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/amami-crocodile-newt/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/ryukyu-scops-owl/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/coral-snake/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/white-striped-chafer/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/watase-shrew/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/broad-grooved-stag/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/amami-stag/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/ryukyu-robin/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/ferrie-longhorn/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/lidths-jay/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/amami-mountain-stag/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/orii-bat/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/long-haired-rat/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/amami-woodcock/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/loggerhead-turtle/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/pale-thrush/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/camponotus-amamianus/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/amami-deer-stag/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/akamata/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/banded-gecko/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/species/tokunoshima-spiny-rat/index.html",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/data/sources.json",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/data/species.json",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/data/checklist-records.csv",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/data/photos.json",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/data/checklist-records.json",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/data/museum.json",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/journey.css",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/museum.css",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/style.css",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/habitat.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/app.js",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/journey.js",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/storybook.css",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/storybook/sea-768.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/storybook/river-768.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/storybook/river.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/storybook/index.js",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/storybook/forest-768.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/storybook/sea.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/storybook/forest.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-himehabu-v4.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-camponotus-amamianus-v3.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-watase-shrew-v1.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-black-wood-pigeon-v1.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-broad-grooved-stag-v2.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-ferrie-longhorn-v2.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-winter-chafer-v2.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-lidths-jay-v2.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-orii-bat-v1.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-amami-tip-nosed-frog-v1.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-ryukyu-scops-owl-v1.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-green-snake-v3.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-amami-dung-beetle-v2.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-amami-crocodile-newt-v1.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-pale-thrush-v1.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-ruddy-kingfisher-v1.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-green-turtle-v2.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-loggerhead-turtle-v3.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-long-haired-rat-v1.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-banded-gecko-v3.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-habu-v4.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-otton-frog-v1.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-uke-stag-v2.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-green-pigeon-v1.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-blue-tiger-v2.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-amami-woodcock-v1.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-amami-stag-v2.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-coral-snake-v3.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-orii-shrew-v1.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-grey-faced-buzzard-v1.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-ryukyu-robin-v1.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-akamata-v4.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-white-striped-chafer-v2.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-okinawa-peacock-v2.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-amami-deer-stag-v2.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-amami-mountain-stag-v2.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-tokunoshima-spiny-rat-v1.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-amami-spiny-rat-v1.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-amami-ishikawa-frog-v2.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/animals/cute-amami-rabbit-v2.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/habu.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/akamata.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/winter-chafer.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/otton-frog.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/loggerhead-turtle.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/long-haired-rat.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/black-wood-pigeon.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/pale-thrush.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/orii-bat.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/tokunoshima-spiny-rat.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/uke-stag.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/amami-crocodile-newt.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/amami-dung-beetle.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/grey-faced-buzzard.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/blue-tiger.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/ruddy-kingfisher.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/green-turtle.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/broad-grooved-stag.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/green-snake.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/amami-ishikawa-frog.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/camponotus-amamianus.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/white-striped-chafer.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/green-pigeon.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/amami-tip-nosed-frog.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/okinawa-peacock.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/ryukyu-robin.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/lidths-jay.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/amami-deer-stag.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/amami-stag.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/orii-shrew.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/amami-mountain-stag.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/banded-gecko.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/watase-shrew.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/ferrie-longhorn.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/amami-woodcock.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/ryukyu-scops-owl.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/amami-rabbit.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/coral-snake.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/amami-spiny-rat.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    },
+    {
+      "path": "/wildlife/assets/photos/himehabu.webp",
+      "status": 200,
+      "sha256Match": true,
+      "csp": true,
+      "noTransform": true
+    }
+  ]
+}

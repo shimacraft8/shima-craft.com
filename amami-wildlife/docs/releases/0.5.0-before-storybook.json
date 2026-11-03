@@ -1,0 +1,59 @@
+{
+  "releasedAt": "2026-11-03T15:09:36.610970+09:00",
+  "publicVersion": "0.5.0",
+  "localVersion": "0.5.0",
+  "publicWorkerVersion": "a1b72706-84fd-4e45-a126-608445e35bf7",
+  "publicUrl": "https://shima-craft.com/wildlife/",
+  "nativeVoxelModels": 40,
+  "publicIllustrations": 40,
+  "photos": 40,
+  "all40In360World": true,
+  "interaction": [
+    "first-person WASD / held direction buttons",
+    "drag or arrows to look",
+    "two zoom steps",
+    "native animal mesh click and name click open photo/details",
+    "leave forest to 2D catalogue",
+    "seven habitats connected by paths and bridges"
+  ],
+  "testsPassed": 44,
+  "httpChecks": 145,
+  "httpPassed": 145,
+  "localCspHttpPassed": 141,
+  "browserPhotoAndDetailChecks": 40,
+  "nativeMeshClickVerified": true,
+  "browserResponsiveWidths": [
+    1280,
+    390,
+    844
+  ],
+  "gitPushedCommit": "356260eb09935a8a4d280c5c439a2c4977324683",
+  "gitCommitMeaning": "Verified implementation plus HUD click correction; subsequent documentation commit records production verification.",
+  "gitBranch": "codex/wildlife-paper-museum-20261102",
+  "githubRepository": "shimacraft8/shima-craft.com",
+  "accountVerified": "shimacraft8@gmail.com",
+  "existingSiteWorkersUnchanged": true,
+  "routeMappingsUnchanged": true,
+  "rollbackWorkerVersion": "5461041d-601a-4c99-9235-74a45af46242",
+  "claudeReview": {
+    "model": "claude-opus-5",
+    "effort": "high",
+    "readOnlyRounds": 4
+  },
+  "zipRebuildVerified": true,
+  "rebuildMatchingPublicFiles": 142,
+  "completedBy": "Codex",
+  "blocker": null,
+  "notVerified": [
+    "iOS/Android physical devices",
+    "physical multi-touch",
+    "low-end GPUs / temperature / battery",
+    "OS reduced-motion setting",
+    "VoiceOver/TalkBack",
+    "200% text zoom",
+    "real WebGL context loss",
+    "expert anatomy/taxonomy/photo identification",
+    "complete fauna coverage"
+  ],
+  "scopeLimitation": "40 editorial entries with true native voxel geometry; original creative landscape, not a geographic/scale/distribution reconstruction. 1179 literature records and 248 requested names are not fully edited/illustrated."
+}

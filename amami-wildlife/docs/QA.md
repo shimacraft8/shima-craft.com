@@ -1,3 +1,7 @@
+# 現行 0.6.0 の検証
+
+最新は[体験型の自然絵本](STORYBOOK_20261103.md)、[公開状態](release-result.json)、storybook-tests.log、storybook-local-http.json、production-http.json、storybook-browser-books.json、storybook-production-browser.json、storybook-zip-verification.jsonを参照。以下は過去版の検証履歴。
+
 # 0.4.0 ローカル候補の検証（2026-11-02）
 
 本番未公開。トップを目線高の連続した3D森林へ再改修。最終の森はforest-desktop.png / forest-mobile.pngで確認でき、途中の島模型案は不採用です。Three.js博物館を追加。Node 22.23.4でビルドと24テストが成功し、ローカルWorkerの141ファイルにHTTP 200・CSP・no-transformを確認しました。全40件のパネル名とリンク、1440×900/390×844、写真の直接クリック、Tab循環、Escape、2D往復、3Dモジュール取得失敗時の検索を確認しています。

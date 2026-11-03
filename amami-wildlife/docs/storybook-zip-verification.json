@@ -1,0 +1,11 @@
+{
+  "atUtc": "2026-11-03T11:32:31.022355+00:00",
+  "node": "22.23.4",
+  "npmCi": "offline cache / successful",
+  "testsPassed": 52,
+  "publicFiles": 146,
+  "rebuildMatchesAllPublicFiles": true,
+  "credentialsExcluded": true,
+  "zipIntegrity": true,
+  "sourcePath": "work/wildlife-release/storybook-20261103/zip-check/amami-wildlife"
+}

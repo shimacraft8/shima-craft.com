@@ -59,3 +59,15 @@
 API照合で403になった後、通常のWrangler whoamiによる既存OAuth更新を行い、同じメール/Accountとバージョン/ルートの照合が成功。再ログインや権限の拡張は実施していません。
 
 ZIPはscripts/package.pyで再生成。ソース/資料/許諾写真/選択した素材/プロトタイプを含み、認証情報/node_modules/研究用第三者メディアを除外。抽出後、Node22.23.4と既存npmキャッシュのみでnpm ci・ビルド・44テスト・モデル確認画面ビルドに成功。公開142ファイルが全件一致（voxel-zip-verification.json）。最終ZIPのSHA-256はZIPと同じoutputsフォルダの.sha256ファイルを参照。
+
+## 0.6.0 / 操作してめくる自然絵本
+
+公開Worker: `b4e5713c-1358-406b-849d-d98768449034`。実装と短いPC画面の修正のGitHub記録は`0976ab8690b98d363260b4c9362f6b77c7829b1f`。トップはWebGLを読み込まず、水平のネイティブスクロールから紙の回転と層の動きを表現する。図鑑全40項目にイラスト/実写/出典を維持。
+
+GitHub shimacraft8、Cloudflare shimacraft8@gmail.comと対象Account/Zoneを再照合。専用ブランチへpushし、図鑑Workerのみ`--keep-vars`で公開。既存2 Workerとルートは不変。最終本番149 HTTPチェック、ローカル本番相当145ファイル、52自動試験と40項目の実ブラウザー表示を確認。実機は未確認。
+
+復旧先は直前0.5.0の`a1b72706-84fd-4e45-a126-608445e35bf7`。図鑑configと専用認証で`wrangler rollback a1b72706-84fd-4e45-a126-608445e35bf7 --name shima-craft-amami-wildlife`。既存ホーム/制作サイトのWorkerには実行しない。旧版は歩行式のブロックの森へ戻る。
+
+直接APIの403は、通常のWrangler whoamiによる既存OAuth更新後に解消。再ログイン、権限拡張、別アカウントへの切替は行っていない。
+
+ZIP再構築結果はstorybook-zip-verification.json。ZIPとSHA-256はプロジェクトの親outputsに保存。認証情報、依存、Git、研究用第三者メディアは含まない。

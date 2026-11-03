@@ -1,0 +1,20 @@
+{
+  "atUtc": "2026-11-03T11:32:16.164095+00:00",
+  "origin": "https://shima-craft.com",
+  "version": "0.6.0",
+  "PC1280x720": {
+    "coverActionsBottom": 451.13,
+    "coverIndexTop": 517.39,
+    "noOverlap": true,
+    "openCoverToForest": true
+  },
+  "mobile390x844": {
+    "horizontalOverflow": false,
+    "forestCreatureOpen": true,
+    "photoLoaded": true,
+    "closeToSameChapter": true,
+    "nextChapter": true
+  },
+  "runtimeErrorsObserved": [],
+  "physicalDevice": false
+}

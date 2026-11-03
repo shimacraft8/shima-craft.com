@@ -55,3 +55,11 @@ iOS/Androidの実機、Safari/Android Chrome実機の性能・熱・バッテリ
 対象GitHubはshimacraft8/shima-craft.comの図鑑専用ブランチ。Cloudflareはshimacraft8@gmail.com、shima-craft-amami-wildlifeの4ルートだけ。既存トップ/制作サイトのWorkerとルートを変更しない。追加API/DB/Cron/有料サービス/計測タグは導入しない。
 
 直前0.5.0の復旧先はa1b72706-84fd-4e45-a126-608445e35bf7。手順はDEPLOYMENT.md。プロジェクトZIPにはソース・採用素材・原画・データ・設計・検証記録を含み、認証情報と研究用第三者メディアは除外する。
+
+## 公開結果
+
+0.6.0公開済み。Worker b4e5713c-1358-406b-849d-d98768449034。本番149/149成功、既存2 Workerと全ルート不変。公開ブラウザーでPC1280×720の表紙/章と390×844の生き物/実写/閉じる/次章を確認。短いPC窓で表紙のボタンと目次が近すぎたため修正・再公開し、66px以上の間隔を確認した。最終Git実装は0976ab8690b98d363260b4c9362f6b77c7829b1f。
+
+風景の植物・環境の参考: 環境省の奄美群島国立公園 https://www.env.go.jp/nature/nationalparks/list/amami-gunto/spot/ 、奄美野生生物保護センター https://kyushu.env.go.jp/okinawa/awcc/national-park.html 、林野庁の奄美群島森林生態系保護地域 https://www.rinya.maff.go.jp/kyusyu/keikaku/hogorin/shinrin_seitaikei/amamigunntou.html 。引用図や写真の模写ではなく創作画として制作した。
+
+ZIPを別ディレクトリへ展開し、Node22.23.4と既存のnpmキャッシュだけでnpm ci・ビルド・52試験に成功。公開146ファイルのSHA-256が全件一致。ZIPの破損・パス・認証情報除外も確認した。検証記録はstorybook-zip-verification.json、最終ZIPのチェックサムはoutputs/amami-wildlife-project.zip.sha256。

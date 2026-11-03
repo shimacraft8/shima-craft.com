@@ -1,0 +1,325 @@
+
+added 3 packages in 4s
+Built 43 pages and 146 public files
+TAP version 13
+# Subtest: every editorial animal has exactly one finite placement in the continuous landscape
+ok 1 - every editorial animal has exactly one finite placement in the continuous landscape
+  ---
+  duration_ms: 3.370104
+  type: 'test'
+  ...
+# Subtest: all viewpoints are on dry land and their links resolve
+ok 2 - all viewpoints are on dry land and their links resolve
+  ---
+  duration_ms: 0.921318
+  type: 'test'
+  ...
+# Subtest: ground, river and sea triangles face upward, with finite vertices and valid indices
+ok 3 - ground, river and sea triangles face upward, with finite vertices and valid indices
+  ---
+  duration_ms: 182.510657
+  type: 'test'
+  ...
+# Subtest: free-look wraps across north using the shortest turn and old animal links still resolve
+ok 4 - free-look wraps across north using the shortest turn and old animal links still resolve
+  ---
+  duration_ms: 2.688067
+  type: 'test'
+  ...
+# Subtest: OS motion changes restore the saved user choice and never leave the pause control stuck disabled
+ok 5 - OS motion changes restore the saved user choice and never leave the pause control stuck disabled
+  ---
+  duration_ms: 7.181647
+  type: 'test'
+  ...
+# Subtest: all editorial records are reachable in exactly one dynamically generated museum room
+ok 6 - all editorial records are reachable in exactly one dynamically generated museum room
+  ---
+  duration_ms: 3.280622
+  type: 'test'
+  ...
+# Subtest: exhibit pagination includes the final partial page without missing or duplicate records
+ok 7 - exhibit pagination includes the final partial page without missing or duplicate records
+  ---
+  duration_ms: 0.501479
+  type: 'test'
+  ...
+# Subtest: camera easing has stationary endpoints and monotonic progress; invalid URL room is safe
+ok 8 - camera easing has stationary endpoints and monotonic progress; invalid URL room is safe
+  ---
+  duration_ms: 0.783458
+  type: 'test'
+  ...
+# Subtest: museum payload retains source values and local licensed photo provenance
+ok 9 - museum payload retains source values and local licensed photo provenance
+  ---
+  duration_ms: 5.109101
+  type: 'test'
+  ...
+# Subtest: picturebook runtime is self-hosted, preserves fallback links and never loads Three.js
+ok 10 - picturebook runtime is self-hosted, preserves fallback links and never loads Three.js
+  ---
+  duration_ms: 2.912352
+  type: 'test'
+  ...
+# Subtest: editorial entries have unique slugs, sources, pages and no invented images
+ok 11 - editorial entries have unique slugs, sources, pages and no invented images
+  ---
+  duration_ms: 8.125516
+  type: 'test'
+  ...
+# Subtest: document records remain explicitly unreviewed, traceable and separate from species count
+ok 12 - document records remain explicitly unreviewed, traceable and separate from species count
+  ---
+  duration_ms: 7.450006
+  type: 'test'
+  ...
+# Subtest: all internal links and images resolve; headings, language and alt attributes exist
+ok 13 - all internal links and images resolve; headings, language and alt attributes exist
+  ---
+  duration_ms: 52.44591
+  type: 'test'
+  ...
+# Subtest: worker serves every editorial detail and applies security headers
+ok 14 - worker serves every editorial detail and applies security headers
+  ---
+  duration_ms: 97.38788
+  type: 'test'
+  ...
+# Subtest: worker canonicalizes directory paths and retains filter query
+ok 15 - worker canonicalizes directory paths and retains filter query
+  ---
+  duration_ms: 0.879666
+  type: 'test'
+  ...
+# Subtest: worker rejects mutations, unknown paths and encoded slash; no catch-all site route
+ok 16 - worker rejects mutations, unknown paths and encoded slash; no catch-all site route
+  ---
+  duration_ms: 2.44936
+  type: 'test'
+  ...
+# Subtest: HEAD and missing pages preserve correct behavior
+ok 17 - HEAD and missing pages preserve correct behavior
+  ---
+  duration_ms: 1.692779
+  type: 'test'
+  ...
+# Subtest: no credentials, trackers or remote scripts in public payload
+ok 18 - no credentials, trackers or remote scripts in public payload
+  ---
+  duration_ms: 1.275401
+  type: 'test'
+  ...
+# Subtest: real photographs have reusable licenses, attribution, reviewed identities and local assets
+ok 19 - real photographs have reusable licenses, attribution, reviewed identities and local assets
+  ---
+  duration_ms: 15.398359
+  type: 'test'
+  ...
+# Subtest: latest requested white background, text-only brand, factual headings and ant revision are retained
+ok 20 - latest requested white background, text-only brand, factual headings and ant revision are retained
+  ---
+  duration_ms: 3.432041
+  type: 'test'
+  ...
+# Subtest: rejected anatomy variants cannot be selected and revised art has a visual review record
+ok 21 - rejected anatomy variants cannot be selected and revised art has a visual review record
+  ---
+  duration_ms: 3.483638
+  type: 'test'
+  ...
+# Subtest: requested inventory preserves whales and distinguishes unverified candidates from editorial entries
+ok 22 - requested inventory preserves whales and distinguishes unverified candidates from editorial entries
+  ---
+  duration_ms: 5.314258
+  type: 'test'
+  ...
+# Subtest: picturebook preserves native catalogue links, pause, three chapters and static fallback
+ok 23 - picturebook preserves native catalogue links, pause, three chapters and static fallback
+  ---
+  duration_ms: 1.311581
+  type: 'test'
+  ...
+# Subtest: new photos preserve source class and disclose specimens or uncertain subspecies
+ok 24 - new photos preserve source class and disclose specimens or uncertain subspecies
+  ---
+  duration_ms: 0.849496
+  type: 'test'
+  ...
+# Subtest: public asset URLs match current content hashes so cached old scripts and photos are not reused
+ok 25 - public asset URLs match current content hashes so cached old scripts and photos are not reused
+  ---
+  duration_ms: 51.853316
+  type: 'test'
+  ...
+# Subtest: catalogue keeps every taxon in its own labelled section without mixed groups
+ok 26 - catalogue keeps every taxon in its own labelled section without mixed groups
+  ---
+  duration_ms: 5.596908
+  type: 'test'
+  ...
+# Subtest: both sea turtles have distinct sourced entries, local art and actual photo tabs
+ok 27 - both sea turtles have distinct sourced entries, local art and actual photo tabs
+  ---
+  duration_ms: 2.538661
+  type: 'test'
+  ...
+# Subtest: snake selections require structural underdrawing and explicit post-generation topology review
+ok 28 - snake selections require structural underdrawing and explicit post-generation topology review
+  ---
+  duration_ms: 1.783856
+  type: 'test'
+  ...
+# Subtest: picturebook swipes advance left, retreat right and leave vertical/pinch gestures alone
+ok 29 - picturebook swipes advance left, retreat right and leave vertical/pinch gestures alone
+  ---
+  duration_ms: 2.289953
+  type: 'test'
+  ...
+# Subtest: native scroll progress is finite and bounded without grabbing scroll input
+ok 30 - native scroll progress is finite and bounded without grabbing scroll input
+  ---
+  duration_ms: 0.917962
+  type: 'test'
+  ...
+# Subtest: legacy habitat links map to the matching story rather than losing the destination
+ok 31 - legacy habitat links map to the matching story rather than losing the destination
+  ---
+  duration_ms: 0.268364
+  type: 'test'
+  ...
+# Subtest: three story scenes use existing sourced species and locally reviewed original art
+ok 32 - three story scenes use existing sourced species and locally reviewed original art
+  ---
+  duration_ms: 3.931134
+  type: 'test'
+  ...
+# Subtest: dialog tab panels are paired and photo is loaded on demand, not as a fabricated fallback
+ok 33 - dialog tab panels are paired and photo is loaded on demand, not as a fabricated fallback
+  ---
+  duration_ms: 2.101749
+  type: 'test'
+  ...
+# Subtest: interactive page turns choose the nearest real page and clamp rapid endpoint requests
+ok 34 - interactive page turns choose the nearest real page and clamp rapid endpoint requests
+  ---
+  duration_ms: 0.541374
+  type: 'test'
+  ...
+# Subtest: chapter URLs preserve the catalogue filters and legacy fragment/spot destinations
+ok 35 - chapter URLs preserve the catalogue filters and legacy fragment/spot destinations
+  ---
+  duration_ms: 1.109314
+  type: 'test'
+  ...
+# Subtest: interactive stage has a cover and real anchor controls; no inline styles violate the production CSP
+ok 36 - interactive stage has a cover and real anchor controls; no inline styles violate the production CSP
+  ---
+  duration_ms: 2.269666
+  type: 'test'
+  ...
+# Subtest: prototype models have actual volumetric finite geometry from every view and no image textures
+ok 37 - prototype models have actual volumetric finite geometry from every view and no image textures
+  ---
+  duration_ms: 55.496892
+  type: 'test'
+  ...
+# Subtest: turtle has two front and two rear articulated flippers attached to its body, not land legs
+ok 38 - turtle has two front and two rear articulated flippers attached to its body, not land legs
+  ---
+  duration_ms: 14.611963
+  type: 'test'
+  ...
+# Subtest: every edited species has a distinct finite native model and anatomy-specific limbs
+ok 39 - every edited species has a distinct finite native model and anatomy-specific limbs
+  ---
+  duration_ms: 131.772345
+  type: 'test'
+  ...
+# Subtest: species-specific marks and turtle structure remain distinguishable
+ok 40 - species-specific marks and turtle structure remain distinguishable
+  ---
+  duration_ms: 21.976596
+  type: 'test'
+  ...
+# Subtest: green snake is on the forest floor rather than a branch
+ok 41 - green snake is on the forest floor rather than a branch
+  ---
+  duration_ms: 2.801533
+  type: 'test'
+  ...
+# Subtest: the connecting walk reaches every viewpoint in both directions without teleporting
+ok 42 - the connecting walk reaches every viewpoint in both directions without teleporting
+  ---
+  duration_ms: 31.525639
+  type: 'test'
+  ...
+# Subtest: walking is frame-rate independent, diagonal speed is normalized and long frame deltas are bounded
+ok 43 - walking is frame-rate independent, diagonal speed is normalized and long frame deltas are bounded
+  ---
+  duration_ms: 1.686156
+  type: 'test'
+  ...
+# Subtest: solid trunks block walking, separated axes permit sliding and cannot be tunnelled through
+ok 44 - solid trunks block walking, separated axes permit sliding and cannot be tunnelled through
+  ---
+  duration_ms: 1.436172
+  type: 'test'
+  ...
+# Subtest: water, steep drops and world edges remain impassable
+ok 45 - water, steep drops and world edges remain impassable
+  ---
+  duration_ms: 47.56718
+  type: 'test'
+  ...
+# Subtest: block terrain has finite data and outward facing unit normals on every triangle
+ok 46 - block terrain has finite data and outward facing unit normals on every triangle
+  ---
+  duration_ms: 193.416644
+  type: 'test'
+  ...
+# Subtest: opposing keys cancel and physical key codes work regardless of keyboard letter case
+ok 47 - opposing keys cancel and physical key codes work regardless of keyboard letter case
+  ---
+  duration_ms: 0.319179
+  type: 'test'
+  ...
+# Subtest: the rendered forest obstacles still allow all seven habitats and every animal to be approached
+ok 48 - the rendered forest obstacles still allow all seven habitats and every animal to be approached
+  ---
+  duration_ms: 879.992023
+  type: 'test'
+  ...
+# Subtest: all rendered and playable cells fit inside the bounded cache and repeated queries reuse cells
+ok 49 - all rendered and playable cells fit inside the bounded cache and repeated queries reuse cells
+  ---
+  duration_ms: 555.362866
+  type: 'test'
+  ...
+# Subtest: marine turtles swim below sea level over the lagoon rather than standing on the beach
+ok 50 - marine turtles swim below sea level over the lagoon rather than standing on the beach
+  ---
+  duration_ms: 1.121931
+  type: 'test'
+  ...
+# Subtest: forest and cave animals are not assigned to bare beach or mudflat perches
+ok 51 - forest and cave animals are not assigned to bare beach or mudflat perches
+  ---
+  duration_ms: 0.926029
+  type: 'test'
+  ...
+# Subtest: solid cave walls occlude labels and species finder chooses the open side
+ok 52 - solid cave walls occlude labels and species finder chooses the open side
+  ---
+  duration_ms: 1.239548
+  type: 'test'
+  ...
+1..52
+# tests 52
+# suites 0
+# pass 52
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2201.62037
